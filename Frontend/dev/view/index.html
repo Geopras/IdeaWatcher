@@ -8,13 +8,35 @@
 </head>
 <body>
     <!---------------------------------- Header --------------------------------->
-    <header class="v-mainMenu-view"></header>
+    <header class="v-mainMenu-view">
+		<h1>Schnapsideen deluxe</h1>
+	</header>
     <!----------------------------------- Views Container ----------------------------------->
     <div class="views-container">
         <!----------------------------------- View : login ----------------------------------->
         <div class="v-login-view"></div>
         <!----------------------------------- View : ideaDetails ----------------------------->
-        <div class="v-ideaDetails-view"></div>
+        <div class="v-ideaDetails-view">
+			<ul class="tab">
+				<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'hot')">Hot</a></li>
+				<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'fresh')">Fresh</a></li>
+				<li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'trending')">Trending</a></li>
+			</ul>
+
+			<div id="hot" class="tabcontent">
+				<h3>Hier stehen die am Besten bewerteten Ideen.</h3>
+			</div>
+			
+			<div id="fresh" class="tabcontent">
+				<h3>Hier stehen die neuesten Ideen.</h3>
+			</div>
+			
+			<div id="trending" class="tabcontent">
+				<h3>Hier stehen aufstrebende Ideen.</h3>
+			</div>
+
+
+        </div>
         <!----------------------------------- View : ideaCreation ---------------------------->
         <div class="v-ideaCreation-view"></div>
         <!----------------------------------- View : impress --------------------------------->
