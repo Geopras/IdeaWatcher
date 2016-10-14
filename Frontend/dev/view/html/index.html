@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-	<link rel="stylesheet" href="styles.css">
+    <script>
+					// Get the element with id="defaultOpen" and click on it
+					document.getElementById("defaultOpen").click();
+					</script>
+	<script language="javascript" type="text/javascript" src="../javascript/mainViewLogic.js"></script>
+						
+
+	<link rel="stylesheet" href="../css/styles.css">
     <title>IdeaWatcher</title>
 </head>
 <body>
@@ -22,7 +29,7 @@
         
         <!----------------------------------- View : ideaList : tabs ---------------------------->
 			<ul class="tab">
-				<li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'hot')">Hot</a></li>
+				<li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'hot')" id="defaultOpen">Hot</a></li>
 				<li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'fresh')">Fresh</a></li>
 				<li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'trending')">Trending</a></li>
 			</ul>
