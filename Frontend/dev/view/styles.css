@@ -8,91 +8,85 @@ textbox {
 
 }
 
-header h1 {
-
-}
-
 /* Header */
-header.v-mainMenu-view {	
-text-align: center
-}
+	header.v-mainMenu-view {	
+	text-align: center
+	}
+
+	header h1 {
+
+	}
 
 /* Views Container */
-div.views-container {
-}
+	div.views-container {
+	}
 
-div.views-container div {
-margin-left: 200;
-margin-right: 200
-}
+	div.views-container div {
+	margin-left: 200;
+	margin-right: 200
+	}
 /* View : login */
-div.v-login-view {
-} 
+	div.v-login-view {
+	} 
 
 /*View : ideaList */
-div.v-ideaList-view {
-}
+	
+	/* list header */
+		div.v-ideaList-view ul.tab {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			border: 1px solid #ccc;
+			background-color: #f1f1f1;
+			text-align: center;
+		}
 
-div.v-ideaList-view ul {
-border: 1px solid #ccc;
-}
+		/* Float the list items side by side */
+		div.v-ideaList-view ul.tab li {float: left;}
 
-/* Style the list */
-div.v-ideaList-view ul.tab {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-    text-align: center;
-}
+		/* Style the links inside the list items */
+		div.v-ideaList-view ul.tab li a {
+			display: inline-block;
+			color: black;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+			transition: 0.3s;
+			font-size: 17px;
+		}
 
-/* Float the list items side by side */
-div.v-ideaList-view ul.tab li {float: left;}
+		/* Change background color of links on hover */
+		div.v-ideaList-view ul.tab li a:hover {background-color: #ddd;}
 
-/* Style the links inside the list items */
-div.v-ideaList-view ul.tab li a {
-    display: inline-block;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    transition: 0.3s;
-    font-size: 17px;
-}
+		/* Create an active/current tablink class */
+		div.v-ideaList-view ul.tab li a:focus, .active {background-color: #ccc;}
 
-/* Change background color of links on hover */
-div.v-ideaList-view ul.tab li a:hover {background-color: #ddd;}
-
-/* Create an active/current tablink class */
-div.v-ideaList-view ul.tab li a:focus, .active {background-color: #ccc;}
-
-/* Style the tab content */
-div.v-ideaList-view .tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
-}
+	/* tab content */
+		div.v-ideaList-view .tabcontent {
+			display: none;
+			padding: 6px 12px;
+			border: 1px solid #ccc;
+			border-top: none;
+		}
 
 /* View : ideaDetails */
-div.v-ideaDetails-view {
-} 
+	div.v-ideaDetails-view {
+	} 
 
 /* View : ideaCreation */
-div.v-ideaCreation-view {
-} 
+	div.v-ideaCreation-view {
+	} 
 
 /* View : impress */
-div.v-impress-view {
-} 
+	div.v-impress-view {
+	} 
 
 /* View : profileEdit */
-div.v-profileEdit-view {
-}
+	div.v-profileEdit-view {
+	}
 
 /* View : profile */
-div.v-profile-view {
-}
+	div.v-profile-view {
+	}
 
