@@ -19,6 +19,3 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 
-function setActive() {
-	document.getElementById("defaultOpen").click();
-	}
