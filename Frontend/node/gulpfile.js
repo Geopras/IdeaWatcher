@@ -12,6 +12,7 @@ gulp.task('jsTransform', function(){
     console.log('js wird neu generiert');
     // Auswahl der Ausgangsdateien
     return gulp.src([
+        '../dev/core/namespace.js',
         '../dev/controller/**/*',
         '../dev/view/javascript/**/*'
     ])
