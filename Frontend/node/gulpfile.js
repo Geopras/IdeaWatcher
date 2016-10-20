@@ -13,6 +13,8 @@ gulp.task('jsTransform', function(){
     // Auswahl der Ausgangsdateien
     return gulp.src([
         '../dev/core/namespace.js',
+        '../dev/core/messageBroker.js',
+        '../dev/core/navigator.js',
         '../dev/controller/**/*',
         '../dev/view/javascript/**/*'
     ])

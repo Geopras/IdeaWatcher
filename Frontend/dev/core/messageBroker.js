@@ -1,4 +1,4 @@
-ideaWatcher.core.MessageBroker = ideaWatcher.core.MessageBroker || (function () {
+ideaWatcher.core.MessageBroker = ideaWatcher.core.MessageBroker || (function CMessageBroker() {
 
     //region local Vars
     // anzahl eingegangener Nachrichten
