@@ -1,4 +1,4 @@
-idea.controller.mainView = idea.controller.mainView || (function ControlerMainView() {
+ideaWatcher.controller.mainView = ideaWatcher.controller.mainView || (function ControlerMainView() {
 
     return {
 
