@@ -1,0 +1,1 @@
+window.ideaWatcher = window.ideaWatcher || {};
