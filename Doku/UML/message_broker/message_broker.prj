@@ -1,6 +1,6 @@
 format 76
 "message_broker"
-  revision 1
+  revision 3
   modified_by 2 "Stefan"
 
 
@@ -56,8 +56,8 @@ format 76
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
     collaborationdiagram 128002 "cd"
-      show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
-      size A4
+      show_full_operations_definition default show_hierarchical_rank yes write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+      size A4-Landscape
     end
 
     class 128002 "loginController"

@@ -1,14 +1,11 @@
-window_sizes 1600 837 195 597 600 82
+window_sizes 1600 837 104 1490 600 82
 diagrams
   active  collaborationdiagram_ref 128002 // cd
-    1399 679 100 4 0 0
-  componentdiagram_ref 128130 // cd
-    473 536 100 4 0 0
+    1490 681 166 18 0 0
 end
 show_stereotypes
-selected class_ref 128386 // webSocketEndpoint
+selected collaborationdiagram_ref 128002 // cd
 open
   usecaseview_ref 128002 // ucv
-  componentview_ref 128002 // cv
 end
 end
