@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="softwareprojekt" version="4">
+  <OBJECT>
+    <ID name="softwareprojekt" mc="Standard.Package" uid="7d037811-21e0-4611-ad04-35f3729fbec7"/>
+    <PID name="softwareprojekt" mc="Standard.Project" uid="cfa6bc20-d746-40af-982b-3716e4d295ff"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[softwareprojekt]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="Nutzer" mc="Standard.Actor" uid="dd621fab-0438-4cbf-a4f6-edb93ff2bc15"/>
+        <COMPID name="Idee anlegen" mc="Standard.UseCase" uid="0cf292f6-87a2-4595-920f-737e89f550ec"/>
+        <COMPID name="Idee bewerten" mc="Standard.UseCase" uid="2c02c442-16f8-46d0-84c5-969fd7b17d66"/>
+        <COMPID name="Idee löschen" mc="Standard.UseCase" uid="4fc68c6b-bec8-483f-af76-196797600433"/>
+        <COMPID name="Idee verfolgen" mc="Standard.UseCase" uid="29028633-b551-46dd-ac1a-e4a6daa98d5e"/>
+        <COMPID name="an Seite anmelden" mc="Standard.UseCase" uid="d07fc769-713a-474c-aac2-1655fe6b7607"/>
+        <COMPID name="Profil bearbeiten" mc="Standard.UseCase" uid="dc0d15ee-1177-488a-92c9-18e1860ee9a1"/>
+        <COMPID name="Idee anschauen" mc="Standard.UseCase" uid="fd1b32c5-0363-4739-b811-5cac3347fe25"/>
+        <COMPID name="an Seite registrieren" mc="Standard.UseCase" uid="d039b912-1f8a-4faa-a2be-69fc953ee223"/>
+        <COMPID name="Impressum anschauen" mc="Standard.UseCase" uid="776f260c-8997-4711-a1df-56b5c50c24ac"/>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="overview diagram" mc="Standard.ClassDiagram" uid="dfd564ae-76a6-46aa-b692-a460791378c5"/>
+        <COMPID name="softwareprojekt Use Case diagram" mc="Standard.UseCaseDiagram" uid="e035b000-0e48-4287-b271-b5ffc7ab8316"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
