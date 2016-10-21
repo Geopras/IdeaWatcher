@@ -1,0 +1,28 @@
+<!----------------------------------- View : ideaList ---------------------------->
+<div class="v-ideaList-view">
+    <!----------------------------------- View : ideaList : tabs ---------------------------->
+    <ul class="tab">
+        <li><a href="javascript:void(0)" class="tablinks"
+               onclick="openTab(event, 'hot')" id="defaultOpen">Hot</a></li>
+        <li><a href="javascript:void(0)" class="tablinks"
+               onclick="openTab(event, 'fresh')">Fresh</a></li>
+        <li><a href="javascript:void(0)" class="tablinks"
+               onclick="openTab(event, 'trending')">Trending</a></li>
+    </ul>
+
+    <!----------------------------------- View : ideaList : tab "hot" ---------------------------->
+    <div id="hot" class="tabcontent">
+        <h3>Hier stehen die am Besten bewerteten Ideen.</h3>
+        <img src="../../dev/view/test.png" alt="" />
+    </div>
+
+    <!----------------------------------- View : ideaList : tab "fresh" ---------------------------->
+    <div id="fresh" class="tabcontent">
+        <h3>Hier stehen die neuesten Ideen.</h3>
+    </div>
+
+    <!----------------------------------- View : ideaList : tab "trending" ---------------------------->
+    <div id="trending" class="tabcontent">
+        <h3>Hier stehen aufstrebende Ideen.</h3>
+    </div>
+</div>

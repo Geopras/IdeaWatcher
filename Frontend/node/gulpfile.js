@@ -50,3 +50,23 @@ gulp.task('minicss', ['less'], function () {
     .pipe(gulp.dest('../dist/public'));
 });
 //endregion
+
+gulp.task('buildAll', ['jsTransform', 'minicss'], function(){
+    console.log('Javascript und CSS minimiert und HTML neu zusammengebaut');
+    // Auswahl der Ausgangsdateien -> Reihenfolge wichtig!
+    return gulp.src([
+        '../dev/view/html/head.html',
+        '../dev/view/html/login-view.html',
+        '../dev/view/html/ideaList-view.html',
+        '../dev/view/html/ideaDetails-view.html',
+        '../dev/view/html/ideaCreation-view.html',
+        '../dev/view/html/profile-view.html',
+        '../dev/view/html/profileEdit-view.html',
+        '../dev/view/html/impress-view.html',
+        '../dev/view/html/foot.html'
+    ])
+    //Verkettung der Dateien
+        .pipe(concat('ideaWatcher.html'))
+        // auf Festplatte schreiben
+        .pipe(gulp.dest('../dist/public'));
+});
