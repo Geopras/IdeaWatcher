@@ -1,0 +1,11 @@
+window_sizes 1600 837 104 1490 600 82
+diagrams
+  active  collaborationdiagram_ref 128002 // cd
+    1490 681 166 18 0 0
+end
+show_stereotypes
+selected collaborationdiagram_ref 128002 // cd
+open
+  usecaseview_ref 128002 // ucv
+end
+end
