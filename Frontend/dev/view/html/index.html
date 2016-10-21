@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width">
 <script language="javascript" type="text/javascript"
 	src="../javascript/mainViewLogic.js"></script>
+<script type="text/javascript">
+	// Get the element with id="defaultOpen" and click on it
+	window.onload = function() {
+		document.getElementById("defaultOpen").click();
+	}
+</script>
+	<link rel="stylesheet" href="../css/styles.css">
 	<link rel="stylesheet" href="../../../dist/private/ideaWatcher.css">
 <title>IdeaWatcher</title>
 </head>
@@ -14,12 +21,12 @@
 		<nav>
 			<ul>
 				<li><a>Logo</a>
-				<li class="js-mainMenu-btnHome">Hot</li>
-    			<li class="js-mainMenu-btnTrending">Trending</li>
-    			<li class="js-mainMenu-btnFresh">Fresh</li>
-   				<li class="js-mainMenu-btnCategories">Categories</li>
-   				<li class="js-mainMenu-btnSearch">Suche</li>
-   				<li class="js-mainMenu-btnProfile">Profil</li>
+				<li><a href="#" title="Nach Hause">Hot</a></li>
+    			<li><a href="#" title="Unser Produktsortiment">Trending</a></li>
+    			<li><a href="#" title="Das sind wir">Fresh</a></li>
+   				<li><a href="#" title="So erreichen Sie uns">Categories</a></li>
+   				<li><a href="#" title="Rechtliches">Suche</a></li>
+   				<li><a href="#" title="Rechtliches">Profil</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -69,13 +76,5 @@
 		<div class="v-profile-view"></div>
 	</div>
 <script src="./../../../dist/private/ideaWatcher.js"></script>
-<script>
-	// löse das globale ini Event aus
-	// alle Komponenten, die nach dem laden der Seite direkt etwas ausführen wollen,
-	// sollten sich unter diesem Event registrieren
-	ideaWatcher.core.MessageBroker.publish({
-			topic: 'internal/ini'
-	});
-</script>
 </body>
 </html>
