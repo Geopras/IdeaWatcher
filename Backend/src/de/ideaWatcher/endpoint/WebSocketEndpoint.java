@@ -25,6 +25,9 @@ public class WebSocketEndpoint {
 
     @OnOpen
     public void open(Session session) {
+        System.out.println("Session open");;
+        int a = 1;
+        int b = 2;
     }
 
     @OnClose
