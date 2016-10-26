@@ -17,6 +17,8 @@ function connectWebSocket() {
     }
     webSocket.onopen = function () {
         console.log('Info: WebSocket connection opened');
+        debugger
+        webSocket.send(JSON.stringify(message))
     };
     webSocket.onmessage = function (event) {
         console.log('Received: ' + event.data);
@@ -24,5 +26,5 @@ function connectWebSocket() {
     webSocket.onclose = function (event) {
         console.log('Info: WebSocket connection closed, Code: ' + event.code + (event.reason == "" ? "" : ", Reason: " + event.reason));
     }
-    //webSocket.send(JSON.stringify(message))
+
 }
