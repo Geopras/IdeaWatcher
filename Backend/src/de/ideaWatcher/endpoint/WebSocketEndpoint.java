@@ -9,7 +9,7 @@ public class WebSocketEndpoint {
 
 	// implementation of Task #10 - WebSocketConnection goes here
     @OnMessage
-    public void getMessage(Session session, String msg) {
+    public void handleMessage(Session session, String msg) {
         try {
             if (session.isOpen()) {
                 session.getBasicRemote().sendText(msg);
@@ -26,8 +26,6 @@ public class WebSocketEndpoint {
     @OnOpen
     public void open(Session session) {
         System.out.println("Session open");;
-        int a = 1;
-        int b = 2;
     }
 
     @OnClose

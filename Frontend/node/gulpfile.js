@@ -27,6 +27,7 @@ gulp.task('jsTransform', function(){
     // minifizieren
     .pipe(uglify())
     // auf Festplatte schreiben
+    .pipe(gulp.dest('../dist/private'))
     .pipe(gulp.dest('../dist/public'));
 });
 
@@ -47,12 +48,14 @@ gulp.task('minicss', ['less'], function () {
     return gulp.src('../dist/private/ideaWatcher.css')
     .pipe(cssnano())
     .pipe(rename('ideaWatcher.min.css'))
+    .pipe(gulp.dest('../dist/private'))
     .pipe(gulp.dest('../dist/public'));
 });
 //endregion
 
-gulp.task('buildAll', ['jsTransform', 'minicss'], function(){
-    console.log('Javascript und CSS minimiert und HTML neu zusammengebaut');
+//region build html
+gulp.task('buildhtml', function () {
+    console.log('Erstelle HTML-Datei...');
     // Auswahl der Ausgangsdateien -> Reihenfolge wichtig!
     return gulp.src([
         '../dev/view/html/head.html',
@@ -68,5 +71,20 @@ gulp.task('buildAll', ['jsTransform', 'minicss'], function(){
     //Verkettung der Dateien
         .pipe(concat('ideaWatcher.html'))
         // auf Festplatte schreiben
+        .pipe(gulp.dest('../dist/private'))
         .pipe(gulp.dest('../dist/public'));
+});
+//endregion
+
+//region deploy resources
+gulp.task('deployres', function () {
+    console.log('Kopiere Ressourcen in Auslieferungspfad...');
+    return gulp.src('../dev/view/res/**/*')
+        .pipe(gulp.dest('../dist/private/resources'))
+        .pipe(gulp.dest('../dist/public/resources'));
+});
+//endregion
+
+gulp.task('buildAll', ['jsTransform', 'minicss', 'buildhtml', 'deployres'], function(){
+    console.log('Javascript und CSS minimiert, HTML neu zusammengebaut und Ressourcen aktualisiert...');
 });
