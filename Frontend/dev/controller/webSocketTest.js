@@ -13,7 +13,7 @@ var message = {
 
 function connectWebSocket() {
     if (webSocket == null) {
-        webSocket = new WebSocket('ws://localhost:8080/wsEndpoint');
+        webSocket = new WebSocket('ws://localhost:8080/IdeaWatcher/wsEndpoint');
     }
     webSocket.onopen = function () {
         console.log('Info: WebSocket connection opened');
