@@ -22,7 +22,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function UICMainMenu()
 
     function handleButtonNavigation(clickEvent){
 
-        console.log('htmlBtnHot geklickt');
+        console.log('htmlBtnHome geklickt');
         ideaWatcher.core.Navigator.switchView({
             viewId: 'mainView',
             url: 'myMainView'
