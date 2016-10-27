@@ -1,5 +1,11 @@
     </div>
     <!--<!script src="./ideaWatcher.min.js"></script>-->
     <script src="./ideaWatcher.js"></script>
+    <script>
+        var evIni = {
+            topic:'internal/ini'
+        };
+        ideaWatcher.core.MessageBroker.publish(evIni);
+    </script>
 </body>
 </html>
