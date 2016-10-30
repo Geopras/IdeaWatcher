@@ -1,6 +1,6 @@
         <!----------------------------------- View : profileEdit ----------------------------->
         <div class="v-profileEdit-view">
-            <h1>Profile</h1>
+            <h1 id="profEdit_profile_header">Profile</h1>
             <div class="profileEdit-image">
                 <!--Font Awesome User Icon-->
                 <img src="./resources/img/user.jpg" alt="profile-image" />
@@ -20,24 +20,25 @@
                             <input id="mail" type="email" placeholder="email@example.org" required /></p>
                     </div>
 
-                    <p><input id="mail_public" type="checkbox" /> <label for="mail_public">allow people to contact me (Email address is public)</label></p>
+                    <p><input id="mail_public" type="checkbox" />
+                       <label for="mail_public" id="profEdit_mail-public_label">allow people to contact me (Email address is public)</label></p>
 
-                    <p><label for="sname">Surname</label><br>
+                    <p><label for="sname" id="profEdit_surname_label">Surname</label><br>
                         <input id="sname" type="text" /></p>
 
-                    <p><label for="fname">First Name</label><br>
+                    <p><label for="fname" id="profEdit_firstname_label">First Name</label><br>
                         <input id="fname" type="text" /></p>
 
-                    <p><label for="gender">Gender</label><br>
+                    <p><label for="gender" id="profEdit_gender_label">Gender</label><br>
                         <select id="gender">
                             <option>Female</option>
                             <option>Male</option>
                         </select></p>
 
-                    <p><label for="country">Country</label><br>
+                    <p><label for="country" id="profEdit_country_label">Country</label><br>
                         <select id="country"></select></p>
 
-                    <p><input type="submit" value="Submit"></p>
+                    <p><input type="submit" value="Submit" id="profEdit_submit_button"></p>
                 </form>
             </div>
         </div>
