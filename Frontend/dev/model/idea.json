@@ -1,0 +1,140 @@
+// Gedanken:
+// ich würde es so folgendermaßen aufziehen:
+// - für verschachtelte Daten werden alle Infos mit gespeichert, die in einer View mit angezeigt werden
+// (also z.B. Idee => Ideengeber(User) - nur UserID, Username und Email werden verschachtelt unter der Idee mit gespeichert,
+// alle weiteren Infos sind an dieser Stelle Ballast. Die Daten sind für die schnelle Anzeige ausreichend und ein
+// Link auf die User-Profil-Seite (ich weiß, haben wir nicht) könnte mit einer neuen WebSocket Abfrage die Daten
+// aus dem User-Dokument laden
+
+// in einer Idee müssen die IDs der Personen, die sie geliket und gefollowed sind gespeichert werden,
+// damit diese Personen sie auch wieder unliken und unfollowen können (und nicht doppelt bewerten)
+{
+  "ideas": [
+    {
+      "idea_id": "",
+      "ideaname": "Neue Idee",
+      "text": "",
+      "category": "",
+      "idea_creator":{
+        "user_id": "",
+        "username": "",
+        "email": "",
+        "mail_public_available": true
+      },
+      "publish_date": "",
+      "hot_rank": 0,
+      "trending_rank": 0,
+      "fresh_rank": 0,
+      "likes": [],
+      "number_likes": 0,
+      "follower": [],
+      "number_follwer": 0,
+      "comments": [
+        {
+          "user_id": "",
+          "username": "",
+          "picture_url": "",
+          "date": "",
+          "text": ""
+        }
+      ],
+      "number_comments": 0
+    },
+    {
+      "idea_id": "fa5dc9be-12e6-4eab-bc29-f6a70c766db8",
+      "ideaname": "Solarbetriebener Currywurstschneider",
+      "text": "Der solarbetriebene Currywurstschneider ist das ultimative Gadget für jedes Picknick.",
+      "category": "Gadget",
+      "idea_creator":{
+        "user_id": "fa18b86a-356f-4651-8d3a-e0a3475ec604",
+        "username": "testuser",
+        "email": "user@test.com",
+        "mail_public_available": true
+      },
+      "publish_date": "2016-10-30T18:25:43.511Z",
+      "hot_rank": 1,
+      "trending_rank": 2,
+      "fresh_rank": 2,
+      "likes": [
+        {
+          "user_id": "ccd2d929-f4a5-4a07-be8d-f52624bb668e",
+          "username": "RainerZufall"
+        },
+        {
+          "user_id": "5bd65e6a-c37b-4f43-9a0b-befe6110eda9",
+          "username": "PeterLustig"
+        },
+        {
+          "user_id": "e7b342d6-3747-4656-b97a-b9a6098293a8",
+          "username": "DieWildeAngie"
+        }
+      ],
+      "number_likes": 3,
+      "follower": [
+        {
+          "user_id": "ccd2d929-f4a5-4a07-be8d-f52624bb668e",
+          "username": "RainerZufall"
+        },
+        {
+          "user_id": "5bd65e6a-c37b-4f43-9a0b-befe6110eda9",
+          "username": "PeterLustig"
+        }
+      ],
+      "number_follwer": 2,
+      "comments": [
+        {
+          "user_id": "e7b342d6-3747-4656-b97a-b9a6098293a8",
+          "username": "DieWildeAngie",
+          "picture_url": "",
+          "date": "2016-10-30T19:05:01.511Z",
+          "text": "Sehr sehr gute Idee. Das brauche ich unbedingt für den Bundestag, wenn der Horst wieder so lange Quatsch erzählt."
+        }
+      ],
+      "number_comments": 1
+    },
+    {
+      "idea_id": "fa5dc9be-12e6-4eab-bc29-f6a70c766db8",
+      "ideaname": "Atombetriebener Rasenmäher",
+      "text": "Kennen Sie das auch: Ständigt stirbt eines Ihrer Kinder, weil es mit dem Rasenmäher über das Stromkabel fährt? Das muss nicht sein. Mit dem atombetriebenen Rasenmäher gehören diese Probleme der Vergangenheit an.",
+      "category": "Garten",
+      "idea_creator":{
+        "user_id": "5bd65e6a-c37b-4f43-9a0b-befe6110eda9",
+        "username": "LionToothPeter",
+        "email": "peter@zdf.de",
+        "mail_public_available": true
+      },
+      "publish_date": "2016-10-31T23:40:55.511Z",
+      "hot_rank": 2,
+      "trending_rank": 1,
+      "fresh_rank": 1,
+      "likes": [
+        {
+          "user_id": "e7b342d6-3747-4656-b97a-b9a6098293a8",
+          "username": "DieWildeAngie"
+        },
+        {
+          "user_id": "fa18b86a-356f-4651-8d3a-e0a3475ec604",
+          "username": "testuser"
+        }
+      ],
+      "number_likes": 2,
+      "follower": [
+        {
+          "user_id": "fa18b86a-356f-4651-8d3a-e0a3475ec604",
+          "username": "testuser"
+        }
+      ],
+      "number_follwer": 1,
+      "comments": [
+        {
+          "user_id": "e7b342d6-3747-4656-b97a-b9a6098293a8",
+          "username": "DieWildeAngie",
+          "picture_url": "",
+          "date": "2016-10-31T23:50:01.511Z",
+          "text": "Ja, das ist mir auch schon passiert. Offiziell habe ich ja keine Kinder... (mehr)..."
+        }
+      ],
+      "number_comments": 1
+    }
+  ]
+}
