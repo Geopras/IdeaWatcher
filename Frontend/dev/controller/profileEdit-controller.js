@@ -2,7 +2,7 @@ ideaWatcher.controller.ProfileEdit = ideaWatcher.controller.ProfileEdit || (func
 
         var cbShowView = null;
         var evSwitchView = {
-            topic: 'switchView/login',
+            topic: 'switchView/profileEdit',
             cbFunction: cbSwitchView
         };
 
