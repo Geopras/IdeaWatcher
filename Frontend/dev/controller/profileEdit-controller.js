@@ -29,7 +29,7 @@ ideaWatcher.controller.ProfileEdit = ideaWatcher.controller.ProfileEdit || (func
         return {
             // hier kann die View eine Methode(ui-Connector) registrieren, die gerufen wird,
             // wenn die View ein/ausgeblendet werden soll
-            registerShowView: pubRegisterShowView,
+            registerShowView: pubRegisterShowView
         };
 
     })();
