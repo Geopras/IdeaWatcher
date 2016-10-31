@@ -41,6 +41,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function UICMainMenu()
         // muss dann in die entsprechende View ausgelagert werden, nur für testzwecke
         htmlView.style.display = 'none';
         document.querySelector('.v-signUp-view').style.display = 'none';
+        document.querySelector('.v-mainMenu-view').style.display = 'none';
 
         ideaWatcher.core.Navigator.switchView({
             viewId: 'login',
