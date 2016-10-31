@@ -16,6 +16,7 @@ gulp.task('jsTransform', function(){
         '../dev/core/messageBroker.js',
         '../dev/core/navigator.js',
         '../dev/core/websocketConnector.js',
+        '../dev/core/localizer.js',
         '../dev/controller/**/*',
         '../dev/view/javascript/**/*'
     ])
