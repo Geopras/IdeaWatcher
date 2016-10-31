@@ -22,7 +22,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function UICMainMenu()
         htmlBtnHot = document.querySelector('.js-mainMenu-btnHome');
         htmlBtnLogin = document.querySelector('.js-mainMenu-btnLogin');
         htmlBtnHot.addEventListener('click',handleButtonNavigation);
-        htmlBtnLogin.addEventListener('click',handleButtonNavigation);
+        htmlBtnLogin.addEventListener('click',handleButtonNavigationLogin);
     }
 
     function handleButtonNavigation(clickEvent){
@@ -34,7 +34,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function UICMainMenu()
         });
     }
 
-    function handleButtonNavigation(clickEvent){
+    function handleButtonNavigationLogin(clickEvent){
 
         console.log('htmlBtnLogin geklickt');
 
