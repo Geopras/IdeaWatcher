@@ -39,7 +39,7 @@ ideaWatcher.controller.Login = ideaWatcher.controller.Login || (function CLogin(
     //endregion
 
     //region build: RequestLogin
-    function buildRequestLogin(userName,password)
+    function buildRequestLogin()
     {
         // das könnte man in das Model auslagern... sinnvoll?
         var exLoginRequest = {
