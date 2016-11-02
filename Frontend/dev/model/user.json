@@ -1,0 +1,103 @@
+// Frage: Die Anzahlen erstellter und gefolgter Ideen wird nirgendwo ausgegeben.
+// Sollen sie trotzdem gespeichert und berechnet werden, damit sie zukünftig angezeigt werden könnte?
+// Dann hätte man einen einheitlichen WorkFlow mit den Ideen, wo man es ja brauch, aber halt ein wenig
+// Mehraufwand.
+{
+  "users": [
+    {
+      "user_id": "",
+      "username": "Neuer Benutzer",
+      "email": "",
+      "mail_public_available": true,
+      "surname": "",
+      "firstname": "",
+      "gender": "",
+      "country": "",
+      "picture_url": "",
+      "created_ideas": [],
+      "number_created": 0,
+      "followed_ideas": [],
+      "number_followed": 0
+    },
+    {
+      "user_id": "fa18b86a-356f-4651-8d3a-e0a3475ec604",
+      "username": "testuser",
+      "email": "user@test.com",
+      "mail_public_available": true,
+      "surname": "Wurst",
+      "firstname": "Hans",
+      "gender": "male",
+      "country": "germany",
+      "picture_url": "",
+      "created_ideas": [
+        {
+          "idea_id": "fa5dc9be-12e6-4eab-bc29-f6a70c766db8",
+          "ideaname": "Solarbetriebener Currywurstschneider"
+        }
+      ],
+      "number_created": 1,
+      "followed_ideas": [
+        {
+          "idea_id": "fa5dc9be-12e6-4eab-bc29-f6a70c766db8",
+          "ideaname": "Atombetriebener Rasenmäher"
+        }
+      ],
+      "number_followed": 1
+    },
+    {
+      "user_id": "e7b342d6-3747-4656-b97a-b9a6098293a8",
+      "username": "DieWildeAngie",
+      "email": "angie@bundestag.de",
+      "mail_public_available": false,
+      "surname": "Merkel",
+      "firstname": "Angela",
+      "gender": "female",
+      "country": "germany",
+      "picture_url": "",
+      "created_ideas": [],
+      "number_created": 0,
+      "followed_ideas": [],
+      "number_followed": 0
+    },
+    {
+      "user_id": "ccd2d929-f4a5-4a07-be8d-f52624bb668e",
+      "username": "RainerZufall",
+      "email": "rainer69@aol.com",
+      "mail_public_available": true,
+      "surname": "Zufall",
+      "firstname": "Rainer",
+      "gender": "male",
+      "country": "austria",
+      "picture_url": "",
+      "created_ideas": [],
+      "number_created": 0,
+      "followed_ideas": [
+        {
+          "idea_id": "fa5dc9be-12e6-4eab-bc29-f6a70c766db8",
+          "ideaname": "Solarbetriebener Currywurstschneider"
+        }
+      ],
+      "number_followed": 1
+    },
+    {
+      "user_id": "5bd65e6a-c37b-4f43-9a0b-befe6110eda9",
+      "username": "LionToothPeter",
+      "email": "peter@zdf.de",
+      "mail_public_available": true,
+      "surname": "Lustig",
+      "firstname": "Peter",
+      "gender": "male",
+      "country": "germany",
+      "picture_url": "",
+      "created_ideas": [],
+      "number_created": 0,
+      "followed_ideas": [
+        {
+          "idea_id": "fa5dc9be-12e6-4eab-bc29-f6a70c766db8",
+          "ideaname": "Solarbetriebener Currywurstschneider"
+        }
+      ],
+      "number_followed": 1
+    }
+  ]
+}

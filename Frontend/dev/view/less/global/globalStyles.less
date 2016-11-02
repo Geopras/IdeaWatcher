@@ -16,12 +16,16 @@ html, body {
 }
 .views-container{
   padding-top: 80px;
+  position: relative;
+  margin: auto; // sorgt dafür, dass der Container zentriert ist.
+  min-width: 600px;
+  max-width: 900px;
 }
 
 /* style the labels of mandatory input fields */
 .required-input label::after {
   content: " *";
-  color: red;
+  color: @mandatoryAsteriskColor;
 }
 .required-input label {
   font-weight: bold;
@@ -31,19 +35,16 @@ html, body {
 * beautiful input elements
 */
 
-input[type=text], input[type=email], select {
-  width: 100%;
+input[type=text], input[type=email], input[type=password], select {
   padding: 12px 20px;
   margin: 8px 0;
-  display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 }
 
-input[type=submit], input[type=button] {
-  width: 100%;
-  background-color: @interactionColor1;
+input[type=submit], input[type=button], button {
+  background-color: @interactionColor;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -53,7 +54,7 @@ input[type=submit], input[type=button] {
 }
 
 input[type=submit]:hover, input[type=button]:hover {
-  background-color: @interactionColor2;
+  background-color: @buttonHoverColor;
 }
 
 /*
@@ -104,7 +105,7 @@ input[type=submit]:hover, input[type=button]:hover {
   top: 3px; left: 4px;
   font-size: 18px;
   line-height: 0.8;
-  color: @interactionColor1;
+  color: @interactionColor;
   transition: all .2s;
 }
 /* checked mark aspect changes */
@@ -131,5 +132,5 @@ input[type=submit]:hover, input[type=button]:hover {
 }
 /* hover style just for information */
 label:hover:before {
-  border: 1px solid @interactionColor1!important;
+  border: 1px solid @interactionColor;
 }
