@@ -8,6 +8,11 @@ import de.ideaWatcher.webApi.workflows.LoginWorkflow;
  */
 public class LoginCommand<JsonObject> implements ICommand<JsonObject> {
 
+    /**
+     * Command mit Login-Daten ausfuehren
+     * @param data {JsonObject} Login-Daten
+     * @return {JsonObject} Ergebnis des Workflow als Antwort
+     */
     @Override
     public JsonObject apply(JsonObject data) {
         LoginWorkflow workflow = new LoginWorkflow();
