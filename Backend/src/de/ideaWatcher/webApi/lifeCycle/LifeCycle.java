@@ -1,4 +1,4 @@
-package de.ideaWatcher.lifeCycle;
+package de.ideaWatcher.webApi.lifeCycle;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

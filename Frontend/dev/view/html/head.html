@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="./ideaWatcher.css"/>
     <title>IdeaWatcher</title>
 </head>
-<body onload="javascript:connectWebSocket()">
+<body onload="ideaWatcher.core.WebSocketConnector.connectToServer('ws://localhost:8080/IdeaWatcher/wsEndpoint')">
     <!---------------------------------- Header --------------------------------->
     <header class="v-mainMenu-view">
         <nav>
