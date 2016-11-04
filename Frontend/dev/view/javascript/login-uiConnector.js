@@ -7,11 +7,13 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
         cbFunction: cbIni
     };
 
-    var htmlFormLogin = null;
-    var htmlTxtUsername = null;
-    var htmlTxtPassword = null;
-    var htmlBtnLogin = null;
-    // var htmlVerificationLabel = null;
+    var htmlForm = null;
+    var htmlUsernameInput = null;
+    var htmlUsernameInputLabel = null;
+    var htmlPasswordInput = null;
+    var htmlPasswordInputLabel = null;
+    var htmlSubmitButton = null;
+    var htmlForgotPasswordButton = null;
     var htmlView = null;
     var textLogin = {
         fail: 'Benutzername oder Passwort falsch',
@@ -29,12 +31,14 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
         console.log('Initialisiere UIConnector Login');
 
         //region assign html elements
-        htmlFormLogin = document.querySelector('.js-Login-form-login');
-        htmlTxtUsername = document.querySelector('.js-login-txt-username');
-        htmlTxtPassword = document.querySelector('.js-login-txt-password');
-        htmlBtnLogin = document.querySelector('.js-login-btn-login');
-        // htmlVerificationLabel = document.querySelector('.js-login-desk-lbl-verificationError');
-        htmlView = document.querySelector('.v-login-view');
+        htmlView = document.querySelector('.login_view');
+        htmlForm = document.querySelector('.login_form');
+        htmlUsernameInput = document.querySelector('.login_userName_input');
+        htmlUsernameInputLabel = document.querySelector('login_userNameInput_label');
+        htmlPasswordInput = document.querySelector('.login_password_input');
+        htmlPasswordInputLabel = document.querySelector('profileEdit_password_label');
+        htmlSubmitButton = document.querySelector('.login_submit_button');
+        htmlForgotPasswordButton = document.querySelector('.login_forgotPassword_button');
         //endregion
 
         //region register Callbacks
@@ -43,17 +47,17 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
         //endregion
 
         // region override onSubmit to prevent page reload
-        htmlFormLogin.onsubmit = function onSubmit(event) {
+        htmlForm.onsubmit = function onSubmit(event) {
             event.preventDefault();
         };
         // endregion
 
         //region LoginButton: Eventlistener(click)
-        htmlBtnLogin.addEventListener('click', function clickLogin() {
+        htmlSubmitButton.addEventListener('click', function clickLogin() {
 
             var exObj = {
-                userName: htmlTxtUsername.value,
-                password: htmlTxtPassword.value
+                userName: htmlUsernameInput.value,
+                password: htmlPasswordInput.value
             };
             console.log(exObj);
 
@@ -77,6 +81,42 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
     }
     //endregion
 
+    //region localizeView()
+    function localizeView() {
+
+        var language = ideaWatcher.core.Localizer.getLanguage();
+
+        console.log("Starte Lokalisierung der Login-View ...");
+
+        htmlViewHeader.textContent =
+            ideaWatcher.core.Localizer.ProfileEdit[language].profile;
+        htmlUserNameLabel.textContent =
+            ideaWatcher.core.Localizer.ProfileEdit[language].userName;
+        htmlEmailLabel.textContent =
+            ideaWatcher.core.Localizer.ProfileEdit[language].email;
+        htmlEmailCheckLabel.textContent =
+            ideaWatcher.core.Localizer.ProfileEdit[language].mail_public_available;
+        htmlSurnameLabel.textContent =
+            ideaWatcher.core.Localizer.ProfileEdit[language].surname;
+        htmlFirstNameLabel.textContent =
+            ideaWatcher.core.Localizer.ProfileEdit[language].firstName;
+        htmlGenderLabel.textContent =
+            ideaWatcher.core.Localizer.ProfileEdit[language].gender;
+        htmlCountryLabel.textContent =
+            ideaWatcher.core.Localizer.ProfileEdit[language].country;
+        htmlSubmitButton.setAttribute("value", ideaWatcher.core.Localizer
+            .ProfileEdit[language].submit);
+        htmlBrowseImageButton.setAttribute("value", ideaWatcher.core.Localizer
+            .ProfileEdit[language].browse);
+
+        console.log("Lokalisierung ProfileEditView abgeschlossen.")
+    }
+
+    // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
+    return {
+
+    };
+    //endregion
 
     return {
 

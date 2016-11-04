@@ -1,5 +1,6 @@
 ideaWatcher.core.Localizer = ideaWatcher.core.Localizer || (function CLocalizer() {
 
+        var currentLanguage = "en_GB";
         var i18n = null;
 
         // Testdaten
@@ -37,67 +38,71 @@ ideaWatcher.core.Localizer = ideaWatcher.core.Localizer || (function CLocalizer(
         };
 
         /*
-        // JSON-Definition (nicht mehr verwendet, weil WebSocket direkt JS-Objekte zurück gibt)
-        // trotzdem aufheben für Backend
+         // JSON-Definition (nicht mehr verwendet, weil WebSocket direkt JS-Objekte zurück gibt)
+         // trotzdem aufheben für Backend
 
-        var en_GB = '{"username":"Username",' +
-            '"email":"Email",' +
-            '"mail_public_available":"allow people to contact me (Email address is public)",' +
-            '"surname":"Surname",' +
-            '"firstname":"First Name",' +
-            '"gender":"Gender",' +
-            '"country":"Country",' +
-            '"submit":"Submit",' +
-            '"profile":"Profile",' +
-            '"browse":"Browse ..."' +
-            '}';
+         var en_GB = '{"username":"Username",' +
+         '"email":"Email",' +
+         '"mail_public_available":"allow people to contact me (Email address is public)",' +
+         '"surname":"Surname",' +
+         '"firstname":"First Name",' +
+         '"gender":"Gender",' +
+         '"country":"Country",' +
+         '"submit":"Submit",' +
+         '"profile":"Profile",' +
+         '"browse":"Browse ..."' +
+         '}';
 
-        var de_DE = '{"username":"Benutzername",' +
-            '"email":"E-Mail",' +
-            '"mail_public_available":"Erlaube anderen mich zu kontaktieren (E-Mail Adresse ist öffentlich)",' +
-            '"surname":"Nachname",' +
-            '"firstname":"Vorname",' +
-            '"gender":"Geschlecht",' +
-            '"country":"Land",' +
-            '"submit":"Absenden",' +
-            '"profile":"Profil",' +
-            '"browse":"Durchsuchen ..."' +
-            '}';
-            */
+         var de_DE = '{"username":"Benutzername",' +
+         '"email":"E-Mail",' +
+         '"mail_public_available":"Erlaube anderen mich zu kontaktieren (E-Mail Adresse ist öffentlich)",' +
+         '"surname":"Nachname",' +
+         '"firstname":"Vorname",' +
+         '"gender":"Geschlecht",' +
+         '"country":"Land",' +
+         '"submit":"Absenden",' +
+         '"profile":"Profil",' +
+         '"browse":"Durchsuchen ..."' +
+         '}';
+         */
 
-        function pubSetLanguage(lang){
+        function pubSetLanguage(language) {
 
-            console.log("Localizer: wähle Sprache aus");
+            currentLanguage = language;
+            console.log("Sprache geändert in: " + language);
 
-            switch(lang) {
-                case "en_GB":
-                    //i18n = JSON.parse(en_GB);
-                    i18n = en_GB;
-                    console.log("Sprache: englisch");
-                    break;
-                case "de_DE":
-                    //i18n = JSON.parse(de_DE);
-                    i18n = de_DE;
-                    console.log("Sprache: deutsch");
-                    break;
-                default:
-                    //i18n = JSON.parse(en_GB);
-                    i18n = en_GB;
-                    console.log("Sprache: englisch (default)");
-            }
+            //
+            // console.log("Localizer: wähle Sprache aus");
+            //
+            // switch (lang) {
+            //     case "en_GB":
+            //         //i18n = JSON.parse(en_GB);
+            //         i18n = en_GB;
+            //         console.log("Sprache: Englisch");
+            //         break;
+            //     case "de_DE":
+            //         //i18n = JSON.parse(de_DE);
+            //         i18n = de_DE;
+            //         console.log("Sprache: Deutsch");
+            //         break;
+            //     default:
+            //         //i18n = JSON.parse(en_GB);
+            //         i18n = en_GB;
+            //         console.log("Sprache: Englisch (default)");
+            // }
 
         }
 
-        function pubGetLanguage(){
+        function pubGetLanguage() {
 
-            if (i18n == null){
-                pubSetLanguage(null);
-            }
+            // if (i18n == null) {
+            //     pubSetLanguage(null);
+            // }
 
-            return i18n;
+            return currentLanguage;
         }
 
-        function pubLocalizeViews(lang){
+        function pubLocalizeViews(lang) {
 
             pubSetLanguage(lang);
 

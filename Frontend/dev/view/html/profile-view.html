@@ -1,10 +1,11 @@
         <!----------------------------------- View : profile --------------------------------->
-        <div class="v-profile-view">
+        <div class="profile_view">
             <!----------------------------------- View : userProfile : tabs --------------------------->
             
             <ul class="tab">
                 <li><a href="javascript:void(0)" class="tablinks"
-                       onclick="openTab(event, 'hot')" id="defaultOpen">Meine Ideen</a></li>
+                       onclick="openTab(event, 'hot')"
+                       id="profile_defaultOpen_tabElement">Meine Ideen</a></li>
                 <li><a href="javascript:void(0)" class="tablinks"
                        onclick="openTab(event, 'fresh')">Ideen, denen ich folge</a></li>
                 <li><a href="javascript:void(0)" class="tablinks"
@@ -12,15 +13,16 @@
             </ul>
             
             <!----------------------------------- View : userProfile : tab "hot" --------------------------->
-            <div id="hot" class="tabcontent">
+            <div id="profile_contentHot_tab" class="profile_contentHot_tab">
                 <h3>Hier stehen meine Ideen.</h3>
                 <img src="./resources/img/test.png" alt="" />
             </div>
 	
             <!----------------------------------- View : userProfile : tab "fresh" --------------------------->
-            <div id="fresh" class="tabcontent">
+            <div id="profile_contentFresh_tab" class="profile_contentFresh_tab">
                 <h3>Hier stehen die Ideen, denen ich folge.</h3>
             </div>
 
             <!----------------------------------- View : userProfile : tab "trending" --------------------------->
-            <div id="trending" class="tabcontent">
+            <div id="profile_contentTrending_tab"
+                 class="profile_contentTrending_tab">

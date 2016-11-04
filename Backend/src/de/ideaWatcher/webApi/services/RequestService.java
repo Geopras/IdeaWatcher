@@ -22,14 +22,16 @@ public class RequestService {
      * Der Key ist das Ziel, das mit der Request-Eigenschaft "destination"
      * angegeben wird.
      */
+    public void initialize() {
+        initializeCommandMap();
+    }
+
     private void initializeCommandMap() {
         this.workflowMapping = new CommandMap();
         this.workflowMapping.addCommand("SLogin/validate", new LoginCommand());
     }
 
-    public void initialize() {
-        initializeCommandMap();
-    }
+
 
     /**
      * Behandelt einen JSON-String-Request vom Frontend ueber einen zugehoerigen

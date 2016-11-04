@@ -10,6 +10,18 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         var htmlFormProfileEdit = null;
         var htmlView = null;
 
+        //region lade zu internationalisierende HTML-Elemente
+        var htmlViewHeader = null;
+        var htmlUserNameLabel = null;
+        var htmlEmailLabel = null;
+        var htmlEmailCheckLabel = null;
+        var htmlSurnameLabel = null;
+        var htmlFirstNameLabel = null;
+        var htmlGenderLabel = null;
+        var htmlCountryLabel = null;
+        var htmlSubmitButton = null;
+        var htmlBrowseImageButton = null;
+
         //endregion
 
         //region subscribe to events
@@ -21,12 +33,19 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         {
             console.log('Initialisiere UIConnector ProfileEdit');
 
-            // lokalisiere die View anhand der global definierten Sprache
-            pubLocalizeView(ideaWatcher.core.Localizer.getLanguage());
-
             //region assign html elements
-            htmlFormProfileEdit = document.querySelector('.js-profileEdit-form-profile');
-            htmlView = document.querySelector('.v-profileEdit-view');
+            htmlFormProfileEdit = document.querySelector('.profileEdit_form');
+            htmlView = document.querySelector('.profileEdit_view');
+            htmlViewHeader = document.getElementById('profileEdit_header');
+            htmlUserNameLabel = document.getElementById('userNameInput_label');
+            htmlEmailLabel = document.getElementById('emailInput_label');
+            htmlEmailCheckLabel = document.getElementById('profileEdit_emailCheckbox_label');
+            htmlSurnameLabel = document.getElementById("profileEdit_surnameInput_label");
+            htmlFirstNameLabel = document.getElementById("profileEdit_firstNameInput_label");
+            htmlGenderLabel = document.getElementById("profileEdit_genderSelect_label");
+            htmlCountryLabel = document.getElementById("profileEdit_countrySelect_label");
+            htmlSubmitButton = document.getElementById("profileEdit_submit_button");
+            htmlBrowseImageButton = document.getElementById("profileEdit_browseImage_button");
             //endregion
 
             //region register Callbacks
@@ -40,6 +59,9 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             };
             // endregion
 
+            // lokalisiere die View anhand der global definierten Sprache
+            localizeView();
+
         }
         //endregion
 
@@ -48,6 +70,7 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         {
             if(obj.shouldShow)
             {
+                localizeView();
                 htmlView.style.display = 'block';
             }
             else
@@ -57,23 +80,33 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         }
         //endregion
 
-        function pubLocalizeView(i18n) {
+        //region localizeView()
+        function localizeView() {
+
+            var language = ideaWatcher.core.Localizer.getLanguage();
 
             console.log("Starte Lokalisierung der ProfileEdit-View ...");
 
-
-            document.getElementById("profEdit_profile_header").textContent = i18n.vProfileEdit.profile;
-            document.getElementById("profEdit_uname_label").textContent = i18n.vProfileEdit.username;
-            document.getElementById("profEdit_email_label").textContent = i18n.vProfileEdit.email;
-            document.getElementById("profEdit_mail-public_label").textContent = i18n.vProfileEdit.mail_public_available;
-            document.getElementById("profEdit_surname_label").textContent = i18n.vProfileEdit.surname;
-            document.getElementById("profEdit_firstname_label").textContent = i18n.vProfileEdit.firstname;
-            document.getElementById("profEdit_gender_label").textContent = i18n.vProfileEdit.gender;
-            document.getElementById("profEdit_country_label").textContent = i18n.vProfileEdit.country;
-
-            document.getElementById("profEdit_submit_button").setAttribute("value", i18n.vProfileEdit.submit);
-            document.getElementById("profileEdit-browseImageButton").setAttribute("value", i18n.vProfileEdit.browse);
-
+            htmlViewHeader.textContent =
+                ideaWatcher.core.Localizer.ProfileEdit[language].profile;
+            htmlUserNameLabel.textContent =
+                ideaWatcher.core.Localizer.ProfileEdit[language].userName;
+            htmlEmailLabel.textContent =
+                ideaWatcher.core.Localizer.ProfileEdit[language].email;
+            htmlEmailCheckLabel.textContent =
+                ideaWatcher.core.Localizer.ProfileEdit[language].mail_public_available;
+            htmlSurnameLabel.textContent =
+                ideaWatcher.core.Localizer.ProfileEdit[language].surname;
+            htmlFirstNameLabel.textContent =
+                ideaWatcher.core.Localizer.ProfileEdit[language].firstName;
+            htmlGenderLabel.textContent =
+                ideaWatcher.core.Localizer.ProfileEdit[language].gender;
+            htmlCountryLabel.textContent =
+                ideaWatcher.core.Localizer.ProfileEdit[language].country;
+            htmlSubmitButton.setAttribute("value", ideaWatcher.core.Localizer
+                    .ProfileEdit[language].submit);
+            htmlBrowseImageButton.setAttribute("value", ideaWatcher.core.Localizer
+                    .ProfileEdit[language].browse);
 
             console.log("Lokalisierung ProfileEditView abgeschlossen.")
         }
@@ -81,7 +114,7 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
         return {
 
-            localizeView: pubLocalizeView
         };
+        //endregion
 
     })();
