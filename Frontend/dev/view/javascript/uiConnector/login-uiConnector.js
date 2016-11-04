@@ -7,14 +7,16 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
         cbFunction: cbIni
     };
 
+    var htmlView = null;
     var htmlForm = null;
+    var htmlHeader = null;
     var htmlUsernameInput = null;
     var htmlUsernameInputLabel = null;
     var htmlPasswordInput = null;
     var htmlPasswordInputLabel = null;
     var htmlSubmitButton = null;
     var htmlForgotPasswordButton = null;
-    var htmlView = null;
+
     var textLogin = {
         fail: 'Benutzername oder Passwort falsch',
         duplicate: 'Sie sind bereits angemeldet, bitte zunächst abmelden'
@@ -33,6 +35,7 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
         //region assign html elements
         htmlView = document.querySelector('.login_view');
         htmlForm = document.querySelector('.login_form');
+        htmlHeader = document.getElementById('login_header');
         htmlUsernameInput = document.querySelector('.login_userName_input');
         htmlUsernameInputLabel = document.querySelector('login_userNameInput_label');
         htmlPasswordInput = document.querySelector('.login_password_input');
@@ -72,6 +75,7 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
     {
         if(obj.shouldShow)
         {
+            localizeView();
             htmlView.style.display = 'block';
         }
         else
@@ -88,28 +92,18 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
 
         console.log("Starte Lokalisierung der Login-View ...");
 
-        htmlViewHeader.textContent =
-            ideaWatcher.core.Localizer.ProfileEdit[language].profile;
-        htmlUserNameLabel.textContent =
-            ideaWatcher.core.Localizer.ProfileEdit[language].userName;
-        htmlEmailLabel.textContent =
-            ideaWatcher.core.Localizer.ProfileEdit[language].email;
-        htmlEmailCheckLabel.textContent =
-            ideaWatcher.core.Localizer.ProfileEdit[language].mail_public_available;
-        htmlSurnameLabel.textContent =
-            ideaWatcher.core.Localizer.ProfileEdit[language].surname;
-        htmlFirstNameLabel.textContent =
-            ideaWatcher.core.Localizer.ProfileEdit[language].firstName;
-        htmlGenderLabel.textContent =
-            ideaWatcher.core.Localizer.ProfileEdit[language].gender;
-        htmlCountryLabel.textContent =
-            ideaWatcher.core.Localizer.ProfileEdit[language].country;
+        htmlHeader.textContent =
+            ideaWatcher.core.Localizer.login[language].header;
+        htmlUsernameInputLabel.textContent =
+            ideaWatcher.core.Localizer.login[language].userName;
+        htmlPasswordInputLabel.textContent =
+            ideaWatcher.core.Localizer.login[language].password;
         htmlSubmitButton.setAttribute("value", ideaWatcher.core.Localizer
-            .ProfileEdit[language].submit);
-        htmlBrowseImageButton.setAttribute("value", ideaWatcher.core.Localizer
-            .ProfileEdit[language].browse);
+            .login[language].submit);
+        htmlForgotPasswordButton.setAttribute("value", ideaWatcher.core.Localizer
+            .login[language].browse);
 
-        console.log("Lokalisierung ProfileEditView abgeschlossen.")
+        console.log("Lokalisierung Login-View abgeschlossen.")
     }
 
     // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
@@ -117,9 +111,5 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
 
     };
     //endregion
-
-    return {
-
-    };
 
 })();
