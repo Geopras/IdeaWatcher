@@ -1,0 +1,26 @@
+format 76
+
+deploymentnodecanvas 128002 deploymentnode_ref 128002 // :Client
+  xyzwh 245 151 2000 50 32
+end
+deploymentnodecanvas 128130 deploymentnode_ref 128130 // :ApplicationServer
+  xyzwh 422 152 2000 110 32
+end
+deploymentnodecanvas 128386 deploymentnode_ref 128258 // :Webserver
+  xyzwh 404 232 2000 136 32
+end
+artifactcanvas 128514 artifact_ref 128002 // ideaWatcher.war
+  xyz 602 207 2000
+end
+deploymentnodecanvas 129282 deploymentnode_ref 128386 // :DBMS
+  xyzwh 666 152 2000 53 32
+end
+line 128258 ----
+  from ref 128002 z 2001 label "WebSocket" xyz 347.5 139.5 3000 to ref 128130
+line 129154 ----
+  from ref 128386 z 2001 label "HTTP" xyz 330 209 3000 to ref 128002
+line 129410 ----
+  from ref 128130 z 2001 label "MongoDB Wire Protocol" xyz 558.5 134 3000 to ref 129282
+line 128898 -_-_
+  from ref 128130 z 2001 to ref 128514
+end
