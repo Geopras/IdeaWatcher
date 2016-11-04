@@ -61,6 +61,7 @@ gulp.task('buildhtml', function () {
     // Auswahl der Ausgangsdateien -> Reihenfolge wichtig!
     return gulp.src([
         '../dev/view/html/head.html',
+        '../dev/view/html/mainMenu-view.html',
         '../dev/view/html/login-view.html',
         '../dev/view/html/ideaList-view.html',
         '../dev/view/html/ideaDetails-view.html',

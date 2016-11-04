@@ -1,27 +1,32 @@
+// Localization für View profileEdit
+
+// Bitte alphabetisch ordnen!!
+
 ideaWatcher.core.Localizer.profileEdit = {
     en_GB: {
-        userName: 'Username',
+        browse: 'Browse ...',
+        country: 'Country',
         email: 'Email',
-        mail_public_available: 'allow people to contact me (Email address is' +
-        ' public)',
-        surname: 'Surname',
         firstName: 'First Name',
         gender: 'Gender',
-        country: 'Country',
+        header: 'Profile',
+        mail_public_available: 'allow people to contact me (Email address is' +
+        ' public)',
         submit: 'Submit',
-        profile: 'Profile',
-        browse: 'Browse ...'
+        surname: 'Surname',
+        userName: 'Username'
     },
     de_DE: {
-        userName: 'Benutzername',
+        browse: 'Durchsuchen ...',
+        country: 'Land',
         email: 'E-Mail',
-        mail_public_available: 'Erlaube anderen mich zu kontaktieren (E-Mail Adresse ist öffentlich)',
-        surname: 'Nachname',
         firstName: 'Vorname',
         gender: 'Geschlecht',
-        country: 'Land',
+        header: 'Profil',
+        mail_public_available: 'Erlaube anderen mich zu kontaktieren ' +
+        '(E-Mail Adresse ist öffentlich)',
         submit: 'Übernehmen',
-        profile: 'Profil',
-        browse: 'Durchsuchen ...'
+        surname: 'Nachname',
+        userName: 'Benutzername'
     }
 }

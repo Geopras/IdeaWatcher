@@ -1,4 +1,4 @@
-ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function VIdeaList() {
+ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
     //region local vars
     // Event Globale Initialisierung

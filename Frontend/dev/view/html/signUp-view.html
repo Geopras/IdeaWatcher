@@ -1,50 +1,64 @@
 		<!----------------------------------- View : signUp --------------------------------->
 		<div class="signUp_view">
-			<h1>Werde Ideengeber!</h1>
+			<h1 id="signUp_header">Sign Up</h1>
 			<form>
 				<!-- action="hierhin_wird_es_mit_submit_geschickt" -->
 				<div class="required_input">
 					<p>
 						<label
 								id="userNameInput_label"
-								for="userName_input">Benutzername
+								for="userName_input">
+							Username
 						</label><br>
 						<input
 							id="userName_input"
-							type="text" required />
+							type="text" required>
+						</input>
 					</p>
 		
 				</div>
 		
-				<div class="required-input">
+				<div class="required_input">
 					<p>
-						<label id="emailInput_label" for="email_input">Email
-						</label><br> <input
+						<label id="emailInput_label" for="email_input">
+							Email
+						</label><br>
+						<input
 							id="email_input"
-							type="email" placeholder="email@example.org" required />
+							type="email" placeholder="email@example.org" required>
+						</input>
 					</p>
 				</div>
 				
 				<div class="required_input">
 					<p>
-						<label id="passwordInput_label" for="password_input">Passwort
-						</label><br> <input
+						<label id="passwordInput_label" for="password_input">
+							Password
+						</label><br>
+						<input
 							id="password_input"
-							type="password" placeholder="******"/>
+							type="password" placeholder="******">
+						</input>
 					</p>
 				</div>
 				
 				<div class="required_input">
 					<p>
 						<label id="passwordRepeatInput_label"
-							   for="passwordRepeat_input">Passwort
-							bestätigen</label><br> <input
+							   for="passwordRepeat_input">
+							Password Repeated
+						</label><br>
+						<input
 							id="passwordRepeat_input"
-							type="password" placeholder="******"/>
+							type="password" placeholder="******">
+						</input>
 					</p>
 				</div>
-				<p><input id="submit_input" type="submit"
-						  value="Jetzt registrieren!"></p>
+				<p>
+					<input id="submit_input" type="submit"
+						  value="Register Now!">
+					</input>
+				</p>
 			</form>
 		
 		</div>

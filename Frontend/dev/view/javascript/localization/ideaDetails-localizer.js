@@ -1,3 +1,12 @@
-/**
- * Created by geopras on 04.11.16.
- */
+// Localization für View ideaDetails
+
+// Bitte alphabetisch ordnen!!
+
+ideaWatcher.core.Localizer.ideaDetails = {
+    en_GB: {
+
+    },
+    de_DE: {
+
+    }
+}
