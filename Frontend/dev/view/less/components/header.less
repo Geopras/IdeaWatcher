@@ -13,6 +13,51 @@
   font-size: 16px;
 }
 
+.v-mainMenu-view .logo img{
+    height: 60px;
+    padding: 2px;
+    float: left;
+}
+
+.v-mainMenu-view .logo img:hover {
+    background: #4096ee;
+}
+
+.v-mainMenu-view .lupe img{
+    height: 60px;
+    padding: 20px;
+    float: right;
+}
+
+.v-mainMenu-view .lupe img:hover {
+    background: #4096ee;
+}
+
+.v-mainMenu-view .user img{
+    height: 60px;
+    padding: 20px;
+    float: right;
+}
+
+.v-mainMenu-view .js-mainMenu-btnLogin{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 1px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 17px 10px;
+    cursor: pointer;
+    border-radius: 12px;
+    float:right;
+}
+
+.v-mainMenu-view .user img:hover {
+    background: #4096ee;
+}
+
 .v-mainMenu-view nav ul {
   margin: 0;
   padding: 0;
@@ -35,18 +80,18 @@
   background: #4096ee;
 }
 
-.v-mainMenu-view nav ul li ul{
-    transition:all 500ms; 
-    opacity:0; 
-    overflow:hidden; 
-    height:0;
-}
-
-.v-mainMenu-view nav ul li:hover ul{
-  height: auto;
-  opacity: 1;
-}
-
 .v-mainMenu-view nav ul li a {
   padding: 20px;
+}
+
+.v-mainMenu-view nav ul li:hover ul { 
+    height:auto; 
+    opacity:1;
+}
+
+.v-mainMenu-view nav ul li ul {
+  position: absolute;
+  background: #3a3a3a;
+  overflow:hidden;
+  height: 0;
 }
