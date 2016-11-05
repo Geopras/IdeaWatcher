@@ -31,6 +31,12 @@ public class Response {
         this.errorMessage = errorMessage;
     }
 
+    public void initialize(String destination, String result, String errorMessage) {
+        this.destination = destination;
+        this.result = result;
+        this.errorMessage = errorMessage;
+    }
+    
     public JsonObject convertToJson() {
         return Json.createObjectBuilder()
                 .add("destination", this.destination)
