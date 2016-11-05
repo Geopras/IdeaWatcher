@@ -1,7 +1,7 @@
 ideaWatcher.controller.Login = ideaWatcher.controller.Login || (function CLogin() {
 
     //region local vars
-    var WS_URL = 'ws://127.0.0.1:8081/endpointWebSocketClients';
+    var WS_URL = 'ws://127.0.0.1:8080/IdeaWatcher/wsEndpoint';
     var userName = null;
     var password = null;
     // var cbVerificationError = null;
@@ -62,7 +62,7 @@ ideaWatcher.controller.Login = ideaWatcher.controller.Login || (function CLogin(
         else {
             // Verbindung konnte nicht hergestellt werden, nochmal versuchen?
             // oder gleich der Error anzeigen? in eigener Komponente?
-            console.log('Vernindungsaufbau gescheitert');
+            console.log('Verbindungsaufbau gescheitert');
             console.log(errorObject);
         }
     }

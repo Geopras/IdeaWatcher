@@ -20,9 +20,9 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function C
     //region Callback: Internal - SwitchView
     function cbSwitchView(obj)
     {
-        if(obj.shouldShow) {
-        	ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestIdeaListUser('plötzlich auftauchende UserID'));
-        }
+        // if(obj.shouldShow) {
+        // 	ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestIdeaListUser('plötzlich auftauchende UserID'));
+        // }
         cbShowView({
             shouldShow: obj.shouldShow
         });

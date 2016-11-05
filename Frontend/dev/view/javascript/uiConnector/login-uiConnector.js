@@ -7,16 +7,12 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
         cbFunction: cbIni
     };
 
-    var htmlView = null;
-    var htmlForm = null;
-    var htmlHeader = null;
+    var htmlFormLogin = null;
     var htmlUsernameInput = null;
-    var htmlUsernameInputLabel = null;
     var htmlPasswordInput = null;
-    var htmlPasswordInputLabel = null;
     var htmlSubmitButton = null;
-    var htmlForgotPasswordButton = null;
-
+    // var htmlVerificationLabel = null;
+    var htmlView = null;
     var textLogin = {
         fail: 'Benutzername oder Passwort falsch',
         duplicate: 'Sie sind bereits angemeldet, bitte zunächst abmelden'
@@ -33,13 +29,12 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
         console.log('Initialisiere UIConnector Login');
 
         //region assign html elements
-        htmlView = document.querySelector('.login_view');
-        htmlForm = document.querySelector('.login_form');
-        htmlHeader = document.getElementById('login_header');
-        htmlUsernameInputLabel = document.querySelector('login_userNameInput_label');
-        htmlPasswordInputLabel = document.querySelector('profileEdit_password_label');
+        htmlFormLogin = document.querySelector('.login_form');
+        htmlUsernameInput = document.querySelector('.login_userName_input');
+        htmlPasswordInput = document.querySelector('.login_password_input');
         htmlSubmitButton = document.querySelector('.login_submit_button');
-        htmlForgotPasswordButton = document.querySelector('.login_forgotPassword_button');
+        // htmlVerificationLabel = document.querySelector('.js-login-desk-lbl-verificationError');
+        htmlView = document.querySelector('.login_view');
         //endregion
 
         //region register Callbacks
@@ -48,7 +43,7 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
         //endregion
 
         // region override onSubmit to prevent page reload
-        htmlForm.onsubmit = function onSubmit(event) {
+        htmlFormLogin.onsubmit = function onSubmit(event) {
             event.preventDefault();
         };
         // endregion
@@ -73,7 +68,6 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
     {
         if(obj.shouldShow)
         {
-            localizeView();
             htmlView.style.display = 'block';
         }
         else
@@ -83,31 +77,9 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
     }
     //endregion
 
-    //region localizeView()
-    function localizeView() {
 
-        var language = ideaWatcher.core.Localizer.getLanguage();
-
-        console.log("Starte Lokalisierung der Login-View ...");
-
-        htmlHeader.textContent =
-            ideaWatcher.core.Localizer.login[language].header;
-        htmlUsernameInputLabel.textContent =
-            ideaWatcher.core.Localizer.login[language].userName;
-        htmlPasswordInputLabel.textContent =
-            ideaWatcher.core.Localizer.login[language].password;
-        htmlSubmitButton.setAttribute("value", ideaWatcher.core.Localizer
-            .login[language].submit);
-        htmlForgotPasswordButton.setAttribute("value", ideaWatcher.core.Localizer
-            .login[language].browse);
-
-        console.log("Lokalisierung Login-View abgeschlossen.")
-    }
-
-    // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
     return {
 
     };
-    //endregion
 
 })();

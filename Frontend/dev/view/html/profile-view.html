@@ -3,26 +3,24 @@
             <!----------------------------------- View : userProfile : tabs --------------------------->
             
             <ul class="tab">
-                <li><a href="javascript:void(0)" class="tablinks"
-                       onclick="openTab(event, 'hot')"
-                       id="profile_defaultOpen_tabElement">Meine Ideen</a></li>
-                <li><a href="javascript:void(0)" class="tablinks"
+                <li><a href="javascript:void(0)" class="profile_tabLinks"
+                       onclick="openTab(event, 'hot')" id="profile_defaultOpenTab">Meine Ideen</a></li>
+                <li><a href="javascript:void(0)" class="profile_tabLinks"
                        onclick="openTab(event, 'fresh')">Ideen, denen ich folge</a></li>
-                <li><a href="javascript:void(0)" class="tablinks"
+                <li><a href="javascript:void(0)" class="profile_tabLinks"
                        onclick="openTab(event, 'trending')">Benutzerdaten</a></li>
             </ul>
             
             <!----------------------------------- View : userProfile : tab "hot" --------------------------->
-            <div id="profile_contentHot_tab" class="profile_contentHot_tab">
+            <div id="profile_hot_tab" class="profile_tabContent">
                 <h3>Hier stehen meine Ideen.</h3>
                 <img src="./resources/img/test.png" alt="" />
             </div>
 	
             <!----------------------------------- View : userProfile : tab "fresh" --------------------------->
-            <div id="profile_contentFresh_tab" class="profile_contentFresh_tab">
+            <div id="profile_fresh_tab" class="profile_tabContent">
                 <h3>Hier stehen die Ideen, denen ich folge.</h3>
             </div>
 
             <!----------------------------------- View : userProfile : tab "trending" --------------------------->
-            <div id="profile_contentTrending_tab"
-                 class="profile_contentTrending_tab">
+            <div id="profile_trending_tab" class="profile_tabContent">

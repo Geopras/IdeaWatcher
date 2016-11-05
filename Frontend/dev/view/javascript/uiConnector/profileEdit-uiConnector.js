@@ -7,7 +7,7 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             cbFunction: cbIni
         };
 
-        var htmlFormProfileEdit = null;
+        var htmlForm = null;
         var htmlView = null;
 
         //region lade zu internationalisierende HTML-Elemente
@@ -34,16 +34,16 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             console.log('Initialisiere UIConnector ProfileEdit');
 
             //region assign html elements
-            htmlFormProfileEdit = document.querySelector('.profileEdit_form');
+            htmlForm = document.querySelector('.profileEdit_form');
             htmlView = document.querySelector('.profileEdit_view');
-            htmlViewHeader = document.getElementById('profileEdit_header');
-            htmlUserNameLabel = document.getElementById('userNameInput_label');
-            htmlEmailLabel = document.getElementById('emailInput_label');
-            htmlEmailCheckLabel = document.getElementById('profileEdit_emailCheckbox_label');
-            htmlSurnameLabel = document.getElementById("profileEdit_surnameInput_label");
-            htmlFirstNameLabel = document.getElementById("profileEdit_firstNameInput_label");
-            htmlGenderLabel = document.getElementById("profileEdit_genderSelect_label");
-            htmlCountryLabel = document.getElementById("profileEdit_countrySelect_label");
+            htmlViewHeader = document.querySelector('.profileEdit_header');
+            htmlUserNameLabel = document.getElementById('profileEdit_userName_label');
+            htmlEmailLabel = document.getElementById('profileEdit_mail_label');
+            htmlEmailCheckLabel = document.getElementById('profileEdit_mailCheckbox_label');
+            htmlSurnameLabel = document.getElementById("profileEdit_surname_label");
+            htmlFirstNameLabel = document.getElementById("profileEdit_firstName_label");
+            htmlGenderLabel = document.getElementById("profileEdit_gender_label");
+            htmlCountryLabel = document.getElementById("profileEdit_country_label");
             htmlSubmitButton = document.getElementById("profileEdit_submit_button");
             htmlBrowseImageButton = document.getElementById("profileEdit_browseImage_button");
             //endregion
@@ -54,7 +54,7 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             //endregion
 
             // region override onSubmit to prevent page reload
-            htmlFormProfileEdit.onsubmit = function onSubmit(event) {
+            htmlForm.onsubmit = function onSubmit(event) {
                 event.preventDefault();
             };
             // endregion
@@ -110,11 +110,12 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
 
             console.log("Lokalisierung ProfileEditView abgeschlossen.")
         }
+        //endregion
 
         // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
         return {
 
         };
-        //endregion
+
 
     })();
