@@ -2,6 +2,7 @@ package de.ideaWatcher.webApi.services;
 
 import de.ideaWatcher.common.CommandMap;
 import de.ideaWatcher.webApi.commands.LoginCommand;
+import de.ideaWatcher.webApi.commands.SignupCommand;
 import de.ideaWatcher.webApi.core.JsonConverter;
 
 import javax.json.Json;
@@ -28,7 +29,8 @@ public class RequestService {
 
     private void initializeCommandMap() {
         this.workflowMapping = new CommandMap();
-        this.workflowMapping.addCommand("SLogin/validate", new LoginCommand());
+        this.workflowMapping.addCommand("SLogin/validateRequest", new LoginCommand());
+        this.workflowMapping.addCommand("SSignup/addUserRequest", new SignupCommand());
     }
 
 
