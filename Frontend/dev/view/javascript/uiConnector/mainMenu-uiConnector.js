@@ -1,21 +1,14 @@
-ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function UICMainMenu() {
+ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
 
-    //region lokale Variablen
+    //region local vars
     // Event Globale Initialisierung
     var evIni = {
         topic: 'internal/ini',
         cbFunction: cbiIni
     };
     var htmlView;
-    var htmlHomeButton;
     var htmlHotButton;
-    var htmlFreshButton;
-    var htmlTrendingButton;
-    var htmlCategoriesButton;
-    var htmlSearchButton;
-    var htmlProfileButton;
     var htmlLoginButton;
-
     //endregion
 
     //region subscribe to events
@@ -25,21 +18,15 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function UICMainMenu()
     function cbiIni() {
         console.log('ini Event');
         htmlView = document.querySelector('.mainMenu_view');
-        htmlHomeButton = document.getElementById('mainMenu_logo_image');
-        htmlHotButton = document.getElementById('mainMenu_hot_button');
-        htmlFreshButton = document.getElementById('mainMenu_fresh_button');
-        htmlTrendingButton = document.getElementById('mainMenu_trending_button');
-        htmlCategoriesButton = document.getElementById('mainMenu_categories_button');
-        htmlSearchButton = document.getElementById('mainMenu_search_button');
-        htmlProfileButton = document.getElementById('mainMenu_profile_button');
-        htmlLoginButton = document.getElementById('mainMenu_login_button');
-        htmlHotButton.addEventListener('click',handleButtonNavigation);
-        htmlLoginButton.addEventListener('click',handleButtonNavigationLogin);
+        htmlHotButton = document.querySelector('.mainMenu_hot_button');
+        htmlLoginButton = document.querySelector('.mainMenu_login_button');
+        htmlHotButton.addEventListener('click', handleButtonNavigation);
+        htmlLoginButton.addEventListener('click', handleButtonNavigationLogin);
     }
 
     function handleButtonNavigation(clickEvent){
 
-        console.log('htmlHomeButton geklickt');
+        console.log('htmlBtnHome geklickt');
         ideaWatcher.core.Navigator.switchView({
             viewId: 'mainView',
             url: 'myMainView'
@@ -48,12 +35,9 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function UICMainMenu()
 
     function handleButtonNavigationLogin(clickEvent){
 
-        console.log('htmlLoginButton geklickt');
+        console.log('htmlBtnLogin geklickt');
 
-        // muss dann in die entsprechende View ausgelagert werden, nur für testzwecke
-        htmlView.style.display = 'none';
         document.querySelector('.signUp_view').style.display = 'none';
-        document.querySelector('.mainMenu_view').style.display = 'none';
 
         ideaWatcher.core.Navigator.switchView({
             viewId: 'login',

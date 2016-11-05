@@ -2,7 +2,7 @@
 
 // Bitte alphabetisch ordnen!!
 
-ideaWatcher.core.Localizer.profileEdit = {
+ideaWatcher.core.Localizer.ProfileEdit = {
     en_GB: {
         browse: 'Browse ...',
         country: 'Country',
