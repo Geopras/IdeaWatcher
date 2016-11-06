@@ -29,4 +29,10 @@ public class DataManager {
     public User getUser(String userName) {
         return new User();
     }
+    
+    private String hashPassword(String password) {
+        
+        String hash = "";
+        return hash;
+    }
 }
