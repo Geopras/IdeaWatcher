@@ -29,20 +29,15 @@ public class DataManager {
         return new User();
     }
     
-    public static boolean isCorrectPassword(String password) {
-        
-        // hole Hash aus der Datenbank
-        String hashed = "";
+    public static boolean isCorrectPassword(String plaintextPassword, String hashedPassword) {
         
         //überprüfe, ob Passwörter überein stimmen
         
-        if (BCrypt.checkpw(password, hashed)) {
-            //Passwörter stimmen überein
+        if (BCrypt.checkpw(plaintextPassword, hashedPassword)) {
+            return true;
         } else {
-//            Passwörter stimmen nicht überein
+            return false;
         }
-        
-        return true;
     }
     
     private static String hashPassword(String password) {
