@@ -7,6 +7,9 @@ public class User {
 
     private String name;
     private int userId;
+    /**
+     * gehashter Wert
+     */
     private String password;
 
     public String getName() {

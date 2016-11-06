@@ -82,10 +82,10 @@ public class SignupWorkflow implements IWorkflow {
         // end region
     }
 
-    //
-    // /**
-    // * Initialisiere das Response-Objekt anhand des Workflow-Ergebnisses
-    // */
+    
+     /**
+     * Initialisiere das Response-Objekt anhand des Workflow-Ergebnisses
+     */
     private void initializeResponse() {
 
         String destination = this.request.getDestination() + "-response";
