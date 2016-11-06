@@ -42,16 +42,16 @@ ideaWatcher.core.Localizer = ideaWatcher.core.Localizer || (function () {
             return currentLanguage;
         }
 
-        function pubLocalizeViews(lang) {
-
-            pubSetLanguage(lang);
-
-            console.log("Starte Lokalisierung der Views ...");
-
-            ideaWatcher.view.ProfileEdit.localizeView(i18n);
-
-            console.log("Lokalisierung aller Views abgeschlossen.");
-        }
+        // function pubLocalizeViews(lang) {
+        //
+        //     pubSetLanguage(lang);
+        //
+        //     console.log("Starte Lokalisierung der Views ...");
+        //
+        //     ideaWatcher.view.ProfileEdit.localizeView(i18n);
+        //
+        //     console.log("Lokalisierung aller Views abgeschlossen.");
+        // }
 
         return {
             // Legt die Sprache für die gesamte Website fest
@@ -60,6 +60,6 @@ ideaWatcher.core.Localizer = ideaWatcher.core.Localizer || (function () {
             // die gewählte Sprache abholen
             getLanguage: pubGetLanguage,
             // damit können die Views bei einem Sprachwechsel lokalisiert werden
-            localizeViews: pubLocalizeViews
+            // localizeViews: pubLocalizeViews
         };
     })();

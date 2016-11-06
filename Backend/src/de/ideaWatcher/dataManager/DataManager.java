@@ -3,20 +3,16 @@ package de.ideaWatcher.dataManager;
 import de.ideaWatcher.webApi.model.User;
 
 public class DataManager {
-
     
-    public DataManager() {
-        
-    }
-    
-    public boolean existsUser(String userName) {
+    public static boolean existsUser(String userName) throws Exception {
         
         //falls User existiert: gibt true zurück
         //falls User nicht existiert: gib false zurück
         return false;
     }
     
-    public void addUser(String userName, String email, String password) throws Exception {
+    public static void addUser(String userName, String email, String password)
+            throws Exception {
         
         //speichere neuen Nutzer in der Datenbank
         //weise ihm eine UserId zu
@@ -26,8 +22,13 @@ public class DataManager {
         
     }
     
-    public User getUser(String userName) {
+    public static User getUser(String userName) throws Exception {
+
         return new User();
+    }
+    
+    public static boolean isCorrectPassword(String password) {
+        return true;
     }
     
     private String hashPassword(String password) {

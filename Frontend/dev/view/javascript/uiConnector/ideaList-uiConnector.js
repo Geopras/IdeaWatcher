@@ -86,13 +86,13 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function VIdeaList() {
             likes.appendChild(numberOfLikes);
           
             var followers = document.createElement('li');
-            followers.textContent = ideaWatcher.core.Localizer.ideaList[language].followers;
+            followers.textContent = ideaWatcher.core.Localizer.IdeaList[language].followers;
             var numberOfFollowers = document.createElement('span');
             numberOfFollowers.classList.add('ideaList_numberOfFollowers_span');
             followers.appendChild(numberOfFollowers);
           
             var comments = document.createElement('li');
-            comments.textContent = ideaWatcher.core.Localizer.ideaList[language].comments;
+            comments.textContent = ideaWatcher.core.Localizer.IdeaList[language].comments;
             var numberOfComments = document.createElement('span');
             numberOfComments.classList.add('ideaList_numberOfComments_span');
             comments.appendChild(numberOfComments);

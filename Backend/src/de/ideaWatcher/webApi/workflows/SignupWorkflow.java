@@ -1,18 +1,17 @@
 package de.ideaWatcher.webApi.workflows;
 
-import javax.json.JsonObject;
-
 import de.ideaWatcher.dataManager.DataManager;
 import de.ideaWatcher.webApi.core.IWorkflow;
 import de.ideaWatcher.webApi.core.Request;
 import de.ideaWatcher.webApi.core.Response;
+
+import javax.json.JsonObject;
 
 /**
  * Workflow zur Registrierung eines Nutzers
  */
 public class SignupWorkflow implements IWorkflow {
 
-    private DataManager dataManager;
     private Request request;
     private Response response;
     private String errorMessage;
@@ -21,9 +20,8 @@ public class SignupWorkflow implements IWorkflow {
     /**
      * Instanziiere SignupWorkflow-Objekt zur Registrierung
      */
-    public SignupWorkflow(DataManager dataManager) {
+    public SignupWorkflow() {
 
-        this.dataManager = dataManager;
         this.request = new Request();
         this.response = new Response();
         this.errorMessage = "";
@@ -37,7 +35,6 @@ public class SignupWorkflow implements IWorkflow {
      */
     public JsonObject getResponse(JsonObject request) {
 
-        dataManager = new DataManager();
         // Konvertiere Request-JsonObject zu Request-JavaObject
         this.request.convertToJava(request);
         this.execute();
@@ -56,26 +53,31 @@ public class SignupWorkflow implements IWorkflow {
         String password = signupData.getString("password");
 
         // region wenn User nicht existiert, muss er angelegt werden
-        if (!dataManager.existsUser(userName)) {
+        boolean existsUser = false;
+        try {
+            existsUser = DataManager.existsUser(userName);
+        } catch (Exception ex) {
+            //TODO Fehler rausgeben
+        }
+        if (!existsUser) {
             // user muss angelegt werden
             try {
-                dataManager.addUser(userName, email, password);
-                this.result = "valid";
+                DataManager.addUser(userName, email, password);
+                this.result = "ok";
             } catch (Exception e) {
                 // wenn Fehler auftreten, dann wird eine zugehoerige Nachricht
                 // in
                 // // this.errorMessage gespeichert
-                this.errorMessage = String.format("Ssignup/user_signup_failed",
+                this.errorMessage = String.format("SSignup/user_signup_failed",
                         userName);
-                this.result = "notvalid";
+                this.result = "notok";
                 e.printStackTrace();
             }
-
         } else {
             // User bekommt eine Fehlermeldung auf der View
-            this.errorMessage = String.format("Ssignup/username_already_exists",
+            this.errorMessage = String.format("SSignup/username_already_exists",
                     userName);
-            this.result = "notvalid";
+            this.result = "notok";
         }
         // end region
     }

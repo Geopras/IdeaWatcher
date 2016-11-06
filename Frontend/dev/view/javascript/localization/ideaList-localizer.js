@@ -2,7 +2,7 @@
 
 // Bitte alphabetisch ordnen!!
 
-ideaWatcher.core.Localizer.ideaList = {
+ideaWatcher.core.Localizer.IdeaList = {
     en_GB: {
         comments: "Comments: ",
         followers: "Followers: "
