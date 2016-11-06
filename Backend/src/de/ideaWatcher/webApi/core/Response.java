@@ -10,19 +10,43 @@ public class Response {
 
     private String destination;
     private String result;
-    private String token;
-    private int userId;
+    private Long token;
+    private Long userId;
     private String errorMessage;
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String getResult() {
+        return this.result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public void setToken(Long token) {
+        this.token = token;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     public Response() {
         this.destination = "";
         this.result = "";
-        this.token = "";
-        this.userId = -1;
+        this.token = new Long(-1);
+        this.userId = new Long(-1);
         this.errorMessage = "";
     }
 
-    public void initialize(String destination, String result, String token, int
+    public void initialize(String destination, String result, Long token, Long
             userId, String errorMessage) {
         this.destination = destination;
         this.result = result;
@@ -30,19 +54,13 @@ public class Response {
         this.userId = userId;
         this.errorMessage = errorMessage;
     }
-
-    public void initialize(String destination, String result, String errorMessage) {
-        this.destination = destination;
-        this.result = result;
-        this.errorMessage = errorMessage;
-    }
     
-    public JsonObject convertToJson() {
+    public JsonObject toJsonObject() {
         return Json.createObjectBuilder()
                 .add("destination", this.destination)
                 .add("result", this.result)
-                .add("token", this.token)
-                .add("userId", this.userId)
+                .add("token", this.token.toString())
+                .add("userId", this.userId.toString())
                 .add("error", this.errorMessage)
                 .build();
     }

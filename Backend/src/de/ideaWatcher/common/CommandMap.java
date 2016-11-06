@@ -7,11 +7,12 @@ import java.util.stream.Collectors;
  * Klasse zur Erstellung einer Map, um Methodenaufrufe (Commands) bestimmten
  * Keys zuzuordnen, sodass ueber einen Key ein bestimmter Command ausgefuehrt
  * wird. (siehe Wikipedia: "Command pattern")
- * @param <T> Typ der ein- und ausgehenden Daten zum Ausfuehren eines Command
+ * @param <In> Typ der eingehenden Daten zum Ausfuehren eines Command
+ * @param <Out> Typ der ausgehenden Daten zum Ausfuehren eines Command
  */
-public class CommandMap<T> {
+public class CommandMap<In, Out> {
 
-    private HashMap<String, ICommand> commands;
+    private HashMap<String, ICommand<In, Out>> commands;
 
     /**
      * Erzeuge eine neue Instanz von CommandMap
@@ -25,7 +26,7 @@ public class CommandMap<T> {
      * @param key {String} eindeutiger Identifier des Command
      * @param command {ICommand} Instanz des hinzuzufuegenden Command
      */
-    public void addCommand(String key, ICommand command) {
+    public void addCommand(String key, ICommand<In, Out> command) {
         commands.put(key, command);
     }
 
@@ -36,9 +37,9 @@ public class CommandMap<T> {
      * @return Rueckgabewert der Methode vom Typ der eingehenden Daten
      * @throws Exception Wenn der Key in der CommandMap nicht existiert
      */
-    public T executeCommand(String key, T data) throws Exception {
+    public Out executeCommand(String key, In data) throws Exception {
         if (commands.containsKey(key)) {
-            return (T)commands.get(key).apply(data);
+            return commands.get(key).apply(data);
         } else {
             throw new Exception(String.format("commandMap_key_not_exists",
                     key));

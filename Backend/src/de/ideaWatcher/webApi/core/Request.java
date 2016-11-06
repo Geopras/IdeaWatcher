@@ -3,13 +3,13 @@ package de.ideaWatcher.webApi.core;
 import javax.json.JsonObject;
 
 /**
- * Klasse zur Erzeugung einer Antwort-Nachricht als Ergebnis eines Workflow
+ * Klasse zur Erzeugung eines Request-Javaobjekts
  */
 public class Request {
 
     private String destination;
     private JsonObject data;
-    private String token;
+    private int token;
     private int userId;
 
     public String getDestination() {
@@ -20,7 +20,7 @@ public class Request {
         return this.data;
     }
 
-    public String getToken() {
+    public int getToken() {
         return this.token;
     }
 
@@ -28,21 +28,17 @@ public class Request {
         return this.userId;
     }
 
-    public Request() {
-        this.destination = "";
-        this.data = null;
-        this.token = "";
-        this.userId = -1;
+    public Request(String destination, JsonObject data, int token, int userId) {
+        this.destination = destination;
+        this.data = data;
+        this.token = token;
+        this.userId = userId;
     }
 
-    public void convertToJava(JsonObject request) {
-        this.destination = request.getString("destination");
-        this.data = request.getJsonObject("data");
-        this.token = request.getString("token");
-        this.userId = request.getInt("userId");
+    public Request(JsonObject requestJson) {
+        this.destination = requestJson.getString("destination");
+        this.data = requestJson.getJsonObject("data");
+        this.token = requestJson.getInt("token");
+        this.userId = requestJson.getInt("userId");
     }
-
-
-
-
 }

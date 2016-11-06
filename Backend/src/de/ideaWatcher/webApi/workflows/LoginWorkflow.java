@@ -13,7 +13,6 @@ import javax.json.JsonObject;
  */
 public class LoginWorkflow implements IWorkflow {
 
-    private Request request;
     private Response response;
     private String errorMessage;
     private String result;
@@ -23,7 +22,6 @@ public class LoginWorkflow implements IWorkflow {
      */
     public LoginWorkflow() {
 
-        this.request = new Request();
         this.response = new Response();
         this.errorMessage = "";
         this.result = "";
@@ -33,21 +31,18 @@ public class LoginWorkflow implements IWorkflow {
      * Fuehre den Workflow aus und gib das Ergebnis als Response-Objekt zurueck.
      * @return {JsonObject} JSON-String als Ergebnis des Workflow
      */
-    public JsonObject getResponse(JsonObject request) {
+    public Response getResponse(Request request) {
 
-        // Konvertiere Request-JsonObject zu Request-JavaObject
-        this.request.convertToJava(request);
-        this.execute();
-        this.initializeResponse();
-        return this.response.convertToJson();
+        this.execute(request);
+        return this.response;
     }
 
     /**
      * Fuehre den Workflow aus und speichere das Ergebnis bzw. Fehler
      */
-    private void execute() {
+    private void execute(Request request) {
 
-        JsonObject loginData = this.request.getData();
+        JsonObject loginData = request.getData();
         String username = loginData.getString("username");
         String password = loginData.getString("password");
 
@@ -87,15 +82,5 @@ public class LoginWorkflow implements IWorkflow {
         } catch (Exception ex) {
             throw new Exception(ex);
         }
-    }
-
-    /**
-     * Initialisiere das Response-Objekt anhand des Workflow-Ergebnisses
-     */
-    private void initializeResponse() {
-
-        String destination = this.request.getDestination() + "-response";
-        this.response.initialize(destination, this.result,
-                this.request.getToken(), this.request.getUserId(), this.errorMessage);
     }
 }
