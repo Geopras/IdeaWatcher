@@ -14,7 +14,9 @@ public class DataManager {
     public static void addUser(String userName, String email, String password)
             throws Exception {
         
-        //speichere neuen Nutzer in der Datenbank
+        // hash aus Passwort berechnen
+        String hashedPassword = hashPassword(password);
+        //speichere neuen Nutzer(userName, e-mail, hashedPassword) in der Datenbank
         //weise ihm eine UserId zu
         
         //falls es zu Fehlern kommt
@@ -28,12 +30,24 @@ public class DataManager {
     }
     
     public static boolean isCorrectPassword(String password) {
+        
+        // hole Hash aus der Datenbank
+        String hashed = "";
+        
+        //überprüfe, ob Passwörter überein stimmen
+        
+        if (BCrypt.checkpw(password, hashed)) {
+            //Passwörter stimmen überein
+        } else {
+//            Passwörter stimmen nicht überein
+        }
+        
         return true;
     }
     
-    private String hashPassword(String password) {
-        
-        String hash = "";
+    private static String hashPassword(String password) {
+    
+        String hash = BCrypt.hashpw(password, BCrypt.gensalt());
         return hash;
     }
 }
