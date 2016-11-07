@@ -1,8 +1,61 @@
 .profile_view {
+  position: relative;
   width: 100%;
   height: 100%;
   display: none;
 }
+
+// Zeugs für das neue Menü
+
+.profile_view nav {
+  box-sizing: border-box;
+  float: left;
+  width: 100%;
+  background: #3a3a3a;
+  font-size: 16px;
+}
+
+.profile_view nav ul {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.profile_view nav a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+}
+
+.profile_view nav ul li {
+  position: relative;
+  float: left;
+  list-style: none;
+  transition:all 500ms;
+}
+
+.profile_view nav ul li:hover {
+  background: #4096ee;
+}
+
+.profile_view nav ul li a {
+  padding: 20px;
+}
+
+.profile_view nav ul li:hover ul {
+  height:auto;
+  opacity:1;
+}
+
+.profile_view nav ul li ul {
+  position: absolute;
+  background: #3a3a3a;
+  overflow:hidden;
+  height: 0;
+}
+
+
+// Zeugs für das alte Menü:
 
 .profile_view ul.tab {
   list-style-type: none;
