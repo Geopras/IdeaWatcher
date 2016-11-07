@@ -1,4 +1,4 @@
-ideaWatcher.controller.HotIdeaList = ideaWatcher.controller.HotIdeaList || (function CHotIdeaList() {
+ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function CIdeaList() {
 
 
     //region local vars

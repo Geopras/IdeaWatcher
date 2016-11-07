@@ -1,9 +1,13 @@
-ideaWatcher.view.service.ideaList = ideaWatcher.view.service.ideaList || (function VIdeaList() {
+ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function VIdeaList() {
 
     //region local vars
     // Event Globale Initialisierung
-    
-    var htmlList = null;
+    var evIni = {
+        topic: 'internal/ini',
+        cbFunction: cbIni
+    };
+
+    var htmlView = null;
     var htmlIdeaHeader = null;
     var htmlIdeaDescription = null;
     var numberOfLikes = null;
@@ -11,7 +15,44 @@ ideaWatcher.view.service.ideaList = ideaWatcher.view.service.ideaList || (functi
     var numberOfComments = null;
     var ideaList = null;
     //endregion
+
+    //region subscribe to events
+    ideaWatcher.core.MessageBroker.subscribe(evIni);
+    //endregion
+
+    //region cbIni
+    function cbIni()
+    {
+        console.log('Initialisiere UIConnector IdeaList');
+
+                //endregion
+
+        var idea1 = {
+          		name:'Testname1',
+          		description:'description Test1',
+          		likes: 5,
+          		follower: 7,
+          		comments: 14
+          }
+          var idea2 = {
+          		name:'Testname2',
+          		description:'description Test2',
+          		likes: 4,
+          		follower:8,
+          		comments:4
+          }
+          var listIdeas = [idea1,idea2];
+          cbRenderList(listIdeas);
+
+
+          
+        //region register Callbacks
+        ideaWatcher.controller.IdeaList.registerShowView(cbShowView);
+        ideaWatcher.controller.IdeaList.registerRenderList(cbRenderList);
+        //endregion 
         
+    }
+    //endregion
 
     function cbRenderList(itemList) {
 
@@ -19,7 +60,7 @@ ideaWatcher.view.service.ideaList = ideaWatcher.view.service.ideaList || (functi
         var language = ideaWatcher.core.Localizer.getLanguage();
         //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
      
-        htmlList = document.querySelector('.ideaList_view');
+        htmlView = document.querySelector('.ideaList_view');
      
         itemList.forEach(function(item){
       	    var ideaElement = document.createElement('section');
@@ -63,8 +104,8 @@ ideaWatcher.view.service.ideaList = ideaWatcher.view.service.ideaList || (functi
             ideaElement.appendChild(ideaName);
             ideaElement.appendChild(ideaDescription);
           
-            htmlList.appendChild(ideaElement);
-            htmlList.appendChild(ratings);
+            htmlView.appendChild(ideaElement);
+            htmlView.appendChild(ratings);
           
             ideaName.textContent = item.name;
             ideaDescription.textContent = item.description;
@@ -73,9 +114,24 @@ ideaWatcher.view.service.ideaList = ideaWatcher.view.service.ideaList || (functi
             numberOfFollowers.textContent = item.follower;
             numberOfComments.textContent = item.comments;
       });    	
-        return htmlList;
     }
     
-   
+    //region showView
+    function cbShowView(obj)
+    {
+        if(obj.shouldShow)
+        {
+            htmlView.style.display = 'block';
+        }
+        else
+        {
+            htmlView.style.display = 'none';
+        }
+    }
+    //endregion
+
+    return {
+
+    };
 
 })();
