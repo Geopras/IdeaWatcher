@@ -1,5 +1,6 @@
 ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function CIdeaList() {
 
+
     //region local vars
     var cbShowView = null;
     var cbRenderList = null;
