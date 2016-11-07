@@ -1,4 +1,4 @@
-package main.java.de.ideaWatcher.dataManager.pojos;
+package main.java.de.ideaWatcher.dataManager.model;
 
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * POJO zur Definition eines User-Objekts
+ * Model zur Definition eines User-Objekts
  */
 public class User implements IUser {
 

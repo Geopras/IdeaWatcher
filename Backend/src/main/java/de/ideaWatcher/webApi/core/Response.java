@@ -13,28 +13,39 @@ public class Response implements IResponse {
     private JsonObject data;
     private String errorMessage;
 
+    @Override
     public void setDestination(String destination) {
         this.destination = destination;
     }
 
+    @Override
     public String getResult() {
         return this.result;
     }
 
+    @Override
     public void setResult(String result) {
         this.result = result;
     }
 
+    @Override
     public JsonObject getData() {
         return data;
     }
 
+    @Override
     public void setData(JsonObject data) {
         this.data = data;
     }
 
+    @Override
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    @Override
+    public void setToken(Long token) {
+
     }
 
     /**

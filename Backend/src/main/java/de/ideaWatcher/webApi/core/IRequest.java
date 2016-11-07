@@ -23,11 +23,5 @@ public interface IRequest {
      * Gibt Anfrage-Token zurueck
      * @return {Long} token
      */
-    int getToken();
-
-    /**
-     * Gibt User ID zurueck
-     * @return {Long} user id
-     */
-    int getUserId();
+    Long getToken();
 }

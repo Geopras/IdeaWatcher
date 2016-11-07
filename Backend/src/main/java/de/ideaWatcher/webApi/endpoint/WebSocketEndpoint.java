@@ -5,10 +5,13 @@ import main.java.de.ideaWatcher.webApi.services.RequestService;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ServerEndpoint("/wsEndpoint")
 public class WebSocketEndpoint {
 
+    private static final Logger log = Logger.getLogger( WebSocketEndpoint.class.getName() );
     private RequestService requestService;
 
 	// Request-String in Java-Objekt umwandeln und weitersenden
@@ -22,11 +25,17 @@ public class WebSocketEndpoint {
                 String response = requestService.getResponse(request);
                 session.getBasicRemote().sendText(response);
             }
-        } catch (IOException e) {
+        } catch (IOException ex) {
             try {
+                log.log(Level.SEVERE, "Beim Behandeln des Requests ist ein " +
+                        "Fehler aufgetreten! Die " +
+                        "WebSocket-Verbindung wird geschlossen werden!\n" +
+                        "Fehlermeldung: " + ex.getMessage());
                 session.close();
             } catch (IOException e1) {
-                // Ignore
+                log.log(Level.SEVERE, "Beim Schliessen der " +
+                        "WebSocket-Verbindung ist ein Fehler aufgetreten!\n" +
+                        "Fehlermeldung: " + ex.getMessage());
             }
         }
     }

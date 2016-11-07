@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Dieser Service soll einen empfangenen JSON-String-Request in ein Java-Objekt
@@ -19,6 +20,7 @@ import java.util.List;
  */
 public class RequestService {
 
+    private static final Logger log = Logger.getLogger( RequestService.class.getName() );
     private CommandMap<IRequest, IResponse> workflowMapping;
     private List<Long> tokens;
 
@@ -63,8 +65,21 @@ public class RequestService {
         IRequest requestObject = new Request(requestJson);
         //endregion
 
-        //region zugehoerigen Workflow ausfuehren und Antwort ermitteln
+
         IResponse responseObject = new Response();
+
+        //region Token-Authentifizierung:
+        // Wenn Login- oder Signup-Request, dann Token generieren
+        if (requestObject.getDestination().startsWith("SLogin") ||
+                !requestObject.getDestination().startsWith("SSignup")) {
+            this.generateToken();
+        } else { // Wenn kein Login/Signup, dann Token prüfen
+
+        }
+
+        //endregion
+
+        //region zugehoerigen Workflow ausfuehren und Antwort ermitteln
         try {
             // Angefragten Workflow ausfuehren
             responseObject = this.workflowMapping.executeCommand(requestObject
@@ -94,6 +109,17 @@ public class RequestService {
         JsonObject responseJson = responseObject.toJsonObject();
         return responseJson.toString();
         //endregion
+    }
+
+    private boolean isAuthenticated(IRequest request) {
+
+        // User-Authentifizierung (Token-Prüfung)
+        Long token = request.getToken();
+        if (this.tokens.contains(token)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private Long generateToken() {

@@ -8,12 +8,15 @@ import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
 
 import javax.json.JsonObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Workflow zur Validierung eines Login-Versuchs
  */
 public class LoginWorkflow implements IWorkflow {
 
+    private static final Logger log = Logger.getLogger( LoginWorkflow.class.getName() );
     private IUserController user;
 
     public LoginWorkflow() {
@@ -39,8 +42,11 @@ public class LoginWorkflow implements IWorkflow {
         try {
             foundUser = this.user.getUser(username);
         } catch (Exception ex) {
-            response.setErrorMessage("SLogin/username_not_exists");
+            response.setErrorMessage("SLogin/getUser_error");
             response.setResult("notvalid");
+            log.log(Level.SEVERE, "Bei der Abfrage eines bestimmten User aus " +
+                    "der Datenbank ist ein Fehler " +
+                    "aufgetreten!\nFehlermeldung: " + ex.getMessage());
             return response;
         }
         //endregion
