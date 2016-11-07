@@ -1,0 +1,84 @@
+package main.java.de.ideaWatcher.webApi.workflows;
+
+import main.java.de.ideaWatcher.dataManager.DataManager;
+import main.java.de.ideaWatcher.dataManager.model.User;
+import main.java.de.ideaWatcher.webApi.core.IRequest;
+import main.java.de.ideaWatcher.webApi.core.IResponse;
+import main.java.de.ideaWatcher.webApi.core.Response;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iControllers.IUserController;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
+
+import javax.json.JsonObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Workflow zur Registrierung eines Nutzers
+ */
+public class SignupWorkflow implements IWorkflow {
+
+    private static final Logger log = Logger.getLogger( SignupWorkflow.class.getName() );
+    private IUserController user;
+
+    public SignupWorkflow() {
+
+        this.user = (new DataManager()).getInstanceUser();
+    }
+
+    /**
+     * Fuehre den Workflow aus und gib das Ergebnis als Response-Objekt zurueck.
+     * 
+     * @return {JsonObject} JSON-String als Ergebnis des Workflow
+     */
+    public IResponse getResponse(IRequest request) {
+
+        JsonObject signupData = request.getData();
+        String userName = signupData.getString("username");
+        String email = signupData.getString("email");
+        String password = signupData.getString("password");
+
+        // Response-Objekt erstellen
+        IResponse response = new Response();
+
+        // region wenn User nicht existiert, muss er angelegt werden
+        boolean existsUser;
+        try {
+            existsUser = this.user.existsUser(userName);
+        } catch (Exception ex) {
+            response.setErrorMessage("SSignup/existsUser_error");
+            response.setResult("notok");
+            log.log(Level.SEVERE, "Beim Prüfen, ob ein User existiert ist ein" +
+                    " Fehler aufgetreten!\nFehlermeldung: " + ex.getMessage());
+            return response;
+        }
+
+        if (!existsUser) {
+            // user muss angelegt werden
+            IUser user = new User();
+            user.setUserName(userName);
+            user.setEmail(email);
+            user.setPassword(password);
+            try {
+                this.user.addUser(user);
+                response.setResult("ok");
+                return response;
+            } catch (Exception ex) {
+                // wenn Fehler auftreten, dann wird ein zugehoeriger
+                // Nachrichten-Key in errorMessage gespeichert
+                response.setErrorMessage("SSignup/addUser_error");
+                response.setResult("notok");
+                log.log(Level.SEVERE, "Beim Hinzufügen eines neuen User in " +
+                        "die Datenbank ist ein Fehler aufgetreten!\n" +
+                        "Fehlermeldung" + ex.getMessage());
+                return response;
+            }
+        } else {
+            // Wenn User bereits existiert, dann über Nachrichten-Key Fehler
+            // zurueckgeben
+            response.setErrorMessage("SSignup/username_already_exists");
+            response.setResult("notok");
+            return response;
+        }
+        // end region
+    }
+}

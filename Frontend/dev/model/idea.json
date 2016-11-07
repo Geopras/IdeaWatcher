@@ -22,6 +22,7 @@
         "mail_public_available": true
       },
       "publish_date": "",
+      "language": "",
       "hot_rank": 0,
       "trending_rank": 0,
       "fresh_rank": 0,
@@ -52,6 +53,7 @@
         "mail_public_available": true
       },
       "publish_date": "2016-10-30T18:25:43.511Z",
+      "language": "german",
       "hot_rank": 1,
       "trending_rank": 2,
       "fresh_rank": 2,
@@ -104,6 +106,7 @@
         "mail_public_available": true
       },
       "publish_date": "2016-10-31T23:40:55.511Z",
+      "language": "german",
       "hot_rank": 2,
       "trending_rank": 1,
       "fresh_rank": 1,

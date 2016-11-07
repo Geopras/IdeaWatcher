@@ -1,26 +1,34 @@
         <!----------------------------------- View : profile --------------------------------->
-        <div class="v-profile-view">
+        <div class="profile_view">
             <!----------------------------------- View : userProfile : tabs --------------------------->
-            
+
+            <nav>
+                <ul>
+                    <li><a class="profileSubMenu_myIdeas_button">My Ideas</a></li>
+                    <li><a class="profileSubMenu_followedIdeas_button">Followed Ideas</a></li>
+                    <li><a class="profileSubMenu_profileEdit_button">Profile</a></li>
+                </ul>
+            </nav>
+
+            <!--
             <ul class="tab">
-                <li><a href="javascript:void(0)" class="tablinks"
-                       onclick="openTab(event, 'hot')" id="defaultOpen">Meine Ideen</a></li>
-                <li><a href="javascript:void(0)" class="tablinks"
-                       onclick="openTab(event, 'fresh')">Ideen, denen ich folge</a></li>
-                <li><a href="javascript:void(0)" class="tablinks"
-                       onclick="openTab(event, 'trending')">Benutzerdaten</a></li>
+                <li><a href="javascript:void(0)" class="profile_tabLinks"
+                       onclick="openTab(event, 'myIdeas')" id="profile_defaultOpenTab">Meine Ideen</a></li>
+                <li><a href="javascript:void(0)" class="profile_tabLinks"
+                       onclick="openTab(event, 'followedIdeas')">Ideen, denen ich folge</a></li>
+                <li><a href="javascript:void(0)" class="profile_tabLinks"
+                       onclick="openTab(event, 'profileEdit')">Benutzerdaten</a></li>
             </ul>
-            
-            <!----------------------------------- View : userProfile : tab "hot" --------------------------->
-            <div id="hot" class="tabcontent">
+
+
+            <div id="profile_myIdeas_tab" class="profile_tabContent">
                 <h3>Hier stehen meine Ideen.</h3>
                 <img src="./resources/img/test.png" alt="" />
             </div>
 	
-            <!----------------------------------- View : userProfile : tab "fresh" --------------------------->
-            <div id="fresh" class="tabcontent">
+            <div id="profile_followedIdeas_tab" class="profile_tabContent">
                 <h3>Hier stehen die Ideen, denen ich folge.</h3>
             </div>
 
-            <!----------------------------------- View : userProfile : tab "trending" --------------------------->
-            <div id="trending" class="tabcontent">
+            <div id="profile_profileEdit_tab" class="profile_tabContent">
+            -->

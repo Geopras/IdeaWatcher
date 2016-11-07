@@ -1,37 +1,44 @@
 		<!----------------------------------- View : signUp --------------------------------->
-		<div class="v-signUp-view">
-			<h1>Werde Ideengeber!</h1>
+		<div class="signUp_view">
+			<h1 class="signUp_header">Sign Up</h1>
 			<form>
 				<!-- action="hierhin_wird_es_mit_submit_geschickt" -->
-				<div class="required-input">
+				<div class="required_input">
 					<p>
-						<label for="uname">Benutzername</label><br> <input id="uname"
-							type="text" required />
+						<label for="signUp_userName_input">Username</label><br>
+						<input id="signUp_userName_input" type="text"
+							   required />
 					</p>
 		
 				</div>
 		
-				<div class="required-input">
+				<div class="required_input">
 					<p>
-						<label for="mail">Email</label><br> <input id="mail"
-							type="email" placeholder="email@example.org" required />
+						<label for="signUp_mail_input">Email</label><br>
+						<input id="signUp_mail_input"
+							   type="email" placeholder="email@example.org"
+							   required />
 					</p>
 				</div>
 				
-				<div class="required-input">
+				<div class="required_input">
 					<p>
-						<label for="password">Passwort</label><br> <input id="password"
-							type="password" placeholder="******"/>
+						<label for="signUp_password_input">Password</label><br>
+						<input id="signUp_password_input"
+							   type="password" placeholder="******"/>
 					</p>
 				</div>
 				
-				<div class="required-input">
+				<div class="required_input">
 					<p>
-						<label for="passwordrepeat">Passwort bestätigen</label><br> <input id="passwordrepeat"
+						<label for="signUp_passwordRepeated_input">Password
+							Repeated</label><br>
+						<input id="signUp_passwordRepeated_input"
 							type="password" placeholder="******"/>
 					</p>
 				</div>
-				<p><input type="submit" value="Jetzt registrieren!"></p>
+				<p><input id="signUp_submit_button" type="submit"
+						  value="Register Now!"></p>
 			</form>
 		
 		</div>

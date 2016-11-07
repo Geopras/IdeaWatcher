@@ -1,0 +1,99 @@
+.mainMenu_view {
+  position: fixed;
+  width: 100%;
+  height: 80px;
+  z-index: 9999;
+}
+
+.mainMenu_view nav {
+  box-sizing: border-box;
+  float: left;
+  width: 100%;
+  background: #3a3a3a;
+  font-size: 16px;
+}
+
+.mainMenu_view .mainMenu_logo_button img{
+  height: 60px;
+  padding: 2px;
+  float: left;
+  cursor: pointer;
+}
+
+.mainMenu_view .mainMenu_logo_button img:hover {
+  background: #4096ee;
+}
+
+.mainMenu_view .mainMenu_lupe_button img{
+  height: 60px;
+  padding: 20px;
+  float: right;
+}
+
+.mainMenu_view .mainMenu_lupe_button img:hover {
+  background: #4096ee;
+}
+
+.mainMenu_view .mainMenu_user_button img{
+  height: 60px;
+  padding: 20px;
+  float: right;
+}
+
+.mainMenu_login_button{
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 1px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 17px 10px;
+  cursor: pointer;
+  border-radius: 12px;
+  float:right;
+}
+
+.mainMenu_view .mainMenu_user_button img:hover {
+  background: #4096ee;
+}
+
+.mainMenu_view nav ul {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.mainMenu_view nav a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+}
+
+.mainMenu_view nav ul li {
+  position: relative;
+  float: left;
+  list-style: none;
+  transition:all 500ms;
+}
+
+.mainMenu_view nav ul li:hover {
+  background: #4096ee;
+}
+
+.mainMenu_view nav ul li a {
+  padding: 20px;
+}
+
+.mainMenu_view nav ul li:hover ul {
+  height:auto;
+  opacity:1;
+}
+
+.mainMenu_view nav ul li ul {
+  position: absolute;
+  background: #3a3a3a;
+  overflow:hidden;
+  height: 0;
+}

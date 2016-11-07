@@ -1,44 +1,46 @@
 		        <!----------------------------------- View : profileEdit ----------------------------->
-		        <div class="v-profileEdit-view">
-		            <h1 id="profEdit_profile_header">Profile</h1>
-		            <div class="profileEdit-image">
+		        <div class="profileEdit_view">
+		            <h1 class="profileEdit_header">Profile</h1>
+		            <div class="profileEdit_image">
 		                <!--Font Awesome User Icon-->
 		                <img src="./resources/img/user.jpg" alt="profile-image" />
-		                <p><input id="profileEdit-browseImageButton" type="button" value="Browse ..." /></p>
+		                <p><input id="profileEdit_browseImage_button" type="button" value="Browse ..." /></p>
 		            </div>
 		
-		            <div class="profileEdit-form">
-		                <form class="js-profileEdit-form-profile"> <!-- action="hierhin_wird_es_mit_submit_geschickt" -->
-		                    <div class="required-input">
-		                        <p><label for="uname" id="profEdit_uname_label">Username</label><br>
-		                            <input id="uname" type="text" required /></p>
+		            <div class="profileEdit_container">
+		                <form class="profileEdit_form"> <!-- action="hierhin_wird_es_mit_submit_geschickt" -->
+		                    <div class="required_input">
+		                        <p><label for="profileEdit_userName_input" id="profileEdit_userName_label">Username</label><br>
+		                            <input id="profileEdit_userName_input" type="text" required /></p>
 		
 		                    </div>
 		
-		                    <div class="required-input">
-		                        <p><label for="mail" id="profEdit_email_label">Email</label><br>
-		                            <input id="mail" type="email" placeholder="email@example.org" required /></p>
+		                    <div class="required_input">
+		                        <p><label for="profileEdit_mail_input" id="profileEdit_mail_label">Email</label><br>
+		                            <input id="profileEdit_mail_input" type="email" placeholder="email@example.org" required /></p>
 		                    </div>
 		
-		                    <p><input id="mail_public" type="checkbox" />
-		                       <label for="mail_public" id="profEdit_mail-public_label">allow people to contact me (Email address is public)</label></p>
+		                    <p><input id="profileEdit_mail_checkbox" type="checkbox" />
+		                       <label for="profileEdit_mail_checkbox" id="profileEdit_mailCheckbox_label">allow people to contact me (Email address is public)</label></p>
 		
-		                    <p><label for="sname" id="profEdit_surname_label">Surname</label><br>
-		                        <input id="sname" type="text" /></p>
+		                    <p><label for="profileEdit_surName_input" id="profileEdit_surname_label">Surname</label><br>
+		                        <input id="profileEdit_surName_input"
+									   type="text" /></p>
 		
-		                    <p><label for="fname" id="profEdit_firstname_label">First Name</label><br>
-		                        <input id="fname" type="text" /></p>
+		                    <p><label for="profileEdit_firstName_input" id="profileEdit_firstName_label">First Name</label><br>
+		                        <input id="profileEdit_firstName_input" type="text" /></p>
 		
-		                    <p><label for="gender" id="profEdit_gender_label">Gender</label><br>
-		                        <select id="gender">
+		                    <p><label for="profileEdit_gender_select" id="profileEdit_gender_label">Gender</label><br>
+		                        <select id="profileEdit_gender_select">
 		                            <option>Female</option>
 		                            <option>Male</option>
 		                        </select></p>
 		
-		                    <p><label for="country" id="profEdit_country_label">Country</label><br>
-		                        <select id="country"></select></p>
+		                    <p><label for="profileEdit_country_select" id="profileEdit_country_label">Country</label><br>
+		                        <select id="profileEdit_country_select"></select></p>
 		
-		                    <p><input type="submit" value="Submit" id="profEdit_submit_button"></p>
+		                    <p><input type="submit" value="Submit"
+									  id="profileEdit_submit_button"></p>
 		                </form>
 		            </div>
 		        </div>
