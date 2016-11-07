@@ -1,10 +1,12 @@
 package de.ideaWatcher.webApi.workflows;
 
 import de.ideaWatcher.dataManager.DataManager;
-import de.ideaWatcher.webApi.core.IWorkflow;
-import de.ideaWatcher.webApi.core.Request;
+import de.ideaWatcher.webApi.core.IRequest;
+import de.ideaWatcher.webApi.core.IResponse;
 import de.ideaWatcher.webApi.core.Response;
+import de.ideaWatcher.webApi.dataManagerInterfaces.iControllers.IUserController;
 
+import javax.json.Json;
 import javax.json.JsonObject;
 
 /**
@@ -12,20 +14,11 @@ import javax.json.JsonObject;
  */
 public class SignupWorkflow implements IWorkflow {
 
-    private Request request;
-    private Response response;
-    private String errorMessage;
-    private String result;
+    private IUserController user;
 
-    /**
-     * Instanziiere SignupWorkflow-Objekt zur Registrierung
-     */
     public SignupWorkflow() {
 
-        this.request = new Request();
-        this.response = new Response();
-        this.errorMessage = "";
-        this.result = "";
+        this.user = (new DataManager()).getInstanceUser();
     }
 
     /**
@@ -33,62 +26,51 @@ public class SignupWorkflow implements IWorkflow {
      * 
      * @return {JsonObject} JSON-String als Ergebnis des Workflow
      */
-    public JsonObject getResponse(JsonObject request) {
+    public IResponse getResponse(IRequest request) {
 
-        // Konvertiere Request-JsonObject zu Request-JavaObject
-        this.request.convertToJava(request);
-        this.execute();
-        this.initializeResponse();
-        return this.response.convertToJson();
-    }
-
-    /**
-     * Fuehre den Workflow aus und speichere das Ergebnis bzw. Fehler
-     */
-    private void execute() {
-
-        JsonObject signupData = this.request.getData();
+        JsonObject signupData = request.getData();
         String userName = signupData.getString("username");
         String email = signupData.getString("email");
         String password = signupData.getString("password");
 
+        // Response-Objekt erstellen
+        IResponse response = new Response();
+
         // region wenn User nicht existiert, muss er angelegt werden
-        boolean existsUser = false;
+        boolean existsUser;
         try {
-            existsUser = DataManager.existsUser(userName);
+            existsUser = this.user.existsUser(userName);
         } catch (Exception ex) {
-            //TODO Fehler rausgeben
+            response.setErrorMessage(ex.getMessage());
+            response.setResult("notok");
+            return response;
         }
+
         if (!existsUser) {
             // user muss angelegt werden
             try {
-                DataManager.addUser(userName, email, password);
-                this.result = "ok";
+                Long userId = this.user.addUser(userName, email, password);
+                JsonObject data = Json.createObjectBuilder()
+                        .add("userId", userId).build();
+                response.setData(data);
+                response.setResult("ok");
+                return response;
+
             } catch (Exception e) {
-                // wenn Fehler auftreten, dann wird eine zugehoerige Nachricht
-                // in
-                // // this.errorMessage gespeichert
-                this.errorMessage = String.format("SSignup/user_signup_failed",
-                        userName);
-                this.result = "notok";
-                e.printStackTrace();
+                // wenn Fehler auftreten, dann wird ein zugehoeriger
+                // Nachrichten-Key in errorMessage gespeichert
+                response.setErrorMessage(String.format
+                        ("SSignup/user_signup_failed"));
+                response.setResult("notok");
+                return response;
             }
         } else {
-            // User bekommt eine Fehlermeldung auf der View
-            this.errorMessage = String.format("SSignup/username_already_exists",
-                    userName);
-            this.result = "notok";
+            // Wenn User bereits existiert, dann über Nachrichten-Key Fehler
+            // zurueckgeben
+            response.setErrorMessage("SSignup/username_already_exists");
+            response.setResult("notok");
+            return response;
         }
         // end region
-    }
-
-    
-     /**
-     * Initialisiere das Response-Objekt anhand des Workflow-Ergebnisses
-     */
-    private void initializeResponse() {
-
-        String destination = this.request.getDestination() + "-response";
-        this.response.initialize(destination, this.result, this.errorMessage);
     }
 }

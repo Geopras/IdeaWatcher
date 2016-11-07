@@ -3,10 +3,9 @@ package de.ideaWatcher.webApi.services;
 import de.ideaWatcher.common.CommandMap;
 import de.ideaWatcher.webApi.commands.LoginCommand;
 import de.ideaWatcher.webApi.commands.SignupCommand;
-import de.ideaWatcher.webApi.core.JsonConverter;
-import de.ideaWatcher.webApi.core.Request;
-import de.ideaWatcher.webApi.core.Response;
+import de.ideaWatcher.webApi.core.*;
 
+import javax.json.Json;
 import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,13 +19,14 @@ import java.util.List;
  */
 public class RequestService {
 
-    private CommandMap<Request, Response> workflowMapping;
+    private CommandMap<IRequest, IResponse> workflowMapping;
     private List<Long> tokens;
 
     /**
      * Create a new instance of RequestService for managing incoming Requests
      */
     public RequestService() {
+
         this.workflowMapping = new CommandMap();
         this.tokens = new ArrayList<>();
     }
@@ -60,16 +60,15 @@ public class RequestService {
 
         //region JSON-String-Request in Request-Javaobjekt umwandeln
         JsonObject requestJson = JsonConverter.convertToJsonObject(request);
-        Request requestObject = new Request(requestJson);
+        IRequest requestObject = new Request(requestJson);
         //endregion
 
         //region zugehoerigen Workflow ausfuehren und Antwort ermitteln
-        Response responseObject = new Response();
+        IResponse responseObject = new Response();
         try {
             // Angefragten Workflow ausfuehren
             responseObject = this.workflowMapping.executeCommand(requestObject
-                            .getDestination(),
-                    requestObject);
+                            .getDestination(), requestObject);
         } catch (Exception ex) {
             responseObject.setErrorMessage(ex.getMessage());
         }
@@ -80,9 +79,16 @@ public class RequestService {
                 responseObject.getResult().equals("valid")) {
             Long newToken = generateToken();
             this.tokens.add(newToken);
-            responseObject.setToken(newToken);
+            // neuen Token zu responseObject hinzufügen
+            JsonObject data = responseObject.getData();
+            JsonObject newData = Json.createObjectBuilder()
+                    .add("userId", data.getString("userId"))
+                    .add("token", newToken).build();
+            responseObject.setData(newData);
         }
         //endregion
+
+        responseObject.setDestination(requestObject.getDestination() + "-response");
 
         //region Response-Javaobjekt als JSON-String rausgeben
         JsonObject responseJson = responseObject.toJsonObject();

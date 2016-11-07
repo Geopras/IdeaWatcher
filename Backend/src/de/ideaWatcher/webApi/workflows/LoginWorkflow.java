@@ -1,10 +1,11 @@
 package de.ideaWatcher.webApi.workflows;
 
 import de.ideaWatcher.dataManager.DataManager;
-import de.ideaWatcher.webApi.core.IWorkflow;
-import de.ideaWatcher.webApi.core.Request;
+import de.ideaWatcher.webApi.core.IRequest;
+import de.ideaWatcher.webApi.core.IResponse;
 import de.ideaWatcher.webApi.core.Response;
-import de.ideaWatcher.webApi.model.User;
+import de.ideaWatcher.webApi.dataManagerInterfaces.iControllers.IUserController;
+import de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
 
 import javax.json.JsonObject;
 
@@ -13,74 +14,47 @@ import javax.json.JsonObject;
  */
 public class LoginWorkflow implements IWorkflow {
 
-    private Response response;
-    private String errorMessage;
-    private String result;
+    private IUserController user;
 
-    /**
-     * Instanziiere LoginWorkflow-Objekt zur Validierung eines Login-Versuchs
-     */
     public LoginWorkflow() {
 
-        this.response = new Response();
-        this.errorMessage = "";
-        this.result = "";
+        this.user = (new DataManager()).getInstanceUser();
     }
 
     /**
      * Fuehre den Workflow aus und gib das Ergebnis als Response-Objekt zurueck.
      * @return {JsonObject} JSON-String als Ergebnis des Workflow
      */
-    public Response getResponse(Request request) {
-
-        this.execute(request);
-        return this.response;
-    }
-
-    /**
-     * Fuehre den Workflow aus und speichere das Ergebnis bzw. Fehler
-     */
-    private void execute(Request request) {
+    public IResponse getResponse(IRequest request) {
 
         JsonObject loginData = request.getData();
         String username = loginData.getString("username");
         String password = loginData.getString("password");
 
-        User foundUser;
+        // Response-Objekt erstellen
+        IResponse response = new Response();
+
+        //region anzumeldenden User vom DataManager anfragen
+        IUser foundUser;
         try {
-            foundUser = getUser(username);
+            foundUser = this.user.getUser(username);
         } catch (Exception ex) {
-            this.errorMessage = String.format
-                    ("Slogin/username_not_exists", username);
-            this.result = "notvalid";
-            return;
+            response.setErrorMessage("SLogin/username_not_exists");
+            response.setResult("notvalid");
+            return response;
         }
+        //endregion
 
         //region Validierungslogik
         // Wenn Passwort korrekt:
-        if (DataManager.isCorrectPassword(foundUser.getPassword())) {
-            this.result = "valid";
-            return;
+        if (this.user.isCorrectPassword(password, foundUser.getPassword())) {
+            response.setResult("valid");
         }
         // Passwort nicht korrekt:
-        this.errorMessage = String.format
-                ("Slogin/password_not_valid",
-                username);
-        this.result = "notvalid";
+        response.setErrorMessage("SLogin/password_not_valid");
+        response.setResult("notvalid");
         //endregion
-    }
 
-    /**
-     * Finde den zum Login-Versuch zugehoerigen User durch den DataManager
-     * @return {User} gefundenen User
-     */
-    private User getUser(String username) throws Exception {
-
-        // TODO: Suche den zu validierenden User heraus
-        try {
-            return DataManager.getUser(username);
-        } catch (Exception ex) {
-            throw new Exception(ex);
-        }
+        return response;
     }
 }

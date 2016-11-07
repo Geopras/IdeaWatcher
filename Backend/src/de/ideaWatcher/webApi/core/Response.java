@@ -6,12 +6,11 @@ import javax.json.JsonObject;
 /**
  * Klasse zur Erzeugung einer Antwort-Nachricht als Ergebnis eines Workflow
  */
-public class Response {
+public class Response implements IResponse {
 
     private String destination;
     private String result;
-    private Long token;
-    private Long userId;
+    private JsonObject data;
     private String errorMessage;
 
     public void setDestination(String destination) {
@@ -26,32 +25,40 @@ public class Response {
         this.result = result;
     }
 
-    public void setToken(Long token) {
-        this.token = token;
+    public JsonObject getData() {
+        return data;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setData(JsonObject data) {
+        this.data = data;
     }
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
+    /**
+     * Erzeugt eine leere Response-Instanz
+     */
     public Response() {
         this.destination = "";
         this.result = "";
-        this.token = new Long(-1);
-        this.userId = new Long(-1);
+        this.data = null;
         this.errorMessage = "";
     }
 
-    public void initialize(String destination, String result, Long token, Long
-            userId, String errorMessage) {
+    /**
+     * Erzeugt eine gefuellte Response-Instanz
+     * @param destination {String} Zieladresse der Antwort im Frontend
+     * @param result {String} zu uebermittelndes Ergebnis
+     * @param data {JsonObject} zu uebermittelnde Daten
+     * @param errorMessage {String} Fehlernachricht
+     */
+    public Response(String destination, String result, JsonObject data,
+                     String errorMessage) {
         this.destination = destination;
         this.result = result;
-        this.token = token;
-        this.userId = userId;
+        this.data = data;
         this.errorMessage = errorMessage;
     }
     
@@ -59,11 +66,8 @@ public class Response {
         return Json.createObjectBuilder()
                 .add("destination", this.destination)
                 .add("result", this.result)
-                .add("token", this.token.toString())
-                .add("userId", this.userId.toString())
+                .add("data", this.data)
                 .add("error", this.errorMessage)
                 .build();
     }
-
-
 }

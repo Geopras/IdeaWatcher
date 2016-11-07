@@ -17,7 +17,7 @@ gulp.task('jsTransform', function(){
         '../dev/core/navigator.js',
         '../dev/core/webSocketConnector.js',
         '../dev/core/localizer.js',
-        '../dev/controller/**/*',
+        '../dev/controllers/**/*',
         '../dev/view/javascript/**/*'
     ])
     //Verkettung der Dateien
