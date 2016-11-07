@@ -3,8 +3,8 @@ package de.ideaWatcher.dataManager.controllers;
 import de.ideaWatcher.dataManager.BCrypt;
 import de.ideaWatcher.dataManager.databaseServices.UserDbService;
 import de.ideaWatcher.dataManager.pojos.User;
-import de.ideaWatcher.webApi.dataManagerInterfaces.iControllers.IUserController;
-import de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
+import main.java.ideaWatcher.webApi.dataManagerInterfaces.iControllers.IUserController;
+import main.java.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
 
 /**
  * Controller der statische Schnittstellen-Methoden zur Abfrage, Neuanlage und

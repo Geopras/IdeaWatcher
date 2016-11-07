@@ -1,10 +1,10 @@
 package de.ideaWatcher.webApi.workflows;
 
 import de.ideaWatcher.dataManager.DataManager;
-import de.ideaWatcher.webApi.core.IRequest;
-import de.ideaWatcher.webApi.core.IResponse;
 import de.ideaWatcher.webApi.core.Response;
 import de.ideaWatcher.webApi.dataManagerInterfaces.iControllers.IUserController;
+import de.ideaWatcher.webApi.core.IRequest;
+import de.ideaWatcher.webApi.core.IResponse;
 
 import javax.json.Json;
 import javax.json.JsonObject;

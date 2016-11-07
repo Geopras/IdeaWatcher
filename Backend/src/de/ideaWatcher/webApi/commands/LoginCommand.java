@@ -1,7 +1,7 @@
 package de.ideaWatcher.webApi.commands;
 
 import de.ideaWatcher.common.ICommand;
-import de.ideaWatcher.webApi.workflows.LoginWorkflow;
+import main.java.ideaWatcher.webApi.workflows.LoginWorkflow;
 /**
  * Command zum Ausfuehren des Login-Workflows
  * @param <Request> Request-Datentyp fuer Eingabeparameter

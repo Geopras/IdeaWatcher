@@ -1,6 +1,6 @@
 // Copyright (c) 2006 Damien Miller <djm@mindrot.org>
 
-package de.ideaWatcher.dataManager; 
+package de.ideaWatcher.dataManager;
 //
 // Permission to use, copy, modify, and distribute this software for any
 // purpose with or without fee is hereby granted, provided that the above

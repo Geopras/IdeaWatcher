@@ -1,6 +1,6 @@
 package de.ideaWatcher.dataManager.pojos;
 
-import de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
+import main.java.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
 
 /**
  * POJO zur Definition eines User-Objekts
