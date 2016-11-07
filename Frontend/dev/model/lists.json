@@ -11,10 +11,9 @@
       "house_Keeping",
       "website"
     ],
-    "country": [
-      "afghanistan",
-      "austria",
-      "germany"
+    "language": [
+      "german",
+      "english"
     ]
   }
 }
