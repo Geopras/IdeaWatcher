@@ -17,7 +17,7 @@ gulp.task('jsTransform', function(){
         '../dev/core/navigator.js',
         '../dev/core/webSocketConnector.js',
         '../dev/core/localizer.js',
-        '../dev/controllers/**/*',
+        '../dev/controller/**/*',
         '../dev/view/javascript/**/*'
     ])
     //Verkettung der Dateien
@@ -67,6 +67,8 @@ gulp.task('buildhtml', function () {
         '../dev/view/html/ideaDetails-view.html',
         '../dev/view/html/ideaCreation-view.html',
         '../dev/view/html/profile-view.html',
+        '../dev/view/html/myIdeas-view.html',
+        '../dev/view/html/followedIdeas-view.html',
         '../dev/view/html/profileEdit-view.html',
         '../dev/view/html/signUp-view.html',
         '../dev/view/html/impress-view.html',

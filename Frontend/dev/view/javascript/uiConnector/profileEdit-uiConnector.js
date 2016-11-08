@@ -9,6 +9,7 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
 
         var htmlForm = null;
         var htmlView = null;
+        var htmlProfileView = null;
 
         //region lade zu internationalisierende HTML-Elemente
         var htmlViewHeader = null;
@@ -36,6 +37,7 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             //region assign html elements
             htmlForm = document.querySelector('.profileEdit_form');
             htmlView = document.querySelector('.profileEdit_view');
+            htmlProfileView = document.querySelector('.profile_view');
             htmlViewHeader = document.querySelector('.profileEdit_header');
             htmlUserNameLabel = document.getElementById('profileEdit_userName_label');
             htmlEmailLabel = document.getElementById('profileEdit_mail_label');
@@ -71,10 +73,12 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             if(obj.shouldShow)
             {
                 localizeView();
+                htmlProfileView.style.display = 'block';
                 htmlView.style.display = 'block';
             }
             else
             {
+                htmlProfileView.style.display = 'none';
                 htmlView.style.display = 'none';
             }
         }

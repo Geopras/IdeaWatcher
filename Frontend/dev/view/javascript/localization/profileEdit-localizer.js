@@ -9,7 +9,7 @@ ideaWatcher.core.Localizer.ProfileEdit = {
         email: 'Email',
         firstName: 'First Name',
         gender: 'Gender',
-        header: 'Profile',
+        profile: 'Profile',
         mail_public_available: 'allow people to contact me (Email address is' +
         ' public)',
         submit: 'Submit',
@@ -22,7 +22,7 @@ ideaWatcher.core.Localizer.ProfileEdit = {
         email: 'E-Mail',
         firstName: 'Vorname',
         gender: 'Geschlecht',
-        header: 'Profil',
+        profile: 'Profil',
         mail_public_available: 'Erlaube anderen mich zu kontaktieren ' +
         '(E-Mail Adresse ist öffentlich)',
         submit: 'Übernehmen',
