@@ -1,4 +1,4 @@
-ideaWatcher.view.HotIdeaList = ideaWatcher.view.HotIdeaList || (function VHotIdeaList() {
+ideaWatcher.view.TrendingIdeaList = ideaWatcher.view.TrendingIdeaList || (function VTrendingIdeaList() {
 
     //region local vars
     // Event Globale Initialisierung
@@ -23,7 +23,7 @@ ideaWatcher.view.HotIdeaList = ideaWatcher.view.HotIdeaList || (function VHotIde
     //region cbIni
     function cbIni()
     {
-        console.log('Initialisiere UIConnector HotIdeaList');
+        console.log('Initialisiere UIConnector TrendingIdeaList');
 
                 //endregion
 
@@ -47,8 +47,8 @@ ideaWatcher.view.HotIdeaList = ideaWatcher.view.HotIdeaList || (function VHotIde
 
           
         //region register Callbacks
-        ideaWatcher.controller.HotIdeaList.registerShowView(cbShowView);
-        ideaWatcher.controller.HotIdeaList.registerRenderList(cbRenderList);
+        ideaWatcher.controller.TrendingIdeaList.registerShowView(cbShowView);
+        ideaWatcher.controller.TrendingIdeaList.registerRenderList(cbRenderList);
         //endregion 
         
     }
@@ -60,9 +60,9 @@ ideaWatcher.view.HotIdeaList = ideaWatcher.view.HotIdeaList || (function VHotIde
         var language = ideaWatcher.core.Localizer.getLanguage();
         //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
      
-        htmlView = document.querySelector('.hotIdeaList_view');
+        htmlView = document.querySelector('.trendingIdeaList_view');
         var header = document.createElement('h3');
-        header.textContent =  ideaWatcher.core.Localizer.HotIdeaList[language].header;
+        header.textContent =  ideaWatcher.core.Localizer.TrendingIdeaList[language].header;
         htmlView.appendChild(header);
         var ideaList = ideaWatcher.view.service.ideaList.renderList(itemList);   
         htmlView.appendChild(ideaList);
