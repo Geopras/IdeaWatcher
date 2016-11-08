@@ -6,8 +6,8 @@ import main.java.de.ideaWatcher.webApi.workflows.SignupWorkflow;
 /**
  * Created by geopras on 05.11.16.
  */
-public class SignupCommand<Request, Response> implements ICommand<Request,
-        Response> {
+public class SignupCommand<IRequest, IResponse> implements ICommand<IRequest,
+        IResponse> {
 
     /**
      * Command mit Login-Daten ausfuehren
@@ -15,8 +15,8 @@ public class SignupCommand<Request, Response> implements ICommand<Request,
      * @return {JsonObject} Ergebnis des Workflow als Antwort
      */
     @Override
-    public Response apply(Request data) {
+    public IResponse apply(IRequest data) {
         SignupWorkflow workflow = new SignupWorkflow();
-        return (Response) workflow.getResponse((main.java.de.ideaWatcher.webApi.core.Request) data);
+        return (IResponse) workflow.getResponse((main.java.de.ideaWatcher.webApi.core.IRequest) data);
     }
 }

@@ -1,10 +1,9 @@
 package main.java.de.ideaWatcher.webApi.endpoint;
 
-import main.java.de.ideaWatcher.webApi.services.RequestService;
+import main.java.de.ideaWatcher.webApi.core.RequestManager;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,7 +11,7 @@ import java.util.logging.Logger;
 public class WebSocketEndpoint {
 
     private static final Logger log = Logger.getLogger( WebSocketEndpoint.class.getName() );
-    private RequestService requestService;
+    private RequestManager requestManager;
 
 	// Request-String in Java-Objekt umwandeln und weitersenden
     @OnMessage
@@ -22,17 +21,17 @@ public class WebSocketEndpoint {
             if (session.isOpen()) {
                 // Validierung des Tokens mit UserID
                 // außer bei Login -> dort nur UserID und Token erzeugen
-                String response = requestService.getResponse(request);
+                String response = requestManager.getResponse(request);
                 session.getBasicRemote().sendText(response);
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             try {
                 log.log(Level.SEVERE, "Beim Behandeln des Requests ist ein " +
                         "Fehler aufgetreten! Die " +
                         "WebSocket-Verbindung wird geschlossen werden!\n" +
                         "Fehlermeldung: " + ex.getMessage());
                 session.close();
-            } catch (IOException e1) {
+            } catch (Exception e1) {
                 log.log(Level.SEVERE, "Beim Schliessen der " +
                         "WebSocket-Verbindung ist ein Fehler aufgetreten!\n" +
                         "Fehlermeldung: " + ex.getMessage());
@@ -43,8 +42,7 @@ public class WebSocketEndpoint {
     @OnOpen
     public void open(Session session) {
         System.out.println("Session open");
-        requestService = new RequestService();
-        requestService.initialize();
+
     }
 
     @OnClose

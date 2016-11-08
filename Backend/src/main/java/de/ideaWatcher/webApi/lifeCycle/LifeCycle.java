@@ -17,5 +17,8 @@ public class LifeCycle implements ServletContextListener{
 	public void contextInitialized(ServletContextEvent arg0)
 	{
 		//startup logic
+
+//		RequestManager = new RequestManager();
+//		requestService.initialize();
 	}
 }

@@ -9,4 +9,4 @@ ideaWatcher.core.Localizer.ideaDetails = {
     de_DE: {
 
     }
-}
+};

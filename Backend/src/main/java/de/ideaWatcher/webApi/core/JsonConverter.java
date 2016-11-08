@@ -14,9 +14,14 @@ public class JsonConverter {
      * @param jsonString
      * @return
      */
-    public static JsonObject convertToJsonObject(String jsonString) {
+    public static JsonObject convertToJsonObject(String jsonString) throws Exception {
 
-        JsonReader jsonReader = Json.createReader(new StringReader(jsonString));
-        return jsonReader.readObject();
+        try {
+            JsonReader jsonReader = Json.createReader(new StringReader(jsonString));
+            return jsonReader.readObject();
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+
     }
 }

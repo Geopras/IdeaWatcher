@@ -9,4 +9,4 @@ ideaWatcher.core.Localizer.impress = {
     de_DE: {
 
     }
-}
+};

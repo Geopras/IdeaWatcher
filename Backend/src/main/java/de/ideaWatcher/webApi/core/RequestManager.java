@@ -1,11 +1,9 @@
-package main.java.de.ideaWatcher.webApi.services;
+package main.java.de.ideaWatcher.webApi.core;
 
 import main.java.de.ideaWatcher.common.CommandMap;
 import main.java.de.ideaWatcher.webApi.commands.LoginCommand;
 import main.java.de.ideaWatcher.webApi.commands.SignupCommand;
-import main.java.de.ideaWatcher.webApi.core.*;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,16 +16,16 @@ import java.util.logging.Logger;
  * umwandeln, an den entsprechenden Workflow weiterleiten und das Ergebnis
  * als JSON-String zurueckgeben.
  */
-public class RequestService {
+public class RequestManager {
 
-    private static final Logger log = Logger.getLogger( RequestService.class.getName() );
+    private static final Logger log = Logger.getLogger( RequestManager.class.getName() );
     private CommandMap<IRequest, IResponse> workflowMapping;
     private List<Long> tokens;
 
     /**
-     * Create a new instance of RequestService for managing incoming Requests
+     * Create a new instance of RequestManager for managing incoming Requests
      */
-    public RequestService() {
+    public RequestManager() {
 
         this.workflowMapping = new CommandMap();
         this.tokens = new ArrayList<>();
@@ -58,26 +56,24 @@ public class RequestService {
      * @param request {String} Request als JSON-String
      * @return {String} Antwort zum Request als JSON-String
      */
-    public String getResponse(String request) {
+    public String getResponse(String request) throws Exception {
 
-        //region JSON-String-Request in Request-Javaobjekt umwandeln
-        JsonObject requestJson = JsonConverter.convertToJsonObject(request);
-        IRequest requestObject = new Request(requestJson);
+        //region Request-JSON-String in Javaobjekt umwandeln
+        IRequest requestObject;
+        try {
+            requestObject = toRequest(request);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
         //endregion
 
+        if (this.isRequestToAuthenticate(requestObject)) {
 
-        IResponse responseObject = new Response();
-
-        //region Token-Authentifizierung:
-        // Wenn Login- oder Signup-Request, dann Token generieren
-        if (requestObject.getDestination().startsWith("SLogin") ||
-                !requestObject.getDestination().startsWith("SSignup")) {
-            this.generateToken();
-        } else { // Wenn kein Login/Signup, dann Token prüfen
+        } else {
 
         }
 
-        //endregion
+        IResponse responseObject = new Response();
 
         //region zugehoerigen Workflow ausfuehren und Antwort ermitteln
         try {
@@ -89,21 +85,8 @@ public class RequestService {
         }
         //endregion
 
-        //region Wenn Login korrekt, dann Token generieren
-        if (requestObject.getDestination().equals("SLogin/validate") &&
-                responseObject.getResult().equals("valid")) {
-            Long newToken = generateToken();
-            this.tokens.add(newToken);
-            // neuen Token zu responseObject hinzufügen
-            JsonObject data = responseObject.getData();
-            JsonObject newData = Json.createObjectBuilder()
-                    .add("userId", data.getString("userId"))
-                    .add("token", newToken).build();
-            responseObject.setData(newData);
-        }
-        //endregion
-
         responseObject.setDestination(requestObject.getDestination() + "-response");
+        responseObject.setToken(requestObject.getToken());
 
         //region Response-Javaobjekt als JSON-String rausgeben
         JsonObject responseJson = responseObject.toJsonObject();
@@ -111,11 +94,57 @@ public class RequestService {
         //endregion
     }
 
+    private IRequest toRequest(String requestString) throws Exception {
+
+        //JSON-String-Request in Request-Javaobjekt umwandeln
+        JsonObject requestJson;
+        try {
+            requestJson = JsonConverter.convertToJsonObject(requestString);
+        } catch (Exception ex) {
+            throw new Exception("Fehler beim Konvertieren eines " +
+                    "Request-Strings in ein JsonObject!\nFehlermeldung: " + ex);
+        }
+
+        try {
+            String requestDestination = requestJson.getString("destination");
+            JsonObject requestData = requestJson.getJsonObject("data");
+            String requestToken = requestJson.getString("token");
+            return new Request(requestDestination, requestData, requestToken);
+
+        } catch (NullPointerException ex) {
+            throw new Exception("Fehler beim Extrahieren der Eigenschaften " +
+                    "des Requests! Es sind nicht alle notwendigen " +
+                    "Eigenschaften vorhanden (destination, data, token)");
+        } catch (ClassCastException ex) {
+            throw new Exception("Fehler beim Extrahieren der Eigenschaften " +
+                    "des Requests! Der Request-String hat kein korrektes " +
+                    "JSON-Format!");
+        }
+    }
+
+    private boolean isRequestToAuthenticate(IRequest request) {
+
+        // Prüft, ob der Request authentifiziert werden muss:
+        if (request.getDestination().startsWith("SLogin") ||
+                !request.getDestination().startsWith("SSignup")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private IResponse setResponseToken(IResponse response) {
+
+        Long newToken = this.generateToken();
+        response.setToken(newToken);
+        this.tokens.add(newToken);  //
+        return response;
+    }
+
     private boolean isAuthenticated(IRequest request) {
 
         // User-Authentifizierung (Token-Prüfung)
-        Long token = request.getToken();
-        if (this.tokens.contains(token)) {
+        if (this.tokens.contains(request.getToken())) {
             return true;
         } else {
             return false;
@@ -134,8 +163,7 @@ public class RequestService {
         //region Wenn Tokens vorhanden, dann Maximalwert + 1 nehmen
         Comparator<Long> cmp = (o1, o2) -> Long.valueOf(o1).compareTo(Long
                 .valueOf(o2));
-        return new Long(Collections.max(this.tokens, cmp)
-                .toString() + 1);
+        return new Long(Collections.max(this.tokens, cmp).toString() + 1);
         //endregion
     }
 }

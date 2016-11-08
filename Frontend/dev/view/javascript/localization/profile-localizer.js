@@ -9,4 +9,4 @@ ideaWatcher.core.Localizer.profile = {
     de_DE: {
 
     }
-}
+};

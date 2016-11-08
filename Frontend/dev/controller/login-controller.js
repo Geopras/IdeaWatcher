@@ -1,4 +1,4 @@
-ideaWatcher.controller.Login = ideaWatcher.controller.Login || (function CLogin() {
+ideaWatcher.controller.Login = ideaWatcher.controller.Login || (function () {
 
     //region local vars
     var WS_URL = 'ws://127.0.0.1:8080/IdeaWatcher/wsEndpoint';
@@ -44,8 +44,11 @@ ideaWatcher.controller.Login = ideaWatcher.controller.Login || (function CLogin(
         // das könnte man in das Model auslagern... sinnvoll?
         var exLoginRequest = {
             destination: 'SLogin/validateRequest',
-            userName: userName,
-            password: password
+            data: {
+                userName: userName,
+                password: password,
+            },
+            token: -1
         };
 
         return exLoginRequest;

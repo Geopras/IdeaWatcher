@@ -13,14 +13,14 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
             webSocket = new WebSocket(url);
 
             // callback function wenn Verbindung erfolgreich
-            webSocket.onOpen = function () {
+            webSocket.onopen = function () {
                 console.log('WebSocket-Verbindung erfolgreich hergestellt!');
                 callbackFunction(true);
                 isConnected = true;
             };
 
             // callback function wenn eine Nachricht reinkommt
-            webSocket.onMessage = function (event) {
+            webSocket.onmessage = function (event) {
                 try {
                     var serverMessage = JSON.parse(event.data);
                     console.log(serverMessage);
@@ -36,12 +36,12 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                 }
             };
 
-            webSocket.onError = function (error) {
+            webSocket.onerror = function (error) {
                 console.log('Fehler! Verbindungsaufbau schief gegangen!');
                 console.log('Fehlermeldung: ' + error);
                 isConnected = false;
             };
-            webSocket.onClose = function (event) {
+            webSocket.onclose = function (event) {
                 isConnected = false;
                 var reason = '', errorText = '';
 

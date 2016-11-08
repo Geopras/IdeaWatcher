@@ -9,4 +9,4 @@ ideaWatcher.core.Localizer.ideaCreation = {
     de_DE: {
 
     }
-}
+};

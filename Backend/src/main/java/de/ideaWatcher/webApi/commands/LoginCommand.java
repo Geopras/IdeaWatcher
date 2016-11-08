@@ -4,11 +4,11 @@ import main.java.de.ideaWatcher.common.ICommand;
 import main.java.de.ideaWatcher.webApi.workflows.LoginWorkflow;
 /**
  * Command zum Ausfuehren des Login-Workflows
- * @param <Request> Request-Datentyp fuer Eingabeparameter
- * @param <Response> Response-Datentyp fuer Ausgabeparameter
+ * @param <IRequest> Request-Datentyp fuer Eingabeparameter
+ * @param <IResponse> Response-Datentyp fuer Ausgabeparameter
  * */
-public class LoginCommand<Request, Response> implements ICommand<Request,
-        Response> {
+public class LoginCommand<IRequest, IResponse> implements ICommand<IRequest,
+        IResponse> {
 
     /**
      * Command mit Login-Daten ausfuehren
@@ -16,8 +16,9 @@ public class LoginCommand<Request, Response> implements ICommand<Request,
      * @return {JsonObject} Ergebnis des Workflow als Antwort
      */
     @Override
-    public Response apply(Request data) {
+    public IResponse apply(IRequest data) {
         LoginWorkflow workflow = new LoginWorkflow();
-        return (Response) workflow.getResponse((main.java.de.ideaWatcher.webApi.core.Request) data);
+        return (IResponse) workflow.getResponse((main.java.de.ideaWatcher
+                .webApi.core.IRequest) data);
     }
 }
