@@ -1,2 +1,31 @@
         <!----------------------------------- View : ideaCreation ---------------------------->
-        <div class="ideaCreation_view"></div>
+        <div class="ideaCreation_view">
+            <h1>New Idea</h1>
+                    <div class="ideaCreation_container">
+                        <form class="ideaCreation_form"> <!-- action="hierhin_wird_es_mit_submit_geschickt" -->
+                            <p id="ideaCreation_name"><label for="ideaCreation_name_input" id="ideaCreation_name_label">Name</label><br>
+                                <input id="ideaCreation_name_input"
+                                       type="text" /></p>
+                            <p id="ideaCreation_category"><label for="ideaCreation_category_input" id="ideaCreation_category_label">Category</label><br>
+                                <select class="minimal" id="ideaCreation_category_select">
+                                    <option value="ideaCreation_category_1">Category 1</option>
+                                    <option value="ideaCreation_category_2">Category 2</option>
+                                    <option value="ideaCreation_category_3">Category 3</option>
+                                </select></p>
+                            <p style="clear: left;"><label for="ideaCreation_description_textarea" id="ideaCreation_description_label">Description</label><br>
+                                <textarea name="ideaCreation_description_textarea" 
+                                          id="ideaCreation_description_textarea" 
+                                          onfocus="this.value=''; setbg('#e5fff3');" 
+                                          onblur="setbg('white')">
+                                          Enter your description here...
+                                </textarea></p>
+                            <p id="ideaCreation_all_buttons"><input type="submit" value="Publish"
+                                      id="ideaCreation_publish_button">
+                               <input type="submit" value="Cancel"
+                                      id="ideaCreation_cancel_button">
+                               <input type="submit" value="Save"
+                                      id="ideaCreation_save_button">
+                            </p>
+                        </form>
+                    </div>
+        </div>
