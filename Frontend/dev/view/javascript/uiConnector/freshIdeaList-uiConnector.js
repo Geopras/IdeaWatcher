@@ -61,7 +61,7 @@ ideaWatcher.view.FreshIdeaList = ideaWatcher.view.FreshIdeaList || (function VFr
         //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
      
         htmlView = document.querySelector('.freshIdeaList_view');
-        var header = document.createElement('h3');
+        var header = document.createElement('h1');
         header.textContent =  ideaWatcher.core.Localizer.FreshIdeaList[language].header;
         htmlView.appendChild(header);
         var ideaList = ideaWatcher.view.service.ideaList.renderList(itemList);   

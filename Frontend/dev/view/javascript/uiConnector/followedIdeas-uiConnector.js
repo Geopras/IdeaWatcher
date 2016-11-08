@@ -9,6 +9,8 @@ ideaWatcher.view.FollowedIdeas = ideaWatcher.view.FollowedIdeas || (function VFo
 
         var htmlView = null;
         var htmlProfileView = null;
+    	var ideaList = null;
+
 
         //region lade zu internationalisierende HTML-Elemente
 
@@ -23,6 +25,23 @@ ideaWatcher.view.FollowedIdeas = ideaWatcher.view.FollowedIdeas || (function VFo
         {
             console.log('Initialisiere UIConnector FollowedIdeas');
 
+            var idea1 = {
+        			name : 'Testname1',
+        			description : 'description Test1',
+        			likes : 5,
+        			follower : 7,
+        			comments : 14
+        		}
+        		var idea2 = {
+        			name : 'Testname2',
+        			description : 'description Test2',
+        			likes : 4,
+        			follower : 8,
+        			comments : 4
+        		}
+        		var listIdeas = [ idea1, idea2 ];
+        		cbRenderList(listIdeas);
+        		
             //region assign html elements
             htmlView = document.querySelector('.followedIdeas_view');
             htmlProfileView = document.querySelector('.profile_view');
@@ -31,6 +50,7 @@ ideaWatcher.view.FollowedIdeas = ideaWatcher.view.FollowedIdeas || (function VFo
             //region register Callbacks
             // wam.logic.Login.registerVerificationError(cbShowVerificationError);
             ideaWatcher.controller.FollowedIdeas.registerShowView(cbShowView);
+            ideaWatcher.controller.FollowedIdeas.registerRenderList(cbRenderList);
             //endregion
 
             // lokalisiere die View anhand der global definierten Sprache
@@ -39,6 +59,20 @@ ideaWatcher.view.FollowedIdeas = ideaWatcher.view.FollowedIdeas || (function VFo
         }
         //endregion
 
+        function cbRenderList(itemList) {
+
+            // localization:
+            var language = ideaWatcher.core.Localizer.getLanguage();
+            //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
+         
+            htmlView = document.querySelector('.followedIdeas_view');
+            var header = document.createElement('h1');
+            header.textContent =  ideaWatcher.core.Localizer.FollowedIdeas[language].header;
+            htmlView.appendChild(header);
+            var ideaList = ideaWatcher.view.service.ideaList.renderList(itemList);   
+            htmlView.appendChild(ideaList);
+        }
+        
         //region showView
         function cbShowView(obj)
         {

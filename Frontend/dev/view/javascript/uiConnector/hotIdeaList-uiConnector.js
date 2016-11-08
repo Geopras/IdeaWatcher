@@ -56,7 +56,7 @@ ideaWatcher.view.HotIdeaList = ideaWatcher.view.HotIdeaList || (function VHotIde
         //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
      
         htmlView = document.querySelector('.hotIdeaList_view');
-        var header = document.createElement('h3');
+        var header = document.createElement('h1');
         header.textContent =  ideaWatcher.core.Localizer.HotIdeaList[language].header;
         htmlView.appendChild(header);
         var ideaList = ideaWatcher.view.service.ideaList.renderList(itemList);   

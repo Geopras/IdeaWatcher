@@ -65,9 +65,8 @@ ideaWatcher.view.MyIdeas = ideaWatcher.view.MyIdeas || (function VMyIdeas() {
         // localization:
         var language = ideaWatcher.core.Localizer.getLanguage();
         //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
-     
-        htmlView = document.querySelector('.myIdeaList_view');
-        var header = document.createElement('h3');
+        htmlView = document.querySelector('.myIdeas_view');
+        var header = document.createElement('h1');
         header.textContent =  ideaWatcher.core.Localizer.MyIdeaList[language].header;
         htmlView.appendChild(header);
         var ideaList = ideaWatcher.view.service.ideaList.renderList(itemList);   
