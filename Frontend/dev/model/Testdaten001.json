@@ -1,0 +1,101 @@
+
+
+{
+  "password": "",
+  "userName": "Neuer Benutzer",
+  "email": "",
+  "mailPublicAvailable": true,
+  "surname": "",
+  "firstname": "",
+  "gender": "",
+  "language": "",
+  "pictureURL": "",
+  "createdIdeas": [],
+  "numberCreated": 0,
+  "followedIdeas": [],
+  "numberFollowed": 0
+},
+{
+  "password": "fa18b86a-356f-4651-8d3a-e0a3475ec604",
+  "userName": "testuser",
+  "email": "user@test.com",
+  "mailPublicAvailable": true,
+  "surname": "Wurst",
+  "firstname": "Hans",
+  "gender": "male",
+  "language": "german",
+  "pictureURL": "",
+  "password_hash": "Hier könnte Ihre Werbung stehen",
+  "createdIdeas": [
+	{
+	  "idea_id": "fa5dc9be-12e6-4eab-bc29-f6a70c766db8",
+	  "ideaname": "Solarbetriebener Currywurstschneider"
+	}
+  ],
+  "numberCreated": 1,
+  "followedIdeas": [
+	{
+	  "idea_id": "fa5dc9be-12e6-4eab-bc29-f6a70c766db8",
+	  "ideaname": "Atombetriebener Rasenmäher"
+	}
+  ],
+  "numberFollowed": 1
+},
+{
+  "password": "e7b342d6-3747-4656-b97a-b9a6098293a8",
+  "userName": "DieWildeAngie",
+  "email": "angie@bundestag.de",
+  "mailPublicAvailable": false,
+  "surname": "Merkel",
+  "firstname": "Angela",
+  "gender": "female",
+  "language": "german",
+  "pictureURL": "",
+  "password_hash": "Hier könnte Ihre Werbung stehen",
+  "createdIdeas": [],
+  "numberCreated": 0,
+  "followedIdeas": [],
+  "numberFollowed": 0
+},
+{
+  "password": "ccd2d929-f4a5-4a07-be8d-f52624bb668e",
+  "userName": "RainerZufall",
+  "email": "rainer69@aol.com",
+  "mailPublicAvailable": true,
+  "surname": "Zufall",
+  "firstname": "Rainer",
+  "gender": "male",
+  "language": "english",
+  "pictureURL": "",
+  "password_hash": "Hier könnte Ihre Werbung stehen",
+  "createdIdeas": [],
+  "numberCreated": 0,
+  "followedIdeas": [
+	{
+	  "idea_id": "fa5dc9be-12e6-4eab-bc29-f6a70c766db8",
+	  "ideaname": "Solarbetriebener Currywurstschneider"
+	}
+  ],
+  "numberFollowed": 1
+},
+{
+  "password": "5bd65e6a-c37b-4f43-9a0b-befe6110eda9",
+  "userName": "LionToothPeter",
+  "email": "peter@zdf.de",
+  "mailPublicAvailable": true,
+  "surname": "Lustig",
+  "firstname": "Peter",
+  "gender": "male",
+  "language": "german",
+  "pictureURL": "",
+  "password_hash": "Hier könnte Ihre Werbung stehen",
+  "createdIdeas": [],
+  "numberCreated": 0,
+  "followedIdeas": [
+	{
+	  "idea_id": "fa5dc9be-12e6-4eab-bc29-f6a70c766db8",
+	  "ideaname": "Solarbetriebener Currywurstschneider"
+	}
+  ],
+  "numberFollowed": 1
+}
