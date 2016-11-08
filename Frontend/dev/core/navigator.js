@@ -1,8 +1,8 @@
 ideaWatcher.core.Navigator = ideaWatcher.core.Navigator || (function () {
 
         //region local vars
-        var currentView = 'ideaList';
-        var startView = 'ideaList';
+        var currentView = 'HotIdeaList';
+        var startView = 'HotIdeaList';
         //endregion
 
         //region EventListener registrieren(popstate)
