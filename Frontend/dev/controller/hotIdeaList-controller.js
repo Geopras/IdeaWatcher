@@ -1,11 +1,11 @@
-ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function CIdeaList() {
+ideaWatcher.controller.HotIdeaList = ideaWatcher.controller.HotIdeaList || (function CHotIdeaList() {
 
 
     //region local vars
     var cbShowView = null;
     var cbRenderList = null;
     var evSwitchView = {
-        topic: 'switchView/ideaList',
+        topic: 'switchView/HotIdeaList',
         cbFunction: cbSwitchView
     };
     // var evIni = Object.create(wam.core.events.Ini);
