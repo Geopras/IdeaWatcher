@@ -8,11 +8,6 @@ ideaWatcher.view.HotIdeaList = ideaWatcher.view.HotIdeaList || (function VHotIde
     };
 
     var htmlView = null;
-    var htmlIdeaHeader = null;
-    var htmlIdeaDescription = null;
-    var numberOfLikes = null;
-    var numberOfFollowers = null;
-    var numberOfComments = null;
     var ideaList = null;
     //endregion
 
