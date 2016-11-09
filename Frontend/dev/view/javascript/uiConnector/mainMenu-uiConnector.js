@@ -8,6 +8,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 				cbFunction : cbiIni
 			};
 			var htmlView;
+			var htmlHomeButton;
 			var htmlHotButton;
 			var htmlFreshButton;
 			var htmlTrendingButton;
@@ -24,6 +25,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 			function cbiIni() {
 				console.log('ini Event');
 				htmlView = document.querySelector('.mainMenu_view');
+				htmlHomeButton = document.querySelector('.mainMenu_logo_button');
 				htmlHotButton = document.querySelector('.mainMenu_hot_button');
 				htmlFreshButton = document.querySelector('.mainMenu_fresh_button');
 				htmlTrendingButton = document.querySelector('.mainMenu_trending_button');
@@ -33,6 +35,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 						.querySelector('.mainMenu_user_button');
 				htmlCategoryParentNode = document.querySelector('.mainMenu_categoryList_ul');
 				
+				htmlHomeButton.addEventListener('click', handleButtonNavigation);
 				htmlHotButton.addEventListener('click', handleButtonNavigationHot);
 				htmlFreshButton.addEventListener('click', handleButtonNavigationFresh);
 				htmlTrendingButton.addEventListener('click', handleButtonNavigationTrending);
@@ -56,8 +59,8 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 
 				console.log('htmlBtnHome geklickt');
 				ideaWatcher.core.Navigator.switchView({
-					viewId : 'mainView',
-					url : 'myMainView'
+					viewId : 'HotIdeaList',
+					url : 'ideaWatcher.html'
 				});
 			}
 
