@@ -24,8 +24,11 @@ ideaWatcher.controller.CategoryIdeaList = ideaWatcher.controller.CategoryIdeaLis
         // if(obj.shouldShow) {
         // 	ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestIdeaListUser('plötzlich auftauchende UserID'));
         // }
+    	
+    	console.log(obj.additionalData);
         cbShowView({
-            shouldShow: obj.shouldShow
+            shouldShow: obj.shouldShow,
+            additionalData : obj.additionalData
         });
     }
     //endregion

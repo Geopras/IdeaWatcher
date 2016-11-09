@@ -14,6 +14,7 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
     var numberOfFollowers = null;
     var numberOfComments = null;
     var ideaList = null;
+    var header;
     //endregion
 
     //region subscribe to events
@@ -61,8 +62,7 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
         //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
      
         htmlView = document.querySelector('.categoryIdeaList_view');
-        var header = document.createElement('h1');
-        header.textContent =  ideaWatcher.core.Localizer.CategoryIdeaList[language].header;
+        header = document.createElement('h1');
         htmlView.appendChild(header);
         var ideaList = ideaWatcher.view.service.ideaList.renderList(itemList);   
         htmlView.appendChild(ideaList);
@@ -74,6 +74,7 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
         if(obj.shouldShow)
         {
             htmlView.style.display = 'block';
+            renderHeader(obj.additionalData.categoryName);
         }
         else
         {
@@ -81,6 +82,10 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
         }
     }
     //endregion
+    
+    function renderHeader(categoryName) {
+    	 header.textContent = categoryName ;
+    }
 
     return {
 

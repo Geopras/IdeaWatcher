@@ -115,9 +115,13 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 			function handleButtonNavigationCategory(clickEvent){
 
 	            console.log('htmlCategoryButton geklickt');
+	            var source = clickEvent.srcElement || clickEvent.target;
 	            ideaWatcher.core.Navigator.switchView({
 	                viewId: 'CategoryIdeaList',
-	                url: 'CategoryIdeaList'
+	                url: 'CategoryIdeaList',
+	                additionalData: {
+	                	categoryName: source.textContent
+	                }
 	            });
 	        }
 			
