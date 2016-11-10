@@ -1,4 +1,4 @@
-ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (function VCategoryIdeaList() {
+ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (function () {
 
     //region local vars
     // Event Globale Initialisierung
@@ -8,7 +8,7 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
     };
 
     var htmlView = null;
-    var htmlIdeaHeader = null;
+    var htmlHeader = null;
     var htmlIdeaDescription = null;
     var numberOfLikes = null;
     var numberOfFollowers = null;
@@ -26,6 +26,9 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
         console.log('Initialisiere UIConnector CategoryIdeaList');
 
                 //endregion
+
+        htmlView = document.querySelector('.categoryIdeaList_view');
+        htmlHeader = document.createElement('h3');
 
         var idea1 = {
           		name:'Testname1',
@@ -59,12 +62,10 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
         // localization:
         var language = ideaWatcher.core.Localizer.getLanguage();
         //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
-     
-        htmlView = document.querySelector('.categoryIdeaList_view');
-        var header = document.createElement('h3');
-        header.textContent =  ideaWatcher.core.Localizer.CategoryIdeaList[language].header;
-        htmlView.appendChild(header);
-        var ideaList = ideaWatcher.view.service.ideaList.renderList(itemList);   
+
+        htmlHeader.textContent =  ideaWatcher.core.Localizer.CategoryIdeaList[language].header;
+        htmlView.appendChild(htmlHeader);
+        ideaList = ideaWatcher.view.component.IdeaList.renderList(itemList);
         htmlView.appendChild(ideaList);
     }
     

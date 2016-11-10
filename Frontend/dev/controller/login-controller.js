@@ -10,7 +10,7 @@ ideaWatcher.controller.Login = ideaWatcher.controller.Login || (function () {
         topic: 'switchView/login',
         cbFunction: cbSwitchView
     };
-    // var evIni = Object.create(wam.core.events.Ini);
+    // var evIni = Object.create(wam.services.events.Ini);
     // evIni.cbFunction = cbIni;
     //endregion
 
@@ -42,14 +42,13 @@ ideaWatcher.controller.Login = ideaWatcher.controller.Login || (function () {
     function buildRequestLogin()
     {
         // das könnte man in das Model auslagern... sinnvoll?
-        var exLoginRequest = {
-            destination: 'SLogin/validateRequest',
-            data: {
-                userName: userName,
-                password: password,
-            },
-            token: -1
+        var exLoginRequest = ideaWatcher.model.Request;
+        exLoginRequest.destination = 'SLogin/validateRequest';
+        exLoginRequest.data = {
+            userName: userName,
+            password: password,
         };
+        exLoginRequest.token = '-1';
 
         return exLoginRequest;
     }

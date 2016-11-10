@@ -1,6 +1,6 @@
 package main.java.de.ideaWatcher.webApi.dataManagerInterfaces;
 
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iControllers.IUserController;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IUserController;
 
 /**
  * Interface zur Implementierung eines DataManagers

@@ -50,7 +50,7 @@ public class CommandMap<In, Out> {
      * Liste alle vorhandenen Commands der CommandMap in der Konsole auf
      */
     public void listCommands() {
-        System.out.println("Enabled commands: " +
+        System.out.println("Enabled command: " +
                 commands.keySet().stream().collect(Collectors.joining(", ")));
     }
 }

@@ -4,11 +4,11 @@
 
 ideaWatcher.core.Localizer.IdeaList = {
     en_GB: {
-        comments: "Comments: ",
-        followers: "Followers: "
+        comments: 'Comments: ',
+        followers: 'Followers: '
     },
     de_DE: {
-        comments: "Kommentare: ",
-        followers: "Verfolgende: "
+        comments: 'Kommentare: ',
+        followers: 'Verfolgende: '
     }
 }

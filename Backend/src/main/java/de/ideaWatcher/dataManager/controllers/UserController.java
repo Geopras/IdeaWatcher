@@ -1,8 +1,8 @@
 package main.java.de.ideaWatcher.dataManager.controllers;
 
 import main.java.de.ideaWatcher.dataManager.services.UserService;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iControllers.IUserController;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IUserController;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 
 /**
  * Controller der statische Schnittstellen-Methoden zur Abfrage, Neuanlage und
@@ -61,7 +61,7 @@ public class UserController implements IUserController {
     @Override
     public boolean isCorrectPassword(String plaintextPassword, String hashedPassword) {
 
-        return this.userService.isCorrectPassword(plaintextPassword,
+        return this.userService.validatePassword(plaintextPassword,
                 hashedPassword);
     }
 }

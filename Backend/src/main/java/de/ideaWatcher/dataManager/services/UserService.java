@@ -2,7 +2,7 @@ package main.java.de.ideaWatcher.dataManager.services;
 
 import main.java.de.ideaWatcher.dataManager.BCrypt;
 import main.java.de.ideaWatcher.dataManager.model.User;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.bson.Document;
 import static com.mongodb.client.model.Filters.eq;
 
@@ -11,18 +11,18 @@ import static com.mongodb.client.model.Filters.eq;
  */
 public class UserService {
 
-    private DBconnectionService dbConnectionService;
+    private DbConnectionService dbConnectionService;
 
     public UserService() {
-        this.dbConnectionService = new DBconnectionService("UserCollection");
+        this.dbConnectionService = new DbConnectionService("testUsers");
     }
 
     public IUser getUser(String userName) {
 
         dbConnectionService.openConnection();
 
-        Document userDoc = dbConnectionService.getCollection().find(eq
-                ("userName", userName)).first();
+        Document userDoc = dbConnectionService.getCollection()
+                .find(eq("userName", userName)).first();
         dbConnectionService.closeConnection();
 
         return buildUser(userDoc);
@@ -32,6 +32,7 @@ public class UserService {
 
         IUser user = new User();
         user.setUserName(userDoc.getString("userName").toString());
+        user.setPassword(userDoc.getString("password").toString());
         return user;
     }
 
@@ -87,7 +88,7 @@ public class UserService {
         }
     }
 
-    private String hashPassword(String password) {
+    public String hashPassword(String password) {
 
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
@@ -119,7 +120,7 @@ public class UserService {
                 .append("numberFollowed", user.getNumberFollowedIdeas());
     }
 
-    public boolean isCorrectPassword(String plaintextPassword, String
+    public boolean validatePassword(String plaintextPassword, String
             hashedPassword) {
 
         if (BCrypt.checkpw(plaintextPassword, hashedPassword)) {

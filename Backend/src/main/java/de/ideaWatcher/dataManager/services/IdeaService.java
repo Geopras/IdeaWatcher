@@ -5,9 +5,9 @@ package main.java.de.ideaWatcher.dataManager.services;
  */
 public class IdeaService {
 
-    private DBconnectionService dbConnectionService;
+    private DbConnectionService dbConnectionService;
 
     public IdeaService() {
-        this.dbConnectionService = new DBconnectionService("IdeaCollection");
+        this.dbConnectionService = new DbConnectionService("IdeaCollection");
     }
 }

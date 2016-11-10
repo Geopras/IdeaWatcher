@@ -1,4 +1,4 @@
-ideaWatcher.view.FollowedIdeas = ideaWatcher.view.FollowedIdeas || (function VFollowedIdeas() {
+ideaWatcher.view.FollowedIdeas = ideaWatcher.view.FollowedIdeas || (function () {
 
         //region local vars
         // Event Globale Initialisierung

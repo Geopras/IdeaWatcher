@@ -1,7 +1,6 @@
 package main.java.de.ideaWatcher.webApi.core;
 
-import javax.json.Json;
-import javax.json.JsonObject;
+import org.json.JSONObject;
 
 /**
  * Klasse zur Erzeugung einer Antwort-Nachricht als Ergebnis eines Workflow
@@ -11,7 +10,7 @@ public class Response implements IResponse {
     private String destination;
     private Long token;
     private String result;
-    private JsonObject data;
+    private JSONObject data;
     private String errorMessage;
 
     @Override
@@ -30,18 +29,28 @@ public class Response implements IResponse {
     }
 
     @Override
-    public JsonObject getData() {
+    public JSONObject getData() {
         return this.data;
     }
 
     @Override
-    public void setData(JsonObject data) {
+    public void setData(JSONObject data) {
         this.data = data;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return this.errorMessage;
     }
 
     @Override
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    @Override
+    public boolean hasToken() {
+        return this.token != null;
     }
 
     @Override
@@ -68,7 +77,7 @@ public class Response implements IResponse {
      * @param data {JsonObject} zu uebermittelnde Daten
      * @param errorMessage {String} Fehlernachricht
      */
-    public Response(String destination, Long token, String result, JsonObject
+    public Response(String destination, Long token, String result, JSONObject
             data, String errorMessage) {
         this.destination = destination;
         this.token = token;
@@ -77,13 +86,12 @@ public class Response implements IResponse {
         this.errorMessage = errorMessage;
     }
     
-    public JsonObject toJsonObject() {
-        return Json.createObjectBuilder()
-                .add("destination", this.destination)
-                .add("token", this.token)
-                .add("result", this.result)
-                .add("data", this.data)
-                .add("error", this.errorMessage)
-                .build();
+    public JSONObject toJSONObject() {
+        return new JSONObject()
+                .append("destination", this.destination)
+                .append("token", this.token)
+                .append("result", this.result)
+                .append("data", this.data)
+                .append("error", this.errorMessage);
     }
 }

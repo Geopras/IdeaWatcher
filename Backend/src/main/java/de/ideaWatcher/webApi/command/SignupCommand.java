@@ -1,7 +1,7 @@
-package main.java.de.ideaWatcher.webApi.commands;
+package main.java.de.ideaWatcher.webApi.command;
 
 import main.java.de.ideaWatcher.common.ICommand;
-import main.java.de.ideaWatcher.webApi.workflows.SignupWorkflow;
+import main.java.de.ideaWatcher.webApi.workflow.SignupWorkflow;
 
 /**
  * Created by geopras on 05.11.16.

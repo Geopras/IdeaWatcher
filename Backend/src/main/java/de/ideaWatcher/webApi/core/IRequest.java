@@ -1,6 +1,6 @@
 package main.java.de.ideaWatcher.webApi.core;
 
-import javax.json.JsonObject;
+import org.json.JSONObject;
 
 /**
  * Interface zur Erstellung einer Request-Klasse
@@ -17,7 +17,7 @@ public interface IRequest {
      * Gibt Daten zur Anfrage zurueck
      * @return {JsonObject} Daten
      */
-    JsonObject getData();
+    JSONObject getData();
 
     /**
      * Gibt Anfrage-Token zurueck

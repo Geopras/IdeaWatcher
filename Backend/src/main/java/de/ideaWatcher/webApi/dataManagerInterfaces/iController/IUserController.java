@@ -1,6 +1,6 @@
-package main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iControllers;
+package main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController;
 
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 
 /**
  * Interface für Definition der Benutzerverwaltungsschnittstelle

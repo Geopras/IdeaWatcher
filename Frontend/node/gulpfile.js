@@ -18,7 +18,8 @@ gulp.task('jsTransform', function(){
         '../dev/core/webSocketConnector.js',
         '../dev/core/localizer.js',
         '../dev/controller/**/*',
-        '../dev/view/javascript/**/*'
+        '../dev/view/javascript/**/*',
+        '../dev/model/**/*'
     ])
     //Verkettung der Dateien
     .pipe(concat('ideaWatcher.js'))

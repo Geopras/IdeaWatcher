@@ -1,6 +1,6 @@
 package main.java.de.ideaWatcher.webApi.endpoint;
 
-import main.java.de.ideaWatcher.webApi.core.RequestManager;
+import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 public class WebSocketEndpoint {
 
     private static final Logger log = Logger.getLogger( WebSocketEndpoint.class.getName() );
-    private RequestManager requestManager;
 
 	// Request-String in Java-Objekt umwandeln und weitersenden
     @OnMessage
@@ -21,7 +20,7 @@ public class WebSocketEndpoint {
             if (session.isOpen()) {
                 // Validierung des Tokens mit UserID
                 // außer bei Login -> dort nur UserID und Token erzeugen
-                String response = requestManager.getResponse(request);
+                String response = InstanceManager.getRequestManager().getResponse(request);
                 session.getBasicRemote().sendText(response);
             }
         } catch (Exception ex) {
@@ -42,14 +41,15 @@ public class WebSocketEndpoint {
     @OnOpen
     public void open(Session session) {
         System.out.println("Session open");
-
     }
 
     @OnClose
     public void close(Session session) {
+        System.out.println("Session closed");
     }
 
     @OnError
     public void onError(Throwable error) {
+        System.out.println("Session error");
     }
 }

@@ -1,4 +1,4 @@
-ideaWatcher.controller.HotIdeaList = ideaWatcher.controller.HotIdeaList || (function CHotIdeaList() {
+ideaWatcher.controller.HotIdeaList = ideaWatcher.controller.HotIdeaList || (function () {
 
 
     //region local vars
@@ -8,7 +8,7 @@ ideaWatcher.controller.HotIdeaList = ideaWatcher.controller.HotIdeaList || (func
         topic: 'switchView/HotIdeaList',
         cbFunction: cbSwitchView
     };
-    // var evIni = Object.create(wam.core.events.Ini);
+    // var evIni = Object.create(wam.services.events.Ini);
     // evIni.cbFunction = cbIni;
     //endregion
 
@@ -22,7 +22,7 @@ ideaWatcher.controller.HotIdeaList = ideaWatcher.controller.HotIdeaList || (func
     function cbSwitchView(obj)
     {
         // if(obj.shouldShow) {
-        // 	ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestIdeaListUser('plötzlich auftauchende UserID'));
+        // 	ideaWatcher.services.WebSocketConnector.sendRequest(buildRequestIdeaListUser('plötzlich auftauchende UserID'));
         // }
         cbShowView({
             shouldShow: obj.shouldShow

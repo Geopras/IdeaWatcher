@@ -6,5 +6,10 @@ package main.java.de.ideaWatcher.common;
  */
 public interface ICommand<In, Out> {
 
+    /**
+     * Fuehrt den Command aus
+     * @param data zu uebergebende Daten
+     * @return Ergebnis des Command zurueckgegeben
+     */
     Out apply(In data);
 }

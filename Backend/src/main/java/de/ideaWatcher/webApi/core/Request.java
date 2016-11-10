@@ -1,6 +1,6 @@
 package main.java.de.ideaWatcher.webApi.core;
 
-import javax.json.JsonObject;
+import org.json.JSONObject;
 
 /**
  * Klasse zur Erzeugung eines Request-Javaobjekts
@@ -8,7 +8,7 @@ import javax.json.JsonObject;
 public class Request implements IRequest {
 
     private String destination;
-    private JsonObject data;
+    private JSONObject data;
     private Long token;
 
     @Override
@@ -17,7 +17,7 @@ public class Request implements IRequest {
     }
 
     @Override
-    public JsonObject getData() {
+    public JSONObject getData() {
         return this.data;
     }
 
@@ -29,11 +29,11 @@ public class Request implements IRequest {
     /**
      * Gibt neue Instanz der Klasse Request zurueck
      * @param destination {String} Ziel der Anfrage
-     * @param data {JsonObject} Daten zur Anfrage
+     * @param data {JSONObject} Daten zur Anfrage
      * @param token {Long} Token der Benutzersession
      * @return {IRequest} Request-Objekt
      */
-    public Request(String destination, JsonObject data, Long token) {
+    public Request(String destination, JSONObject data, Long token) {
         this.destination = destination;
         this.data = data;
         this.token = token;
@@ -42,11 +42,11 @@ public class Request implements IRequest {
     /**
      * Gibt neue Instanz der Klasse Request zurueck
      * @param destination {String} Ziel der Anfrage
-     * @param data {JsonObject} Die Daten der Anfrage als JsonObject
+     * @param data {JSONObject} Die Daten der Anfrage als JsonObject
      * @param token {String} User-Token
      * @return {IRequest} Request-Objekt
      */
-    public Request(String destination, JsonObject data, String token) {
+    public Request(String destination, JSONObject data, String token) {
         this.destination = destination;
         this.data = data;
         this.token = new Long(token);

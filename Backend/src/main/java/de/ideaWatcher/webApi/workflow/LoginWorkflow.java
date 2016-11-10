@@ -1,13 +1,13 @@
-package main.java.de.ideaWatcher.webApi.workflows;
+package main.java.de.ideaWatcher.webApi.workflow;
 
-import main.java.de.ideaWatcher.dataManager.DataManager;
-import main.java.de.ideaWatcher.webApi.core.Response;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iControllers.IUserController;
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
+import main.java.de.ideaWatcher.webApi.core.Response;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IUserController;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
+import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
+import org.json.JSONObject;
 
-import javax.json.JsonObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +21,7 @@ public class LoginWorkflow implements IWorkflow {
 
     public LoginWorkflow() {
 
-        this.user = (new DataManager()).getInstanceUser();
+        this.user = InstanceManager.getDataManager().getInstanceUser();
     }
 
     /**
@@ -30,19 +30,19 @@ public class LoginWorkflow implements IWorkflow {
      */
     public IResponse getResponse(IRequest request) {
 
-        JsonObject loginData = request.getData();
-        String username = loginData.getString("username");
-        String password = loginData.getString("password");
-
-        // Response-Objekt erstellen
+        // Workflow-Antwort instanziieren
         IResponse response = new Response();
+
+        JSONObject loginData = request.getData();
+        String username = loginData.getString("userName");
+        String password = loginData.getString("password");
 
         //region anzumeldenden User vom DataManager anfragen
         IUser foundUser;
         try {
             foundUser = this.user.getUser(username);
         } catch (Exception ex) {
-            response.setErrorMessage("SLogin/getUser_error");
+            response.setErrorMessage("SLogin_getUser_error");
             response.setResult("notvalid");
             log.log(Level.SEVERE, "Bei der Abfrage eines bestimmten User aus " +
                     "der Datenbank ist ein Fehler " +
@@ -55,10 +55,11 @@ public class LoginWorkflow implements IWorkflow {
         // Wenn Passwort korrekt:
         if (this.user.isCorrectPassword(password, foundUser.getPassword())) {
             response.setResult("valid");
+        } else {
+            // Passwort nicht korrekt:
+            response.setErrorMessage("SLogin_password_not_valid");
+            response.setResult("notvalid");
         }
-        // Passwort nicht korrekt:
-        response.setErrorMessage("SLogin/password_not_valid");
-        response.setResult("notvalid");
         //endregion
 
         return response;

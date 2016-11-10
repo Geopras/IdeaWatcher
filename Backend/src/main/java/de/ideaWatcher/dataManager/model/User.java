@@ -1,7 +1,7 @@
 package main.java.de.ideaWatcher.dataManager.model;
 
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IIdea;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,16 +34,6 @@ public class User implements IUser {
     @Override
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    @Override
-    public Long getUserId() {
-        return this.userId;
-    }
-
-    @Override
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     @Override
@@ -177,6 +167,8 @@ public class User implements IUser {
         this.surname = "";
         this.email = "";
         this.gender = "";
+        this.language = "";
+        this.pictureUrl = "";
         this.createdIdeas = new ArrayList<>();
         this.numberCreatedIdeas = 0;
         this.numberFollowedIdeas = 0;

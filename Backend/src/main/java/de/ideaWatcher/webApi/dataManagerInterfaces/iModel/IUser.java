@@ -1,4 +1,4 @@
-package main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs;
+package main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel;
 
 import java.util.List;
 
@@ -18,18 +18,6 @@ public interface IUser {
      * @param name {String} Benutzername
      */
     void setUserName(String name);
-
-    /**
-     * Gibt die User ID zurueck
-     * @return {Long} user id
-     */
-    Long getUserId();
-
-    /**
-     * Legt die User ID fest
-     * @param userId {Long}
-     */
-    void setUserId(Long userId);
 
     /**
      * Gibt das Passwort als Hash-Wert zurueck

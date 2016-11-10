@@ -1,4 +1,4 @@
-ideaWatcher.view.FreshIdeaList = ideaWatcher.view.FreshIdeaList || (function VFreshIdeaList() {
+ideaWatcher.view.FreshIdeaList = ideaWatcher.view.FreshIdeaList || (function () {
 
     //region local vars
     // Event Globale Initialisierung
@@ -64,7 +64,7 @@ ideaWatcher.view.FreshIdeaList = ideaWatcher.view.FreshIdeaList || (function VFr
         var header = document.createElement('h3');
         header.textContent =  ideaWatcher.core.Localizer.FreshIdeaList[language].header;
         htmlView.appendChild(header);
-        var ideaList = ideaWatcher.view.service.ideaList.renderList(itemList);   
+        var ideaList = ideaWatcher.view.component.IdeaList.renderList(itemList);
         htmlView.appendChild(ideaList);
     }
     

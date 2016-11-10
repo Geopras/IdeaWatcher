@@ -1,6 +1,6 @@
 package main.java.de.ideaWatcher.webApi.core;
 
-import javax.json.JsonObject;
+import org.json.JSONObject;
 
 /**
  * Interface zur Implementierung einer Response-Klasse
@@ -27,21 +27,33 @@ public interface IResponse {
 
     /**
      * Gibt die zu uebermittelnden Daten zurueck
-     * @return {JsonObject} Daten-JSON-Objekt
+     * @return {JSONObject} Daten-JSON-Objekt
      */
-    JsonObject getData();
+    JSONObject getData();
 
     /**
      * Legt die zu uebermittelnden Daten fest
-     * @param data {JsonObject} Daten-JSON-Objekt
+     * @param data {JSONObject} Daten-JSON-Objekt
      */
-    void setData(JsonObject data);
+    void setData(JSONObject data);
+
+    /**
+     * Gibt Fehlernachricht zurueck
+     * @return {String} Fehlernachricht
+     */
+    String getErrorMessage();
 
     /**
      * Legt die zu uebermittelnde Fehlernachricht ueber einen Identifier fest
      * @param errorMessage {String} Identifier fuer Fehlernachricht
      */
     void setErrorMessage(String errorMessage);
+
+    /**
+     * Prueft, ob Response-Objekt bereits einen Token hat
+     * @return {boolean} TRUE, wenn ein Token definiert ist
+     */
+    boolean hasToken();
 
     /**
      * Legt den User-Token fest
@@ -51,7 +63,7 @@ public interface IResponse {
 
     /**
      * Konvertiert das Java-Objekt in ein JSON-Objekt
-     * @return {JsonObject} JSON-Objekt
+     * @return {JSONObject} JSON-Objekt
      */
-    JsonObject toJsonObject();
+    JSONObject toJSONObject();
 }

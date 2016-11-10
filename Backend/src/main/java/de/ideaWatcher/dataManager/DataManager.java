@@ -3,7 +3,7 @@ package main.java.de.ideaWatcher.dataManager;
 import main.java.de.ideaWatcher.dataManager.services.UserService;
 import main.java.de.ideaWatcher.dataManager.controllers.UserController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.IDataManager;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iControllers
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController
         .IUserController;
 
 /**

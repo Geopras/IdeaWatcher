@@ -8,7 +8,7 @@ import org.bson.Document;
 /**
  * Service zur Verbindung mit der Datenbank
  */
-public class DBconnectionService {
+public class DbConnectionService {
 
     private MongoClient mongoClient;
     private MongoDatabase db;
@@ -27,7 +27,7 @@ public class DBconnectionService {
         return collection;
     }
 
-    public DBconnectionService(String collectionName) {
+    public DbConnectionService(String collectionName) {
         this.collectionName = collectionName;
     }
 
@@ -36,7 +36,7 @@ public class DBconnectionService {
         this.mongoClient = new MongoClient("localhost", 27017);
         //this.db = mongoClient.getDatabase("ideaWatcher");
         //this.collection = db.getCollection("ideaWatchUser");
-        this.db = this.mongoClient.getDatabase("ideaWatcher");
+        this.db = this.mongoClient.getDatabase("local");
         this.collection = this.db.getCollection(this.collectionName);
     }
 

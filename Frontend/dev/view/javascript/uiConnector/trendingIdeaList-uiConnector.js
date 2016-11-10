@@ -1,4 +1,4 @@
-ideaWatcher.view.TrendingIdeaList = ideaWatcher.view.TrendingIdeaList || (function VTrendingIdeaList() {
+ideaWatcher.view.TrendingIdeaList = ideaWatcher.view.TrendingIdeaList || (function () {
 
     //region local vars
     // Event Globale Initialisierung
@@ -64,7 +64,7 @@ ideaWatcher.view.TrendingIdeaList = ideaWatcher.view.TrendingIdeaList || (functi
         var header = document.createElement('h3');
         header.textContent =  ideaWatcher.core.Localizer.TrendingIdeaList[language].header;
         htmlView.appendChild(header);
-        var ideaList = ideaWatcher.view.service.ideaList.renderList(itemList);   
+        var ideaList = ideaWatcher.view.component.IdeaList.renderList(itemList);
         htmlView.appendChild(ideaList);
     }
     

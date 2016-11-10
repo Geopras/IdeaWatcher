@@ -1,14 +1,14 @@
-package main.java.de.ideaWatcher.webApi.workflows;
+package main.java.de.ideaWatcher.webApi.workflow;
 
-import main.java.de.ideaWatcher.dataManager.DataManager;
 import main.java.de.ideaWatcher.dataManager.model.User;
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.core.Response;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iControllers.IUserController;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iPOJOs.IUser;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IUserController;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
+import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
+import org.json.JSONObject;
 
-import javax.json.JsonObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +22,7 @@ public class SignupWorkflow implements IWorkflow {
 
     public SignupWorkflow() {
 
-        this.user = (new DataManager()).getInstanceUser();
+        this.user = InstanceManager.getDataManager().getInstanceUser();
     }
 
     /**
@@ -32,8 +32,8 @@ public class SignupWorkflow implements IWorkflow {
      */
     public IResponse getResponse(IRequest request) {
 
-        JsonObject signupData = request.getData();
-        String userName = signupData.getString("username");
+        JSONObject signupData = request.getData();
+        String userName = signupData.getString("userName");
         String email = signupData.getString("email");
         String password = signupData.getString("password");
 
@@ -45,7 +45,7 @@ public class SignupWorkflow implements IWorkflow {
         try {
             existsUser = this.user.existsUser(userName);
         } catch (Exception ex) {
-            response.setErrorMessage("SSignup/existsUser_error");
+            response.setErrorMessage("SSignup_existsUser_error");
             response.setResult("notok");
             log.log(Level.SEVERE, "Beim Prüfen, ob ein User existiert ist ein" +
                     " Fehler aufgetreten!\nFehlermeldung: " + ex.getMessage());
@@ -65,7 +65,7 @@ public class SignupWorkflow implements IWorkflow {
             } catch (Exception ex) {
                 // wenn Fehler auftreten, dann wird ein zugehoeriger
                 // Nachrichten-Key in errorMessage gespeichert
-                response.setErrorMessage("SSignup/addUser_error");
+                response.setErrorMessage("SSignup_addUser_error");
                 response.setResult("notok");
                 log.log(Level.SEVERE, "Beim Hinzufügen eines neuen User in " +
                         "die Datenbank ist ein Fehler aufgetreten!\n" +
@@ -75,7 +75,7 @@ public class SignupWorkflow implements IWorkflow {
         } else {
             // Wenn User bereits existiert, dann über Nachrichten-Key Fehler
             // zurueckgeben
-            response.setErrorMessage("SSignup/username_already_exists");
+            response.setErrorMessage("SSignup_username_already_exists");
             response.setResult("notok");
             return response;
         }

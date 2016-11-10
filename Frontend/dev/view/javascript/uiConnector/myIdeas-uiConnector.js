@@ -1,4 +1,4 @@
-ideaWatcher.view.MyIdeas = ideaWatcher.view.MyIdeas || (function VMyIdeas() {
+ideaWatcher.view.MyIdeas = ideaWatcher.view.MyIdeas || (function () {
 
         //region local vars
         // Event Globale Initialisierung

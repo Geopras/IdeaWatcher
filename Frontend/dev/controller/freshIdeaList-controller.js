@@ -1,4 +1,4 @@
-ideaWatcher.controller.FreshIdeaList = ideaWatcher.controller.FreshIdeaList || (function CFreshIdeaList() {
+ideaWatcher.controller.FreshIdeaList = ideaWatcher.controller.FreshIdeaList || (function () {
 
 
     //region local vars
@@ -8,7 +8,7 @@ ideaWatcher.controller.FreshIdeaList = ideaWatcher.controller.FreshIdeaList || (
         topic: 'switchView/FreshIdeaList',
         cbFunction: cbSwitchView
     };
-    // var evIni = Object.create(wam.core.events.Ini);
+    // var evIni = Object.create(wam.services.events.Ini);
     // evIni.cbFunction = cbIni;
     //endregion
 
@@ -22,7 +22,7 @@ ideaWatcher.controller.FreshIdeaList = ideaWatcher.controller.FreshIdeaList || (
     function cbSwitchView(obj)
     {
         // if(obj.shouldShow) {
-        // 	ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestIdeaListUser('plötzlich auftauchende UserID'));
+        // 	ideaWatcher.services.WebSocketConnector.sendRequest(buildRequestIdeaListUser('plötzlich auftauchende UserID'));
         // }
         cbShowView({
             shouldShow: obj.shouldShow
