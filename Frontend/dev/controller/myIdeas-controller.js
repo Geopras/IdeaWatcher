@@ -1,6 +1,7 @@
 ideaWatcher.controller.MyIdeas = ideaWatcher.controller.MyIdeas || (function CMyIdeas() {
 
         var cbShowView = null;
+        var cbRenderList = null;
         var evSwitchView = {
             topic: 'switchView/myIdeas',
             cbFunction: cbSwitchView
@@ -23,13 +24,19 @@ ideaWatcher.controller.MyIdeas = ideaWatcher.controller.MyIdeas || (function CMy
         function pubRegisterShowView(cb) {
             cbShowView = cb;
         }
+        
+        function pubRegisterRenderList(cb) {
+            cbRenderList = cb;
+           
+        }
         //endregion
 
         // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
         return {
             // hier kann die View eine Methode(ui-Connector) registrieren, die gerufen wird,
             // wenn die View ein/ausgeblendet werden soll
-            registerShowView: pubRegisterShowView
+            registerShowView: pubRegisterShowView,
+            registerRenderList: pubRegisterRenderList
         };
 
     })();

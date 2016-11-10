@@ -1,4 +1,4 @@
-ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (function () {
+ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (function VCategoryIdeaList() {
 
     //region local vars
     // Event Globale Initialisierung
@@ -14,6 +14,7 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
     var numberOfFollowers = null;
     var numberOfComments = null;
     var ideaList = null;
+    var header;
     //endregion
 
     //region subscribe to events
@@ -66,6 +67,11 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
         htmlHeader.textContent =  ideaWatcher.core.Localizer.CategoryIdeaList[language].header;
         htmlView.appendChild(htmlHeader);
         ideaList = ideaWatcher.view.component.IdeaList.renderList(itemList);
+     
+        htmlView = document.querySelector('.categoryIdeaList_view');
+        header = document.createElement('h1');
+        htmlView.appendChild(header);
+        var ideaList = ideaWatcher.view.service.ideaList.renderList(itemList);   
         htmlView.appendChild(ideaList);
     }
     
@@ -75,6 +81,7 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
         if(obj.shouldShow)
         {
             htmlView.style.display = 'block';
+            renderHeader(obj.additionalData.categoryName);
         }
         else
         {
@@ -82,6 +89,10 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
         }
     }
     //endregion
+    
+    function renderHeader(categoryName) {
+    	 header.textContent = categoryName ;
+    }
 
     return {
 

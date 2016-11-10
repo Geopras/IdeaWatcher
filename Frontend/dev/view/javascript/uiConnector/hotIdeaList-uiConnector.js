@@ -8,11 +8,6 @@ ideaWatcher.view.HotIdeaList = ideaWatcher.view.HotIdeaList || (function () {
     };
 
     var htmlView = null;
-    var htmlIdeaHeader = null;
-    var htmlIdeaDescription = null;
-    var numberOfLikes = null;
-    var numberOfFollowers = null;
-    var numberOfComments = null;
     var ideaList = null;
     //endregion
 
@@ -61,7 +56,7 @@ ideaWatcher.view.HotIdeaList = ideaWatcher.view.HotIdeaList || (function () {
         //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
      
         htmlView = document.querySelector('.hotIdeaList_view');
-        var header = document.createElement('h3');
+        var header = document.createElement('h1');
         header.textContent =  ideaWatcher.core.Localizer.HotIdeaList[language].header;
         htmlView.appendChild(header);
         var ideaList = ideaWatcher.view.component.IdeaList.renderList(itemList);

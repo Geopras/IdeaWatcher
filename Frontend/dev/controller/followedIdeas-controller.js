@@ -1,6 +1,7 @@
 ideaWatcher.controller.FollowedIdeas = ideaWatcher.controller.FollowedIdeas || (function CFollowedIdeas() {
 
         var cbShowView = null;
+        var cbRenderList = null;
         var evSwitchView = {
             topic: 'switchView/followedIdeas',
             cbFunction: cbSwitchView
@@ -23,13 +24,19 @@ ideaWatcher.controller.FollowedIdeas = ideaWatcher.controller.FollowedIdeas || (
         function pubRegisterShowView(cb) {
             cbShowView = cb;
         }
+        
+        function pubRegisterRenderList(cb) {
+            cbRenderList = cb;
+           
+        }
         //endregion
 
         // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
         return {
             // hier kann die View eine Methode(ui-Connector) registrieren, die gerufen wird,
             // wenn die View ein/ausgeblendet werden soll
-            registerShowView: pubRegisterShowView
+            registerShowView: pubRegisterShowView,
+            registerRenderList: pubRegisterRenderList
         };
 
     })();
