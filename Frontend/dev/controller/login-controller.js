@@ -31,10 +31,6 @@ ideaWatcher.controller.Login = ideaWatcher.controller.Login || (function () {
         if (ideaWatcher.core.WebSocketConnector.isConnected()) {
             ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestLogin());
         }
-        else {
-            // Versuche eine Verbindung zum Backend aufzubauen
-            ideaWatcher.core.WebSocketConnector.connectToServer(WS_URL, cbConnectionEstablished);
-        }
     }
     //endregion
 
@@ -46,27 +42,11 @@ ideaWatcher.controller.Login = ideaWatcher.controller.Login || (function () {
         exLoginRequest.destination = 'SLogin/validateRequest';
         exLoginRequest.data = {
             userName: userName,
-            password: password,
+            password: password
         };
         exLoginRequest.token = '-1';
 
         return exLoginRequest;
-    }
-    //endregion
-
-    //region Callback: connection established
-    function cbConnectionEstablished(isConnected,errorObject)
-    {
-        if (isConnected) {
-            // Wenn die Verbindung erfolgreich hergestellt wurde, wird der Request an das Backend geschickt
-            ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestLogin());
-        }
-        else {
-            // Verbindung konnte nicht hergestellt werden, nochmal versuchen?
-            // oder gleich der Error anzeigen? in eigener Komponente?
-            console.log('Verbindungsaufbau gescheitert');
-            console.log(errorObject);
-        }
     }
     //endregion
 
