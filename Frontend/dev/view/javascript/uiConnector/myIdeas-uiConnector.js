@@ -69,7 +69,7 @@ ideaWatcher.view.MyIdeas = ideaWatcher.view.MyIdeas || (function () {
         var header = document.createElement('h1');
         header.textContent =  ideaWatcher.core.Localizer.MyIdeaList[language].header;
         htmlView.appendChild(header);
-        var ideaList = ideaWatcher.view.service.ideaList.renderList(itemList);   
+		var ideaList = ideaWatcher.view.component.IdeaList.renderList(itemList);
         htmlView.appendChild(ideaList);
     }
 	

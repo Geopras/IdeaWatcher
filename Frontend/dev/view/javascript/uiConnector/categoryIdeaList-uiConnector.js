@@ -71,7 +71,6 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
         htmlView = document.querySelector('.categoryIdeaList_view');
         header = document.createElement('h1');
         htmlView.appendChild(header);
-        var ideaList = ideaWatcher.view.service.ideaList.renderList(itemList);   
         htmlView.appendChild(ideaList);
     }
     
