@@ -82,14 +82,27 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
     }
     
     function checkValidPassword() {
-    	if (htmlPasswordInput.value.length < 8)
+    	
+    	var regex = new RegExp('e');
+//    			'(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}');
+    	console.log(htmlPasswordInput.value);
+    	if (regex.test(htmlPasswordInput.value))
     		{
-    		console.log('Passwort ist zu kurz.');
+    		console.log('Dass Passwort entspricht den Richtlinien.');
     		}
     	else
     		{
-    		console.log('Passwort ist scheinbar lang genug.');
+    		console.log('Dass Passwort entspricht nicht den Richtlinien.');
     		}
+    	
+//    	if (htmlPasswordInput.value.length < 8)
+//    		{
+//    		console.log('Passwort ist zu kurz.');
+//    		}
+//    	else
+//    		{
+//    		console.log('Passwort ist scheinbar lang genug.');
+//    		}
     }
     
     //region showView
