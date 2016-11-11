@@ -85,7 +85,12 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function () {
     
     function checkValidPassword() {
     	
+<<<<<<< HEAD
     	var regex = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}');
+=======
+    	var regex = new RegExp('e');
+//    			'(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}');
+>>>>>>> branch 'testBassbiene' of https://github.com/Geopras/IdeaWatcher.git
     	console.log(htmlPasswordInput.value);
     	if (regex.test(htmlPasswordInput.value))
     		{
