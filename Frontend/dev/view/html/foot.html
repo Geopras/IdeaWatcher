@@ -2,10 +2,13 @@
     <!--<!script src="./ideaWatcher.min.js"></script>-->
     <script src="./ideaWatcher.js"></script>
     <script>
+        ideaWatcher.core.Localizer.setLanguage("de_DE");
+        var WS_URL = 'ws://127.0.0.1:8080/IdeaWatcher/wsEndpoint';
+        ideaWatcher.core.WebSocketConnector.connectToServer(WS_URL);
         var evIni = {
             topic:'internal/ini'
         };
-        ideaWatcher.core.Localizer.setLanguage("de_DE");
+
         ideaWatcher.core.MessageBroker.publish(evIni);
     </script>
 </body>

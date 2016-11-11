@@ -1,7 +1,6 @@
 ideaWatcher.controller.Login = ideaWatcher.controller.Login || (function () {
 
     //region local vars
-    var WS_URL = 'ws://127.0.0.1:8080/IdeaWatcher/wsEndpoint';
     var userName = null;
     var password = null;
     // var cbVerificationError = null;

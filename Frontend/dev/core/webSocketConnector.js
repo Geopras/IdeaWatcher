@@ -7,7 +7,7 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
         //endregion
 
         //region Neue WebSocket-Verbindung einrichten
-        function pubConnect(url, callbackFunction) {
+        function pubConnect(url) {//, callbackFunction) {
             if (webSocket != null) webSocket.close();
             console.log('Versuche eine neue WebSocket-Verbindung mit "' + url + '" herzustellen...');
             webSocket = new WebSocket(url);
@@ -15,7 +15,7 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
             // callback function wenn Verbindung erfolgreich
             webSocket.onopen = function () {
                 console.log('WebSocket-Verbindung erfolgreich hergestellt!');
-                callbackFunction(true);
+                // callbackFunction(true);
                 isConnected = true;
             };
 
