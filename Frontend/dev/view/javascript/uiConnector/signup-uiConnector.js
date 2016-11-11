@@ -46,7 +46,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
 
         //region register Callbacks
         // wam.logic.Login.registerVerificationError(cbShowVerificationError);
-        ideaWatcher.controller.SignUp.registerShowView(cbShowView);
+        ideaWatcher.controller.Signup.registerShowView(cbShowView);
         //endregion
 
         // region override onSubmit to prevent page reload
