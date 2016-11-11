@@ -65,10 +65,10 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                 errorText = 'Grund für Verbindungstrennung: ' + event.code + ' --- ' + reason;
                 console.log(errorText);
                 // besser als Objekt schreiben um nicht zu verwirren?
-                callbackfunction(false, {
-                    code: event.code,
-                    reason: reason
-                });
+                // callbackfunction(false, {
+                //     code: event.code,
+                //     reason: reason
+                // });
             };
         }
 

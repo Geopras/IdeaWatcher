@@ -1,4 +1,4 @@
-ideaWatcher.model.Idea = {
+ideaWatcher.model.Idea = ideaWatcher.model.Idea || {
     name: '',
     description: '',
     category: '',

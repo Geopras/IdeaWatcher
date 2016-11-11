@@ -1,4 +1,4 @@
-ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
+ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function () {
 
     //region local vars
     // Event Globale Initialisierung
@@ -61,9 +61,11 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         //region LoginButton: Eventlistener(click)
         htmlSubmitButton.addEventListener('click', function clickSignUp() {
 
-            var exObj = {
+            var exObj = ideaWatcher.model.SignupRequest;
+            exObj.data = {
                 userName: htmlUsernameInput.value,
-                password: htmlPasswordInput.value
+                password: htmlPasswordInput.value,
+                email: htmlEmailInput.value
             };
             console.log(exObj);
 

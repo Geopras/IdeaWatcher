@@ -13,13 +13,15 @@ gulp.task('jsTransform', function(){
     // Auswahl der Ausgangsdateien
     return gulp.src([
         '../dev/core/namespace.js',
+        '../dev/model/**/*',
         '../dev/core/messageBroker.js',
         '../dev/core/navigator.js',
         '../dev/core/webSocketConnector.js',
         '../dev/core/localizer.js',
+
         '../dev/controller/**/*',
-        '../dev/view/javascript/**/*',
-        '../dev/model/**/*'
+        '../dev/view/javascript/**/*'
+
     ])
     //Verkettung der Dateien
     .pipe(concat('ideaWatcher.js'))

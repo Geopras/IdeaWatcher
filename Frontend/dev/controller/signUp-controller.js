@@ -1,8 +1,5 @@
 ideaWatcher.controller.Signup = ideaWatcher.controller.Signup || (function () {
 
-    var userName = null;
-    var email = null;
-    var password = null;
     var cbShowView = null;
     var evSwitchView = {
         topic: 'switchView/signup',
@@ -17,38 +14,29 @@ ideaWatcher.controller.Signup = ideaWatcher.controller.Signup || (function () {
     //region TryToSignup
     function pubTryToSignup(exObject)
     {
-        // BN+PW zwischenspeichern, wird von buildRequestLogin() Methode an 2 Stellen Benötigt
-        userName = exObject.userName;
-        email = exObject.email;
-        password = exObject.password;
-
         // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
         if (ideaWatcher.core.WebSocketConnector.isConnected()) {
-            ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestLogin());
-        }
-        else {
-            // Versuche eine Verbindung zum Backend aufzubauen
-            ideaWatcher.core.WebSocketConnector.connectToServer(WS_URL, cbConnectionEstablished);
+            ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestSignup(exObject));
+        } else {
+            // TODO: Was soll passieren, wenn keine Verbindung gerade
+            // TODO: existiert? Fehlermeldung?
         }
     }
     //endregion
 
     //region build: RequestSignup
-    function buildRequestSignup()
+    function buildRequestSignup(exObject)
     {
-        // das könnte man in das Model auslagern... sinnvoll?
         var exSignupRequest = ideaWatcher.model.Request;
-        exSignupRequest.destination = 'SSignup/signupRequest';
-        exSignupRequest.data = {
-            userName: userName,
-            email: email,
-            password: password
-        };
 
-        return exLoginRequest;
+        exSignupRequest.destination = 'SSignup/signupRequest';
+        exSignupRequest.data = exObject;
+
+        return exSignupRequest;
     }
     //endregion
 
+    //TODO: Brauchen wir wirklich diese Callbackfunction??!!
     //region Callback: connection established
     function cbConnectionEstablished(isConnected,errorObject)
     {
