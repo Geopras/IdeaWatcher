@@ -46,7 +46,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
 
         //region register Callbacks
         // wam.logic.Login.registerVerificationError(cbShowVerificationError);
-        ideaWatcher.controller.Login.registerShowView(cbShowView);
+        ideaWatcher.controller.SignUp.registerShowView(cbShowView);
         //endregion
 
         // region override onSubmit to prevent page reload
@@ -59,7 +59,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         // endregion
 
         //region LoginButton: Eventlistener(click)
-        htmlSubmitButton.addEventListener('click', function clickLogin() {
+        htmlSubmitButton.addEventListener('click', function clickSignUp() {
 
             var exObj = {
                 userName: htmlUsernameInput.value,
