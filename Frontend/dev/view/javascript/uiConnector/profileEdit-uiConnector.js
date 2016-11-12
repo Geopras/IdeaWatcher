@@ -8,12 +8,12 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         };
 
         var evSaveResponse = {
-            topic: 'SProfileEdit/validateAndSaveResponse',
+            topic: 'SProfileEdit/validateAndSaveRequest-response',
             cbFunction: cbSaveResponse
         };
 
         var evUserDataReceived = {
-            topic: 'SProfileEdit/loadUserDataResponse',
+            topic: 'SProfileEdit/getUserDataRequest-response',
             cbFunction: cbUserDataReceived
         };
 
@@ -46,6 +46,11 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         var htmlGenderSelect = null;
         var htmlLanguageSelect = null;
 
+        var htmlAlertSuccessDiv = null;
+        var htmlAlertInfoDiv = null;
+        var htmlAlertWarningDiv = null;
+        var htmlAlertErrorDiv = null;
+
         var htmlSubmitButton = null;
         var htmlBrowseImageButton = null;
         //endregion
@@ -74,12 +79,15 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             htmlFirstNameInput = document.getElementById("profileEdit_firstName_input");
             htmlGenderSelect = document.getElementById("profileEdit_gender_select");
             htmlLanguageSelect = document.getElementById("profileEdit_language_select");
+            htmlAlertSuccessDiv = document.getElementById("profileEdit_alertSuccess_div");
+            htmlAlertInfoDiv = document.getElementById("profileEdit_alertInfo_div");
+            htmlAlertWarningDiv = document.getElementById("profileEdit_alertWarning_div");
+            htmlAlertErrorDiv = document.getElementById("profileEdit_alertError_div");
             htmlSubmitButton = document.getElementById("profileEdit_submit_button");
             htmlBrowseImageButton = document.getElementById("profileEdit_browseImage_button");
             //endregion
 
             //region register Callbacks
-            // wam.logic.Login.registerVerificationError(cbShowVerificationError);
             ideaWatcher.controller.ProfileEdit.registerShowView(cbShowView);
             //endregion
 
@@ -114,6 +122,7 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         //region cbSaveResponse
         function cbSaveResponse(exObj)
         {
+            console.log(exObj);
             //TODO: Ausgabe an User - Speichern erfolgreich oder Fehler bei Validierung von UserName, Email
         }
         //endregion
@@ -137,26 +146,31 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         {
             if(obj.shouldShow)
             {
-                ideaWatcher.controller.ProfileEdit.tryToLoadUserData();
+                //TODO: Hier würde man jetzt den aktuell angemeldeten Benutzer übergeben
+                var currentUser = {
+                    userName: 'HansWurst2000'
+                };
+                ideaWatcher.controller.ProfileEdit.tryToLoadUserData(currentUser);
+
                 localizeView();
                 htmlProfileView.style.display = 'block';
                 htmlView.style.display = 'block';
 
-                //TODO: Hier wird nur Testweise ein BeispielUser erzeugt und angezeigt
-                var testUser = ideaWatcher.model.User;
-                testUser.username = "HansWurst2000";
-                testUser.email = "hans.wurst@gmx.de";
-                testUser.isMailPublic = true;
-                testUser.surname = "Wurst";
-                testUser.firstName = "Hans";
-                testUser.gender = "Male";
-                testUser.language = "";
-
-                var evTest = {
-                    topic: 'SProfileEdit/loadUserDataResponse',
-                    exObject: testUser
-                };
-                ideaWatcher.core.MessageBroker.publish(evTest);
+                // //TODO: Hier wird nur Testweise ein BeispielUser erzeugt und angezeigt
+                // var testUser = ideaWatcher.model.User;
+                // testUser.username = "HansWurst2000";
+                // testUser.email = "hans.wurst@gmx.de";
+                // testUser.isMailPublic = true;
+                // testUser.surname = "Wurst";
+                // testUser.firstName = "Hans";
+                // testUser.gender = "Male";
+                // testUser.language = "";
+                //
+                // var evTest = {
+                //     topic: 'SProfileEdit/loadUserDataResponse',
+                //     exObject: testUser
+                // };
+                // ideaWatcher.core.MessageBroker.publish(evTest);
             }
             else
             {

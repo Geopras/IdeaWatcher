@@ -29,17 +29,19 @@ ideaWatcher.controller.ProfileEdit = ideaWatcher.controller.ProfileEdit || (func
 
             exSaveUserDataRequest.destination = 'SProfileEdit/validateAndSaveRequest';
             exSaveUserDataRequest.data = exObject;
+            //TODO: Token muss hier noch richtig gesetzt werden, wenn implementiert
+            exSaveUserDataRequest.token = "1";
 
             return exSaveUserDataRequest;
         }
         //endregion
 
         //region TryToLoadUserDate
-        function pubTryToLoadUserData()
+        function pubTryToLoadUserData(exObject)
         {
             // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
             if (ideaWatcher.core.WebSocketConnector.isConnected()) {
-                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestLoadUserData());
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestLoadUserData(exObject));
             } else {
                 //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
             }
@@ -53,6 +55,8 @@ ideaWatcher.controller.ProfileEdit = ideaWatcher.controller.ProfileEdit || (func
 
             exLoadUserDataRequest.destination = 'SProfileEdit/getUserDataRequest';
             exLoadUserDataRequest.data = exObject;
+            //TODO: Token richtig setzen wenn implementiert
+            exLoadUserDataRequest.token = "1";
 
             return exLoadUserDataRequest;
         }

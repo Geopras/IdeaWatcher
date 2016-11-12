@@ -3,6 +3,7 @@ package main.java.de.ideaWatcher.webApi.manager;
 import main.java.de.ideaWatcher.common.CommandMap;
 import main.java.de.ideaWatcher.common.JsonService;
 import main.java.de.ideaWatcher.webApi.command.LoginCommand;
+import main.java.de.ideaWatcher.webApi.command.ProfileEditCommand;
 import main.java.de.ideaWatcher.webApi.command.SignupCommand;
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
@@ -44,6 +45,8 @@ public class RequestManager {
                 new LoginCommand());
         this.workflowMapping.addCommand("SSignup/addUserRequest",
                 new SignupCommand());
+        this.workflowMapping.addCommand("SProfileEdit/validateAndSaveRequest",
+                new ProfileEditCommand());
     }
 
     /**
