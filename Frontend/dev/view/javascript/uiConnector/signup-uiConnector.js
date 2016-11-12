@@ -88,6 +88,11 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function () {
     	var regex = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}');
     	console.log(htmlPasswordInput.value);
     	if (regex.test(htmlPasswordInput.value))
+    	
+
+    	var regex = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}');
+    	console.log(htmlPasswordInput.value);
+    	if (regex.test(htmlPasswordInput.value))
     		{
     		console.log('Dass Passwort entspricht den Richtlinien.');
     		}
