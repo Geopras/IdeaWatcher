@@ -1,7 +1,7 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
 import main.java.de.ideaWatcher.dataManager.BCrypt;
-import main.java.de.ideaWatcher.dataManager.model.User;
+import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.bson.Document;
 import static com.mongodb.client.model.Filters.eq;

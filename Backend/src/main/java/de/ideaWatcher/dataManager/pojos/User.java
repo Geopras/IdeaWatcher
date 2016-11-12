@@ -1,4 +1,4 @@
-package main.java.de.ideaWatcher.dataManager.model;
+package main.java.de.ideaWatcher.dataManager.pojos;
 
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
@@ -7,12 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Model zur Definition eines User-Objekts
+ * POJO fuer Austausch eines User-Objekts
  */
 public class User implements IUser {
 
     private String userName;
-    private Long userId;
     private String password;
     private String email;
     private boolean isMailPublic;

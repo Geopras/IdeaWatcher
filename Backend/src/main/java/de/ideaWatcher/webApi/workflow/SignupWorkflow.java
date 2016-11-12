@@ -1,6 +1,6 @@
 package main.java.de.ideaWatcher.webApi.workflow;
 
-import main.java.de.ideaWatcher.dataManager.model.User;
+import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.core.Response;
