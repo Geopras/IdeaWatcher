@@ -58,9 +58,8 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup
 				// region LoginButton: Eventlistener(click)
 				htmlSubmitButton.addEventListener('click',
 						function clickSignUp() {
-
-							var exObj = ideaWatcher.model.SignupRequest;
-							exObj.data = {
+					
+							var exObj = {
 								userName : htmlUsernameInput.value,
 								password : htmlPasswordInput.value,
 								email : htmlEmailInput.value
@@ -69,6 +68,8 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup
 
 							ideaWatcher.controller.Signup.tryToSignup(exObj);
 						});
+				htmlPasswordRepeatInput.disabled = true;
+				 htmlSubmitButton.disabled = true;
 				 localizeView();
 				// endregion
 			}
@@ -80,6 +81,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup
 				if (htmlPasswordInput.value == htmlPasswordRepeatInput.value) {
 					htmlPasswordRepeatErrorLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordMatching;
 					htmlPasswordRepeatErrorLabel.style.color = 'black';
+					htmlSubmitButton.disabled = false;
 				} else {
 					htmlPasswordRepeatErrorLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordNotMatching;
 				}
@@ -117,6 +119,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup
 					isPasswordValid = false;
 				} else {
 					console.log('Dass Passwort entspricht den Richtlinien.');
+					htmlPasswordRepeatInput.disabled = false;
 					htmlPasswordErrorLabel.style.display = 'none';
 				}
 				
