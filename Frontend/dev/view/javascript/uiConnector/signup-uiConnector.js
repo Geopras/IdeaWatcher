@@ -15,15 +15,6 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup
 			var htmlPasswordRepeatInput = null;
 			var htmlSubmitButton = null;
 			var htmlView = null;
-			var textSignup = {
-				userExists : 'Benutzername bereits vergeben.',
-				passwortNotMatching : 'Die Passwörter stimmen nicht überein.',
-				passwortTooShort : 'Das Passwort ist zu kurz.',
-				passwortMissingUppercase : 'Das Passwort muss mindestens einen Großbuchstaben enthalten.',
-				passwortMissingLowercase : 'Das Passwort muss mindestens einen Kleinbuchstaben enthalten.',
-				passwortMissingDigit : 'Das Passwort muss mindestens eine Ziffer enthalten.',
-				passwortMissingSpecialCharacter : 'Das Passwort muss mindestens ein Sonderzeichen enthalten.'
-			};
 			// endregion
 
 			// region subscribe to events
@@ -46,10 +37,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup
 				htmlSubmitButton = document
 						.querySelector('#signUp_submit_button');
 
-				// htmlVerificationLabel =
-				// document.querySelector('.js-login-desk-lbl-verificationError');
-				htmlView = document.querySelector('.signUp_view');
-				// endregion
+				htmlView = document.querySelector('.signUp_view');		 
 
 				// region register Callbacks
 				// wam.logic.Login.registerVerificationError(cbShowVerificationError);
@@ -81,41 +69,61 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup
 
 							ideaWatcher.controller.Signup.tryToSignup(exObj);
 						});
+				 localizeView();
 				// endregion
 			}
 			// endregion
 
 			function checkEqualPassword() {
+				var language = ideaWatcher.core.Localizer.getLanguage();
+				var htmlPasswordRepeatErrorLabel = document.querySelector('.signUp_passwordRepeatedError_label');
 				if (htmlPasswordInput.value == htmlPasswordRepeatInput.value) {
-					console.log('Passwörter stimmen überein.');
+					htmlPasswordRepeatErrorLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordMatching;
+					htmlPasswordRepeatErrorLabel.style.color = 'black';
+				} else {
+					htmlPasswordRepeatErrorLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordNotMatching;
 				}
+				htmlPasswordRepeatErrorLabel.style.display = 'inline';
 
 			}
 
 			function checkValidPassword() {
 
+				var language = ideaWatcher.core.Localizer.getLanguage();
 				var password = htmlPasswordInput.value;
+				var htmlPasswordErrorLabel = document.querySelector('.signUp_passwordError_label');
+				var isPasswordValid = true;
+				var errorMessage;
+				
 				console.log(password);
 				if (password.length < 8) {
-					console.log("Your password must be at least 8 characters");
+					errorMessage = ideaWatcher.core.Localizer.signUp[language].passwordTooShort;
+					isPasswordValid = false;
 				} else if (password.search(/[a-z]/) < 0) {
-					console
-							.log("Your password must contain at least one lowercase letter.");
+					errorMessage = ideaWatcher.core.Localizer.signUp[language].passwordMissingLowercase;
+					isPasswordValid = false;
+					
 				} else if (password.search(/[A-Z]/) < 0) {
-					console
-							.log("Your password must contain at least one uppercase letter.");
+					errorMessage = ideaWatcher.core.Localizer.signUp[language].passwordMissingUppercase;
+					isPasswordValid = false;
 				} else if (password.search(/[0-9]/) < 0) {
-					console
-							.log("Your password must contain at least one digit.");
+					errorMessage = ideaWatcher.core.Localizer.signUp[language].passwordMissingDigit;
+					isPasswordValid = false;
 				} else if (password.search(/[{}()#:;^,.?!|&_~@$%/\=+*"'-]/) < 0) {
-					console
-							.log("Your password must contain at least one of those special digits: {}()#:;^,.?!|&_~@$%/\=+*\"'-");
+					errorMessage = ideaWatcher.core.Localizer.signUp[language].passwordMissingSpecialCharacter;
+					isPasswordValid = false;
 				} else if (password.search(/[äüöß]/) > 0) {
-					console
-							.log("Your password cannot contain those characters: äöüß");
+					errorMessage = ideaWatcher.core.Localizer.signUp[language].passwordContainsInvalidCharacter;
+					isPasswordValid = false;
 				} else {
 					console.log('Dass Passwort entspricht den Richtlinien.');
-					return true;
+					htmlPasswordErrorLabel.style.display = 'none';
+				}
+				
+				if (!isPasswordValid) {
+					htmlPasswordErrorLabel.textContent = errorMessage;
+					htmlPasswordErrorLabel.style.display = 'inline';
+					
 				}
 			}
 
@@ -139,6 +147,24 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup
 			}
 			// endregion
 
+			function localizeView() {
+				
+				console.log("Starte Lokalisierung der SignUp-View ...");
+
+	            var language = ideaWatcher.core.Localizer.getLanguage();
+	            var htmlViewHeader = document.querySelector('.signUp_header');
+	            var htmlUserNameLabel = document.querySelector('#signUp_userName_label');
+	            var htmlMailLabel = document.querySelector('#signUp_mail_label');
+	            var htmlPasswordLabel = document.querySelector('#signUp_password_label');
+	            var htmlPasswordRepeatedLabel = document.querySelector('#signUp_passwordRepeated_label');
+	            
+	            htmlViewHeader.textContent = ideaWatcher.core.Localizer.signUp[language].header;
+	            htmlUserNameLabel.textContent = ideaWatcher.core.Localizer.signUp[language].userName;
+	            htmlMailLabel.textContent = ideaWatcher.core.Localizer.signUp[language].mail;
+	            htmlPasswordLabel.textContent = ideaWatcher.core.Localizer.signUp[language].password;
+	            htmlPasswordRepeatedLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordRepeated;
+	            htmlSubmitButton.value = ideaWatcher.core.Localizer.signUp[language].submit;
+			}
 			return {
 
 			};
