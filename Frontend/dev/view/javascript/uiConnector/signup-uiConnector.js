@@ -18,9 +18,11 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup
 			var textSignup = {
 				userExists : 'Benutzername bereits vergeben.',
 				passwortNotMatching : 'Die Passwörter stimmen nicht überein.',
-				passwortTooShort : 'Das Passwort .',
-				passwortTooShort : 'Das Passwort .',
-				passwortTooShort : 'Das Passwort .'
+				passwortTooShort : 'Das Passwort ist zu kurz.',
+				passwortMissingUppercase : 'Das Passwort muss mindestens einen Großbuchstaben enthalten.',
+				passwortMissingLowercase : 'Das Passwort muss mindestens einen Kleinbuchstaben enthalten.',
+				passwortMissingDigit : 'Das Passwort muss mindestens eine Ziffer enthalten.',
+				passwortMissingSpecialCharacter : 'Das Passwort muss mindestens ein Sonderzeichen enthalten.'
 			};
 			// endregion
 
@@ -93,85 +95,39 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup
 			function checkValidPassword() {
 
 				var password = htmlPasswordInput.value;
+				console.log(password);
 				if (password.length < 8) {
 					console.log("Your password must be at least 8 characters");
-				}
-				else if (password.search(/[a-z]/) < 0) {
-					console.log("Your password must contain at least one lowercase letter.");
-				}
-				else if (password.search(/[A-Z]/) < 0) {
-					console.log("Your password must contain at least one uppercase letter.");
-				}
-				else if (password.search(/[0-9]/) < 0) {
-					console.log("Your password must contain at least one digit.");
-				}
-				else
-					{
+				} else if (password.search(/[a-z]/) < 0) {
+					console
+							.log("Your password must contain at least one lowercase letter.");
+				} else if (password.search(/[A-Z]/) < 0) {
+					console
+							.log("Your password must contain at least one uppercase letter.");
+				} else if (password.search(/[0-9]/) < 0) {
+					console
+							.log("Your password must contain at least one digit.");
+				} else if (password.search(/[{}()#:;^,.?!|&_~@$%/\=+*"'-]/) < 0) {
+					console
+							.log("Your password must contain at least one of those special digits: {}()#:;^,.?!|&_~@$%/\=+*\"'-");
+				} else if (password.search(/[äüöß]/) > 0) {
+					console
+							.log("Your password cannot contain those characters: äöüß");
+				} else {
 					console.log('Dass Passwort entspricht den Richtlinien.');
-					return true;	
-					}
-				
-				
-			
-
-    function checkEqualPassword() {
-    	if (htmlPasswordInput.value == htmlPasswordRepeatInput.value)
-    		{
-    		console.log('Passwörter stimmen überein.');
-    		}
-    		
-    }
-    
-    function checkValidPassword() {
-    	
-    	var regex = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}');
-    	console.log(htmlPasswordInput.value);
-    	if (regex.test(htmlPasswordInput.value))
-    	
-
-    	var regex = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}');
-    	console.log(htmlPasswordInput.value);
-    	if (regex.test(htmlPasswordInput.value))
-    		{
-    		console.log('Dass Passwort entspricht den Richtlinien.');
-    		}
-    	else
-    		{
-    		console.log('Dass Passwort entspricht nicht den Richtlinien.');
-    		}
-    	
-//    	if (htmlPasswordInput.value.length < 8)
-//    		{
-//    		console.log('Passwort ist zu kurz.');
-//    		}
-//    	else
-//    		{
-//    		console.log('Passwort ist scheinbar lang genug.');
-//    		}
-    }
-    
-    //region showView
-    function cbShowView(obj)
-    {
-        if(obj.shouldShow)
-        {
-            htmlView.style.display = 'block';
-        }
-        else
-        {
-            htmlView.style.display = 'none';
-        }
-    }
-    //endregion
-				// if (htmlPasswordInput.value.length < 8)
-				// {
-				// console.log('Passwort ist zu kurz.');
-				// }
-				// else
-				// {
-				// console.log('Passwort ist scheinbar lang genug.');
-				// }
+					return true;
+				}
 			}
+
+			// region showView
+			function cbShowView(obj) {
+				if (obj.shouldShow) {
+					htmlView.style.display = 'block';
+				} else {
+					htmlView.style.display = 'none';
+				}
+			}
+			// endregion
 
 			// region showView
 			function cbShowView(obj) {
