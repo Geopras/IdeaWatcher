@@ -4,9 +4,12 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
         var webSocket = null;
         var isConnected = false;
         var standardHeader = {};
+        var userToken = '';
+
         //endregion
 
         //region Neue WebSocket-Verbindung einrichten
+
         // für alle verwirrten Seelen:
         // hier muss die Callbackfunktion übergeben werden, die gerufen werden soll,
         // wenn die Verbindung hergestellt/nicht Hergestellt wurde
@@ -14,6 +17,7 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
         // Des Weiteren wird das isConnected Flag entsprechend getzt, um später zu prüfen ob die Verbindung noch korrekt
         // aufgebaut ist.
         function pubConnect(url, callbackFunction) {
+
             if (webSocket != null) webSocket.close();
             console.log('Versuche eine neue WebSocket-Verbindung mit "' + url + '" herzustellen...');
             webSocket = new WebSocket(url);
@@ -21,7 +25,7 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
             // callback function wenn Verbindung erfolgreich
             webSocket.onopen = function () {
                 console.log('WebSocket-Verbindung erfolgreich hergestellt!');
-                callbackFunction(true);
+                // callbackFunction(true);
                 isConnected = true;
             };
 
@@ -29,6 +33,24 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
             webSocket.onmessage = function (event) {
                 try {
                     var serverMessage = JSON.parse(event.data);
+
+                    //region Response-Token-Behandlung
+                    if (serverMessage.token !== '') {
+                        var responseToken = serverMessage.token;
+                        if (userToken === '') {
+                            userToken = responseToken;
+                        }
+                        else if (responseToken !== userToken) {
+                            console.log('Antwort-Token stimmt nicht mit' +
+                                ' User-Token überein!')
+                        }
+                    }
+                    else if (!serverMessage.destination.startsWith('SSignup')) {
+                        console.log('Die Serverantwort enthält keinen Token,' +
+                            ' obwohl einer vorhanden sein muesste.')
+                    }
+                    //endregion
+
                     console.log(serverMessage);
 
                     ideaWatcher.core.MessageBroker.publish({
@@ -63,10 +85,10 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                 errorText = 'Grund für Verbindungstrennung: ' + event.code + ' --- ' + reason;
                 console.log(errorText);
                 // besser als Objekt schreiben um nicht zu verwirren?
-                callbackfunction(false, {
-                    code: event.code,
-                    reason: reason
-                });
+                // callbackfunction(false, {
+                //     code: event.code,
+                //     reason: reason
+                // });
             };
         }
 
@@ -79,6 +101,16 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
             for (var propStandardHeader in standardHeader) {
                 if (standardHeader.hasOwnProperty(propStandardHeader)) {
                     message[propStandardHeader] = standardHeader[propStandardHeader];
+                }
+            }
+
+            if (!message.destination.startsWith('SLogin') &&
+                !message.destination.startsWith('SSignup')) {
+
+                if (userToken !== '') {
+                    message.token = userToken;
+                } else {
+                    //TODO: Fehlermeldung, keine User-Session zuordenbar
                 }
             }
 

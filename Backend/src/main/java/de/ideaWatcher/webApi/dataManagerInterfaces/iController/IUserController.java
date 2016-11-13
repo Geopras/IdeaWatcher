@@ -48,4 +48,20 @@ public interface IUserController {
      * @return {boolean} true if password is equal hash password
      */
     boolean isCorrectPassword(String plaintextPassword, String hashedPassword);
+
+    /**
+     * Loescht einen vorhandenen User
+     * @param userName {String} eindeutiger Username
+     * @throws Exception falls der User nicht existiert oder ein Problem beim
+     * Zugriff auf die Datenbank auftrat
+     */
+    void deleteUser(String userName) throws Exception;
+
+    /**
+     * Aendert einen vorhandenen User
+     * @param user {IUser} geaendertes User-Objekt
+     * @throws Exception falls der User nicht existiert oder ein Problem beim
+     * Zugriff auf die Datenbank auftrat
+     */
+    void changeUser(IUser user) throws Exception;
 }

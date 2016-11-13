@@ -64,4 +64,14 @@ public class UserController implements IUserController {
         return this.userService.validatePassword(plaintextPassword,
                 hashedPassword);
     }
+
+    @Override
+    public void deleteUser(String userName) throws Exception {
+
+    }
+
+    @Override
+    public void changeUser(IUser user) throws Exception {
+
+    }
 }

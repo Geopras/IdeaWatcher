@@ -21,7 +21,7 @@ public interface IRequest {
 
     /**
      * Gibt Anfrage-Token zurueck
-     * @return {Long} token
+     * @return {String} token
      */
-    Long getToken();
+    String getToken();
 }

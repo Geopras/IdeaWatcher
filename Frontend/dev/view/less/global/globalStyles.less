@@ -23,12 +23,47 @@ html, body {
 }
 
 /* style the labels of mandatory input fields */
-.required-input::after {
+.required_input label::after {
   content: " *";
   color: @mandatoryAsteriskColor;
 }
-.required-input {
+.required_input label {
   font-weight: bold;
+}
+
+/* alert_div Container */
+
+.alert_success, .alert_info, .alert_warning, .alert_error  {
+  border: 1px solid;
+  margin: 10px 0px;
+  padding:15px 10px 15px 50px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  display: none;
+}
+
+.alert_success {
+  color: #00529B;
+  background-color: #BDE5F8;
+  background-image: url('./resources/img/info.png');
+}
+
+.alert_info {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  background-image:url('./resources/img/success.png');
+}
+
+.alert_warning {
+  color: #9F6000;
+  background-color: #FEEFB3;
+  background-image: url('./resources/img/warning.png');
+}
+
+.alert_error {
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('./resources/img/error.png');
 }
 
 /*
@@ -42,22 +77,6 @@ input[type=text], input[type=email], input[type=password], select {
   border-radius: 4px;
   box-sizing: border-box;
 }
-
-/*
-select {
-  padding: 12px 20px;
-  margin: 8px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-option {
-  padding: 0 20px;
-  margin: 8px 0;
-}
-*/
-
 
 input[type=submit], input[type=button], button {
   background-color: @interactionColor;

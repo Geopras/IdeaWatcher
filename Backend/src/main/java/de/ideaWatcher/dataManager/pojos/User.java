@@ -1,4 +1,4 @@
-package main.java.de.ideaWatcher.dataManager.model;
+package main.java.de.ideaWatcher.dataManager.pojos;
 
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
@@ -7,12 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Model zur Definition eines User-Objekts
+ * POJO fuer Austausch eines User-Objekts
  */
 public class User implements IUser {
 
     private String userName;
-    private Long userId;
     private String password;
     private String email;
     private boolean isMailPublic;
@@ -22,9 +21,9 @@ public class User implements IUser {
     private String language;
     private String pictureUrl;
     private List<IIdea> createdIdeas;
-    private int numberCreatedIdeas;
+    private Double numberCreatedIdeas;
     private List<IIdea> followedIdeas;
-    private int numberFollowedIdeas;
+    private Double numberFollowedIdeas;
 
     @Override
     public String getUserName() {
@@ -127,12 +126,12 @@ public class User implements IUser {
     }
 
     @Override
-    public int getNumberCreatedIdeas() {
+    public Double getNumberCreatedIdeas() {
         return this.numberCreatedIdeas;
     }
 
     @Override
-    public void setNumberCreatedIdeas(int numberCreatedIdeas) {
+    public void setNumberCreatedIdeas(Double numberCreatedIdeas) {
         this.numberCreatedIdeas = numberCreatedIdeas;
     }
 
@@ -147,12 +146,12 @@ public class User implements IUser {
     }
 
     @Override
-    public int getNumberFollowedIdeas() {
+    public Double getNumberFollowedIdeas() {
         return this.numberFollowedIdeas;
     }
 
     @Override
-    public void setNumberFollowedIdeas(int numberFollowedIdeas) {
+    public void setNumberFollowedIdeas(Double numberFollowedIdeas) {
         this.numberFollowedIdeas = numberFollowedIdeas;
     }
 
@@ -170,8 +169,8 @@ public class User implements IUser {
         this.language = "";
         this.pictureUrl = "";
         this.createdIdeas = new ArrayList<>();
-        this.numberCreatedIdeas = 0;
-        this.numberFollowedIdeas = 0;
+        this.numberCreatedIdeas = 0.0;
+        this.numberFollowedIdeas = 0.0;
         this.followedIdeas = new ArrayList<>();
     }
 }

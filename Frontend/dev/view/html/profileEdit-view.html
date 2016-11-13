@@ -20,11 +20,11 @@
 		                            <input id="profileEdit_mail_input" type="email" placeholder="email@example.org" required /></p>
 		                    </div>
 		
-		                    <p><input id="profileEdit_mail_checkbox" type="checkbox" />
-		                       <label for="profileEdit_mail_checkbox" id="profileEdit_mailCheckbox_label">allow people to contact me (Email address is public)</label></p>
+		                    <p><input id="profileEdit_mailCheckbox_input" type="checkbox" />
+		                       <label for="profileEdit_mailCheckbox_input" id="profileEdit_mailCheckbox_label">allow people to contact me (Email address is public)</label></p>
 		
-		                    <p><label for="profileEdit_surName_input" id="profileEdit_surname_label">Surname</label><br>
-		                        <input id="profileEdit_surName_input"
+		                    <p><label for="profileEdit_surname_input" id="profileEdit_surname_label">Surname</label><br>
+		                        <input id="profileEdit_surname_input"
 									   type="text" /></p>
 		
 		                    <p><label for="profileEdit_firstName_input" id="profileEdit_firstName_label">First Name</label><br>
@@ -36,11 +36,34 @@
 		                            <option>Male</option>
 		                        </select></p>
 		
-		                    <p><label for="profileEdit_country_select" id="profileEdit_country_label">Country</label><br>
-		                        <select id="profileEdit_country_select"></select></p>
+		                    <p><label for="profileEdit_language_select" id="profileEdit_language_label">Language</label><br>
+		                        <select id="profileEdit_language_select">
+									<option>de_DE</option>
+									<option>en_GB</option>
+								</select></p>
 		
 		                    <p><input type="submit" value="Submit"
-									  id="profileEdit_submit_button"></p>
+									  id="profileEdit_submit_button">
+
+							<div class="profileEdit_alert_container">
+								<div class="alert_success" id="profileEdit_alertSuccess_div">
+									<strong>Success!</strong> Indicates a successful or positive action.
+								</div>
+
+								<div class="alert_info" id="profileEdit_alertInfo_div">
+									<strong>Info!</strong> Indicates a neutral informative change or action.
+								</div>
+
+								<div class="alert_warning" id="profileEdit_alertWarning_div">
+									<strong>Warning!</strong> Indicates a warning that might need attention.
+								</div>
+
+								<div class="alert_error" id="profileEdit_alertError_div">
+									<strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+								</div>
+							</div>
+
+							</p>
 		                </form>
 		            </div>
 		        </div>

@@ -1,8 +1,8 @@
-ideaWatcher.model.Idea = {
+ideaWatcher.model.Idea = ideaWatcher.model.Idea || {
     name: '',
     description: '',
     category: '',
-    creator: ideaWatcher.model.User,
+    creator: '',
     publishDate: new Date(),
     language: '',
     hotRank: 0,

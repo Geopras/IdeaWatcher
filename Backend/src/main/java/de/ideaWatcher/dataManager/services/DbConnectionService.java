@@ -41,7 +41,7 @@ public class DbConnectionService {
     }
 
     public void closeConnection(){
-        System.out.println("bye... connection closed");
+        System.out.println("bye... mongoDB-connection closed");
         this.mongoClient.close();
     }
 }

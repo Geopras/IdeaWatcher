@@ -13,13 +13,14 @@ gulp.task('jsTransform', function(){
     // Auswahl der Ausgangsdateien
     return gulp.src([
         '../dev/core/namespace.js',
+        '../dev/model/**/*',
         '../dev/core/messageBroker.js',
         '../dev/core/navigator.js',
         '../dev/core/webSocketConnector.js',
         '../dev/core/localizer.js',
         '../dev/controller/**/*',
-        '../dev/view/javascript/**/*',
-        '../dev/model/**/*'
+        '../dev/view/javascript/**/*'
+
     ])
     //Verkettung der Dateien
     .pipe(concat('ideaWatcher.js'))
@@ -75,7 +76,8 @@ gulp.task('buildhtml', function () {
         '../dev/view/html/followedIdeas-view.html',
         '../dev/view/html/profileEdit-view.html',
         '../dev/view/html/signUp-view.html',
-        '../dev/view/html/impress-view.html',
+        '../dev/view/html/about-view.html',
+        '../dev/view/html/footBar-view.html',
         '../dev/view/html/foot.html'
     ])
     //Verkettung der Dateien

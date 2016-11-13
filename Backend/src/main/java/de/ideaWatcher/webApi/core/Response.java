@@ -8,7 +8,7 @@ import org.json.JSONObject;
 public class Response implements IResponse {
 
     private String destination;
-    private Long token;
+    private String token;
     private String result;
     private JSONObject data;
     private String errorMessage;
@@ -54,7 +54,7 @@ public class Response implements IResponse {
     }
 
     @Override
-    public void setToken(Long token) {
+    public void setToken(String token) {
         this.token = token;
     }
 
@@ -77,7 +77,7 @@ public class Response implements IResponse {
      * @param data {JsonObject} zu uebermittelnde Daten
      * @param errorMessage {String} Fehlernachricht
      */
-    public Response(String destination, Long token, String result, JSONObject
+    public Response(String destination, String token, String result, JSONObject
             data, String errorMessage) {
         this.destination = destination;
         this.token = token;
@@ -87,11 +87,12 @@ public class Response implements IResponse {
     }
     
     public JSONObject toJSONObject() {
-        return new JSONObject()
-                .append("destination", this.destination)
-                .append("token", this.token)
-                .append("result", this.result)
-                .append("data", this.data)
-                .append("error", this.errorMessage);
+        JSONObject jsonObject =  new JSONObject()
+                .put("destination", this.destination)
+                .put("token", this.token)
+                .put("result", this.result)
+                .put("data", this.data)
+                .put("error", this.errorMessage);
+        return jsonObject;
     }
 }

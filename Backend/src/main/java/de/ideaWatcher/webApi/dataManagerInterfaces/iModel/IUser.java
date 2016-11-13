@@ -47,10 +47,10 @@ public interface IUser {
     void setPictureURL(String pictureURL);
     List<IIdea> getCreatedIdeas();
     void setCreatedIdeas(List<IIdea> createdIdeas);
-    int getNumberCreatedIdeas();
-    void setNumberCreatedIdeas(int p_numberCreated);
+    Double getNumberCreatedIdeas();
+    void setNumberCreatedIdeas(Double numberCreatedIdeas);
     List<IIdea> getFollowedIdeas();
     void setFollowedIdeas(List<IIdea> followedIdeas);
-    int getNumberFollowedIdeas();
-    void setNumberFollowedIdeas(int numberFollowedIdeas);
+    Double getNumberFollowedIdeas();
+    void setNumberFollowedIdeas(Double numberFollowedIdeas);
 }

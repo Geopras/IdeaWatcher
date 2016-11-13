@@ -1,4 +1,4 @@
-ideaWatcher.model.User = {
+ideaWatcher.model.User = ideaWatcher.model.User || {
     username: '',
     email: '',
     surname: '',

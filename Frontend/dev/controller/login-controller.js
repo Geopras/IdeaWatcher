@@ -1,7 +1,6 @@
 ideaWatcher.controller.Login = ideaWatcher.controller.Login || (function () {
 
     //region local vars
-    var WS_URL = 'ws://127.0.0.1:8080/IdeaWatcher/wsEndpoint';
     var userName = null;
     var password = null;
     // var cbVerificationError = null;
@@ -23,28 +22,22 @@ ideaWatcher.controller.Login = ideaWatcher.controller.Login || (function () {
     //region TryToLogin
     function pubTryToLogin(exObject)
     {
-        // BN+PW zwischenspeichern, wird von buildRequestLogin() Methode an 2 Stellen Benötigt
-        userName = exObject.userName;
-        password = exObject.password;
-
         // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
         if (ideaWatcher.core.WebSocketConnector.isConnected()) {
-            ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestLogin());
+            ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestLogin(exObject));
+        } else {
+            //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
         }
     }
     //endregion
 
     //region build: RequestLogin
-    function buildRequestLogin()
+    function buildRequestLogin(exObject)
     {
-        // das könnte man in das Model auslagern... sinnvoll?
         var exLoginRequest = ideaWatcher.model.Request;
+
         exLoginRequest.destination = 'SLogin/validateRequest';
-        exLoginRequest.data = {
-            userName: userName,
-            password: password
-        };
-        exLoginRequest.token = '-1';
+        exLoginRequest.data = exObject;
 
         return exLoginRequest;
     }
