@@ -131,13 +131,13 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         // Zeige die Benutzerdaten in den Input-Feldern an, wenn sie erhalten wurden
         function cbUserDataReceived(exObj)
         {
-            htmlUserNameInput.value = exObj.username;
-            htmlEmailInput.value = exObj.email;
-            htmlEmailCheckInput.checked = exObj.isMailPublic;
-            htmlSurnameInput.value = exObj.surname;
-            htmlFirstNameInput.value = exObj.firstName;
-            htmlGenderSelect.value = exObj.gender;
-            htmlLanguageSelect.value = exObj.language;
+            htmlUserNameInput.value = exObj.data.userName;
+            htmlEmailInput.value = exObj.data.email;
+            htmlEmailCheckInput.checked = exObj.data.isMailPublic;
+            htmlSurnameInput.value = exObj.data.surname;
+            htmlFirstNameInput.value = exObj.data.firstName;
+            htmlGenderSelect.value = exObj.data.gender;
+            htmlLanguageSelect.value = exObj.data.language;
         }
         //endregion
 

@@ -8,8 +8,9 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.IDataManager;
  */
 public class InstanceManager {
 
-    public static RequestManager requestManager;
-    public static IDataManager dataManager;
+    private static RequestManager requestManager;
+    private static IDataManager dataManager;
+    private static TokenManager tokenManager;
 
     public static RequestManager getRequestManager() {
         return requestManager;
@@ -19,10 +20,15 @@ public class InstanceManager {
         return dataManager;
     }
 
+    public static TokenManager getTokenManager() {
+        return tokenManager;
+    }
+
     public static void initialize() {
         requestManager = new RequestManager();
         requestManager.initialize();
         dataManager = new DataManager();
+        tokenManager = new TokenManager();
     }
 
 }

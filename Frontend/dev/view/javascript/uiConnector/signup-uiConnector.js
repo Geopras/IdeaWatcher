@@ -140,16 +140,6 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup
 			}
 			// endregion
 
-			// region showView
-			function cbShowView(obj) {
-				if (obj.shouldShow) {
-					htmlView.style.display = 'block';
-				} else {
-					htmlView.style.display = 'none';
-				}
-			}
-			// endregion
-
 			function localizeView() {
 				
 				console.log("Starte Lokalisierung der SignUp-View ...");

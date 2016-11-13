@@ -57,9 +57,9 @@ public interface IResponse {
 
     /**
      * Legt den User-Token fest
-     * @param token {Long}
+     * @param token {String}
      */
-    void setToken(Long token);
+    void setToken(String token);
 
     /**
      * Konvertiert das Java-Objekt in ein JSON-Objekt

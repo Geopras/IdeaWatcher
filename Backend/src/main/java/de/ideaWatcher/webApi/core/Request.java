@@ -9,7 +9,7 @@ public class Request implements IRequest {
 
     private String destination;
     private JSONObject data;
-    private Long token;
+    private String token;
 
     @Override
     public String getDestination() {
@@ -22,21 +22,8 @@ public class Request implements IRequest {
     }
 
     @Override
-    public Long getToken() {
+    public String getToken() {
         return this.token;
-    }
-
-    /**
-     * Gibt neue Instanz der Klasse Request zurueck
-     * @param destination {String} Ziel der Anfrage
-     * @param data {JSONObject} Daten zur Anfrage
-     * @param token {Long} Token der Benutzersession
-     * @return {IRequest} Request-Objekt
-     */
-    public Request(String destination, JSONObject data, Long token) {
-        this.destination = destination;
-        this.data = data;
-        this.token = token;
     }
 
     /**
@@ -49,6 +36,6 @@ public class Request implements IRequest {
     public Request(String destination, JSONObject data, String token) {
         this.destination = destination;
         this.data = data;
-        this.token = new Long(token);
+        this.token = token;
     }
 }

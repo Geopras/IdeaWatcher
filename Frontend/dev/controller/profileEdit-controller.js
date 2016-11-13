@@ -29,8 +29,6 @@ ideaWatcher.controller.ProfileEdit = ideaWatcher.controller.ProfileEdit || (func
 
             exSaveUserDataRequest.destination = 'SProfileEdit/validateAndSaveRequest';
             exSaveUserDataRequest.data = exObject;
-            //TODO: Token muss hier noch richtig gesetzt werden, wenn implementiert
-            exSaveUserDataRequest.token = "1";
 
             return exSaveUserDataRequest;
         }
@@ -55,8 +53,6 @@ ideaWatcher.controller.ProfileEdit = ideaWatcher.controller.ProfileEdit || (func
 
             exLoadUserDataRequest.destination = 'SProfileEdit/getUserDataRequest';
             exLoadUserDataRequest.data = exObject;
-            //TODO: Token richtig setzen wenn implementiert
-            exLoadUserDataRequest.token = "1";
 
             return exLoadUserDataRequest;
         }

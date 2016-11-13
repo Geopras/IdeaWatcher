@@ -2,6 +2,7 @@ package main.java.de.ideaWatcher.webApi.manager;
 
 import main.java.de.ideaWatcher.common.CommandMap;
 import main.java.de.ideaWatcher.common.JsonService;
+import main.java.de.ideaWatcher.webApi.command.GetProfileCommand;
 import main.java.de.ideaWatcher.webApi.command.LoginCommand;
 import main.java.de.ideaWatcher.webApi.command.ProfileEditCommand;
 import main.java.de.ideaWatcher.webApi.command.SignupCommand;
@@ -18,7 +19,7 @@ import org.json.JSONObject;
 public class RequestManager {
 
     private CommandMap<IRequest, IResponse> workflowMapping;
-    private TokenManager tokenManager;
+
 
     /**
      * Erstellt eine neue Instanz des RequestManager
@@ -26,7 +27,6 @@ public class RequestManager {
     public RequestManager() {
 
         this.workflowMapping = new CommandMap();
-        this.tokenManager = new TokenManager();
     }
 
     /**
@@ -47,6 +47,8 @@ public class RequestManager {
                 new SignupCommand());
         this.workflowMapping.addCommand("SProfileEdit/validateAndSaveRequest",
                 new ProfileEditCommand());
+        this.workflowMapping.addCommand("SProfileEdit/getUserDataRequest",
+                new GetProfileCommand<>());
     }
 
     /**
@@ -76,17 +78,25 @@ public class RequestManager {
 
         if (requestObject.getDestination().startsWith("SLogin")) {
 
+            String userName = "";
+            try {
+                userName = requestObject.getData().getString("userName");
+            } catch (Exception ex) {
+                response.setErrorMessage("SLogin/no_userName_found");
+                shouldStartWorkflow = false;
+            }
             // Wenn Login-Request, dann neuen Token generieren
-            response.setToken(this.tokenManager.generateToken());
+            response.setToken(InstanceManager.getTokenManager().generateToken
+                    (userName));
 
         } else if (!requestObject.getDestination().startsWith("SSignup")) {
 
             // Wenn kein Signup-Request, dann Token validieren
-            if (!this.tokenManager.existsToken(requestObject.getToken())) {
+            if (!InstanceManager.getTokenManager().existsToken(requestObject.getToken())) {
 
                 // Wenn Token nicht gueltig, dann Antwort mit Fehlernachricht
                 // zurueckschicken
-                response.setErrorMessage("SSignup/token_not_valid");
+                response.setErrorMessage("token_not_valid");
                 shouldStartWorkflow = false;
             }
         }
@@ -100,8 +110,6 @@ public class RequestManager {
                         (requestObject
                         .getDestination(), requestObject);
                 response.setResult(workFlowResponse.getResult());
-                if (workFlowResponse.getData() == null) {
-                }
                 response.setData(workFlowResponse.getData());
                 response.setErrorMessage(workFlowResponse.getErrorMessage());
 
@@ -121,7 +129,8 @@ public class RequestManager {
 
         //region Response-Javaobjekt als JSON-String zurueckgeben
         JSONObject responseJson = response.toJSONObject();
-        return responseJson.toString();
+        String responseString = responseJson.toString();
+        return responseString;
         //endregion
     }
 
@@ -139,7 +148,11 @@ public class RequestManager {
         try {
             String requestDestination = requestJson.getString("destination");
             JSONObject requestData = requestJson.getJSONObject("data");
-            String requestToken = requestJson.getString("token");
+            String requestToken = "";
+            if (!requestDestination.startsWith("SLogin") &&
+                    !requestDestination.startsWith("SSignup")) {
+                requestToken = requestJson.getString("token");
+            }
             
             return new Request(requestDestination, requestData, requestToken);
 

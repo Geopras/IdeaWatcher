@@ -14,7 +14,7 @@ public class UserService {
     private DbConnectionService dbConnectionService;
 
     public UserService() {
-        this.dbConnectionService = new DbConnectionService("testUsers");
+        this.dbConnectionService = new DbConnectionService("testLogin");
     }
 
     public IUser getUser(String userName) {
@@ -33,6 +33,15 @@ public class UserService {
         IUser user = new User();
         user.setUserName(userDoc.getString("userName").toString());
         user.setPassword(userDoc.getString("password").toString());
+        user.setEmail(userDoc.getString("email").toString());
+        user.setIsMailPublic(userDoc.getBoolean("isMailPublic"));
+        user.setSurname(userDoc.getString("surname"));
+        user.setFirstname(userDoc.getString("firstName"));
+        user.setGender(userDoc.getString("gender"));
+        user.setLanguage(userDoc.getString("language"));
+        user.setPictureURL(userDoc.getString("pictureUrl"));
+        user.setNumberCreatedIdeas(userDoc.getDouble("numberCreatedIdeas"));
+        user.setNumberFollowedIdeas(userDoc.getDouble("numberFollowedIdeas"));
         return user;
     }
 
