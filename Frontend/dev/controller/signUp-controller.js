@@ -24,11 +24,11 @@ ideaWatcher.controller.Signup = ideaWatcher.controller.Signup || (function () {
 
         // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
         if (ideaWatcher.core.WebSocketConnector.isConnected()) {
-            ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestLogin());
+            ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestSignup());
         }
         else {
             // Versuche eine Verbindung zum Backend aufzubauen
-            ideaWatcher.core.WebSocketConnector.connectToServer(WS_URL, cbConnectionEstablished);
+            // ideaWatcher.core.WebSocketConnector.connectToServer(WS_URL, cbConnectionEstablished);
         }
     }
     //endregion
@@ -45,7 +45,7 @@ ideaWatcher.controller.Signup = ideaWatcher.controller.Signup || (function () {
             password: password
         };
 
-        return exLoginRequest;
+        return exSignupRequest;
     }
     //endregion
 

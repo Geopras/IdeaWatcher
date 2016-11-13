@@ -46,30 +46,27 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
 
         //region register Callbacks
         // wam.logic.Login.registerVerificationError(cbShowVerificationError);
-        ideaWatcher.controller.Signup.registerShowView(cbShowView);
+        ideaWatcher.controller.Login.registerShowView(cbShowView);
         //endregion
 
         // region override onSubmit to prevent page reload
         htmlFormSignup.onsubmit = function onSubmit(event) {
+
+            var exObj = {
+                userName: htmlUsernameInput.value,
+                password: htmlPasswordInput.value,
+                email: htmlEmailInput.value
+            };
+            console.log(exObj);
+
+            ideaWatcher.controller.Signup.tryToSignup(exObj);
+
             event.preventDefault();
         };
         
         htmlPasswordInput.addEventListener('change', checkValidPassword);
         htmlPasswordRepeatInput.addEventListener('change', checkEqualPassword);
         // endregion
-
-        //region LoginButton: Eventlistener(click)
-        htmlSubmitButton.addEventListener('click', function clickSignUp() {
-
-            var exObj = {
-                userName: htmlUsernameInput.value,
-                password: htmlPasswordInput.value
-            };
-            console.log(exObj);
-
-            ideaWatcher.controller.Signup.tryToSignup(exObj);
-        });
-        //endregion
     }
     //endregion
 
