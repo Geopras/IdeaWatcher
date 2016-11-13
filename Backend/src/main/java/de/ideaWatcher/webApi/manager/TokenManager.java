@@ -1,42 +1,39 @@
 package main.java.de.ideaWatcher.webApi.manager;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Klasse zur Verwaltung von Tokens
  */
 public class TokenManager {
 
-    private List<Long> tokens;
+    private Map<String, String> tokens;
+
+    public String getTokenValue(String token) throws Exception {
+
+        if (this.existsToken(token)) {
+            return this.tokens.get(token);
+        } else {
+            throw new Exception("token_not_exists");
+        }
+    }
 
     public TokenManager() {
 
-        this.tokens = new ArrayList<>();
+        this.tokens = new HashMap<>();
     }
 
-    public Long generateToken() {
+    public String generateToken(String userName) {
 
-        //region Wenn noch kein Token vorhanden, dann bei 1 beginnen
-        if (this.tokens.size() == 0) {
-            // mit 1 beginnen:
-            return new Long(1);
-        }
-        //endregion
-
-        //region Wenn Tokens vorhanden, dann Maximalwert + 1 nehmen
-        Comparator<Long> cmp = (o1, o2) -> Long.valueOf(o1).compareTo(Long
-                .valueOf(o2));
-        return new Long(Collections.max(this.tokens, cmp).toString() + 1);
-        //endregion
+        String newToken = UUID.randomUUID().toString();
+        this.tokens.put(newToken, userName);
+        return newToken;
     }
 
-    public boolean existsToken(Long token) {
+    public boolean existsToken(String token) {
 
         // User-Authentifizierung (Token-Prüfung)
-        if (this.tokens.contains(token)) {
+        if (this.tokens.containsKey(token)) {
             return true;
         } else {
             return false;
