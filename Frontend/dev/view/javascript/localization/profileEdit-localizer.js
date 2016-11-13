@@ -5,11 +5,11 @@
 ideaWatcher.core.Localizer.ProfileEdit = {
     en_GB: {
         browse: 'Browse ...',
-        country: 'Country',
         email: 'Email',
         firstName: 'First Name',
         gender: 'Gender',
         profile: 'Profile',
+        language: 'Language',
         mail_public_available: 'allow people to contact me (Email address is' +
         ' public)',
         submit: 'Submit',
@@ -18,11 +18,11 @@ ideaWatcher.core.Localizer.ProfileEdit = {
     },
     de_DE: {
         browse: 'Durchsuchen ...',
-        country: 'Land',
         email: 'E-Mail',
         firstName: 'Vorname',
         gender: 'Geschlecht',
         profile: 'Profil',
+        language: 'Sprache',
         mail_public_available: 'Erlaube anderen mich zu kontaktieren ' +
         '(E-Mail Adresse ist öffentlich)',
         submit: 'Übernehmen',

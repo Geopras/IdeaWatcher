@@ -10,6 +10,58 @@ ideaWatcher.controller.ProfileEdit = ideaWatcher.controller.ProfileEdit || (func
         ideaWatcher.core.MessageBroker.subscribe(evSwitchView);
         //endregion
 
+        //region TryToSaveUserData
+        function pubTryToSaveUserData(exObject)
+        {
+            // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
+            if (ideaWatcher.core.WebSocketConnector.isConnected()) {
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestSaveUserData(exObject));
+            } else {
+                //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
+            }
+        }
+        //endregion
+
+        //region build: RequestSaveUserData
+        function buildRequestSaveUserData(exObject)
+        {
+            var exSaveUserDataRequest = ideaWatcher.model.Request;
+
+            exSaveUserDataRequest.destination = 'SProfileEdit/validateAndSaveRequest';
+            exSaveUserDataRequest.data = exObject;
+            //TODO: Token muss hier noch richtig gesetzt werden, wenn implementiert
+            exSaveUserDataRequest.token = "1";
+
+            return exSaveUserDataRequest;
+        }
+        //endregion
+
+        //region TryToLoadUserDate
+        function pubTryToLoadUserData(exObject)
+        {
+            // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
+            if (ideaWatcher.core.WebSocketConnector.isConnected()) {
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestLoadUserData(exObject));
+            } else {
+                //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
+            }
+        }
+        //endregion
+
+        //region build: RequestLoadUserData
+        function buildRequestLoadUserData(exObject)
+        {
+            var exLoadUserDataRequest = ideaWatcher.model.Request;
+
+            exLoadUserDataRequest.destination = 'SProfileEdit/getUserDataRequest';
+            exLoadUserDataRequest.data = exObject;
+            //TODO: Token richtig setzen wenn implementiert
+            exLoadUserDataRequest.token = "1";
+
+            return exLoadUserDataRequest;
+        }
+        //endregion
+
         //region Callback: Internal - SwitchView
         function cbSwitchView(obj)
         {
@@ -29,7 +81,14 @@ ideaWatcher.controller.ProfileEdit = ideaWatcher.controller.ProfileEdit || (func
         return {
             // hier kann die View eine Methode(ui-Connector) registrieren, die gerufen wird,
             // wenn die View ein/ausgeblendet werden soll
-            registerShowView: pubRegisterShowView
+            registerShowView: pubRegisterShowView,
+            // stellt die Öffentliche Schnittstelle dar, mit der die View dem Controler sagen kann,
+            // dass der Benutzer den Submit-Button gedrückt hat und jetzt seine User-Daten an das
+            // Backend geschickt werden sollen, um sie zu validieren und bei Erfolg zu speichern
+            tryToSaveUserData: pubTryToSaveUserData,
+            // hier kann die View dem Controller sagen, dass sie gerne die Daten des Benutzers laden
+            // und anzeigen möchte
+            tryToLoadUserData: pubTryToLoadUserData
         };
 
     })();

@@ -77,7 +77,8 @@ gulp.task('buildhtml', function () {
         '../dev/view/html/followedIdeas-view.html',
         '../dev/view/html/profileEdit-view.html',
         '../dev/view/html/signUp-view.html',
-        '../dev/view/html/impress-view.html',
+        '../dev/view/html/about-view.html',
+        '../dev/view/html/footBar-view.html',
         '../dev/view/html/foot.html'
     ])
     //Verkettung der Dateien
