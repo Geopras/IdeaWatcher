@@ -3,7 +3,7 @@
 	"password" : "$2a$10$qZVZdX9xFvcZS9H7i6l0UeUB4eL57tF0fZju5Dq.dGbyFz7g5RX4a",
 	"userName" : "test",
 	"email" : "test@test.org",
-	"isMailPublic" : true,
+	"isMailPublic" : false,
 	"surname" : "Wurst",
 	"firstName" : "Hans",
 	"gender" : "Male",

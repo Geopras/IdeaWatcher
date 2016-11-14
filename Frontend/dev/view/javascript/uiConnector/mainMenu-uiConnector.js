@@ -15,7 +15,12 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 			var htmlLoginButton;
 			var htmlUserButton;
 			var htmlCategoryParentNode;
-			var htmlCategoryChildrenList;
+		    var htmlCategoryChildrenList;
+		    var htmlUserNoLoginParentNode;
+		    var htmlUserWithLoginParentNode;
+			var htmlUserNoLoginChildrenList;
+			var htmlUserWithLoginChildrenList;
+
 			// endregion
 
 			// region subscribe to events
@@ -34,7 +39,9 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 				htmlUserButton = document
 						.querySelector('.mainMenu_user_button');
 				htmlCategoryParentNode = document.querySelector('.mainMenu_categoryList_ul');
-				
+				htmlUserNoLoginParentNode = document.querySelector('.mainMenu_noUserLogin_ul');
+				htmlUserWithLoginParentNode = document.querySelector('.mainMenu_withUserLogin_ul');
+
 				htmlHomeButton.addEventListener('click', handleButtonNavigation);
 				htmlHotButton.addEventListener('click', handleButtonNavigationHot);
 				htmlFreshButton.addEventListener('click', handleButtonNavigationFresh);
@@ -50,6 +57,23 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 					console.log(htmlCategoryChildrenList[i].textContent);
 					htmlCategoryChildrenList[i].addEventListener('click',
 							handleButtonNavigationCategory);
+				}
+
+				htmlUserNoLoginChildrenList = htmlUserNoLoginParentNode.children;
+
+				for(var i=0; i<htmlCategoryChildrenList.length; i++) {
+					console.log(htmlCategoryChildrenList[i].textContent);
+					htmlCategoryChildrenList[i].addEventListener('click',
+						handleButtonNavigationCategory);
+				}
+
+				htmlUserWithLoginParentNode.
+				htmlUserWithLoginChildrenList = htmlUserWithLoginParentNode.children;
+
+				for(var i=0; i<htmlCategoryChildrenList.length; i++) {
+					console.log(htmlCategoryChildrenList[i].textContent);
+					htmlCategoryChildrenList[i].addEventListener('click',
+						handleButtonNavigationCategory);
 				}
 			
 				
