@@ -1,5 +1,6 @@
 package main.java.de.ideaWatcher.webApi.workflow;
 
+import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.core.Response;
@@ -14,11 +15,11 @@ import java.util.logging.Logger;
 public class ProfileEditWorkflow implements IWorkflow {
 
     private static final Logger log = Logger.getLogger( ProfileEditWorkflow.class.getName() );
-    private IUserController user;
+    private IUserController userController;
 
     public ProfileEditWorkflow() {
 
-        this.user = InstanceManager.getDataManager().getInstanceUser();
+        this.userController = InstanceManager.getDataManager().getInstanceUser();
     }
 
     public IResponse getResponse(IRequest request) {
@@ -79,7 +80,7 @@ public class ProfileEditWorkflow implements IWorkflow {
         // zugehoerigen User zu bekommen
         IUser foundUser;
         try {
-            foundUser = this.user.getUser(userName);
+            foundUser = this.userController.getUser(userName);
         } catch (Exception ex) {
             response.setErrorMessage("SProfile_getUser_error");
             response.setResult("error");
@@ -95,7 +96,7 @@ public class ProfileEditWorkflow implements IWorkflow {
             // Prüfe, ob der neue UserName noch verfügbar ist
             boolean existsUser;
             try {
-                existsUser = this.user.existsUser(requestUsername);
+                existsUser = this.userController.existsUser(requestUsername);
             } catch (Exception ex) {
                 response.setErrorMessage("SProfile_existsUser_error");
                 response.setResult("error");
@@ -118,7 +119,7 @@ public class ProfileEditWorkflow implements IWorkflow {
             // Prüfe, ob die neue Email-Adresse noch verfügbar ist
             boolean existsMail;
             try {
-                existsMail = this.user.existsEmail(requestEmail);
+                existsMail = this.userController.existsEmail(requestEmail);
             } catch (Exception ex) {
                 response.setErrorMessage("SProfile_existsEmail_error");
                 response.setResult("error");
@@ -138,8 +139,29 @@ public class ProfileEditWorkflow implements IWorkflow {
 
         // Speichere Daten
 
-        response.setResult("success");
+        try {
+            IUser user = new User();
+            user.setUserName(requestUsername);
+            user.setEmail(requestEmail);
+            user.setSurname(requestSurname);
+            user.setFirstname(requestFirstName);
+            user.setGender(requestGender);
+            user.setLanguage(requestLanguage);
+            user.setIsMailPublic(requestIsMailPublic);
+            user.setPictureURL(requestPictureUrl);
 
-        return response;
+            this.userController.changeUser(userName, user);
+
+            response.setResult("success");
+            return response;
+
+        } catch (Exception ex) {
+            response.setErrorMessage("SProfile_changeUser_error");
+            response.setResult("error");
+            log.log(Level.SEVERE, "Beim Ändern der Werte eines existierenden Nutzers" +
+                    " ist ein Fehler aufgetreten!" +
+                    "\nFehlermeldung: " + ex.getMessage());
+            return response;
+        }
     }
 }

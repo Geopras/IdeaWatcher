@@ -27,7 +27,9 @@ ideaWatcher.core.Localizer.ProfileEdit = {
             SProfile_userNameNotFree_error: 'This UserName is already taken.',
             SProfile_existsEmail_error: 'An Error occurred on the server.'  +
             ' Please try again later.',
-            SProfile_emailNotFree_error: 'This email adress is already taken.'
+            SProfile_emailNotFree_error: 'This email adress is already taken.',
+            SProfile_changeUser_error: 'An Error occurred on the server.'  +
+            ' Please try again later.'
         }
     },
     de_DE: {
@@ -54,7 +56,9 @@ ideaWatcher.core.Localizer.ProfileEdit = {
             SProfile_userNameNotFree_error: 'Der gewünschte Benutzername ist bereits vergeben.',
             SProfile_existsEmail_error: 'Auf dem Server ist ein Problem aufgetreten.' +
             ' Bitte versuchen Sie es später erneut.',
-            SProfile_emailNotFree_error: 'Die gewünschte Email-Adresse ist bereits vergeben.'
+            SProfile_emailNotFree_error: 'Die gewünschte Email-Adresse ist bereits vergeben.',
+            SProfile_changeUser_error: 'Auf dem Server ist ein Problem aufgetreten.' +
+            ' Bitte versuchen Sie es später erneut.'
         }
     }
 }
