@@ -60,7 +60,6 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         };
 
         htmlPasswordRepeatInput.disabled = true;
-        htmlSubmitButton.disabled = true;
         localizeView();
 
         htmlPasswordInput.addEventListener('change', checkValidPassword);
@@ -89,12 +88,11 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         	console.log('Equal passwords.');
         	htmlPasswordRepeatErrorLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordMatching;
         	htmlPasswordRepeatErrorLabel.style.color = 'black';
-            htmlSubmitButton.disabled = false;
-            return true;
+           // return true;
         } else {
         	console.log('Not equal passwords.');
         	htmlPasswordRepeatErrorLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordNotMatching;
-            return false;
+            //return false;
         }
         htmlPasswordRepeatErrorLabel.style.display = 'inline';
 
