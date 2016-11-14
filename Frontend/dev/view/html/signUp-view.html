@@ -5,34 +5,34 @@
 					<!-- action="hierhin_wird_es_mit_submit_geschickt" -->
 					<div>
 						<p>
-							<label for="signUp_userName_input" class="required-input">Username</label><br>
+							<label id = "signUp_userName_label" for="signUp_userName_input" class="required-input">Username</label><span class="signUp_error_span"><label class="signUp_userNameError_label" for="signUp_userName_input"></label></span><br>
 							<input id="signUp_userName_input" type="text"
 								   required />
 						</p>
 			
 					</div>
 			
-					<div>
+					<div class="required_input">
 						<p>
-							<label for="signUp_mail_input" class="required-input">Email</label><br>
+							<label id = "signUp_mail_label" for="signUp_mail_input" class="required-input">Email</label><span class="signUp_error_span"><label class="signUp_mailError_label" for="signUp_mail_input"></label></span><br>
 							<input id="signUp_mail_input"
 								   type="email" placeholder="email@example.org"
 								   required />
 						</p>
 					</div>
 					
-					<div>
+					<div class="required_input">
 						<p>
-							<label for="signUp_password_input" class="required-input">Password</label><br>
+							<label id = "signUp_password_label" for="signUp_password_input" class="required-input">Password</label><span class="signUp_error_span"><label class="signUp_passwordError_label" for="signUp_password_input"></label></span><br>
 							<input id="signUp_password_input"
 								   type="password" placeholder="******" required />
 						</p>
 					</div>
 					
-					<div>
+					<div class="required_input">
 						<p>
-							<label for="signUp_passwordRepeated_input" class="required-input">
-								Password Repeated</label><br>
+							<label id = "signUp_passwordRepeated_label" for="signUp_passwordRepeated_input" class="required-input">
+							Password Repeated</label><span class="signUp_error_span"><label class="signUp_passwordRepeatedError_label" for="signUp_passwordRepeated_input"></label></span><br>
 							<input id="signUp_passwordRepeated_input"
 								type="password" placeholder="******" required/>
 						</p>
