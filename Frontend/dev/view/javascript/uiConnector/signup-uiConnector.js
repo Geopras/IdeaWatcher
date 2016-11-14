@@ -52,6 +52,10 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         // region override onSubmit to prevent page reload
         htmlFormSignup.onsubmit = function onSubmit(event) {
 
+            event.preventDefault();
+            if(!checkEqualPassword()) return;
+            if(!checkValidPassword()) return;
+
             var exObj = {
                 userName: htmlUsernameInput.value,
                 password: htmlPasswordInput.value,
@@ -60,33 +64,40 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
             console.log(exObj);
 
             ideaWatcher.controller.Signup.tryToSignup(exObj);
-
-            event.preventDefault();
         };
         
-        htmlPasswordInput.addEventListener('change', checkValidPassword);
-        htmlPasswordRepeatInput.addEventListener('change', checkEqualPassword);
+        // htmlPasswordInput.addEventListener('change', checkValidPassword);
+        // htmlPasswordRepeatInput.addEventListener('change', checkEqualPassword);
         // endregion
     }
     //endregion
 
     function checkEqualPassword() {
-    	if (htmlPasswordInput.value == htmlPasswordRepeatInput.value)
-    		{
+    	if (htmlPasswordInput.value == htmlPasswordRepeatInput.value) {
     		console.log('Passwörter stimmen überein.');
-    		}
+            return true;
+    	}
+    	else {
+            ideaWatcher.controller.GlobalNotification.showNotification(
+            'Login', 'Passwörter stimmen nicht überein!',5000);
+            return false
+        }
     		
     }
     
     function checkValidPassword() {
     	if (htmlPasswordInput.value.length < 8)
-    		{
+        {
     		console.log('Passwort ist zu kurz.');
-    		}
+            ideaWatcher.controller.GlobalNotification.showNotification(
+            'Login', 'Das Passwort ist zu kurz!',5000);
+            return false;
+    	}
     	else
-    		{
+        {
     		console.log('Passwort ist scheinbar lang genug.');
-    		}
+            return true;
+    	}
     }
     
     //region showView

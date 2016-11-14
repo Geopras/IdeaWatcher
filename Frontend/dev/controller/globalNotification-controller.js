@@ -3,7 +3,7 @@ ideaWatcher.controller.GlobalNotification = ideaWatcher.controller.GlobalNotific
     // quick and dirty Hack, nicht zum nachmachen;
     onkeydown = function(e){
         if(e.ctrlKey && e.keyCode == 'I'.charCodeAt(0)){
-            showNotification('Login','Login leider fehlgeschlagen', 4000);
+            pubShowNotification('Login','Login leider fehlgeschlagen', 4000);
         }
     };
 
@@ -11,7 +11,7 @@ ideaWatcher.controller.GlobalNotification = ideaWatcher.controller.GlobalNotific
     var cbShowNotification = null;
     //endregion
 
-    function showNotification(headline,text,duration)
+    function pubShowNotification(headline,text,duration)
     {
         cbShowNotification(headline,text,duration);
     }
@@ -21,8 +21,8 @@ ideaWatcher.controller.GlobalNotification = ideaWatcher.controller.GlobalNotific
     }
 
     return {
-
-        registerShowNotification: pubRegisterShowNotification
+        registerShowNotification: pubRegisterShowNotification,
+        showNotification: pubShowNotification
     };
 
 })();
