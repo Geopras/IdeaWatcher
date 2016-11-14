@@ -54,9 +54,9 @@ public class UserService {
                     ("userName", userName)).first();
             dbConnectionService.closeConnection();
             if (userDoc == null) {
-                return true;
-            } else {
                 return false;
+            } else {
+                return true;
             }
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -72,9 +72,9 @@ public class UserService {
                     ("email", email)).first();
             dbConnectionService.closeConnection();
             if (userDoc == null) {
-                return true;
-            } else {
                 return false;
+            } else {
+                return true;
             }
         } catch (Exception ex) {
             throw new Exception(ex);
