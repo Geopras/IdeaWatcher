@@ -17,10 +17,16 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             cbFunction: cbUserDataReceived
         };
 
+        var evLocalizeView = {
+            topic: 'localizeView/profileEdit',
+            cbFunction: localizeView
+        };
+
         //region subscribe to events
         ideaWatcher.core.MessageBroker.subscribe(evIni);
         ideaWatcher.core.MessageBroker.subscribe(evSaveResponse);
         ideaWatcher.core.MessageBroker.subscribe(evUserDataReceived);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         //endregion
 
         var htmlForm = null;
@@ -86,6 +92,10 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             htmlSubmitButton = document.getElementById("profileEdit_submit_button");
             htmlBrowseImageButton = document.getElementById("profileEdit_browseImage_button");
             //endregion
+
+            // Benutzername und Email dürfen nicht geändert werdne
+            htmlUserNameInput.disabled = true;
+            htmlEmailInput.disabled = true;
 
             //region register Callbacks
             ideaWatcher.controller.ProfileEdit.registerShowView(cbShowView);
@@ -222,7 +232,7 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             htmlBrowseImageButton.setAttribute("value", ideaWatcher.core.Localizer
                     .ProfileEdit[language].browse);
 
-            console.log("Lokalisierung ProfileEditView abgeschlossen.")
+            console.log("Lokalisierung ProfileEditView abgeschlossen.");
         }
         //endregion
 
