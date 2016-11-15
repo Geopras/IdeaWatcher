@@ -7,12 +7,18 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function VCrea
             cbFunction: cbIni
         };
         
+        var evLocalizeView = {
+                topic: 'localizeView/ideaCreation',
+                cbFunction: localizeView
+            };
+        
         var htmlView = null;
         var htmlProfileView = null;
         var createIdea = null;
 
         //region subscribe to events
         ideaWatcher.core.MessageBroker.subscribe(evIni);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         //endregion
 
         //region lade zu internationalisierende HTML-Elemente

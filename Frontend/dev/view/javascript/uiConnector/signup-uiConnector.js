@@ -157,7 +157,6 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         {
             localizeView();
             htmlView.style.display = 'block';
-            localizeView();
         }
         else
         {
