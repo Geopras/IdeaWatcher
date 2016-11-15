@@ -7,23 +7,44 @@
                 <li><a class="mainMenu_trending_button">Trending</a></li>
                 <li><a class="mainMenu_fresh_button">Fresh</a></li>
                 <li><a>Categories</a>
-                <ul class="mainMenu_categoryList_ul">
-                   <li data-category='category1'><a>Categorie 1</a></li>
-                   <li data-category='category1'><a>Categorie 2</a></li>
-                   <li data-category='category1'><a>Categorie 3</a></li>
-                </ul>
+	                <ul class="mainMenu_categoryList_ul">
+	                   <li data-category='category1'><a>Categorie 1</a></li>
+	                   <li data-category='category2'><a>Categorie 2</a></li>
+	                   <li data-category='category3'><a>Categorie 3</a></li>
+	                </ul>
                 </li>
-                <button class="mainMenu_login_button">Login</button>
-                <div class="mainMenu_lupe_button"><img
-                        src="./resources/img/lupe.png"/></div>
-                <div class="mainMenu_user_button"><img
-                        src="./resources/img/user.png"/></div>
-                <div class="mainMenu_language_toggle">
+<!--                 <button class="mainMenu_login_button">Login</button>
+                 
+                <div class="mainMenu_user_button">
+                    <img src="./resources/img/user.png"/>
+                    <div class="mainMenu_signIn_button">Test 1</div>
+                    <div class="mainMenu_signUp_button">Test 2</div>
+                </div>
+        -->
+
+<div class="mainMenu_user_button_dropdown" style="float:right;">
+  <div class="mainMenu_user_button">
+                    <img src="./resources/img/user.png"/>
+  <div class="mainMenu_user_button_dropdown-content">
+    <a>Sign Up</a>
+    <a>Sign In</a>
+  </div>
+</div>
+</div>              
+                
+
+                
+                <div class="mainMenu_lupe_button" style="float:right;"><img
+                        src="./resources/img/lupe.png"/>
+                </div>
+                
+                <div class="mainMenu_language_toggle" style="float:right;">
                     <label class="mainMenu_switch">
                         <input type="checkbox">
                         <div class="mainMenu_slider round"></div>
                     </label>
                 </div>
+                
             </ul>
         </nav>
     </header>

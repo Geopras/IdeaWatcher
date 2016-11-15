@@ -31,9 +31,6 @@
   float: right;
 }
 
-
-
-
 .mainMenu_switch {
   position: relative;
   display: inline-block;
@@ -72,14 +69,12 @@
   transition: 0.4s;
 }
 
-
 input:checked + .mainMenu_slider {
   background-color: red;
   background-image: url("./resources/img/en.png");
   background-size: 25px 15px;
 //  transition: 0.4s;
 }
-
 
 input:checked + .mainMenu_slider:before {
   -webkit-transform: translateX(21px);
@@ -88,10 +83,8 @@ input:checked + .mainMenu_slider:before {
   background-color: yellow;
   background-image: url("./resources/img/de.jpg");
   background-size: 20px 25px;
-//  transition: 0.4s;
 }
 
-/* Rounded sliders */
 .mainMenu_slider.round {
   border-radius: 50px;
 }
@@ -100,18 +93,11 @@ input:checked + .mainMenu_slider:before {
   border-radius: 20%;
 }
 
-
-
-
-
-
-
-
-
 .mainMenu_view .mainMenu_lupe_button img{
   height: 60px;
   padding: 20px;
   float: right;
+  transition: all 500ms;
 }
 
 .mainMenu_view .mainMenu_lupe_button img:hover {
@@ -122,6 +108,7 @@ input:checked + .mainMenu_slider:before {
   height: 60px;
   padding: 20px;
   float: right;
+  transition: all 500ms;
 }
 
 .mainMenu_login_button{
@@ -170,6 +157,15 @@ input:checked + .mainMenu_slider:before {
   padding: 20px;
 }
 
+.mainMenu_view nav ul li ul li {
+  min-width: 160px;
+}
+
+.mainMenu_view nav ul li div {
+  height: 60px;
+  transition:all 500ms;
+}
+
 .mainMenu_view nav ul li:hover ul {
   height:auto;
   opacity:1;
@@ -180,4 +176,37 @@ input:checked + .mainMenu_slider:before {
   background: #3a3a3a;
   overflow:hidden;
   height: 0;
+}
+
+.mainMenu_user_button_list_ul {
+    background: #000000;
+}
+
+.mainMenu_user_button_dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.mainMenu_user_button_dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    min-width: 160px;
+    margin: 60px 0px 0px 0px;
+    background: #3a3a3a;
+}
+
+.mainMenu_user_button_dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.mainMenu_user_button_dropdown-content a:hover {
+    background: #4096ee;
+}
+
+.mainMenu_user_button_dropdown:hover .mainMenu_user_button_dropdown-content {
+    display: block;
 }
