@@ -74,11 +74,11 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
             htmlCategoryChildrenList = htmlCategoryParentNode.children;
 
             for (var i = 0; i < htmlCategoryChildrenList.length; i++) {
-                console.log(htmlCategoryChildrenList[i].textContent);
                 htmlCategoryChildrenList[i].addEventListener('click',
                     handleButtonNavigationCategory);
             }
 
+            localizeView();
         }
 
         function handleButtonNavigation(clickEvent) {
@@ -173,7 +173,31 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
         }
 
         function localizeView() {
-
+        	var language = ideaWatcher.core.Localizer.getLanguage();
+             htmlHotButton.textContent = ideaWatcher.core.Localizer.mainMenu[language].hotButtonLabel;
+             htmlTrendingButton.textContent = ideaWatcher.core.Localizer.mainMenu[language].trendingButtonLabel;
+             htmlFreshButton.textContent = ideaWatcher.core.Localizer.mainMenu[language].freshButtonLabel;
+             
+             var htmlCategoryHeader = document.querySelector('#categoryHeader');
+             var htmlCategoryBusiness = document.querySelector('#mainMenu_businessCategory_label');
+             var htmlCategoryComputer = document.querySelector('#mainMenu_computerCategory_label');
+             var htmlCategoryGadet = document.querySelector('#mainMenu_gadgetCategory_label');
+             var htmlCategoryHome = document.querySelector('#mainMenu_homeCategory_label');
+             var htmlCategorySports = document.querySelector('#mainMenu_sportsCategory_label');
+             var htmlCategoryToys = document.querySelector('#mainMenu_toysCategory_label');
+             var htmlCategoryOther = document.querySelector('#mainMenu_otherCategory_label');
+             
+             htmlCategoryHeader.textContent = ideaWatcher.core.Localizer.mainMenu[language].categoriesButtonLabel;
+             htmlCategoryBusiness.textContent = ideaWatcher.core.Localizer.mainMenu[language].business;
+             htmlCategoryComputer.textContent = ideaWatcher.core.Localizer.mainMenu[language].computer;
+             htmlCategoryGadet.textContent = ideaWatcher.core.Localizer.mainMenu[language].gadet;
+             htmlCategoryHome.textContent = ideaWatcher.core.Localizer.mainMenu[language].homeAndGarden;
+             htmlCategorySports.textContent = ideaWatcher.core.Localizer.mainMenu[language].sports;
+             htmlCategoryToys.textContent = ideaWatcher.core.Localizer.mainMenu[language].toys;
+             htmlCategoryOther.textContent = ideaWatcher.core.Localizer.mainMenu[language].other;
+             
+             htmlLoginButton.textContent = ideaWatcher.core.Localizer.mainMenu[language].loginButtonLabel;
+             htmlSignupButton.textContent = ideaWatcher.core.Localizer.mainMenu[language].signupButtonLabel;
         }
 
         return {};

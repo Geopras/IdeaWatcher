@@ -11,6 +11,11 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
             topic: 'SLogin/validateRequest-response',
             cbFunction: cbLoginResponse
         };
+        
+        var evLocalizeView = {
+                topic: 'localizeView/login',
+                cbFunction: localizeView
+            };
 
         var htmlFormLogin = null;
         var htmlUsernameInput = null;
@@ -27,6 +32,7 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
         //region subscribe to events
         ideaWatcher.core.MessageBroker.subscribe(evIni);
         ideaWatcher.core.MessageBroker.subscribe(evLoginResponse);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         //endregion
 
         //region cbIni
