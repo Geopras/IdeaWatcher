@@ -6,11 +6,13 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function VCrea
             topic: 'internal/ini',
             cbFunction: cbIni
         };
+        
+        var htmlView = null;
+        var htmlProfileView = null;
+        var createIdea = null;
 
         //region subscribe to events
         ideaWatcher.core.MessageBroker.subscribe(evIni);
-        ideaWatcher.core.MessageBroker.subscribe(evSaveResponse);
-        ideaWatcher.core.MessageBroker.subscribe(evUserDataReceived);
         //endregion
 
         //region lade zu internationalisierende HTML-Elemente
@@ -37,21 +39,21 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function VCrea
             console.log('Initialisiere UIConnector ProfileEdit');
 
             //region assign html elements
-            htmlViewHeadline = document.querySelector('.ideaCreation_newIdea');
-            htmlName = document.querySelector('.ideaCreation_name_label');
-            htmlCategory = document.querySelector('.ideaCreation_category_label');
-            htmlCategory1 = document.querySelector('.ideaCreation_category_1');
-            htmlCategory2 = document.querySelector('.ideaCreation_category_2');
-            htmlCategory3 = document.querySelector('.ideaCreation_category_3');
-            htmlCategory4 = document.querySelector('.ideaCreation_category_4');
-            htmlCategory5 = document.querySelector('.ideaCreation_category_5');
-            htmlCategory6 = document.querySelector('.ideaCreation_category_6');
-            htmlCategory7 = document.querySelector('.ideaCreation_category_7');
-            htmlDescription = document.querySelector('.ideaCreation_description_label');
-            htmlDescriptionTextarea = document.querySelector('.ideaCreation_description_textarea');
-            htmlPublishButton = document.querySelector('.ideaCreation_publish_button');
-            htmlCancelButton = document.querySelector('.ideaCreation_cancel_button');
-            htmlSaveButton = document.querySelector('.ideaCreation_save_button');
+            htmlViewHeadline = document.getElementById('ideaCreation_newIdea');
+            htmlName = document.getElementById('ideaCreation_name_label');
+            htmlCategory = document.getElementById('ideaCreation_category_label');
+            htmlCategory1 = document.getElementById('ideaCreation_category_1');
+            htmlCategory2 = document.getElementById('ideaCreation_category_2');
+            htmlCategory3 = document.getElementById('ideaCreation_category_3');
+            htmlCategory4 = document.getElementById('ideaCreation_category_4');
+            htmlCategory5 = document.getElementById('ideaCreation_category_5');
+            htmlCategory6 = document.getElementById('ideaCreation_category_6');
+            htmlCategory7 = document.getElementById('ideaCreation_category_7');
+            htmlDescription = document.getElementById('ideaCreation_description_label');
+            htmlDescriptionTextarea = document.getElementById('ideaCreation_description_textarea');
+            htmlPublishButton = document.getElementById('ideaCreation_publish_button');
+            htmlCancelButton = document.getElementById('ideaCreation_cancel_button');
+            htmlSaveButton = document.getElementById('ideaCreation_save_button');
             //endregion
 
             // lokalisiere die View anhand der global definierten Sprache
