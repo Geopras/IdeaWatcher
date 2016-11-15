@@ -29,7 +29,7 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
                 //endregion
 
         htmlView = document.querySelector('.categoryIdeaList_view');
-        htmlHeader = document.createElement('h3');
+       
 
         var idea1 = {
           		name:'Testname1',
@@ -64,13 +64,11 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
         var language = ideaWatcher.core.Localizer.getLanguage();
         //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
 
-        htmlHeader.textContent =  ideaWatcher.core.Localizer.CategoryIdeaList[language].header;
+        htmlHeader = document.createElement('h1');
         htmlView.appendChild(htmlHeader);
         ideaList = ideaWatcher.view.component.IdeaList.renderList(itemList);
      
         htmlView = document.querySelector('.categoryIdeaList_view');
-        header = document.createElement('h1');
-        htmlView.appendChild(header);
         htmlView.appendChild(ideaList);
     }
     
@@ -90,7 +88,7 @@ ideaWatcher.view.CategoryIdeaList = ideaWatcher.view.CategoryIdeaList || (functi
     //endregion
     
     function renderHeader(categoryName) {
-    	 header.textContent = categoryName ;
+    	htmlHeader.textContent = categoryName ;
     }
 
     return {

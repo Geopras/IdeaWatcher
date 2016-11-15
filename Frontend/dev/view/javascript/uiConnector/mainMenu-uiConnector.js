@@ -13,6 +13,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 			var htmlFreshButton;
 			var htmlTrendingButton;
 			var htmlLoginButton;
+			var htmlSignupButton;
 			var htmlLanguageSwitchCheckbox;
 			var htmlUserButton;
 			var htmlCategoryParentNode;
@@ -34,7 +35,9 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 				htmlTrendingButton = document
 						.querySelector('.mainMenu_trending_button');
 				htmlLoginButton = document
-						.querySelector('.mainMenu_login_button');
+						.querySelector('#mainMenu_login_button');
+				htmlSignupButton = document
+				.querySelector('#mainMenu_signup_button');
 				htmlUserButton = document
 						.querySelector('.mainMenu_user_button');
 				htmlCategoryParentNode = document
@@ -52,8 +55,10 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 						handleButtonNavigationTrending);
 				htmlLoginButton.addEventListener('click',
 						handleButtonNavigationLogin);
-				htmlUserButton.addEventListener('click',
-						handleButtonNavigationProfile);
+				htmlSignupButton.addEventListener('click',
+						handleButtonNavigationSignup);
+				//htmlUserButton.addEventListener('click',
+					//	handleButtonNavigationProfile);
 				htmlLanguageSwitchCheckbox.addEventListener('change',
 						handleCheckboxLanguageSwitch); // bei "click" wird die
 														// Methode gleich
@@ -82,8 +87,6 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 
 				console.log('htmlBtnLogin geklickt');
 
-				document.querySelector('.signUp_view').style.display = 'none';
-
 				ideaWatcher.core.Navigator.switchView({
 					viewId : 'login',
 					url : 'myLogin'
@@ -91,6 +94,17 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 
 			}
 
+			function handleButtonNavigationSignup(clickEvent) {
+
+				console.log('htmlBtnSignup geklickt');
+
+				ideaWatcher.core.Navigator.switchView({
+					viewId : 'signup',
+					url : 'mySignUp'
+				});
+
+			}
+			
 			function handleButtonNavigationProfile(clickEvent) {
 
 				console.log('htmlUserButton geklickt');
