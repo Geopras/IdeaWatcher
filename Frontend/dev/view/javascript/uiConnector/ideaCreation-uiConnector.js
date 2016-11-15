@@ -92,14 +92,14 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function VCrea
                 ideaWatcher.core.Localizer.CreateIdea[language].description;
             htmlDescriptionTextarea.textContent = 
                 ideaWatcher.core.Localizer.CreateIdea[language].descriptionTextarea;
-            htmlPublishButton.textContent = 
-                ideaWatcher.core.Localizer.CreateIdea[language].publish;
-            htmlCancelButton.textContent = 
-                ideaWatcher.core.Localizer.CreateIdea[language].cancel;
-            htmlSaveButton.textContent = 
-                ideaWatcher.core.Localizer.CreateIdea[language].save;
-
-            console.log("Lokalisierung IdeaCreation-View abgeschlossen.")
+            htmlPublishButton.setAttribute("value", ideaWatcher.core.Localizer
+                .CreateIdea[language].publish);
+            htmlCancelButton.setAttribute("value", ideaWatcher.core.Localizer
+                .CreateIdea[language].cancel);
+            htmlSaveButton.setAttribute("value", ideaWatcher.core.Localizer
+                .CreateIdea[language].save);
+            
+            console.log("Lokalisierung IdeaCreation-View abgeschlossen.");
         }
         //endregion
 

@@ -146,8 +146,6 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
                     ideaWatcher.core.Localizer.ProfileEdit[language].errorMessage[errorMessage],
                     5000);
             }
-
-            //TODO: Ausgabe an User - Speichern erfolgreich oder Fehler bei Validierung von UserName, Email
         }
         //endregion
 
@@ -155,13 +153,22 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         // Zeige die Benutzerdaten in den Input-Feldern an, wenn sie erhalten wurden
         function cbUserDataReceived(exObj)
         {
-            htmlUserNameInput.value = exObj.data.userName;
-            htmlEmailInput.value = exObj.data.email;
-            htmlEmailCheckInput.checked = exObj.data.isMailPublic;
-            htmlSurnameInput.value = exObj.data.surname;
-            htmlFirstNameInput.value = exObj.data.firstName;
-            htmlGenderSelect.value = exObj.data.gender;
-            htmlLanguageSelect.value = exObj.data.language;
+            if (exObj.result == 'success'){
+                htmlUserNameInput.value = exObj.data.userName;
+                htmlEmailInput.value = exObj.data.email;
+                htmlEmailCheckInput.checked = exObj.data.isMailPublic;
+                htmlSurnameInput.value = exObj.data.surname;
+                htmlFirstNameInput.value = exObj.data.firstName;
+                htmlGenderSelect.value = exObj.data.gender;
+                htmlLanguageSelect.value = exObj.data.language;
+            } else {
+                var errorMessage = exObj.error;
+
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.core.Localizer.ProfileEdit[language].profile,
+                    ideaWatcher.core.Localizer.ProfileEdit[language].errorMessage[errorMessage],
+                    5000);
+            }
         }
         //endregion
 
