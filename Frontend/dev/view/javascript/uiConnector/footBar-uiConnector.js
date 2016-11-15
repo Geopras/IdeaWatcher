@@ -7,6 +7,12 @@ ideaWatcher.view.FootBar = ideaWatcher.view.FootBar
             topic : 'internal/ini',
             cbFunction : cbiIni
         };
+
+        var evLocalizeView = {
+            topic: 'localizeView/footBar',
+            cbFunction: localizeView
+        };
+
         var htmlView;
         var htmlAboutButton;
         var htmlCopyrightText;
@@ -14,6 +20,7 @@ ideaWatcher.view.FootBar = ideaWatcher.view.FootBar
 
         // region subscribe to events
         ideaWatcher.core.MessageBroker.subscribe(evIni);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         // endregion
 
         function cbiIni() {

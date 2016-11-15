@@ -1,171 +1,181 @@
 ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
-		|| (function() {
+    || (function () {
 
-			// region local vars
-			// Event Globale Initialisierung
-			var evIni = {
-				topic : 'internal/ini',
-				cbFunction : cbiIni
-			};
-			var htmlView;
-			var htmlHomeButton;
-			var htmlHotButton;
-			var htmlFreshButton;
-			var htmlTrendingButton;
-			var htmlLoginButton;
-			var htmlSignupButton;
-			var htmlLanguageSwitchCheckbox;
-			var htmlUserButton;
-			var htmlCategoryParentNode;
-			var htmlCategoryChildrenList;
-			// endregion
+        // region local vars
+        // Event Globale Initialisierung
+        var evIni = {
+            topic: 'internal/ini',
+            cbFunction: cbiIni
+        };
 
-			// region subscribe to events
-			ideaWatcher.core.MessageBroker.subscribe(evIni);
-			// endregion
+        var evLocalizeView = {
+            topic: 'localizeView/mainMenu',
+            cbFunction: localizeView
+        };
 
-			function cbiIni() {
-				console.log('ini Event');
-				htmlView = document.querySelector('.mainMenu_view');
-				htmlHomeButton = document
-						.querySelector('.mainMenu_logo_button');
-				htmlHotButton = document.querySelector('.mainMenu_hot_button');
-				htmlFreshButton = document
-						.querySelector('.mainMenu_fresh_button');
-				htmlTrendingButton = document
-						.querySelector('.mainMenu_trending_button');
-				htmlLoginButton = document
-						.querySelector('#mainMenu_login_button');
-				htmlSignupButton = document
-				.querySelector('#mainMenu_signup_button');
-				htmlUserButton = document
-						.querySelector('.mainMenu_user_button');
-				htmlCategoryParentNode = document
-						.querySelector('.mainMenu_categoryList_ul');
-				htmlLanguageSwitchCheckbox = document
-						.querySelector('.mainMenu_switch');
+        var htmlView;
+        var htmlHomeButton;
+        var htmlHotButton;
+        var htmlFreshButton;
+        var htmlTrendingButton;
+        var htmlLoginButton;
+        var htmlSignupButton;
+        var htmlLanguageSwitchCheckbox;
+        var htmlUserButton;
+        var htmlCategoryParentNode;
+        var htmlCategoryChildrenList;
+        // endregion
 
-				htmlHomeButton
-						.addEventListener('click', handleButtonNavigation);
-				htmlHotButton.addEventListener('click',
-						handleButtonNavigationHot);
-				htmlFreshButton.addEventListener('click',
-						handleButtonNavigationFresh);
-				htmlTrendingButton.addEventListener('click',
-						handleButtonNavigationTrending);
-				htmlLoginButton.addEventListener('click',
-						handleButtonNavigationLogin);
-				htmlSignupButton.addEventListener('click',
-						handleButtonNavigationSignup);
-				//htmlUserButton.addEventListener('click',
-					//	handleButtonNavigationProfile);
-				htmlLanguageSwitchCheckbox.addEventListener('change',
-						handleCheckboxLanguageSwitch); // bei "click" wird die
-														// Methode gleich
-														// zweimal aufgerufen
+        // region subscribe to events
+        ideaWatcher.core.MessageBroker.subscribe(evIni);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
+        // endregion
 
-				htmlCategoryChildrenList = htmlCategoryParentNode.children;
+        function cbiIni() {
+            console.log('ini Event');
+            htmlView = document.querySelector('.mainMenu_view');
+            htmlHomeButton = document
+                .querySelector('.mainMenu_logo_button');
+            htmlHotButton = document.querySelector('.mainMenu_hot_button');
+            htmlFreshButton = document
+                .querySelector('.mainMenu_fresh_button');
+            htmlTrendingButton = document
+                .querySelector('.mainMenu_trending_button');
+            htmlLoginButton = document
+                .querySelector('#mainMenu_login_button');
+            htmlSignupButton = document
+                .querySelector('#mainMenu_signup_button');
+            htmlUserButton = document
+                .querySelector('.mainMenu_user_button');
+            htmlCategoryParentNode = document
+                .querySelector('.mainMenu_categoryList_ul');
+            htmlLanguageSwitchCheckbox = document
+                .querySelector('.mainMenu_switch');
 
-				for (var i = 0; i < htmlCategoryChildrenList.length; i++) {
-					console.log(htmlCategoryChildrenList[i].textContent);
-					htmlCategoryChildrenList[i].addEventListener('click',
-							handleButtonNavigationCategory);
-				}
+            htmlHomeButton
+                .addEventListener('click', handleButtonNavigation);
+            htmlHotButton.addEventListener('click',
+                handleButtonNavigationHot);
+            htmlFreshButton.addEventListener('click',
+                handleButtonNavigationFresh);
+            htmlTrendingButton.addEventListener('click',
+                handleButtonNavigationTrending);
+            htmlLoginButton.addEventListener('click',
+                handleButtonNavigationLogin);
+            htmlSignupButton.addEventListener('click',
+                handleButtonNavigationSignup);
+            //htmlUserButton.addEventListener('click',
+            //	handleButtonNavigationProfile);
+            htmlLanguageSwitchCheckbox.addEventListener('change',
+                handleCheckboxLanguageSwitch); // bei "click" wird die
+            // Methode gleich
+            // zweimal aufgerufen
 
-			}
+            htmlCategoryChildrenList = htmlCategoryParentNode.children;
 
-			function handleButtonNavigation(clickEvent) {
+            for (var i = 0; i < htmlCategoryChildrenList.length; i++) {
+                console.log(htmlCategoryChildrenList[i].textContent);
+                htmlCategoryChildrenList[i].addEventListener('click',
+                    handleButtonNavigationCategory);
+            }
 
-				console.log('htmlBtnHome geklickt');
-				ideaWatcher.core.Navigator.switchView({
-					viewId : 'HotIdeaList',
-					url : 'ideaWatcher.html'
-				});
-			}
+        }
 
-			function handleButtonNavigationLogin(clickEvent) {
+        function handleButtonNavigation(clickEvent) {
 
-				console.log('htmlBtnLogin geklickt');
+            console.log('htmlBtnHome geklickt');
+            ideaWatcher.core.Navigator.switchView({
+                viewId: 'HotIdeaList',
+                url: 'ideaWatcher.html'
+            });
+        }
 
-				ideaWatcher.core.Navigator.switchView({
-					viewId : 'login',
-					url : 'myLogin'
-				});
+        function handleButtonNavigationLogin(clickEvent) {
 
-			}
+            console.log('htmlBtnLogin geklickt');
 
-			function handleButtonNavigationSignup(clickEvent) {
+            ideaWatcher.core.Navigator.switchView({
+                viewId: 'login',
+                url: 'myLogin'
+            });
 
-				console.log('htmlBtnSignup geklickt');
+        }
 
-				ideaWatcher.core.Navigator.switchView({
-					viewId : 'signup',
-					url : 'mySignUp'
-				});
+        function handleButtonNavigationSignup(clickEvent) {
 
-			}
-			
-			function handleButtonNavigationProfile(clickEvent) {
+            console.log('htmlBtnSignup geklickt');
 
-				console.log('htmlUserButton geklickt');
-				ideaWatcher.core.Navigator.switchView({
-					viewId : 'profile',
-					url : 'myProfile'
-				});
-			}
+            ideaWatcher.core.Navigator.switchView({
+                viewId: 'signup',
+                url: 'mySignUp'
+            });
 
-			function handleButtonNavigationHot(clickEvent) {
+        }
 
-				console.log('htmlHotButton geklickt');
-				ideaWatcher.core.Navigator.switchView({
-					viewId : 'HotIdeaList',
-					url : 'HotIdeaList'
-				});
-			}
+        function handleButtonNavigationProfile(clickEvent) {
 
-			function handleButtonNavigationFresh(clickEvent) {
+            console.log('htmlUserButton geklickt');
+            ideaWatcher.core.Navigator.switchView({
+                viewId: 'profile',
+                url: 'myProfile'
+            });
+        }
 
-				console.log('htmlFreshButton geklickt');
-				ideaWatcher.core.Navigator.switchView({
-					viewId : 'FreshIdeaList',
-					url : 'FreshIdeaList'
-				});
-			}
-			function handleButtonNavigationTrending(clickEvent) {
+        function handleButtonNavigationHot(clickEvent) {
 
-				console.log('htmlTrendingButton geklickt');
-				ideaWatcher.core.Navigator.switchView({
-					viewId : 'TrendingIdeaList',
-					url : 'TrendingIdeaList'
-				});
-			}
+            console.log('htmlHotButton geklickt');
+            ideaWatcher.core.Navigator.switchView({
+                viewId: 'HotIdeaList',
+                url: 'HotIdeaList'
+            });
+        }
 
-			function handleButtonNavigationCategory(clickEvent) {
+        function handleButtonNavigationFresh(clickEvent) {
 
-				console.log('htmlCategoryButton geklickt');
-				var source = clickEvent.srcElement || clickEvent.target;
-				ideaWatcher.core.Navigator.switchView({
-					viewId : 'CategoryIdeaList',
-					url : 'CategoryIdeaList',
-					additionalData : {
-						categoryName : source.textContent
-					}
-				});
-			}
+            console.log('htmlFreshButton geklickt');
+            ideaWatcher.core.Navigator.switchView({
+                viewId: 'FreshIdeaList',
+                url: 'FreshIdeaList'
+            });
+        }
 
-			function handleCheckboxLanguageSwitch(clickEvent) {
-				var language = ideaWatcher.core.Localizer.getLanguage();
-				if (language == 'de_DE') {
-					language = ideaWatcher.core.Localizer.setLanguage('en_GB');
-				} else {
+        function handleButtonNavigationTrending(clickEvent) {
 
-					language = ideaWatcher.core.Localizer.setLanguage('de_DE');
-				}
+            console.log('htmlTrendingButton geklickt');
+            ideaWatcher.core.Navigator.switchView({
+                viewId: 'TrendingIdeaList',
+                url: 'TrendingIdeaList'
+            });
+        }
 
-			}
+        function handleButtonNavigationCategory(clickEvent) {
 
-			return {
+            console.log('htmlCategoryButton geklickt');
+            var source = clickEvent.srcElement || clickEvent.target;
+            ideaWatcher.core.Navigator.switchView({
+                viewId: 'CategoryIdeaList',
+                url: 'CategoryIdeaList',
+                additionalData: {
+                    categoryName: source.textContent
+                }
+            });
+        }
 
-			};
+        function handleCheckboxLanguageSwitch(clickEvent) {
+            var language = ideaWatcher.core.Localizer.getLanguage();
+            if (language == 'de_DE') {
+                language = ideaWatcher.core.Localizer.setLanguage('en_GB');
+            } else {
 
-		})();
+                language = ideaWatcher.core.Localizer.setLanguage('de_DE');
+            }
+            ideaWatcher.core.Localizer.localzeCurrentViews();
+        }
+
+        function localizeView() {
+
+        }
+
+        return {};
+
+    })();

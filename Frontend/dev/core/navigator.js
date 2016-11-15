@@ -40,8 +40,15 @@ ideaWatcher.core.Navigator = ideaWatcher.core.Navigator || (function () {
             currentView = newView;
         }
 
+        function pubGetCurrentView() {
+
+            return currentView;
+        }
+
         return {
-            switchView: prepareSwitch
+            switchView: prepareSwitch,
+            // gibt die aktuell angezeigte View zurück
+            getCurrentView: pubGetCurrentView
         };
 
     })();

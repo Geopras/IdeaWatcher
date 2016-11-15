@@ -7,6 +7,11 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         cbFunction: cbIni
     };
 
+    var evLocalizeView = {
+        topic: 'localizeView/signup',
+        cbFunction: localizeView
+    };
+
     var htmlFormSignup = null;
     var htmlUsernameInput = null;
     var htmlEmailInput = null;
@@ -18,6 +23,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
 
     //region subscribe to events
     ideaWatcher.core.MessageBroker.subscribe(evIni);
+    ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
     //endregion
 
     //region cbIni
@@ -46,6 +52,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         htmlFormSignup.onsubmit = function onSubmit(event) {
 
             event.preventDefault();
+            
             if(!checkEqualPassword()) return;
             if(!checkValidPassword()) return;
 
@@ -60,11 +67,11 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         };
 
         htmlPasswordRepeatInput.disabled = true;
-        localizeView();
+        
 
         htmlPasswordInput.addEventListener('change', checkValidPassword);
         htmlPasswordRepeatInput.addEventListener('change', checkEqualPassword);
-
+        localizeView();
         
         // endregion
     }
@@ -148,7 +155,9 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
     {
         if(obj.shouldShow)
         {
+            localizeView();
             htmlView.style.display = 'block';
+            localizeView();
         }
         else
         {
