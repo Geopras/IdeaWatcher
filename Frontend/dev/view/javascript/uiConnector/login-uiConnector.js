@@ -74,6 +74,7 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
         {
             if(obj.shouldShow)
             {
+            	localizeView();
                 htmlView.style.display = 'block';
             }
             else
@@ -101,6 +102,27 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
         }
         //endregion
 
+        
+        function localizeView() {
+
+            console.log("Starte Lokalisierung der Login-View ...");
+
+            var language = ideaWatcher.core.Localizer.getLanguage();
+            var htmlUserNameLabel = document.querySelector('#login_userName_label');
+            var htmlHeader = document.querySelector('#login_header_h1');
+            var htmlPasswordLabel = document.querySelector('#login_password_label');
+            var htmlForgotPasswordButton = document.querySelector('.login_forgotPassword_button');
+            
+            htmlUsernameInput.placeholder = ideaWatcher.core.Localizer.login[language].userName;
+            htmlPasswordInput.placeholder = ideaWatcher.core.Localizer.login[language].password;
+            
+            htmlHeader.textContent = ideaWatcher.core.Localizer.login[language].header;
+            htmlUserNameLabel.textContent = ideaWatcher.core.Localizer.login[language].userName;
+            htmlPasswordLabel.textContent = ideaWatcher.core.Localizer.login[language].password;
+            htmlSubmitButton.value = ideaWatcher.core.Localizer.login[language].submit;
+            htmlForgotPasswordButton.textContent = ideaWatcher.core.Localizer.login[language].forgotPassword;
+            
+        }
         return {
 
         };

@@ -46,6 +46,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         htmlFormSignup.onsubmit = function onSubmit(event) {
 
             event.preventDefault();
+            
             if(!checkEqualPassword()) return;
             if(!checkValidPassword()) return;
 
@@ -60,11 +61,11 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         };
 
         htmlPasswordRepeatInput.disabled = true;
-        localizeView();
+        
 
         htmlPasswordInput.addEventListener('change', checkValidPassword);
         htmlPasswordRepeatInput.addEventListener('change', checkEqualPassword);
-
+        localizeView();
         
         // endregion
     }
@@ -149,6 +150,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         if(obj.shouldShow)
         {
             htmlView.style.display = 'block';
+            localizeView();
         }
         else
         {
