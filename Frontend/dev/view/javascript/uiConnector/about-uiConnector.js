@@ -7,6 +7,12 @@ ideaWatcher.view.About = ideaWatcher.view.About
             topic : 'internal/ini',
             cbFunction : cbiIni
         };
+
+        var evLocalizeView = {
+            topic: 'localizeView/About',
+            cbFunction: localizeView
+        };
+
         var htmlView;
         var htmlHeader;
         var htmlContentDE;
@@ -14,6 +20,7 @@ ideaWatcher.view.About = ideaWatcher.view.About
 
         // region subscribe to events
         ideaWatcher.core.MessageBroker.subscribe(evIni);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         // endregion
 
         function cbiIni() {
