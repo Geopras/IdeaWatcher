@@ -20,6 +20,11 @@ ideaWatcher.core.Localizer = ideaWatcher.core.Localizer || (function () {
                 topic: 'localizeView/footBar',
                 cbFunction: null
             });
+            
+//            ideaWatcher.core.MessageBroker.publish({
+//                topic: 'localizeView/ideaCreation',
+//                cbFunction: null
+//            });
 
             // sage der aktuellen View Bescheid, dass sie sich lokalisieren soll
             var currentView = ideaWatcher.core.Navigator.getCurrentView();
