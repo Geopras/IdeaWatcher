@@ -48,8 +48,8 @@
   right: 32px;
   bottom: 0;
   background-color: blue;
-  background-image: url("./resources/img/de.jpg");
-  background-size: 20px 14px;
+  background-image: url("./resources/img/en.png");
+  background-size: 30px 14px;
   opacity: 0.9;
 //  -webkit-transition: .4s;
   transition: .4s;
@@ -63,32 +63,27 @@
   left: 0px;
   bottom: -6px;
   background-color: green;
-  background-image: url("./resources/img/en.png");
+  background-image: url("./resources/img/de.jpg");
   background-size: 35px 25px;
-//  -webkit-transition: .4s;
   transition: 0.4s;
 }
 
-
 input:checked + .mainMenu_slider {
   background-color: red;
-  background-image: url("./resources/img/en.png");
+  background-image: url("./resources/img/de.jpg");
   background-size: 25px 15px;
 //  transition: 0.4s;
 }
-
 
 input:checked + .mainMenu_slider:before {
   -webkit-transform: translateX(21px);
   -ms-transform: translateX(21px);
   transform: translateX(21px);
   background-color: yellow;
-  background-image: url("./resources/img/de.jpg");
-  background-size: 20px 25px;
-//  transition: 0.4s;
+  background-image: url("./resources/img/en.png");
+  background-size: 35px 25px;
 }
 
-/* Rounded sliders */
 .mainMenu_slider.round {
   border-radius: 50px;
 }
@@ -101,6 +96,7 @@ input:checked + .mainMenu_slider:before {
   height: 60px;
   padding: 20px;
   float: right;
+  transition: all 500ms;
 }
 
 .mainMenu_view .mainMenu_lupe_button img:hover {
@@ -111,6 +107,7 @@ input:checked + .mainMenu_slider:before {
   height: 60px;
   padding: 20px;
   float: right;
+  transition: all 500ms;
 }
 
 .mainMenu_view .mainMenu_user_button img:hover {
@@ -159,6 +156,15 @@ input:checked + .mainMenu_slider:before {
   padding: 20px;
 }
 
+.mainMenu_view nav ul li ul li {
+  min-width: 200px;
+}
+
+.mainMenu_view nav ul li div {
+  height: 60px;
+  transition:all 500ms;
+}
+
 .mainMenu_view nav ul li:hover ul {
   height:auto;
   opacity:1;
@@ -169,4 +175,37 @@ input:checked + .mainMenu_slider:before {
   background: #3a3a3a;
   overflow:hidden;
   height: 0;
+}
+
+.mainMenu_user_button_list_ul {
+    background: #000000;
+}
+
+.mainMenu_user_button_dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.mainMenu_user_button_dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    min-width: 120px;
+    margin: 60px 0px 0px 0px;
+    background: #3a3a3a;
+}
+
+.mainMenu_user_button_dropdown-content a {
+    color: black;
+    padding: 20px;
+    text-decoration: none;
+    display: block;
+}
+
+.mainMenu_user_button_dropdown-content a:hover {
+    background: #4096ee;
+}
+
+.mainMenu_user_button_dropdown:hover .mainMenu_user_button_dropdown-content {
+    display: block;
 }

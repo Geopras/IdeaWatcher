@@ -71,7 +71,7 @@ public class UserController implements IUserController {
     }
 
     @Override
-    public void changeUser(IUser user) throws Exception {
+    public void changeUser(String userName, IUser user) throws Exception {
 
     }
 }

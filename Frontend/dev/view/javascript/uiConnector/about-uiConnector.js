@@ -8,6 +8,8 @@ ideaWatcher.view.About = ideaWatcher.view.About
             cbFunction : cbiIni
         };
         var htmlView;
+        var htmlHeader;
+        var htmlContentDE;
         // endregion
 
         // region subscribe to events
@@ -17,6 +19,8 @@ ideaWatcher.view.About = ideaWatcher.view.About
         function cbiIni() {
             console.log('ini Event');
             htmlView = document.querySelector('.about_view');
+            htmlHeader = document.getElementById('about_header');
+            htmlContentDE = document.querySelector('.about_content_de_DE');
 
             ideaWatcher.controller.About.registerShowView(cbShowView);
         }
@@ -42,10 +46,14 @@ ideaWatcher.view.About = ideaWatcher.view.About
 
             console.log("Starte Lokalisierung der About-View ...");
 
-            // htmlCopyrightText.textContent =
-            //     ideaWatcher.core.Localizer.FootBar[language].copyright_text;
-            // htmlAboutButton.textContent =
-            //     ideaWatcher.core.Localizer.FootBar[language].about;
+            htmlHeader.textContent =
+                ideaWatcher.core.Localizer.About[language].header;
+
+            if (language == "de_DE"){
+                htmlContentDE.style.display = 'block';
+            } else {
+                htmlContentDE.style.display = 'none';
+            }
         }
 
         return {

@@ -59,9 +59,11 @@ public interface IUserController {
 
     /**
      * Aendert einen vorhandenen User
+     * @param userName {String} eindeutiger Username - noetig, falls sich der Name eines
+     *                 existierenden Users verändert
      * @param user {IUser} geaendertes User-Objekt
      * @throws Exception falls der User nicht existiert oder ein Problem beim
      * Zugriff auf die Datenbank auftrat
      */
-    void changeUser(IUser user) throws Exception;
+    void changeUser(String userName, IUser user) throws Exception;
 }

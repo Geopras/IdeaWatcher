@@ -105,8 +105,6 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
                 exObj.gender = htmlGenderSelect.value;
                 exObj.language = htmlLanguageSelect.value;
 
-                console.log(exObj);
-
                 //TODO (NiceTOHave): Validierung von Username und Mail bei LostFocus vom Input oder so
 
                 ideaWatcher.controller.ProfileEdit.tryToSaveUserData(exObj);
@@ -122,7 +120,23 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         //region cbSaveResponse
         function cbSaveResponse(exObj)
         {
-            console.log(exObj);
+            var language = ideaWatcher.core.Localizer.getLanguage();
+
+            if (exObj.result == 'success'){
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.core.Localizer.ProfileEdit[language].profile,
+                    ideaWatcher.core.Localizer.ProfileEdit[language].saveSuccess,
+                    5000);
+            } else {
+
+                var errorMessage = exObj.error;
+
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.core.Localizer.ProfileEdit[language].profile,
+                    ideaWatcher.core.Localizer.ProfileEdit[language].errorMessage[errorMessage],
+                    5000);
+            }
+
             //TODO: Ausgabe an User - Speichern erfolgreich oder Fehler bei Validierung von UserName, Email
         }
         //endregion

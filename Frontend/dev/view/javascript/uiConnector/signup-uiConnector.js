@@ -60,11 +60,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         };
 
         htmlPasswordRepeatInput.disabled = true;
-        htmlSubmitButton.disabled = true;
         localizeView();
-        
-        // htmlPasswordInput.addEventListener('change', checkValidPassword);
-        // htmlPasswordRepeatInput.addEventListener('change', checkEqualPassword);
 
         htmlPasswordInput.addEventListener('change', checkValidPassword);
         htmlPasswordRepeatInput.addEventListener('change', checkEqualPassword);
@@ -85,17 +81,18 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         // }
 
 
-
+    	
         var language = ideaWatcher.core.Localizer.getLanguage();
         var htmlPasswordRepeatErrorLabel = document.querySelector('.signUp_passwordRepeatedError_label');
         if (htmlPasswordInput.value == htmlPasswordRepeatInput.value) {
-            htmlPasswordRepeatErrorLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordMatching;
-            htmlPasswordRepeatErrorLabel.style.color = 'black';
-            htmlSubmitButton.disabled = false;
-            return true;
+        	console.log('Equal passwords.');
+        	htmlPasswordRepeatErrorLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordMatching;
+        	htmlPasswordRepeatErrorLabel.style.color = 'black';
+           // return true;
         } else {
-            htmlPasswordRepeatErrorLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordNotMatching;
-            return false;
+        	console.log('Not equal passwords.');
+        	htmlPasswordRepeatErrorLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordNotMatching;
+            //return false;
         }
         htmlPasswordRepeatErrorLabel.style.display = 'inline';
 
