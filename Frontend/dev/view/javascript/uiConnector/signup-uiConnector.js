@@ -65,6 +65,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         htmlPasswordInput.addEventListener('change', checkValidPassword);
         htmlPasswordRepeatInput.addEventListener('change', checkEqualPassword);
 
+        
         // endregion
     }
     //endregion
