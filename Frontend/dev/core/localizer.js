@@ -1,6 +1,6 @@
 ideaWatcher.core.Localizer = ideaWatcher.core.Localizer || (function () {
 
-        var currentLanguage = "en_GB";
+        var currentLanguage = 'en_GB';
 
         /*
          // JSON-Definition (nicht mehr verwendet, weil WebSocket direkt JS-Objekte zurück gibt)
@@ -34,7 +34,7 @@ ideaWatcher.core.Localizer = ideaWatcher.core.Localizer || (function () {
         function pubSetLanguage(language) {
 
             currentLanguage = language;
-            console.log("Sprache geändert in: " + language);
+            console.log('Sprache geändert in: ' + language);
         }
 
         function pubGetLanguage() {
