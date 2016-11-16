@@ -6,9 +6,16 @@ ideaWatcher.view.MyIdeas = ideaWatcher.view.MyIdeas || (function () {
 		topic : 'internal/ini',
 		cbFunction : cbIni
 	};
+	
+	 var evLocalizeView = {
+		        topic: 'localizeView/myIdeas',
+		        cbFunction: localizeView
+		    };
 
 	var htmlView = null;
 	var htmlProfileView = null;
+	var header = null;
+	var htmlIdeaCreateButton = null;
 	var ideaList = null;
 
 	// region lade zu internationalisierende HTML-Elemente
@@ -17,6 +24,7 @@ ideaWatcher.view.MyIdeas = ideaWatcher.view.MyIdeas || (function () {
 
 	// region subscribe to events
 	ideaWatcher.core.MessageBroker.subscribe(evIni);
+	ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
 	// endregion
 
 	// region cbIni
@@ -64,11 +72,11 @@ ideaWatcher.view.MyIdeas = ideaWatcher.view.MyIdeas || (function () {
 
         // localization:
         var language = ideaWatcher.core.Localizer.getLanguage();
-        //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
         htmlView = document.querySelector('.myIdeas_view');
-        var header = document.createElement('h1');
-        header.textContent =  ideaWatcher.core.Localizer.MyIdeaList[language].header;
-        htmlView.appendChild(header);
+        //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
+        header = document.querySelector('.myIdeas_header_h1');
+        htmlIdeaCreateButton = document.querySelector('.myIdeas_createNewIdea_button');
+        
 		var ideaList = ideaWatcher.view.component.IdeaList.renderList(itemList);
         htmlView.appendChild(ideaList);
     }
@@ -93,7 +101,8 @@ ideaWatcher.view.MyIdeas = ideaWatcher.view.MyIdeas || (function () {
 	function localizeView() {
 
 		var language = ideaWatcher.core.Localizer.getLanguage();
-
+		header.textContent =  ideaWatcher.core.Localizer.MyIdeaList[language].header;
+		htmlIdeaCreateButton.textContent =  ideaWatcher.core.Localizer.MyIdeaList[language].newIdea;
 		console.log("Starte Lokalisierung der MyIdeas-View ...");
 
 		console.log("Lokalisierung MyIdeasView abgeschlossen.")
