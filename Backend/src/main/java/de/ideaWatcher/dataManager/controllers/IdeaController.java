@@ -14,12 +14,12 @@ public class IdeaController implements IIdeaController {
     }
 
     @Override
-    public IIdea getIdea(String ideaName) throws Exception {
+    public IIdea getIdea(String ideaId) throws Exception {
         return null;
     }
 
     @Override
-    public void deleteIdea(String ideaName) throws Exception {
+    public void deleteIdea(String ideaId) throws Exception {
 
     }
 
