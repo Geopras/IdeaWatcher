@@ -11,6 +11,20 @@ import java.util.Comparator;
  */
 public class IdeaHotRankComparator implements Comparator<Idea> {
 
+    private boolean reverse;
+
+    public IdeaHotRankComparator(){
+        reverse = false;
+    }
+
+    /**
+     * Vergleicht zwei Ideen anhand ihres Hot-Rankings.
+     * @param reverse Bei reverse = true werden große Werte vor kleine Werte sortiert.
+     */
+    public IdeaHotRankComparator(boolean reverse){
+        this.reverse = reverse;
+    }
+
     public int compare(Idea idea1, Idea idea2) {
 
         if (idea1.getHotRank() == null && idea2.getHotRank() == null) {
@@ -18,13 +32,22 @@ public class IdeaHotRankComparator implements Comparator<Idea> {
         }
 
         if (idea1.getHotRank() == null) {
+            if (reverse){
+                return -1;
+            }
             return 1;
         }
 
         if (idea2.getHotRank() == null) {
+            if (reverse){
+                return 1;
+            }
             return -1;
         }
 
+        if (reverse){
+            return idea2.getHotRank().compareTo(idea1.getHotRank());
+        }
         return idea1.getHotRank().compareTo(idea2.getHotRank());
     }
 }
