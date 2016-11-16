@@ -33,7 +33,7 @@ ideaWatcher.view.GlobalNotification = ideaWatcher.view.GlobalNotification || (fu
     //region
     function cbShowNotification(notificationType, headline, text, duration) {
 
-        switch(ideaWatcher.model.GlobalNotificationType[notificationType]) {
+        switch(notificationType) {
             case ideaWatcher.model.GlobalNotificationType.INFO:
                 htmlView.style.backgroundColor = colorInfo;
                 break;
