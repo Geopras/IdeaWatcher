@@ -4,4 +4,4 @@ ideaWatcher.model.GlobalNotificationType = ideaWatcher.model.GlobalNotificationT
         INFO: 2,
         WARNING: 3,
         ERROR: 4
-    }
+    };
