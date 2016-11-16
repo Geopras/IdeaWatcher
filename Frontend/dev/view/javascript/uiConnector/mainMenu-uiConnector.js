@@ -85,7 +85,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 
             console.log('htmlBtnHome geklickt');
             ideaWatcher.core.Navigator.switchView({
-                viewId: 'HotIdeaList',
+                viewId: 'IdeaList',
                 url: 'ideaWatcher.html'
             });
         }
@@ -95,7 +95,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
             console.log('htmlBtnLogin geklickt');
 
             ideaWatcher.core.Navigator.switchView({
-                viewId: 'login',
+                viewId: 'Login',
                 url: 'myLogin'
             });
 
@@ -106,7 +106,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
             console.log('htmlBtnSignup geklickt');
 
             ideaWatcher.core.Navigator.switchView({
-                viewId: 'signup',
+                viewId: 'Signup',
                 url: 'mySignUp'
             });
 
@@ -116,36 +116,51 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 
             console.log('htmlUserButton geklickt');
             ideaWatcher.core.Navigator.switchView({
-                viewId: 'profile',
-                url: 'myProfile'
+                viewId: 'Profile',
+                url: 'myProfile',
             });
         }
 
         function handleButtonNavigationHot(clickEvent) {
 
             console.log('htmlHotButton geklickt');
-            ideaWatcher.core.Navigator.switchView({
-                viewId: 'HotIdeaList',
-                url: 'HotIdeaList'
-            });
+
+            var exObj = {
+                ideaListType: 'HOT',
+                fromRank: '1',
+                toRank: '10'
+            };
+            console.log(exObj);
+
+            ideaWatcher.controller.IdeaList.getIdeaList(exObj);
         }
 
         function handleButtonNavigationFresh(clickEvent) {
 
             console.log('htmlFreshButton geklickt');
-            ideaWatcher.core.Navigator.switchView({
-                viewId: 'FreshIdeaList',
-                url: 'FreshIdeaList'
-            });
+
+            var exObj = {
+                ideaListType: 'FRESH',
+                fromRank: '1',
+                toRank: '10'
+            };
+            console.log(exObj);
+
+            ideaWatcher.controller.IdeaList.getIdeaList(exObj);
         }
 
         function handleButtonNavigationTrending(clickEvent) {
 
             console.log('htmlTrendingButton geklickt');
-            ideaWatcher.core.Navigator.switchView({
-                viewId: 'TrendingIdeaList',
-                url: 'TrendingIdeaList'
-            });
+
+            var exObj = {
+                ideaListType: 'TRENDING',
+                fromRank: '1',
+                toRank: '10'
+            };
+            console.log(exObj);
+
+            ideaWatcher.controller.IdeaList.getIdeaList(exObj);
         }
 
         function handleButtonNavigationCategory(clickEvent) {
