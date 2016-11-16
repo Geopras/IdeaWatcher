@@ -7,6 +7,20 @@ ideaWatcher.view.Profile = ideaWatcher.view.Profile || (function VProfile() {
             cbFunction: cbIni
         };
 
+        var evLocalizeViewMyIdeas = {
+                topic: 'localizeView/myIdeas',
+                cbFunction: localizeView
+            };
+        
+        var evLocalizeViewFollowedIdeas = {
+                topic: 'localizeView/followedIdeas',
+                cbFunction: localizeView
+            };
+        
+        var evLocalizeViewProfileEdit = {
+                topic: 'localizeView/profileEdit',
+                cbFunction: localizeView
+            };
         var htmlView = null;
 
         //region lade zu internationalisierende HTML-Elemente
@@ -17,6 +31,9 @@ ideaWatcher.view.Profile = ideaWatcher.view.Profile || (function VProfile() {
 
         //region subscribe to events
         ideaWatcher.core.MessageBroker.subscribe(evIni);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeViewMyIdeas);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeViewFollowedIdeas);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeViewProfileEdit);
         //endregion
 
         //region cbIni
@@ -70,8 +87,14 @@ ideaWatcher.view.Profile = ideaWatcher.view.Profile || (function VProfile() {
             var language = ideaWatcher.core.Localizer.getLanguage();
 
             console.log("Starte Lokalisierung der Profile-View ...");
-
-
+            htmlMyIdeasButton = document.querySelector('.profileSubMenu_myIdeas_button');
+            htmlFollowedIdeasButton = document.querySelector('.profileSubMenu_followedIdeas_button');
+            htmlProfileEditButton = document.querySelector('.profileSubMenu_profileEdit_button');
+            
+            htmlMyIdeasButton.textContent = ideaWatcher.core.Localizer.profile[language].myIdeas;
+            htmlFollowedIdeasButton.textContent = ideaWatcher.core.Localizer.profile[language].followedIdeas;
+            htmlProfileEditButton.textContent = ideaWatcher.core.Localizer.profile[language].profile;
+            
             console.log("Lokalisierung ProfileView abgeschlossen.")
         }
         //endregion
