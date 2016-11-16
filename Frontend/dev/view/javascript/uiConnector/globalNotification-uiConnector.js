@@ -8,6 +8,11 @@ ideaWatcher.view.GlobalNotification = ideaWatcher.view.GlobalNotification || (fu
     var htmlView = null;
     var htmlHeadline = null;
     var htmlDisplayText = null;
+    var colorInfo = '#86a8ff';
+    var colorWarning = '#ffa775';
+    var colorError = '#ff3245';
+    var colorSuccess = '#77ff60';
+
     //endregion
 
     //region subscribe to events
@@ -26,20 +31,40 @@ ideaWatcher.view.GlobalNotification = ideaWatcher.view.GlobalNotification || (fu
     //endregion
 
     //region
-    function cbShowNotification(headline, text, duration){
-        console.log('show Notification');
+    function cbShowNotification(notificationType, headline, text, duration) {
+
+
+        switch(notificationType) {
+            case 'INFO':
+                htmlView.style.backgroundColor = colorInfo;
+                break;
+            case 'WARNING':
+                htmlView.style.backgroundColor = colorWarning;
+                break;
+            case 'ERROR':
+                htmlView.style.backgroundColor = colorError;
+                break;
+            case 'SUCCESS':
+                htmlView.style.backgroundColor = colorSuccess;
+                break;
+            default:
+                htmlView.style.backgroundColor = colorInfo;
+                break;
+        }
 
         htmlView.style.right = '50px';
+
         htmlHeadline.textContent = headline;
         htmlDisplayText.textContent = text;
         htmlView.style.opacity = '1.0';
-        
+
         setTimeout(function () {
 
             htmlView.style.right = '-350px';
             htmlView.style.opacity = '0.0';
             
         },duration);
+        console.log('show Notification');
     }
     //endregion
 
