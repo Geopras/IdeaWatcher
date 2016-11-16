@@ -57,11 +57,19 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
             // region override onSubmit to prevent page reload
             htmlFormLogin.onsubmit = function onSubmit(event) {
                 event.preventDefault();
-            };
-            // endregion
 
-            //region LoginButton: Eventlistener(click)
-            htmlSubmitButton.addEventListener('click', function clickLogin() {
+                var filterObject = ideaWatcher.model.IdeaListFilter;
+                filterObject.listType = 'hot';
+                filterObject.fromRank = 1;
+                filterObject.toRank = 10;
+
+                var exGetIdeasRequest = ideaWatcher.model.Request;
+
+                exGetIdeasRequest.destination = 'SIdeaList/getIdeasRequest';
+                exGetIdeasRequest.data = filterObject;
+
+                ideaWatcher.core.WebSocketConnector.sendRequest(exGetIdeasRequest);
+
 
                 var exObj = {
                     userName: htmlUsernameInput.value,
@@ -70,8 +78,8 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
                 console.log(exObj);
 
                 ideaWatcher.controller.Login.tryToLogin(exObj);
-            });
-            //endregion
+            };
+            // endregion
         }
         //endregion
 

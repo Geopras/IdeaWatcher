@@ -21,7 +21,7 @@ public class GetProfileWorkflow implements IWorkflow {
 
     public GetProfileWorkflow() {
 
-        this.user = InstanceManager.getDataManager().getInstanceUser();
+        this.user = InstanceManager.getDataManager().getUserController();
     }
 
     @Override

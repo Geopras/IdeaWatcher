@@ -18,9 +18,8 @@ public class Idea implements IIdea {
     private IUser creator;
     private Date publishDate;
     private String language;
-    private Long hotRank;
-    private Long freshRank;
-    private Long trendingRank;
+    private Double hotRank;
+    private Double trendingRank;
     private List<IUser> likeUsers;
     private List<IUser> followerUsers;
     private Long numberLikes;
@@ -89,32 +88,22 @@ public class Idea implements IIdea {
     }
 
     @Override
-    public Long getHotRank() {
+    public Double getHotRank() {
         return this.hotRank;
     }
 
     @Override
-    public void setHotRank(Long hotRank) {
+    public void setHotRank(double hotRank) {
         this.hotRank = hotRank;
     }
 
     @Override
-    public Long getFreshRank() {
-        return this.freshRank;
-    }
-
-    @Override
-    public void setFreshRank(Long freshRank) {
-        this.freshRank = freshRank;
-    }
-
-    @Override
-    public Long getTrendingRank() {
+    public Double getTrendingRank() {
         return this.trendingRank;
     }
 
     @Override
-    public void setTrendingRank(Long trendingRank) {
+    public void setTrendingRank(double trendingRank) {
         this.trendingRank = trendingRank;
     }
 
@@ -189,9 +178,8 @@ public class Idea implements IIdea {
         this.creator = new User();
         this.publishDate = new Date();
         this.language = "";
-        this.hotRank = new Long(0);
-        this.freshRank = new Long(0);
-        this.trendingRank = new Long(0);
+        this.hotRank = new Double(0.0);
+        this.trendingRank = new Double(0.0);
         this.likeUsers = new ArrayList<>();
         this.numberLikes = new Long(0);
         this.followerUsers = new ArrayList<>();

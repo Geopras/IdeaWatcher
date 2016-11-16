@@ -20,12 +20,10 @@ public interface IIdea {
     void setPublishDate(Date publishDate);
     String getLanguage();
     void setLanguage(String language);
-    Long getHotRank();
-    void setHotRank(Long hotRank);
-    Long getFreshRank();
-    void setFreshRank(Long freshRank);
-    Long getTrendingRank();
-    void setTrendingRank(Long trendingRank);
+    Double getHotRank();
+    void setHotRank(double hotRank);
+    Double getTrendingRank();
+    void setTrendingRank(double trendingRank);
     /**
      * Gibt eine Liste von Usern zurueck, die die Idee geliked haben
      * @return {List<IUser>} Liste von Usern

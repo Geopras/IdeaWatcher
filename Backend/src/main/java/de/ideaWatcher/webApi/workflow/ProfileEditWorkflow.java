@@ -19,7 +19,7 @@ public class ProfileEditWorkflow implements IWorkflow {
 
     public ProfileEditWorkflow() {
 
-        this.userController = InstanceManager.getDataManager().getInstanceUser();
+        this.userController = InstanceManager.getDataManager().getUserController();
     }
 
     public IResponse getResponse(IRequest request) {

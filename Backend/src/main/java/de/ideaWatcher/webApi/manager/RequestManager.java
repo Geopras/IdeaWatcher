@@ -2,10 +2,7 @@ package main.java.de.ideaWatcher.webApi.manager;
 
 import main.java.de.ideaWatcher.common.CommandMap;
 import main.java.de.ideaWatcher.common.JsonService;
-import main.java.de.ideaWatcher.webApi.command.GetProfileCommand;
-import main.java.de.ideaWatcher.webApi.command.LoginCommand;
-import main.java.de.ideaWatcher.webApi.command.ProfileEditCommand;
-import main.java.de.ideaWatcher.webApi.command.SignupCommand;
+import main.java.de.ideaWatcher.webApi.command.*;
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.core.Request;
@@ -48,7 +45,9 @@ public class RequestManager {
         this.workflowMapping.addCommand("SProfileEdit/validateAndSaveRequest",
                 new ProfileEditCommand());
         this.workflowMapping.addCommand("SProfileEdit/getUserDataRequest",
-                new GetProfileCommand<>());
+                new GetProfileCommand());
+        this.workflowMapping.addCommand("SIdeaList/getIdeasRequest",
+                new GetIdeaListCommand());
     }
 
     /**
@@ -78,7 +77,8 @@ public class RequestManager {
         boolean shouldStartWorkflow = true;
 
         if (!requestObject.getDestination().startsWith("SSignup") &&
-                !requestObject.getDestination().startsWith("SLogin")) {
+                !requestObject.getDestination().startsWith("SLogin") &&
+                !requestObject.getDestination().startsWith("SIdeaList")) {
 
             // Token validieren
             if (!InstanceManager.getTokenManager()
