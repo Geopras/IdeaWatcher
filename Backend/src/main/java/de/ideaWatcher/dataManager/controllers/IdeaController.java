@@ -12,26 +12,29 @@ public class IdeaController implements IIdeaController {
 
     @Override
     public String addNewIdea(IIdea idea) throws Exception {
+        // ToDO
         return "";
     }
 
     @Override
     public IIdea getIdea(String ideaId) throws Exception {
+        // ToDO
         return null;
     }
 
     @Override
     public List<IIdea> getAllIdeas() throws Exception {
+        // ToDO
         return null;
     }
 
     @Override
     public void deleteIdea(String ideaId) throws Exception {
-
+        // ToDO
     }
 
     @Override
     public void changeIdea(String ideaId, IIdea idea) throws Exception {
-
+        // ToDO
     }
 }
