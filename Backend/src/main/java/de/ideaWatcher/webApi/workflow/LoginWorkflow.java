@@ -21,7 +21,7 @@ public class LoginWorkflow implements IWorkflow {
 
     public LoginWorkflow() {
 
-        this.user = InstanceManager.getDataManager().getInstanceUser();
+        this.user = InstanceManager.getDataManager().getUserController();
     }
 
     /**

@@ -1,5 +1,6 @@
 package main.java.de.ideaWatcher.webApi.dataManagerInterfaces;
 
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IUserController;
 
 /**
@@ -8,9 +9,21 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IUserCo
 public interface IDataManager {
 
     /**
-     * Gibt eine neue Instanz des Typs IUserController zurueck, der fuer alle
+     * Gibt die zentrale Instanz des UserControllers zurueck, der fuer alle
      * Abfragen der User-DB da ist
      * @return
      */
-    IUserController getInstanceUser();
+    IUserController getUserController();
+
+    /**
+     * Gibt die zentrale Instanz des IdeaControllers zurueck, der fuer alle
+     * Abfragen der Idea-DB da ist
+     * @return
+     */
+    IIdeaController getIdeaController();
+
+    /**
+     * Initialisiert den DataManager.
+     */
+    void initialize();
 }

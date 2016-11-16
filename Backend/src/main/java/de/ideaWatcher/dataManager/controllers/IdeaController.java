@@ -1,5 +1,6 @@
 package main.java.de.ideaWatcher.dataManager.controllers;
 
+import main.java.de.ideaWatcher.dataManager.services.IdeaService;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 
@@ -9,6 +10,12 @@ import java.util.List;
  * Schnittstellen zur Idea-Datenbank
  */
 public class IdeaController implements IIdeaController {
+
+    private IdeaService ideaService;
+
+    public IdeaController(IdeaService ideaService) {
+        this.ideaService = ideaService;
+    }
 
     @Override
     public String addNewIdea(IIdea idea) throws Exception {

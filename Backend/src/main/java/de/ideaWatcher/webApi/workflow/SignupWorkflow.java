@@ -22,7 +22,7 @@ public class SignupWorkflow implements IWorkflow {
 
     public SignupWorkflow() {
 
-        this.user = InstanceManager.getDataManager().getInstanceUser();
+        this.user = InstanceManager.getDataManager().getUserController();
     }
 
     /**

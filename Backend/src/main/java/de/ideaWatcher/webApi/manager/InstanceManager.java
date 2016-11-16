@@ -28,6 +28,7 @@ public class InstanceManager {
         requestManager = new RequestManager();
         requestManager.initialize();
         dataManager = new DataManager();
+        dataManager.initialize();
         tokenManager = new TokenManager();
     }
 
