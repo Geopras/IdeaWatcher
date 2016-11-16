@@ -2,6 +2,8 @@ package main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController;
 
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 
+import java.util.List;
+
 /**
  * Interface für Definition der Ideenschnittstelle
  */
@@ -22,6 +24,13 @@ public interface IIdeaController {
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      */
     IIdea getIdea(String ideaId) throws Exception;
+
+    /**
+     * Gibt alle vorhandenen Ideen zurueck
+     * @return {List<IIdea} eine List von Idea-Objekten
+     * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
+     */
+    List<IIdea> getAllIdeas() throws Exception;
 
     /**
      * Loescht eine vorhandene Idee
