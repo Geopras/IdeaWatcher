@@ -62,6 +62,18 @@ public interface IResponse {
     void setToken(String token);
 
     /**
+     * Gibt die UserID zurueck
+     * @return {String} UserID
+     */
+    String getUserId();
+
+    /**
+     * Legt die UserID fest
+     * @param userId {String} UserID
+     */
+    void setUserId(String userId);
+
+    /**
      * Konvertiert das Java-Objekt in ein JSON-Objekt
      * @return {JSONObject} JSON-Objekt
      */

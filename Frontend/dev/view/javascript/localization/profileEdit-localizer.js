@@ -19,7 +19,6 @@ ideaWatcher.core.Localizer.ProfileEdit = {
         errorMessage: {
             SProfile_saveRequestData_error: 'An Error occurred during the data transfer.' +
             ' Please try again later.',
-            SProfile_tokenNotFound_error: 'Your session has expired.',
             SProfile_getUser_error: 'An Error occurred on the server.'  +
             ' Please try again later.',
             SProfile_existsUser_error: 'An Error occurred on the server.'  +
@@ -48,7 +47,6 @@ ideaWatcher.core.Localizer.ProfileEdit = {
         errorMessage: {
             SProfile_saveRequestData_error: 'Beim übermitteln der Daten ist ein Fehler aufgetreten.' +
             ' Bitte versuchen Sie es später erneut.',
-            SProfile_tokenNotFound_error: 'Ihre Sitzung ist abgelaufen.',
             SProfile_getUser_error: 'Auf dem Server ist ein Problem aufgetreten.' +
             ' Bitte versuchen Sie es später erneut.',
             SProfile_existsUser_error: 'Auf dem Server ist ein Problem aufgetreten.' +

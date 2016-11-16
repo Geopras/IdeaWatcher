@@ -73,26 +73,16 @@ public class RequestManager {
 
         //region Token-Validierung
 
-        // Workflow soll nicht starten, wenn Token nicht valide
+        // Workflow soll nicht starten, wenn Token nicht valide (Sofern keine
+        // Signup- oder Login-Anfrage)
         boolean shouldStartWorkflow = true;
 
-        if (requestObject.getDestination().startsWith("SLogin")) {
+        if (!requestObject.getDestination().startsWith("SSignup") &&
+                !requestObject.getDestination().startsWith("SLogin")) {
 
-            String userName = "";
-            try {
-                userName = requestObject.getData().getString("userName");
-            } catch (Exception ex) {
-                response.setErrorMessage("SLogin/no_userName_found");
-                shouldStartWorkflow = false;
-            }
-            // Wenn Login-Request, dann neuen Token generieren
-            response.setToken(InstanceManager.getTokenManager().generateToken
-                    (userName));
-
-        } else if (!requestObject.getDestination().startsWith("SSignup")) {
-
-            // Wenn kein Signup-Request, dann Token validieren
-            if (!InstanceManager.getTokenManager().existsToken(requestObject.getToken())) {
+            // Token validieren
+            if (!InstanceManager.getTokenManager()
+                    .validateToken(requestObject.getUserId(), requestObject.getToken())) {
 
                 // Wenn Token nicht gueltig, dann Antwort mit Fehlernachricht
                 // zurueckschicken
@@ -104,28 +94,40 @@ public class RequestManager {
 
         //region zugehoerigen Workflow ausfuehren und Antwort ermitteln
         if (shouldStartWorkflow) {
+            IResponse workFlowResponse;
             try {
                 // Angefragten Workflow ausfuehren
-                IResponse workFlowResponse = this.workflowMapping.executeCommand
-                        (requestObject
-                        .getDestination(), requestObject);
-                response.setResult(workFlowResponse.getResult());
-                response.setData(workFlowResponse.getData());
-                response.setErrorMessage(workFlowResponse.getErrorMessage());
-
+                workFlowResponse = this.workflowMapping.executeCommand
+                        (requestObject.getDestination(), requestObject);
             } catch (Exception ex) {
                 throw new Exception(ex);
+            }
+            response.setUserId(workFlowResponse.getUserId());
+            response.setResult(workFlowResponse.getResult());
+            response.setData(workFlowResponse.getData());
+            response.setErrorMessage(workFlowResponse.getErrorMessage());
+        }
+        //endregion
+
+        //region Wenn Login-Response erfolgreich, dann Token generieren
+        if (requestObject.getDestination().startsWith("SLogin") &&
+                response.getResult().equals("valid")) {
+
+            String userId = response.getUserId();
+            // Wenn keine userId vom LoginWorkflow zurückgegeben wurde, dann
+            // ist der Login-Versuch nicht erfolgreich
+            if (userId == null) {
+                response.setErrorMessage("SLogin_no_userId_found");
+                response.setResult("notvalid");
+            } else {
+                // Wenn Login-Request, dann neuen Token generieren
+                response.setToken(InstanceManager.getTokenManager()
+                        .generateToken(userId));
             }
         }
         //endregion
 
-        //region Response-Objekt mit Ziel und Token versehen
-        if (!response.hasToken()) {  // Wenn kein Token zuvor generiert
-
-            response.setToken(requestObject.getToken());
-        }
         response.setDestination(requestObject.getDestination() + "-response");
-        //endregion
 
         //region Response-Javaobjekt als JSON-String zurueckgeben
         JSONObject responseJson = response.toJSONObject();
@@ -148,13 +150,16 @@ public class RequestManager {
         try {
             String requestDestination = requestJson.getString("destination");
             JSONObject requestData = requestJson.getJSONObject("data");
+            String requestUserId = "";
             String requestToken = "";
             if (!requestDestination.startsWith("SLogin") &&
                     !requestDestination.startsWith("SSignup")) {
+                requestUserId = requestJson.getString("userId");
                 requestToken = requestJson.getString("token");
             }
             
-            return new Request(requestDestination, requestData, requestToken);
+            return new Request(requestDestination, requestData,
+                    requestUserId, requestToken);
 
         } catch (NullPointerException ex) {
             throw new Exception("Fehler beim Extrahieren der Eigenschaften " +

@@ -98,12 +98,33 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
                 //TODO: Wechsel in eine vordefinierte View fehlt noch
             }
             else if (exObj.result === 'notvalid') {
-                console.log('Der Login-Versuch war leider nicht erfolgreich.');
-                //TODO: Ausgabe des Fehlversuchs muss noch passieren
+                if (exObj.error === 'SLogin_getUser_error') {
+                    console.log('Der Login-Versuch war leider nicht erfolgreich.');
+                    ideaWatcher.controller.GlobalNotification.showNotification(
+                        ideaWatcher.model.GlobalNotificationType.ERROR,
+                        ideaWatcher.core.Localizer.Login[language]
+                            .header,
+                        ideaWatcher.core.Localizer.Login[language]
+                            .SLogin_getUser_error, 5000);
+                }
+                else if (exObj.error === 'SLogin_password_not_valid') {
+                    console.log('Der Login-Versuch war leider nicht erfolgreich.');
+                    ideaWatcher.controller.GlobalNotification.showNotification(
+                        ideaWatcher.model.GlobalNotificationType.ERROR,
+                        ideaWatcher.core.Localizer.Login[language]
+                            .header,
+                        ideaWatcher.core.Localizer.Login[language]
+                            .SLogin_password_not_valid, 5000);
+                }
             } else {
                 console.log('Das Ergebnis ist des Login-Versuchs ist' +
                     ' unbekannt.')
-                //TODO: Ausgabe des Fehlversuchs muss noch passieren
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.model.GlobalNotificationType.ERROR,
+                    ideaWatcher.core.Localizer.Login[language]
+                        .header,
+                    ideaWatcher.core.Localizer.Login[language]
+                        .SLogin_unknown_error, 5000);
             }
         }
         //endregion
@@ -119,14 +140,14 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
             var htmlPasswordLabel = document.querySelector('#login_password_label');
             var htmlForgotPasswordButton = document.querySelector('.login_forgotPassword_button');
             
-            htmlUsernameInput.placeholder = ideaWatcher.core.Localizer.login[language].userName;
-            htmlPasswordInput.placeholder = ideaWatcher.core.Localizer.login[language].password;
+            htmlUsernameInput.placeholder = ideaWatcher.core.Localizer.Login[language].userName;
+            htmlPasswordInput.placeholder = ideaWatcher.core.Localizer.Login[language].password;
             
-            htmlHeader.textContent = ideaWatcher.core.Localizer.login[language].header;
-            htmlUserNameLabel.textContent = ideaWatcher.core.Localizer.login[language].userName;
-            htmlPasswordLabel.textContent = ideaWatcher.core.Localizer.login[language].password;
-            htmlSubmitButton.value = ideaWatcher.core.Localizer.login[language].submit;
-            htmlForgotPasswordButton.textContent = ideaWatcher.core.Localizer.login[language].forgotPassword;
+            htmlHeader.textContent = ideaWatcher.core.Localizer.Login[language].header;
+            htmlUserNameLabel.textContent = ideaWatcher.core.Localizer.Login[language].userName;
+            htmlPasswordLabel.textContent = ideaWatcher.core.Localizer.Login[language].password;
+            htmlSubmitButton.value = ideaWatcher.core.Localizer.Login[language].submit;
+            htmlForgotPasswordButton.textContent = ideaWatcher.core.Localizer.Login[language].forgotPassword;
             
         }
         return {

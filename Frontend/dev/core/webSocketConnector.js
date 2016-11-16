@@ -3,9 +3,10 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
         //region lokale Variablen
         var webSocket = null;
         var isConnected = false;
-        var standardHeader = {};
-        var userToken = '';
-
+        var standardHeader = {
+            token: '',
+            userId: ''
+        };
         //endregion
 
         //region Neue WebSocket-Verbindung einrichten
@@ -31,47 +32,91 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
 
             // callback function wenn eine Nachricht reinkommt
             webSocket.onmessage = function (event) {
+
+                var language = ideaWatcher.core.Localizer.getLanguage();
                 try {
                     var serverMessage = JSON.parse(event.data);
+                } catch (error) {
+                    console.log('Fehler beim Parsen der JSON-Daten vom' +
+                        ' Server!\nFehlermeldung: ' + error);
+                    console.log('Nachricht: ' + event.data);
+                    ideaWatcher.controller.GlobalNotification.showNotification(
+                        ideaWatcher.model.GlobalNotificationType.ERROR,
+                        ideaWatcher.core.Localizer.WebSocketConnector[language]
+                            .headline,
+                        ideaWatcher.core.Localizer.WebSocketConnector[language]
+                            .noValidServerResponse, 5000);
+                }
 
-                    //region Response-Token-Behandlung
-                    if (serverMessage.token !== '') {
-                        var responseToken = serverMessage.token;
-                        if (userToken === '') {
-                            userToken = responseToken;
-                        }
-                        else if (responseToken !== userToken) {
-                            console.log('Antwort-Token stimmt nicht mit' +
-                                ' User-Token überein!')
-                        }
-                    }
-                    else if (!serverMessage.destination.startsWith('SSignup')) {
+                //region Response-Validierung, sofern keine Registrierungsantwort
+                if (!serverMessage.destination.startsWith('SSignup')) {
+
+                    var responseToken = serverMessage.token;
+                    var responseUserId = serverMessage.userId;
+                    if (!responseToken || responseToken === '') {
                         console.log('Die Serverantwort enthält keinen Token,' +
-                            ' obwohl einer vorhanden sein muesste.')
+                            ' obwohl einer vorhanden sein muesste.');
+                        ideaWatcher.controller.GlobalNotification.showNotification(
+                            ideaWatcher.model.GlobalNotificationType.ERROR,
+                            ideaWatcher.core.Localizer.WebSocketConnector[language]
+                                .headline,
+                            ideaWatcher.core.Localizer.WebSocketConnector[language]
+                                .noValidServerResponse, 5000);
+                        return;
                     }
-                    //endregion
+                    if (!responseUserId || responseUserId === '') {
+                        console.log('Die Serverantwort enthält keine UserId,' +
+                            ' obwohl eine vorhanden sein muesste.');
+                        ideaWatcher.controller.GlobalNotification.showNotification(
+                            ideaWatcher.model.GlobalNotificationType.ERROR,
+                            ideaWatcher.core.Localizer.WebSocketConnector[language]
+                                .headline,
+                            ideaWatcher.core.Localizer.WebSocketConnector[language]
+                                .noValidServerResponse, 5000);
+                        return;
+                    }
 
-                    console.log(serverMessage);
+                    if (serverMessage.destination.startsWith('SLogin')) {
+                        standardHeader.token = responseToken;
+                        standardHeader.userId = responseUserId;
+                    }
+                    else if (responseUserId !== standardHeader.userId) {
+                        console.log('Antwort-UserId stimmt nicht mit' +
+                            ' gespeicherter UserId überein!')
+                        ideaWatcher.controller.GlobalNotification.showNotification(
+                            ideaWatcher.model.GlobalNotificationType.ERROR,
+                            ideaWatcher.core.Localizer.WebSocketConnector[language]
+                                .headline,
+                            ideaWatcher.core.Localizer.WebSocketConnector[language]
+                                .noValidServerResponse, 5000);
+                        return;
+                    }
+                }
+                //endregion
 
-                    ideaWatcher.core.MessageBroker.publish({
-                        topic: serverMessage.destination,
-                        exObject: serverMessage
-                    });
-                }
-                catch (error) {
-                    console.log('Fehler beim Parsen der JSON-Daten vom Server -> Fehlermeldung: ' + error);
-                    console.log('Nachricht: ' + serverMessage);
-                }
+                console.log('Servernachricht: ' + serverMessage);
+
+                // Nachricht veröffentlichen
+                ideaWatcher.core.MessageBroker.publish({
+                    topic: serverMessage.destination,
+                    exObject: serverMessage
+                });
             };
 
             webSocket.onerror = function (error) {
                 console.log('Fehler! Verbindungsaufbau schief gegangen!');
                 console.log('Fehlermeldung: ' + error);
+                var language = ideaWatcher.core.Localizer.getLanguage();
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.model.GlobalNotificationType.ERROR,
+                    ideaWatcher.core.Localizer.WebSocketConnector[language].headline,
+                    ideaWatcher.core.Localizer.WebSocketConnector[language]
+                        .connectionInterrupted, 5000);
                 isConnected = false;
             };
             webSocket.onclose = function (event) {
                 isConnected = false;
-                var reason = '', errorText = '';
+                var reason = '';
 
                 if (event.code === 1006) {
                     reason = 'WebSocket-Verbindung zum Application Server konnte nicht aufgebaut werden';
@@ -82,8 +127,14 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                 if (event.code === 1008 || event.code === 1003) {
                     reason = event.reason;
                 }
-                errorText = 'Grund für Verbindungstrennung: ' + event.code + ' --- ' + reason;
+                var errorText = 'Grund für Verbindungstrennung: ' + event.code + ' --- ' + reason;
                 console.log(errorText);
+                var language = ideaWatcher.core.Localizer.getLanguage();
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.model.GlobalNotificationType.ERROR,
+                    ideaWatcher.core.Localizer.WebSocketConnector[language].headline,
+                    ideaWatcher.core.Localizer.WebSocketConnector[language]
+                        .connectionClosed, 5000);
                 // besser als Objekt schreiben um nicht zu verwirren?
                 // callbackfunction(false, {
                 //     code: event.code,
@@ -99,18 +150,15 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
 
             //https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/for...in
             for (var propStandardHeader in standardHeader) {
-                if (standardHeader.hasOwnProperty(propStandardHeader)) {
-                    message[propStandardHeader] = standardHeader[propStandardHeader];
+
+                if (!message.destination.startsWith('SLogin') &&
+                    !message.destination.startsWith('SSignup') &&
+                    !standardHeader.hasOwnProperty(propStandardHeader)) {
+                    console.log('Folgende Validierungseigenschaft fehlt zum ' +
+                        'Absenden der Anfrage: ' + propStandardHeader);
                 }
-            }
-
-            if (!message.destination.startsWith('SLogin') &&
-                !message.destination.startsWith('SSignup')) {
-
-                if (userToken !== '') {
-                    message.token = userToken;
-                } else {
-                    //TODO: Fehlermeldung, keine User-Session zuordenbar
+                else if (standardHeader.hasOwnProperty(propStandardHeader)) {
+                    message[propStandardHeader] = standardHeader[propStandardHeader];
                 }
             }
 

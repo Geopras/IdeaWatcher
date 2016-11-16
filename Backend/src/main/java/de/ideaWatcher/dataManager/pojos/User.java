@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class User implements IUser {
 
+    private String userId;
     private String userName;
     private String password;
     private String email;
@@ -24,6 +25,16 @@ public class User implements IUser {
     private Double numberCreatedIdeas;
     private List<IIdea> followedIdeas;
     private Double numberFollowedIdeas;
+
+    @Override
+    public String getUserId() {
+        return this.userId;
+    }
+
+    @Override
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     @Override
     public String getUserName() {
@@ -160,6 +171,7 @@ public class User implements IUser {
      * @return {User} user object
      */
     public User() {
+        this.userId = "";
         this.userName = "";
         this.password = "";
         this.firstName = "";

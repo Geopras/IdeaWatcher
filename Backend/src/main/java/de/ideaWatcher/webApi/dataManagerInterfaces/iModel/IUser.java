@@ -8,6 +8,18 @@ import java.util.List;
 public interface IUser {
 
     /**
+     * Gibt die User ID zurueck
+     * @return {String} user id
+     */
+    String getUserId();
+
+    /**
+     * Legt die User ID fest
+     * @param userId {String} User ID
+     */
+    void setUserId(String userId);
+
+    /**
      * Gibt den Benutzernamen zurueck
      * @return {String} user name
      */

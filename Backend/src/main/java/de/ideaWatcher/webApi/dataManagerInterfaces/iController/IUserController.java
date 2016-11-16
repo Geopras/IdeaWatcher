@@ -8,12 +8,21 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 public interface IUserController {
 
     /**
-     * Methode ueberprueft, ob der Nutzer in der Datenbank bereits existiert
+     * Methode ueberprueft, ob die UserID in der Datenbank bereits existiert
+     * @param userId ID des Users
+     * @return true, falls die UserID bereits in der Datenbank existiert,
+     * ansonsten false
+     * @throws Exception wenn es bei der Abfrage zu irgendeinem Problem gekommen ist
+     */
+    boolean existsUserId(String userId) throws Exception;
+
+    /**
+     * Methode ueberprueft, ob der Username in der Datenbank bereits existiert
      * @param userName Name des Users
      * @return true, falls der UserName bereits in der Datenbank existiert, ansonsten false
      * @throws Exception wenn es bei der Abfrage zu irgendeinem Problem gekommen ist
      */
-    boolean existsUser(String userName) throws Exception;
+    boolean existsUserName(String userName) throws Exception;
 
     /**
      * Methode ueberprueft, ob die Email in der Datenbank bereits existiert
@@ -33,13 +42,21 @@ public interface IUserController {
             throws Exception;
 
     /**
-     * Methode holt einen User anhand seines User-Namens aus der Datenbank und
+     * Methode holt einen User anhand seiner UserID aus der Datenbank und
      * gibt ihn zurück.
-     * @param userName
+     * @param userId {String} eindeutige UserID
      * @return den gewuenschten User
      * @throws Exception falls es beim Holen des Users zu irgendwelchen Problemen gekommen ist
      */
-    IUser getUser(String userName) throws Exception;
+    IUser getUser(String userId) throws Exception;
+
+    /**
+     * Methode gibt UserID zur Login Angabe (Username oder email) zurueck
+     * @param userNameOrEmail {String} Username oder Email
+     * @return {String} die zugehoerige UserID
+     * @throws Exception falls es beim Holen des Users zu irgendwelchen Problemen gekommen ist
+     */
+    String getUserId(String userNameOrEmail) throws Exception;
 
     /**
      * Validate password
@@ -51,19 +68,18 @@ public interface IUserController {
 
     /**
      * Loescht einen vorhandenen User
-     * @param userName {String} eindeutiger Username
+     * @param userId {String} eindeutige UserID
      * @throws Exception falls der User nicht existiert oder ein Problem beim
      * Zugriff auf die Datenbank auftrat
      */
-    void deleteUser(String userName) throws Exception;
+    void deleteUser(String userId) throws Exception;
 
     /**
      * Aendert einen vorhandenen User
-     * @param userName {String} eindeutiger Username - noetig, falls sich der Name eines
-     *                 existierenden Users verändert
+     * @param userId {String} eindeutige UserId
      * @param user {IUser} geaendertes User-Objekt
      * @throws Exception falls der User nicht existiert oder ein Problem beim
      * Zugriff auf die Datenbank auftrat
      */
-    void changeUser(String userName, IUser user) throws Exception;
+    void changeUser(String userId, IUser user) throws Exception;
 }

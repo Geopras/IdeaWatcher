@@ -41,9 +41,18 @@ public class SignupWorkflow implements IWorkflow {
         IResponse response = new Response();
 
         // region wenn User nicht existiert, muss er angelegt werden
-        boolean existsUser;
+        boolean existsUser = false;
         try {
-            existsUser = this.user.existsUser(userName);
+            // Username kann entweder der Name oder die Email des Users sein:
+            boolean existsUserName = this.user.existsUserName(userName);
+            if (existsUserName) {
+                existsUser = true;
+            } else {
+                boolean existsEmail = this.user.existsEmail(userName);
+                if (existsEmail) {
+                    existsUser = true;
+                }
+            }
         } catch (Exception ex) {
             response.setErrorMessage("SSignup_existsUser_error");
             response.setResult("notok");

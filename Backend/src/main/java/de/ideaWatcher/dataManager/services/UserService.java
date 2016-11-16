@@ -1,10 +1,11 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
+import com.mongodb.BasicDBObject;
 import main.java.de.ideaWatcher.dataManager.BCrypt;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.bson.Document;
-import static com.mongodb.client.model.Filters.eq;
+import org.bson.types.ObjectId;
 
 /**
  * Klasse fuer Zugriff auf User-Datenbank
@@ -17,23 +18,77 @@ public class UserService {
         this.dbConnectionService = new DbConnectionService("testLogin");
     }
 
-    public IUser getUser(String userName) {
+    /**
+     * Gibt den User anhand seiner UserID aus der DB zurück
+     * @param userId {String} eindeutige UserID
+     * @return {IUser} User-Objekt
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */
+    public IUser getUser(String userId) throws Exception {
 
-        dbConnectionService.openConnection();
-
-        Document userDoc = dbConnectionService.getCollection()
-                .find(eq("userName", userName)).first();
-        dbConnectionService.closeConnection();
-
-        return buildUser(userDoc);
+        try {
+            if (this.existsUserId(userId)) {
+                if (!dbConnectionService.isOpen()) {
+                    dbConnectionService.openConnection();
+                }
+                Document userDoc = dbConnectionService.getCollection()
+                        .find(new BasicDBObject("_id", new ObjectId
+                                (userId))).first();
+                return buildUser(userDoc, userId);
+            } else {
+                throw new Exception("userIdNotExist");
+            }
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
+        }
     }
 
-    private IUser buildUser(Document userDoc) {
+    /**
+     * Gibt die UserID zu einem Usernamen oder einer Email zurück
+     * @param userNameOrEmail {String} Username oder Email
+     * @return {String} von der DB generierte UserID
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */
+    public String getUserId(String userNameOrEmail) throws Exception{
+
+        try {
+            Document userDoc;
+            if (this.existsUserName(userNameOrEmail)) {
+                if (!dbConnectionService.isOpen()) {
+                    dbConnectionService.openConnection();
+                }
+                userDoc = dbConnectionService.getCollection()
+                        .find(new BasicDBObject("userName", userNameOrEmail))
+                        .first();
+                return userDoc.get("_id").toString();
+            }
+            else if (this.existsEmail(userNameOrEmail)) {
+                if (!dbConnectionService.isOpen()) {
+                    dbConnectionService.openConnection();
+                }
+                userDoc = dbConnectionService.getCollection()
+                        .find(new BasicDBObject("email", userNameOrEmail))
+                        .first();
+                return userDoc.get("_id").toString();
+            } else {
+                throw new Exception("getUserId_userNameOrEmailNotExists");
+            }
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
+        }
+    }
+
+    private IUser buildUser(Document userDoc, String userId) {
 
         IUser user = new User();
-        user.setUserName(userDoc.getString("userName").toString());
-        user.setPassword(userDoc.getString("password").toString());
-        user.setEmail(userDoc.getString("email").toString());
+        user.setUserId(userId);
+        user.setUserName(userDoc.getString("userName"));
+        user.setPassword(userDoc.getString("password"));
+        user.setEmail(userDoc.getString("email"));
         user.setIsMailPublic(userDoc.getBoolean("isMailPublic"));
         user.setSurname(userDoc.getString("surname"));
         user.setFirstname(userDoc.getString("firstName"));
@@ -45,14 +100,21 @@ public class UserService {
         return user;
     }
 
-    public boolean existsUser(String userName) throws Exception {
-
-        dbConnectionService.openConnection();
+    /**
+     * Prüft, ob die UserID bereits in der DB vorhanden ist
+     * @param userId {String} eindeutige UserID
+     * @return {boolean} TRUE oder FALSE je nachdem, ob UserID existiert
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */
+    public boolean existsUserId(String userId) throws Exception {
 
         try {
-            Document userDoc = dbConnectionService.getCollection().find(eq
-                    ("userName", userName)).first();
-            dbConnectionService.closeConnection();
+            if (!dbConnectionService.isOpen()) {
+                dbConnectionService.openConnection();
+            }
+            Document userDoc = dbConnectionService.getCollection()
+                    .find(new BasicDBObject("_id", new ObjectId(userId)))
+                    .first();
             if (userDoc == null) {
                 return false;
             } else {
@@ -60,17 +122,46 @@ public class UserService {
             }
         } catch (Exception ex) {
             throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
+        }
+    }
+
+    /**
+     * Prüft, ob der Username bereits in der DB vorhanden ist
+     * @param userName {String} eindeutiger Username
+     * @return {boolean} TRUE oder FALSE je nachdem, ob Username existiert
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */
+    public boolean existsUserName(String userName) throws Exception {
+
+        try {
+            if (!dbConnectionService.isOpen()) {
+                dbConnectionService.openConnection();
+            }
+            Document userDoc = dbConnectionService.getCollection()
+                    .find(new BasicDBObject("userName", userName))
+                    .first();
+            if (userDoc == null) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
         }
     }
 
     public boolean existsEmail(String email) throws Exception {
 
-        dbConnectionService.openConnection();
-
         try {
-            Document userDoc = dbConnectionService.getCollection().find(eq
-                    ("email", email)).first();
-            dbConnectionService.closeConnection();
+            if (!dbConnectionService.isOpen()) {
+                dbConnectionService.openConnection();
+            }
+            Document userDoc = dbConnectionService.getCollection()
+                    .find(new BasicDBObject("email", email)).first();
             if (userDoc == null) {
                 return false;
             } else {
@@ -78,22 +169,38 @@ public class UserService {
             }
         } catch (Exception ex) {
             throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
         }
     }
 
-    public void addUser(IUser user) throws Exception {
-        // hash aus Passwort berechnen
-        if (existsUser(user.getUserName()) && !existsEmail(user.getEmail())){
-            throw new Exception("addUser/userOrEmailExists");
+    /**
+     * Fügt einen neuen User in die DB hinzu, sofern der Username und die
+     * Email noch nicht existieren
+     * @param user {IUser} neuer User
+     * @return {String} von der DB generierte UserID
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */
+    public String addUser(IUser user) throws Exception {
+
+        // Prüfen, ob der Username oder die Email bereits existiert
+        if (existsUserName(user.getUserName()) && !existsEmail(user.getEmail())){
+            throw new Exception("addUser_userOrEmailExists");
         }
 
+        // hash aus Passwort berechnen
         user.setPassword(hashPassword(user.getPassword()));
         try {
+            if (!dbConnectionService.isOpen()) {
+                dbConnectionService.openConnection();
+            }
             dbConnectionService.getCollection().insertOne(buildUserDocument
                     (user));
-            dbConnectionService.closeConnection();
+            return getUserId(user.getUserName());
         } catch (Exception ex) {
             throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
         }
     }
 

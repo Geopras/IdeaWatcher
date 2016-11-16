@@ -14,6 +14,7 @@ public class DbConnectionService {
     private MongoDatabase db;
     private MongoCollection<Document> collection;
     private String collectionName;
+    private boolean isOpen;
 
     public MongoClient getMongoClient() {
         return this.mongoClient;
@@ -27,21 +28,38 @@ public class DbConnectionService {
         return collection;
     }
 
+    public boolean isOpen() {
+        return this.isOpen;
+    }
+
     public DbConnectionService(String collectionName) {
         this.collectionName = collectionName;
     }
 
-    public void openConnection() {
+    public void openConnection() throws Exception {
 
-        this.mongoClient = new MongoClient("localhost", 27017);
-        //this.db = mongoClient.getDatabase("ideaWatcher");
-        //this.collection = db.getCollection("ideaWatchUser");
-        this.db = this.mongoClient.getDatabase("local");
-        this.collection = this.db.getCollection(this.collectionName);
+        try {
+            this.mongoClient = new MongoClient("localhost", 27017);
+            //this.db = mongoClient.getDatabase("ideaWatcher");
+            //this.collection = db.getCollection("ideaWatchUser");
+            this.db = this.mongoClient.getDatabase("local");
+            this.collection = this.db.getCollection(this.collectionName);
+
+            this.isOpen = true;
+            System.out.println("MongoDB-Verbindung geöffnet");
+        } catch (Exception ex) {
+
+            throw new Exception(ex);
+        }
     }
 
-    public void closeConnection(){
-        System.out.println("bye... mongoDB-connection closed");
-        this.mongoClient.close();
+    public void closeConnection() throws Exception {
+        try {
+            this.mongoClient.close();
+            this.isOpen = false;
+            System.out.println("MongoDB-Verbindung geschlossen");
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
     }
 }

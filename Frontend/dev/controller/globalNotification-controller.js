@@ -3,7 +3,8 @@ ideaWatcher.controller.GlobalNotification = ideaWatcher.controller.GlobalNotific
     // quick and dirty Hack, nicht zum nachmachen;
     onkeydown = function(e){
         if(e.ctrlKey && e.keyCode == 'I'.charCodeAt(0)){
-            pubShowNotification('SUCCEsSS','Login','Login leider fehlgeschlagen', 4000);
+            pubShowNotification(ideaWatcher.model.GlobalNotificationType.ERROR,'Login','Login leider' +
+                ' fehlgeschlagen', 4000);
         }
     };
 

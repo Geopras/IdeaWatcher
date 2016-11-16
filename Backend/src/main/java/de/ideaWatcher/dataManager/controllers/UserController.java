@@ -18,10 +18,20 @@ public class UserController implements IUserController {
     }
 
     @Override
-    public boolean existsUser(String userName) throws Exception {
+    public boolean existsUserId(String userId) throws Exception {
 
         try {
-            return userService.existsUser(userName);
+            return userService.existsUserId(userId);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
+    @Override
+    public boolean existsUserName(String userName) throws Exception {
+
+        try {
+            return userService.existsUserName(userName);
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -49,10 +59,20 @@ public class UserController implements IUserController {
     }
 
     @Override
-    public IUser getUser(String userName) throws Exception {
+    public IUser getUser(String userId) throws Exception {
 
         try {
-            return this.userService.getUser(userName);
+            return this.userService.getUser(userId);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+
+    @Override
+    public String getUserId(String userNameOrEmail) throws Exception {
+
+        try {
+            return this.userService.getUserId(userNameOrEmail);
         } catch (Exception ex) {
             throw new Exception(ex);
         }
@@ -66,12 +86,12 @@ public class UserController implements IUserController {
     }
 
     @Override
-    public void deleteUser(String userName) throws Exception {
+    public void deleteUser(String userId) throws Exception {
 
     }
 
     @Override
-    public void changeUser(String userName, IUser user) throws Exception {
+    public void changeUser(String userId, IUser user) throws Exception {
 
     }
 }

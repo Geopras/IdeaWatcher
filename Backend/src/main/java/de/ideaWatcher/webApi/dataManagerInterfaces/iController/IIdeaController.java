@@ -10,30 +10,32 @@ public interface IIdeaController {
     /**
      * Fuegt eine neue Idee zur Ideen-Collection hinzu
      * @param idea {IIdea} neues Idea-Objekt
+     * @return {String} von Datenbank generierte IdeaID
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      */
-    void addNewIdea(IIdea idea) throws Exception;
+    String addNewIdea(IIdea idea) throws Exception;
 
     /**
-     * Gibt eine vorhandene Idee anhand des eindeutigen Namens zurueck
-     * @param ideaName {String} eindeutiger Ideename
+     * Gibt eine vorhandene Idee zurueck
+     * @param ideaId {String} eindeutige IdeeID
      * @return {IIdea} ein Idea-Objekt
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      */
-    IIdea getIdea(String ideaName) throws Exception;
+    IIdea getIdea(String ideaId) throws Exception;
 
     /**
-     * Loescht eine vorhandene Idee anhand des eindeutigen Namens
-     * @param ideaName {String} eindeutiger Ideename
+     * Loescht eine vorhandene Idee
+     * @param ideaId {String} eindeutige IdeeID
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      * Problem gekommen ist
      */
-    void deleteIdea(String ideaName) throws Exception;
+    void deleteIdea(String ideaId) throws Exception;
 
     /**
      * Aendert eine vorhandene Idee in der Ideen-Collection
+     * @param ideaId {String} eindeutige IdeeID
      * @param idea {IIdea} neues Idea-Objekt
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      */
-    void changeIdea(IIdea idea) throws Exception;
+    void changeIdea(String ideaId, IIdea idea) throws Exception;
 }

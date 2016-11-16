@@ -20,6 +20,12 @@ public interface IRequest {
     JSONObject getData();
 
     /**
+     * Gibt Anfrage-UserId zurueck
+     * @return {String} userID
+     */
+    String getUserId();
+
+    /**
      * Gibt Anfrage-Token zurueck
      * @return {String} token
      */

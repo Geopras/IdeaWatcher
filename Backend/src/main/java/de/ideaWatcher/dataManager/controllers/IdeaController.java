@@ -9,8 +9,8 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 public class IdeaController implements IIdeaController {
 
     @Override
-    public void addNewIdea(IIdea idea) throws Exception {
-
+    public String addNewIdea(IIdea idea) throws Exception {
+        return "";
     }
 
     @Override
@@ -24,7 +24,7 @@ public class IdeaController implements IIdeaController {
     }
 
     @Override
-    public void changeIdea(IIdea idea) throws Exception {
+    public void changeIdea(String ideaId, IIdea idea) throws Exception {
 
     }
 }

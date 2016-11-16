@@ -25,32 +25,18 @@ public class GetProfileWorkflow implements IWorkflow {
     }
 
     @Override
-    public IResponse getResponse(IRequest data) {
+    public IResponse getResponse(IRequest request) {
+
+        // Die UserID der Anfrage zur Abfrage der Datenbank:
+        String userId = request.getUserId();
 
         // Workflow-Antwort instanziieren
         IResponse response = new Response();
 
-        //region Anhand Request-Token den Username vom TokenManager holen
-        String userName;
-        try {
-            userName = InstanceManager.getTokenManager().getTokenValue
-                    (data.getToken());
-        } catch (Exception ex) {
-            response.setErrorMessage("SProfile_tokenNotFound_error");
-            response.setResult("error");
-            log.log(Level.SEVERE, "Bei der Zuordnung des " +
-                    "Request-Tokens zu einem Username ist " +
-                    "ein Fehler aufgetreten!\nFehlermeldung: "
-                    + ex.getMessage());
-            return response;
-        }
-        //endregion
-
-        //region Anfrage an DataManager stellen, um den zum Usernamen
-        // zugehoerigen User zu bekommen
+        //region Den zur Request-UserID zugehoerigen User in DB abfragen
         IUser foundUser;
         try {
-            foundUser = this.user.getUser(userName);
+            foundUser = this.user.getUser(userId);
             response.setResult("success");
             response.setData(this.userDataToJSONObject(foundUser));
             return response;

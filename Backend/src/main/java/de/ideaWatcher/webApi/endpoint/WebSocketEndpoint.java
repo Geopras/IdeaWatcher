@@ -40,16 +40,17 @@ public class WebSocketEndpoint {
 
     @OnOpen
     public void open(Session session) {
-        System.out.println("Session open");
+        log.log(Level.INFO, "Eine neue Session wurde gestartet.");
     }
 
     @OnClose
     public void close(Session session) {
-        System.out.println("Session closed");
+        log.log(Level.INFO, "Die Session wurde beendet.");
     }
 
     @OnError
     public void onError(Throwable error) {
-        System.out.println("Session error");
+        log.log(Level.SEVERE, "Es trat ein Fehler auf in der Session.\n" +
+                "Fehlermeldung: " + error.toString());
     }
 }

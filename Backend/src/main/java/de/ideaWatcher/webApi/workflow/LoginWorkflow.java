@@ -38,9 +38,11 @@ public class LoginWorkflow implements IWorkflow {
         String password = loginData.getString("password");
 
         //region anzumeldenden User vom DataManager anfragen
+        String userId;
         IUser foundUser;
         try {
-            foundUser = this.user.getUser(username);
+            userId = this.user.getUserId(username);
+            foundUser = this.user.getUser(userId);
         } catch (Exception ex) {
             response.setErrorMessage("SLogin_getUser_error");
             response.setResult("notvalid");
@@ -52,9 +54,10 @@ public class LoginWorkflow implements IWorkflow {
         //endregion
 
         //region Validierungslogik
-        // Wenn Passwort korrekt:
+        // Wenn Passwort korrekt, UserID mit senden
         if (this.user.isCorrectPassword(password, foundUser.getPassword())) {
             response.setResult("valid");
+            response.setUserId(foundUser.getUserId());
         } else {
             // Passwort nicht korrekt:
             response.setErrorMessage("SLogin_password_not_valid");

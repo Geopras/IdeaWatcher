@@ -24,13 +24,13 @@ public class ProfileEditWorkflow implements IWorkflow {
 
     public IResponse getResponse(IRequest request) {
 
+        // Die UserID der Anfrage zur Abfrage der Datenbank:
+        String userId = request.getUserId();
+
         // Workflow-Antwort instanziieren
         IResponse response = new Response();
 
-        // der zum Token gehörende UserName in der DB
-        String userName;
-
-        // die zum Speichern übermittelten Daten
+        //region die zum Speichern übermittelten Daten extrahieren
         String requestUsername;
         String requestEmail;
         String requestSurname;
@@ -59,28 +59,12 @@ public class ProfileEditWorkflow implements IWorkflow {
                     + ex.getMessage());
             return response;
         }
-
-
-        //region Anhand Request-Token den Username vom TokenManager holen
-        try {
-            userName = InstanceManager.getTokenManager().getTokenValue
-                    (request.getToken());
-        } catch (Exception ex) {
-            response.setErrorMessage("SProfile_tokenNotFound_error");
-            response.setResult("error");
-            log.log(Level.SEVERE, "Bei der Zuordnung des " +
-                    "Request-Tokens zu einem Username ist " +
-                    "ein Fehler aufgetreten!\nFehlermeldung: "
-                    + ex.getMessage());
-            return response;
-        }
         //endregion
 
-        //region Anfrage an DataManager stellen, um den zum Usernamen
-        // zugehoerigen User zu bekommen
+        //region Den zur Request-UserID zugehoerigen User in DB abfragen
         IUser foundUser;
         try {
-            foundUser = this.userController.getUser(userName);
+            foundUser = this.userController.getUser(userId);
         } catch (Exception ex) {
             response.setErrorMessage("SProfile_getUser_error");
             response.setResult("error");
@@ -91,51 +75,54 @@ public class ProfileEditWorkflow implements IWorkflow {
         }
         //endregion
 
-        // Prüfen, ob sich Benutzername geändert hat
-        if (!requestUsername.equals(foundUser.getUserName())){
-            // Prüfe, ob der neue UserName noch verfügbar ist
-            boolean existsUser;
-            try {
-                existsUser = this.userController.existsUser(requestUsername);
-            } catch (Exception ex) {
-                response.setErrorMessage("SProfile_existsUser_error");
-                response.setResult("error");
-                log.log(Level.SEVERE, "Beim Prüfen, ob bereits ein User mit dem neuen" +
-                        " UserName existiert ist ein Fehler aufgetreten!\nFehlermeldung: " + ex.getMessage());
-                return response;
-            }
+        // Muss nicht geprüft werden, da der Username nicht geändert werden kann
+//        //region Prüfen, ob sich Benutzername geändert hat
+//        if (!requestUsername.equals(foundUser.getUserName())){
+//            // Prüfe, ob der neue UserName noch verfügbar ist
+//            boolean existsUser;
+//            try {
+//                existsUser = this.userController.existsUser(requestUsername);
+//            } catch (Exception ex) {
+//                response.setErrorMessage("SProfile_existsUser_error");
+//                response.setResult("error");
+//                log.log(Level.SEVERE, "Beim Prüfen, ob bereits ein User mit dem neuen" +
+//                        " UserName existiert ist ein Fehler aufgetreten!\nFehlermeldung: " + ex.getMessage());
+//                return response;
+//            }
+//
+//            if (existsUser){
+//                // Der gewählte UserName ist bereits vergeben
+//                response.setErrorMessage("SProfile_userNameNotFree_error");
+//                response.setResult("error");
+//                return response;
+//            }
+//        }
+//        //endregion
 
-            if (existsUser){
-                // Der gewählte UserName ist bereits vergeben
-                response.setErrorMessage("SProfile_userNameNotFree_error");
-                response.setResult("error");
-                return response;
-            }
-
-        }
-
-        // Pürfen, ob sich Email-Adresse geändert hat
-        if (!requestEmail.equals(foundUser.getEmail())){
-            // Prüfe, ob die neue Email-Adresse noch verfügbar ist
-            boolean existsMail;
-            try {
-                existsMail = this.userController.existsEmail(requestEmail);
-            } catch (Exception ex) {
-                response.setErrorMessage("SProfile_existsEmail_error");
-                response.setResult("error");
-                log.log(Level.SEVERE, "Beim Prüfen, ob bereits ein User mit der neuen" +
-                        " Email-Adresse existiert ist ein Fehler" +
-                        " aufgetreten!\nFehlermeldung: " + ex.getMessage());
-                return response;
-            }
-
-            if (existsMail){
-                // Die gewählte Email-Adresse ist bereits vergeben
-                response.setErrorMessage("SProfile_emailNotFree_error");
-                response.setResult("error");
-                return response;
-            }
-        }
+        // Muss nicht geprüft werden, da die Email nicht geändert werden kann
+//        //region Prüfen, ob sich Email-Adresse geändert hat
+//        if (!requestEmail.equals(foundUser.getEmail())){
+//            // Prüfe, ob die neue Email-Adresse noch verfügbar ist
+//            boolean existsMail;
+//            try {
+//                existsMail = this.userController.existsEmail(requestEmail);
+//            } catch (Exception ex) {
+//                response.setErrorMessage("SProfile_existsEmail_error");
+//                response.setResult("error");
+//                log.log(Level.SEVERE, "Beim Prüfen, ob bereits ein User mit der neuen" +
+//                        " Email-Adresse existiert ist ein Fehler" +
+//                        " aufgetreten!\nFehlermeldung: " + ex.getMessage());
+//                return response;
+//            }
+//
+//            if (existsMail){
+//                // Die gewählte Email-Adresse ist bereits vergeben
+//                response.setErrorMessage("SProfile_emailNotFree_error");
+//                response.setResult("error");
+//                return response;
+//            }
+//        }
+//        //endregion
 
         // Speichere Daten
 
@@ -150,7 +137,7 @@ public class ProfileEditWorkflow implements IWorkflow {
             user.setIsMailPublic(requestIsMailPublic);
             user.setPictureURL(requestPictureUrl);
 
-            this.userController.changeUser(userName, user);
+            this.userController.changeUser(userId, user);
 
             response.setResult("success");
             return response;
