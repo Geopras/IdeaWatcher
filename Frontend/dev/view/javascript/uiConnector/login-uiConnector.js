@@ -98,6 +98,7 @@ ideaWatcher.view.Login = ideaWatcher.view.Login || (function VLogin() {
                 //TODO: Wechsel in eine vordefinierte View fehlt noch
             }
             else if (exObj.result === 'notvalid') {
+                var language = ideaWatcher.core.Localizer.getLanguage();
                 if (exObj.error === 'SLogin_getUser_error') {
                     console.log('Der Login-Versuch war leider nicht erfolgreich.');
                     ideaWatcher.controller.GlobalNotification.showNotification(

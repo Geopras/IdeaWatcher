@@ -48,50 +48,13 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                             .noValidServerResponse, 5000);
                 }
 
-                //region Response-Validierung, sofern keine Registrierungsantwort
-                if (!serverMessage.destination.startsWith('SSignup')) {
+                //region Wenn Login-Antwort, dann Token und UserID speichern
 
-                    var responseToken = serverMessage.token;
-                    var responseUserId = serverMessage.userId;
-                    if (!responseToken || responseToken === '') {
-                        console.log('Die Serverantwort enthält keinen Token,' +
-                            ' obwohl einer vorhanden sein muesste.');
-                        ideaWatcher.controller.GlobalNotification.showNotification(
-                            ideaWatcher.model.GlobalNotificationType.ERROR,
-                            ideaWatcher.core.Localizer.WebSocketConnector[language]
-                                .headline,
-                            ideaWatcher.core.Localizer.WebSocketConnector[language]
-                                .noValidServerResponse, 5000);
-                        return;
-                    }
-                    if (!responseUserId || responseUserId === '') {
-                        console.log('Die Serverantwort enthält keine UserId,' +
-                            ' obwohl eine vorhanden sein muesste.');
-                        ideaWatcher.controller.GlobalNotification.showNotification(
-                            ideaWatcher.model.GlobalNotificationType.ERROR,
-                            ideaWatcher.core.Localizer.WebSocketConnector[language]
-                                .headline,
-                            ideaWatcher.core.Localizer.WebSocketConnector[language]
-                                .noValidServerResponse, 5000);
-                        return;
-                    }
-
-                    if (serverMessage.destination.startsWith('SLogin')) {
-                        standardHeader.token = responseToken;
-                        standardHeader.userId = responseUserId;
-                    }
-                    else if (responseUserId !== standardHeader.userId) {
-                        console.log('Antwort-UserId stimmt nicht mit' +
-                            ' gespeicherter UserId überein!')
-                        ideaWatcher.controller.GlobalNotification.showNotification(
-                            ideaWatcher.model.GlobalNotificationType.ERROR,
-                            ideaWatcher.core.Localizer.WebSocketConnector[language]
-                                .headline,
-                            ideaWatcher.core.Localizer.WebSocketConnector[language]
-                                .noValidServerResponse, 5000);
-                        return;
-                    }
+                if (serverMessage.destination.startsWith('SLogin')) {
+                    standardHeader.token = serverMessage.token;
+                    standardHeader.userId = serverMessage.userId;
                 }
+
                 //endregion
 
                 console.log('Servernachricht: ' + serverMessage);
