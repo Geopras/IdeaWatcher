@@ -11,21 +11,45 @@ import java.util.Comparator;
  */
 public class IdeaAgeComparator implements Comparator<Idea> {
 
-public int compare(Idea idea1, Idea idea2) {
+    private boolean reverse;
+
+    public IdeaAgeComparator(){
+        reverse = false;
+    }
+
+    /**
+     * Vergleicht zwei Ideen anhand ihrer publishDates.
+     * @param reverse Bei reverse = true werden Ideen mit neuerem Datum vor Ideen mit
+     *                aelterem Datum sortiert.
+     */
+    public IdeaAgeComparator(boolean reverse){
+        this.reverse = reverse;
+    }
+
+    public int compare(Idea idea1, Idea idea2) {
 
         if (idea1.getPublishDate() == null && idea2.getPublishDate() == null) {
-        return 0;
+            return 0;
         }
 
         if (idea1.getPublishDate() == null) {
-        return 1;
+            if (reverse){
+                return -1;
+            }
+            return 1;
         }
 
         if (idea2.getPublishDate() == null) {
-        return -1;
+            if (reverse){
+                return 1;
+            }
+            return -1;
         }
 
-        return idea1.getPublishDate().compareTo(idea2.getPublishDate());
+        if (reverse){
+            return idea2.getPublishDate().compareTo(idea1.getPublishDate());
         }
+        return idea1.getPublishDate().compareTo(idea2.getPublishDate());
+    }
 
 }

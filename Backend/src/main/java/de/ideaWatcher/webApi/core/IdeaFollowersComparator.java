@@ -10,6 +10,20 @@ import java.util.Comparator;
  */
 public class IdeaFollowersComparator implements Comparator<Idea> {
 
+    private boolean reverse;
+
+    public IdeaFollowersComparator(){
+        reverse = false;
+    }
+
+    /**
+     * Vergleicht zwei Ideen anhand ihrer numberFollowers.
+     * @param reverse Bei reverse = true werden große Werte vor kleine Werte sortiert.
+     */
+    public IdeaFollowersComparator(boolean reverse){
+        this.reverse = reverse;
+    }
+
     public int compare(Idea idea1, Idea idea2) {
 
         if (idea1.getNumberFollowers() == null && idea2.getNumberFollowers() == null) {
@@ -17,13 +31,22 @@ public class IdeaFollowersComparator implements Comparator<Idea> {
         }
 
         if (idea1.getNumberFollowers() == null) {
+            if (reverse){
+                return -1;
+            }
             return 1;
         }
 
         if (idea2.getNumberFollowers() == null) {
+            if (reverse){
+                return 1;
+            }
             return -1;
         }
 
+        if (reverse){
+            return idea2.getNumberFollowers().compareTo(idea1.getNumberFollowers());
+        }
         return idea1.getNumberFollowers().compareTo(idea2.getNumberFollowers());
     }
 }

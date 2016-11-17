@@ -76,53 +76,53 @@ public class ProfileEditWorkflow implements IWorkflow {
         //endregion
 
         // Muss nicht geprüft werden, da der Username nicht geändert werden kann
-//        //region Prüfen, ob sich Benutzername geändert hat
-//        if (!requestUsername.equals(foundUser.getUserName())){
-//            // Prüfe, ob der neue UserName noch verfügbar ist
-//            boolean existsUser;
-//            try {
-//                existsUser = this.userController.existsUser(requestUsername);
-//            } catch (Exception ex) {
-//                response.setErrorMessage("SProfile_existsUser_error");
-//                response.setResult("error");
-//                log.log(Level.SEVERE, "Beim Prüfen, ob bereits ein User mit dem neuen" +
-//                        " UserName existiert ist ein Fehler aufgetreten!\nFehlermeldung: " + ex.getMessage());
-//                return response;
-//            }
-//
-//            if (existsUser){
-//                // Der gewählte UserName ist bereits vergeben
-//                response.setErrorMessage("SProfile_userNameNotFree_error");
-//                response.setResult("error");
-//                return response;
-//            }
-//        }
-//        //endregion
+        //region Prüfen, ob sich Benutzername geändert hat
+        if (!requestUsername.equals(foundUser.getUserName())){
+            // Prüfe, ob der neue UserName noch verfügbar ist
+            boolean existsUser;
+            try {
+                existsUser = this.userController.existsUserName(requestUsername);
+            } catch (Exception ex) {
+                response.setErrorMessage("SProfile_existsUser_error");
+                response.setResult("error");
+                log.log(Level.SEVERE, "Beim Prüfen, ob bereits ein User mit dem neuen" +
+                        " UserName existiert ist ein Fehler aufgetreten!\nFehlermeldung: " + ex.getMessage());
+                return response;
+            }
+
+            if (existsUser){
+                // Der gewählte UserName ist bereits vergeben
+                response.setErrorMessage("SProfile_userNameNotFree_error");
+                response.setResult("error");
+                return response;
+            }
+        }
+        //endregion
 
         // Muss nicht geprüft werden, da die Email nicht geändert werden kann
-//        //region Prüfen, ob sich Email-Adresse geändert hat
-//        if (!requestEmail.equals(foundUser.getEmail())){
-//            // Prüfe, ob die neue Email-Adresse noch verfügbar ist
-//            boolean existsMail;
-//            try {
-//                existsMail = this.userController.existsEmail(requestEmail);
-//            } catch (Exception ex) {
-//                response.setErrorMessage("SProfile_existsEmail_error");
-//                response.setResult("error");
-//                log.log(Level.SEVERE, "Beim Prüfen, ob bereits ein User mit der neuen" +
-//                        " Email-Adresse existiert ist ein Fehler" +
-//                        " aufgetreten!\nFehlermeldung: " + ex.getMessage());
-//                return response;
-//            }
-//
-//            if (existsMail){
-//                // Die gewählte Email-Adresse ist bereits vergeben
-//                response.setErrorMessage("SProfile_emailNotFree_error");
-//                response.setResult("error");
-//                return response;
-//            }
-//        }
-//        //endregion
+        //region Prüfen, ob sich Email-Adresse geändert hat
+        if (!requestEmail.equals(foundUser.getEmail())){
+            // Prüfe, ob die neue Email-Adresse noch verfügbar ist
+            boolean existsMail;
+            try {
+                existsMail = this.userController.existsEmail(requestEmail);
+            } catch (Exception ex) {
+                response.setErrorMessage("SProfile_existsEmail_error");
+                response.setResult("error");
+                log.log(Level.SEVERE, "Beim Prüfen, ob bereits ein User mit der neuen" +
+                        " Email-Adresse existiert ist ein Fehler" +
+                        " aufgetreten!\nFehlermeldung: " + ex.getMessage());
+                return response;
+            }
+
+            if (existsMail){
+                // Die gewählte Email-Adresse ist bereits vergeben
+                response.setErrorMessage("SProfile_emailNotFree_error");
+                response.setResult("error");
+                return response;
+            }
+        }
+        //endregion
 
         // Speichere Daten
 

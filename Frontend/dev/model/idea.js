@@ -7,7 +7,6 @@ ideaWatcher.model.Idea = ideaWatcher.model.Idea || {
     language: '',
     hotRank: 0,
     trendingRank: 0,
-    freshRank: 0,
     likeUsers: [],
     numberLikes: 0,
     followers: [],
