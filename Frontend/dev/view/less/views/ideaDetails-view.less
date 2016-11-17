@@ -1,26 +1,19 @@
-
+//the view
 .ideaDetails_view {
   position: relative;
   width: 100%;
   height: 100%;
   //display: none;
 }
-
-.ideaDetails_view li {
-	list-style : none;
+//the idea description
+#ideaDetails_description_div {
+	margin-bottom: 20px;
+}
+//the section that shows the rating of this idea
+#ideaDetails_iconList_section div {
 	line-height: 30px;
 	display: inline;
 
-}
-
-#ideaDetails_comments_div img {
-	vertical-align: middle;
-}
-
-
-
-#ideaDescription {
-	margin-bottom: 20px;
 }
 
 #ideaDetails_like_button {
@@ -44,19 +37,11 @@
 }
 
 #ideaDetails_comments_image {
-width: 30px;
+	width: 30px;
 	height: 30px;
 	padding: 0px;
 	margin: 5px;
 	vertical-align: middle;
-}
-
-#ideaDetails_comment_input {
-	padding: 15px 50px;
-}
-
-#ideaDetails_commentSubmit_button {
-	margin-left: 10px;
 }
 
 #ideaDetails_contact_a:hover {
@@ -70,3 +55,44 @@ width: 30px;
     color: #4778d9;
     margin-left: 10px;
 }
+
+//items for creating a new comment
+#ideaDetails_newComment_section {
+	margin-bottom: 20px;
+}
+
+#ideaDetails_comment_input {
+	width: 30%;
+    height: 50px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 5px;
+    font-family: Tahoma, sans-serif;
+    margin: 0px;
+    vertical-align: middle;
+}
+
+#ideaDetails_commentSubmit_button {
+	margin-left: 10px;
+}
+
+#ideaDetails_newComment_section img {
+	vertical-align: middle;
+}
+
+
+//items to display given comments
+.ideaDetails_CommentNameAndText_div {
+	display: -webkit-box;
+    vertical-align: top;
+ 	margin-bottom: 10px;   
+}
+
+.ideaDetails_CommentNameAndText_div img{
+	margin-right: 5px;
+}
+
+.ideaDetails_CommentName_div {
+	font-weight: bold;
+}
+
