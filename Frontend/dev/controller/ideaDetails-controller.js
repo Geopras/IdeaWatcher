@@ -14,7 +14,26 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
     ideaWatcher.core.MessageBroker.subscribe(evSwitchView);
     //endregion
 
+    function pubTryToComment(exObject)
+    {
+        // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
+        if (ideaWatcher.core.WebSocketConnector.isConnected()) {
+            ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestComment(exObject));
+        } else {
+            //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
+        }
+    }
 
+    function buildRequestComment(exObject)
+    {
+        var exCommentRequest = ideaWatcher.model.Request;
+
+        exCommentRequest.destination = 'SIdeaDetails/commentIdea';
+        exCommentRequest.data = exObject;
+
+        return exCommentRequest;
+    }
+    
     //region Callback: Internal - SwitchView
     function cbSwitchView(obj)
     {
@@ -38,7 +57,8 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
     return {
         // hier kann die View eine Methode(ui-Connector) registrieren, die gerufen wird,
         // wenn die View ein/ausgeblendet werden soll
-        registerShowView: pubRegisterShowView
+        registerShowView: pubRegisterShowView,
+        tryToComment: pubTryToComment
     };
 
 })();

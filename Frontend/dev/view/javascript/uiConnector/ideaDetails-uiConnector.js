@@ -20,6 +20,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			var htmlLikeButton = null;
 			var htmlFollowerButton = null;
 			var htmlSubmitButton = null;
+			var currentUser = null;
 
 			// endregion
 
@@ -33,11 +34,12 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				console.log('Initialisiere UIConnector IdeaDetails');
 
 				// region assign html elements
-				
+				htmlView = document.querySelector('.ideaDetails_view');
 				htmlLikeButton = document
 						.querySelector('#ideaDetails_like_button');
 				htmlFollowerButton = document
 						.querySelector('#ideaDetails_follower_button');
+				htmlCommentTextInput = document.querySelector('#ideaDetails_comment_input');
 				
 				// endregion
 
@@ -46,25 +48,20 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				ideaWatcher.controller.IdeaDetails.registerShowView(cbShowView);
 				// endregion
 
-				// region override onSubmit to prevent page reload
 
 				// --> eventuell umbauen für Abschicken des Kommentars
-				// htmlFormSignup.onsubmit = function onSubmit(event) {
-				//
-				// event.preventDefault();
-				//            
-				// if(!checkEqualPassword()) return;
-				// if(!checkValidPassword()) return;
-				//
-				// var exObj = {
-				// userName: htmlUsernameInput.value,
-				// password: htmlPasswordInput.value,
-				// email: htmlEmailInput.value
-				// };
-				// console.log(exObj);
-				//
-				// ideaWatcher.controller.Signup.tryToSignup(exObj);
-				// };
+				htmlView.onsubmit = function onSubmit(event) {
+				
+				 event.preventDefault();
+				            				
+				 var exObj = {
+				 userName: currentUser.username,
+				 text: htmlCommentTextInput.value,
+				 };
+				 console.log(exObj);
+				
+				 ideaWatcher.controller.IdeaDetails.tryToComment(exObj);
+				 };
 
 				// eventlisteners hinzufügen
 				htmlLikeButton.addEventListener('click', changeImageLike);
@@ -74,8 +71,18 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				localizeView();
 
 				var otherUser = ideaWatcher.model.User;
+				var creator = Object.create(otherUser);
+				currentUser = Object.create(otherUser);
 				otherUser.username = 'Erika Mustermann';
 //				otherUser.pictureUrl = '';
+
+				creator.username = 'a';
+				creator.email = 'a@c.de';
+				creator.isMailPublic = true;
+				creator.pictureUrl = './resources/img/gluehbirneLeuchtet.png';
+				
+//				var currentUser =  ideaWatcher.controller.Login.getUserId();
+				currentUser.username = 'Andi';
 				
 				var comment1 = ideaWatcher.model.Comment;
 				comment1.userName = otherUser.username ;
@@ -83,16 +90,10 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				comment1.createDate = new Date();
 				comment1.text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sagittis turpis eu eleifend finibus. Praesent non nisi tempor, imperdiet diam eu, tincidunt ex. Morbi laoreet sollicitudin faucibus. Praesent vitae velit blandit nunc posuere vehicula. Etiam sed augue quam. In hendrerit dictum nullam. ';
 				
-				var user = ideaWatcher.model.User;
-				user.username = 'a';
-				user.email = 'a@c.de';
-				user.isMailPublic = true;
-				user.pictureUrl = './resources/img/gluehbirneLeuchtet.png';
-				
 				var ideaObject = ideaWatcher.model.Idea;
 				ideaObject.name = 'TestObjekt Idee';
 				ideaObject.description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sagittis turpis eu eleifend finibus. Praesent non nisi tempor, imperdiet diam eu, tincidunt ex. Morbi laoreet sollicitudin faucibus. Praesent vitae velit blandit nunc posuere vehicula. Etiam sed augue quam. In hendrerit dictum nullam. ';
-				ideaObject.creator = user;
+				ideaObject.creator = creator;
 				ideaObject.publishDate = new Date();
 				ideaObject.likeUsers = [otherUser];
 				ideaObject.numberLikes = 15;
@@ -167,6 +168,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				console.log('Starte erstellen der Liste...');
 				
 				htmlView = document.querySelector('.ideaDetails_view');
+				creator = obj.additionalData.ideaobject.creator;
 				
 				//header
 				htmlIdeaHeader = document.querySelector('#ideaDetails_ideaHeader_h1');
@@ -178,14 +180,14 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					
 					//likebutton
 					htmlLikeButton = document.querySelector('#ideaDetails_like_button');
-					setLikeButtonPicture(htmlLikeButton);
+					setLikeButtonPicture(htmlLikeButton, obj.additionalData.ideaobject);
 					//number of likes
 					htmlLikesSpan = document.querySelector('#ideaDetails_likes_span');
 					htmlLikesSpan.textContent = obj.additionalData.ideaobject.numberLikes;
 					
 					//starbutton
 					htmlFollowerButton = document.querySelector('#ideaDetails_follower_button');
-					setLikeButtonPicture(htmlFollowerButton);
+					setFollowerButtonPicture(htmlFollowerButton, obj.additionalData.ideaobject);
 					//number of followers
 					htmlFollowerSpan = document.querySelector('#ideaDetails_follower_span');
 					htmlFollowerSpan.textContent = obj.additionalData.ideaobject.numberFollowers;
@@ -194,7 +196,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					htmlCommentsSpan.textContent = obj.additionalData.ideaobject.numberComments;
 
 					//contactlink
-					var creator = obj.additionalData.ideaobject.creator;
+					
 					var mailaddress = creator.email;
 					var mailto = 'mailto: ' + mailaddress;
 					var htmlContactLink = document.querySelector('#ideaDetails_contact_a');
@@ -250,12 +252,22 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						changeImageFollower);
 			}
 			
-			function setLikeButtonPicture(htmlLikeButton) {
+			function setLikeButtonPicture(htmlLikeButton, ideaObject) {
 				//wenn der Nutzer die Idee schon gelikt hat, dann zeige die leuchtende Glühbirne, ansonsten die nicht leuchtende
+				if (ideaObject.likeUsers.includes(currentUser)) {
+					htmlLikeButton.style.backgroundImage = 'url("./resources/img/gluehbirneLeuchtet.png")';
+				} else {
+					htmlLikeButton.style.backgroundImage = 'url("./resources/img/gluehbirneAus.png")';
+				}
 			}
 
-			function setLikeButtonPicture(htmlFollowerButton) {
+			function setFollowerButtonPicture(htmlFollowerButton, ideaObject) {
 				// wenn der Nutzer der Idee schon folgt, soll der leuchtende Stern angezeigt werden, ansonsten der nicht leuchtende
+				if (ideaObject.followers.includes(currentUser)) {
+					htmlFollowerButton.style.backgroundImage = 'url("./resources/img/sternAn.jpg")';
+				} else {
+					htmlFollowerButton.style.backgroundImage = 'url("./resources/img/sternAus.jpg")';
+				}
 			}
 			
 			return {
