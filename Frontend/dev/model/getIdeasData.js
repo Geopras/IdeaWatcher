@@ -1,4 +1,4 @@
-ideaWatcher.model.GetIdeasExObject = ideaWatcher.model.GetIdeasExObject || {
+ideaWatcher.model.GetIdeasData = ideaWatcher.model.GetIdeasData || {
 
         RequestData: {
             category: '',

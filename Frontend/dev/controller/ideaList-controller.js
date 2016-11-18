@@ -1,12 +1,30 @@
 ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function () {
 
-
         //region local vars
+        var cbInitView = null;
         var cbShowView = null;
-        var cbRenderList = null;
-        var evSwitchViewHot = {
+        var cbLocalize = null;
+        var cbGetIdeas = null;
+
+        var evSwitchView = {
             topic: 'switchView/IdeaList',
             cbFunction: cbSwitchView
+        };
+
+        // Event Globale Initialisierung
+        var evIni = {
+            topic: 'internal/ini',
+            cbFunction: cbInitializeView
+        };
+
+        var evLocalizeView = {
+            topic: 'localizeView/IdeaList',
+            cbFunction: cbLocalizeView
+        };
+
+        var evGetIdeasResponse = {
+            topic: 'SIdeaList/getIdeasRequest-response',
+            cbFunction: cbGetIdeasResponse
         };
 
         // var evIni = Object.create(wam.services.events.Ini);
@@ -14,24 +32,32 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         //endregion
 
         //region subscribe to events
-        ideaWatcher.core.MessageBroker.subscribe(evSwitchViewHot);
+        ideaWatcher.core.MessageBroker.subscribe(evSwitchView);
+        ideaWatcher.core.MessageBroker.subscribe(evIni);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
+        ideaWatcher.core.MessageBroker.subscribe(evGetIdeasResponse);
+
         // ideaWatcher.core.MessageBroker.subscribe(evSwitchViewFresh);
         // ideaWatcher.core.MessageBroker.subscribe(evSwitchViewTrending);
         // wtk.MessageBroker.subscribe(evIni);
         // wtk.connection.ResponseHandler.subscribe('SLogin/Response', sCBLoginResponse);
         //endregion
 
-        //region Callback: Internal - SwitchViewHot
-        function cbSwitchView(obj)
-        {
-            // if(obj.shouldShow) {
-            // 	ideaWatcher.services.WebSocketConnector.sendRequest(buildRequestIdeaListUser('plötzlich auftauchende UserID'));
-            // }
-            cbShowView({
-                shouldShow: obj.shouldShow,
-                ideaListType: obj.additionalData.ideaListType,
-                ideaItemList: obj.additionalData.ideaItemList
-            });
+        //region Callback-Functions für MessageBroker
+        function cbSwitchView(obj) {
+            cbShowView(obj);
+        }
+
+        function cbInitializeView(obj) {
+            cbInitView();
+        }
+
+        function cbLocalizeView(obj) {
+            cbLocalize();
+        }
+
+        function cbGetIdeasResponse(obj) {
+            cbGetIdeas(obj);
         }
         //endregion
 
@@ -51,34 +77,44 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         //     cbVerificationError = cb;
         // }
 
+        function pubRegisterInitializeView(cb) {
+            cbInitView = cb;
+        }
+
+        // Event-Callback zur Anzeige der View
         function pubRegisterShowView(cb) {
             cbShowView = cb;
-
         }
 
-        function pubRegisterRenderList(cb) {
-            cbRenderList = cb;
-
+        // Event-Callback zur Lokalisierung der View
+        function pubRegisterLocalizeView(cb) {
+            cbLocalize = cb;
         }
 
-        // get ideas
-        function pubGetIdeaList(exObject)
+        // Schnittstelle für UI-Connector, damit er Daten erhält
+        function pubRegisterGetIdeasResponse(cb) {
+            cbGetIdeas = cb;
+        }
+
+        // Schnittstelle für andere Controller, um die Ideenliste mit
+        // gewünschten Daten zu aktualisieren
+        function pubUpdateIdeaList(exObject)
         {
             // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
             if (ideaWatcher.core.WebSocketConnector.isConnected()) {
-                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestLogin(exObject));
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequest(exObject));
             } else {
                 //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
             }
         }
         //endregion
 
-        //region build: RequestLogin
-        function buildRequestLogin(exObject)
+        //region build: Request
+        function buildRequest(exObject)
         {
             var request = ideaWatcher.model.Request;
 
-            request.destination = 'SIdeaList/getIdeaListRequest';
+            request.destination = 'SIdeaList/getIdeasRequest';
             request.data = exObject;
 
             return request;
@@ -89,9 +125,11 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         return {
             // hier kann die View eine Methode(ui-Connector) registrieren, die gerufen wird,
             // wenn die View ein/ausgeblendet werden soll
+            registerInitializeView: pubRegisterInitializeView,
             registerShowView: pubRegisterShowView,
-            registerRenderList: pubRegisterRenderList,
-            getIdeaList: pubGetIdeaList
+            registerLocalizeView: pubRegisterLocalizeView,
+            registerGetIdeasResponse: pubRegisterGetIdeasResponse,
+            updateIdeaList: pubUpdateIdeaList
         };
 
     })();

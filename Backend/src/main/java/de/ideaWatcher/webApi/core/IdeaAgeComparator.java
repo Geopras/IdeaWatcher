@@ -1,7 +1,7 @@
 package main.java.de.ideaWatcher.webApi.core;
 
 
-import main.java.de.ideaWatcher.dataManager.pojos.Idea;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 
 import java.util.Comparator;
 
@@ -9,7 +9,7 @@ import java.util.Comparator;
  * Vergleicht zwei Ideen anhand ihres PublishDates.
  * Die Idee mit dem älterem Datum wird vor die Idee mit dem neueren Datum sortiert.
  */
-public class IdeaAgeComparator implements Comparator<Idea> {
+public class IdeaAgeComparator implements Comparator<IIdea> {
 
     private boolean reverse;
 
@@ -26,7 +26,7 @@ public class IdeaAgeComparator implements Comparator<Idea> {
         this.reverse = reverse;
     }
 
-    public int compare(Idea idea1, Idea idea2) {
+    public int compare(IIdea idea1, IIdea idea2) {
 
         if (idea1.getPublishDate() == null && idea2.getPublishDate() == null) {
             return 0;

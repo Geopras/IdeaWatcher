@@ -8,6 +8,6 @@ public class IdeaService {
     private DbConnectionService dbConnectionService;
 
     public IdeaService() {
-        this.dbConnectionService = new DbConnectionService("IdeaCollection");
+        this.dbConnectionService = new DbConnectionService("ideaCollection");
     }
 }

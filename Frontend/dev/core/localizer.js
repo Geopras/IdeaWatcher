@@ -48,6 +48,6 @@ ideaWatcher.core.Localizer = ideaWatcher.core.Localizer || (function () {
             // die gewählte Sprache abholen
             getLanguage: pubGetLanguage,
             // damit können die Views bei einem Sprachwechsel lokalisiert werden
-            localzeCurrentViews: pubLocalizeCurrentViews
+            localizeCurrentViews: pubLocalizeCurrentViews
         };
     })();

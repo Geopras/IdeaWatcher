@@ -4,8 +4,9 @@ package main.java.de.ideaWatcher.webApi.workflow;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.webApi.core.*;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.*;
@@ -36,9 +37,11 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         String category;
         int fromRank;
         int toRank;
+        String destinationUrl;
+        String isRenderNewIdeaList;
 
-        List<Idea> allIdeas;
-        List<Idea> filteredIdeas = new ArrayList<Idea>();
+        List<IIdea> allIdeas;
+        List<IIdea> filteredIdeas = new ArrayList<>();
 
         // Workflow-Antwort instanziieren
         IResponse response = new Response();
@@ -49,6 +52,8 @@ public class GetIdeaListWorkflow  implements IWorkflow {
             category = data.getString("category");
             fromRank = data.getInt("fromRank");
             toRank = data.getInt("toRank");
+            destinationUrl = data.getString("destinationUrl");
+            isRenderNewIdeaList = data.getString("isRenderNewIdeaList");
 
         } catch (Exception ex) {
             response.setErrorMessage("SIdeaList_getIdeasRequestData_error");
@@ -92,14 +97,22 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         }
 
         response.setResult("success");
-        response.setData(this.ideaDataToJSONObject(filteredIdeas));
+        JSONObject responseData = new JSONObject();
+        responseData.put("listType", listType);
+        responseData.put("category", category);
+        responseData.put("ideas", this.ideaDataToJSONObject(filteredIdeas));
+        responseData.put("destinationUrl", destinationUrl);
+        responseData.put("isRenderNewIdeaList", isRenderNewIdeaList);
+        response.setData(responseData);
         return response;
     }
 
-    private JSONObject ideaDataToJSONObject(List<Idea> ideas) {
+    private JSONArray ideaDataToJSONObject(List<IIdea> ideas) {
 
-        // TODO: klaeren, wie mehrere JSON-Objekte übergeben werden
-        for (Idea idea:ideas){
+        JSONArray ideasArray = new JSONArray();
+
+        for (IIdea idea : ideas){
+
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("name", idea.getName());
             jsonObject.put("description", idea.getDescription());
@@ -115,25 +128,26 @@ public class GetIdeaListWorkflow  implements IWorkflow {
             jsonObject.put("numberFollowers", idea.getNumberFollowers());
             // jsonObject.put("comments", idea.getComments());
             jsonObject.put("numberComments", idea.getNumberComments());
-            return jsonObject;
+
+            ideasArray.put(jsonObject) ;
         }
 
-        return null;
+        return ideasArray;
     }
 
     /**
      * Erzeugt eine Liste mit Test-Ideen.
      * @return
      */
-    public List<Idea> getTestIdeas(){
-        ArrayList<Idea> ideas = new ArrayList<Idea>();
+    public List<IIdea> getTestIdeas(){
+        List<IIdea> ideas = new ArrayList<>();
         Random r = new Random();
         Calendar calendar;
 
         // erzeuge 100 Testideen
         for (int i = 0; i < 100; i++){
 
-            Idea newIdea = new Idea();
+            IIdea newIdea = new Idea();
             calendar =  new GregorianCalendar();
 
             // Zeitraum letzte 5 Jahre
@@ -154,7 +168,7 @@ public class GetIdeaListWorkflow  implements IWorkflow {
     /**
      * Bewertet die übergebene IdeenListe und setzt die hotRankings und trendingRankings
      */
-    public void calculateIdeaRankings(List<Idea> ideas){
+    public void calculateIdeaRankings(List<IIdea> ideas){
 
         double hotRatingLikes = 0.5;
         double hotRatingFollows = 0.3;
@@ -170,7 +184,7 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         // alter der ältesten Idee in Sekunden
         long maxAge = (new Date().getTime() - oldestPublishDate.getTime()) / 1000;
 
-        for (Idea idea:ideas){
+        for (IIdea idea : ideas){
 
             double likeRatio = ((double) idea.getNumberLikes()) / maxLikes;
             double followRatio = ((double) idea.getNumberFollowers()) / maxFollowers;
