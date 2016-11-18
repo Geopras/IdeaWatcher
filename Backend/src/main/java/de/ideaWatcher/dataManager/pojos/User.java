@@ -2,6 +2,8 @@ package main.java.de.ideaWatcher.dataManager.pojos;
 
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,6 +166,21 @@ public class User implements IUser {
     @Override
     public void setNumberFollowedIdeas(Double numberFollowedIdeas) {
         this.numberFollowedIdeas = numberFollowedIdeas;
+    }
+
+    @Override
+    public JSONObject toJSONObject() {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("userName", this.getUserName());
+        jsonObject.put("email", this.getEmail());
+        jsonObject.put("isMailPublic", this.getIsMailPublic());
+        jsonObject.put("surname", this.getSurname());
+        jsonObject.put("firstName", this.getFirstname());
+        jsonObject.put("gender", this.getGender());
+        jsonObject.put("language", this.getLanguage());
+
+        return jsonObject;
     }
 
     /**

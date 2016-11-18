@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class GetProfileWorkflow implements IWorkflow {
 
-    private static final Logger log = Logger.getLogger( LoginWorkflow.class.getName() );
+    private static final Logger log = Logger.getLogger( GetProfileWorkflow.class.getName() );
     private IUserController user;
 
     public GetProfileWorkflow() {
@@ -38,7 +38,7 @@ public class GetProfileWorkflow implements IWorkflow {
         try {
             foundUser = this.user.getUser(userId);
             response.setResult("success");
-            response.setData(this.userDataToJSONObject(foundUser));
+            response.setData(foundUser.toJSONObject());
             return response;
         } catch (Exception ex) {
             response.setErrorMessage("SProfile_getUser_error");
@@ -49,18 +49,6 @@ public class GetProfileWorkflow implements IWorkflow {
             return response;
         }
         //endregion
-    }
-
-    private JSONObject userDataToJSONObject(IUser user) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userName", user.getUserName());
-        jsonObject.put("email", user.getEmail());
-        jsonObject.put("isMailPublic", user.getIsMailPublic());
-        jsonObject.put("surname", user.getSurname());
-        jsonObject.put("firstName", user.getFirstname());
-        jsonObject.put("gender", user.getGender());
-        jsonObject.put("language", user.getLanguage());
-        return jsonObject;
     }
 
 }

@@ -48,6 +48,9 @@ public class RequestManager {
                 new GetProfileCommand());
         this.workflowMapping.addCommand("SIdeaList/getIdeasRequest",
                 new GetIdeaListCommand());
+        this.workflowMapping.addCommand("SIdea/getIdeaDetailsRequest",
+                new GetIdeaDetailsCommand());
+
     }
 
     /**
