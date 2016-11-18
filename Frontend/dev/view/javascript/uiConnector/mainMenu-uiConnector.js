@@ -102,7 +102,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
             console.log('htmlBtnLogin geklickt');
 
             ideaWatcher.core.Navigator.switchView({
-                viewId: 'Login',
+                viewId: 'login',
                 url: 'myLogin'
             });
 
@@ -113,7 +113,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
             console.log('htmlBtnSignup geklickt');
 
             ideaWatcher.core.Navigator.switchView({
-                viewId: 'Signup',
+                viewId: 'signup',
                 url: 'mySignUp'
             });
 
@@ -123,7 +123,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 
             console.log('htmlUserButton geklickt');
             ideaWatcher.core.Navigator.switchView({
-                viewId: 'Profile',
+                viewId: 'profile',
                 url: 'myProfile',
             });
         }
