@@ -221,7 +221,7 @@ public class UserService {
             }
         }
 
-        return new Document("username", user.getUserName() )
+        return new Document("userName", user.getUserName() )
                 .append("password", user.getPassword())
                 .append("email", user.getEmail())
                 .append("isMailPublic", user.getIsMailPublic())
