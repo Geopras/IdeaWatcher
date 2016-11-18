@@ -18,6 +18,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
     var htmlPasswordInput = null;
     var htmlPasswordRepeatInput = null;
     var htmlSubmitButton = null;
+    var htmlPasswordRepeatErrorLabel = null;
     var htmlView = null;
     //endregion
 
@@ -38,13 +39,12 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         htmlPasswordInput = document.querySelector('#signUp_password_input');
         htmlPasswordRepeatInput = document.querySelector('#signUp_passwordRepeated_input');
         htmlSubmitButton = document.querySelector('#signUp_submit_button');
-        
+        htmlPasswordRepeatErrorLabel = document.querySelector('.signUp_passwordRepeatedError_label');
         // htmlVerificationLabel = document.querySelector('.js-login-desk-lbl-verificationError');
         htmlView = document.querySelector('.signUp_view');
         //endregion
 
         //region register Callbacks
-        // wam.logic.Login.registerVerificationError(cbShowVerificationError);
         ideaWatcher.controller.Signup.registerShowView(cbShowView);
         //endregion
 
@@ -77,39 +77,29 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
     }
     //endregion
 
+    //region check if Passwords are equal
     function checkEqualPassword() {
-        // if (htmlPasswordInput.value == htmlPasswordRepeatInput.value) {
-    		// console.log('Passwörter stimmen überein.');
-        //     return true;
-        // }
-        // else {
-        //     ideaWatcher.controller.GlobalNotification.showNotification(
-        //     'Login', 'Passwörter stimmen nicht überein!',5000);
-        //     return false
-        // }
 
+        htmlPasswordRepeatErrorLabel.style.display = 'inline';
 
-    	
         var language = ideaWatcher.core.Localizer.getLanguage();
-        var htmlPasswordRepeatErrorLabel = document.querySelector('.signUp_passwordRepeatedError_label');
         if (htmlPasswordInput.value == htmlPasswordRepeatInput.value) {
         	console.log('Equal passwords.');
         	htmlPasswordRepeatErrorLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordMatching;
         	htmlPasswordRepeatErrorLabel.style.color = 'black';
-           // return true;
+           return true;
         } else {
         	console.log('Not equal passwords.');
         	htmlPasswordRepeatErrorLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordNotMatching;
-            //return false;
+            return false;
         }
-        htmlPasswordRepeatErrorLabel.style.display = 'inline';
-
-
-
     }
-    
+    //endregion
+
+    //region check if Password is valid
     function checkValidPassword() {
 
+        //TODO: dispolay prperty durch visibility austauschen, da das element nicht aus render Tree genommen werden soll
         var language = ideaWatcher.core.Localizer.getLanguage();
         var password = htmlPasswordInput.value;
         var htmlPasswordErrorLabel = document.querySelector('.signUp_passwordError_label');
@@ -149,6 +139,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
 
         return isPasswordValid;
     }
+    //endregion
     
     //region showView
     function cbShowView(obj)
@@ -185,7 +176,6 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         htmlSubmitButton.value = ideaWatcher.core.Localizer.signUp[language].submit;
     }
     //endregion
-
 
     return {
 
