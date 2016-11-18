@@ -40,7 +40,6 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         htmlPasswordRepeatInput = document.querySelector('#signUp_passwordRepeated_input');
         htmlSubmitButton = document.querySelector('#signUp_submit_button');
         htmlPasswordRepeatErrorLabel = document.querySelector('.signUp_passwordRepeatedError_label');
-        // htmlVerificationLabel = document.querySelector('.js-login-desk-lbl-verificationError');
         htmlView = document.querySelector('.signUp_view');
         //endregion
 
@@ -49,35 +48,38 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
         //endregion
 
         // region override onSubmit to prevent page reload
-        htmlFormSignup.onsubmit = function onSubmit(event) {
-
-            event.preventDefault();
-            
-            if(!checkEqualPassword()) return;
-            if(!checkValidPassword()) return;
-
-            var exObj = {
-                userName: htmlUsernameInput.value,
-                password: htmlPasswordInput.value,
-                email: htmlEmailInput.value
-            };
-            console.log(exObj);
-
-            ideaWatcher.controller.Signup.tryToSignup(exObj);
-        };
+        htmlFormSignup.onsubmit = sendRegistrationToController;
+        // endregion
 
         htmlPasswordRepeatInput.disabled = true;
-        
 
         htmlPasswordInput.addEventListener('change', checkValidPassword);
         htmlPasswordRepeatInput.addEventListener('change', checkEqualPassword);
+
         localizeView();
-        
-        // endregion
     }
     //endregion
 
-    //region check if Passwords are equal
+    //region sendRegistrationToController
+    function sendRegistrationToController()
+    {
+        event.preventDefault();
+
+        if(!checkEqualPassword()) return;
+        if(!checkValidPassword()) return;
+
+        var exObj = {
+            userName: htmlUsernameInput.value,
+            password: htmlPasswordInput.value,
+            email: htmlEmailInput.value
+        };
+        console.log(exObj);
+
+        ideaWatcher.controller.Signup.tryToSignup(exObj);
+    }
+    //endregion
+
+    //region checkEqualPassword
     function checkEqualPassword() {
 
         htmlPasswordRepeatErrorLabel.style.display = 'inline';
@@ -96,7 +98,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function VSignup() {
     }
     //endregion
 
-    //region check if Password is valid
+    //region checkValidPassword
     function checkValidPassword() {
 
         //TODO: dispolay prperty durch visibility austauschen, da das element nicht aus render Tree genommen werden soll
