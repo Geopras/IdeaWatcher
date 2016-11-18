@@ -11,6 +11,7 @@ public class InstanceManager {
     private static RequestManager requestManager;
     private static IDataManager dataManager;
     private static TokenManager tokenManager;
+    private static IdeaManager ideaManager;
 
     public static RequestManager getRequestManager() {
         return requestManager;
@@ -24,12 +25,18 @@ public class InstanceManager {
         return tokenManager;
     }
 
+    public static IdeaManager getIdeaManager() {
+        return ideaManager;
+    }
+
     public static void initialize() {
         requestManager = new RequestManager();
         requestManager.initialize();
         dataManager = new DataManager();
         dataManager.initialize();
         tokenManager = new TokenManager();
+        ideaManager = new IdeaManager();
+        ideaManager.initialize();
     }
 
 }
