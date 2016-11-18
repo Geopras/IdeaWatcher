@@ -29,8 +29,6 @@ public class GetIdeaListWorkflow  implements IWorkflow {
     @Override
     public IResponse getResponse(IRequest request) {
 
-        // Die UserID der Anfrage zur Abfrage der Datenbank:
-        String userId = request.getUserId();
         JSONObject data = request.getData();
 
         String listType;
@@ -91,24 +89,7 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         JSONArray ideasArray = new JSONArray();
 
         for (IIdea idea : ideas){
-
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("name", idea.getName());
-            jsonObject.put("description", idea.getDescription());
-            jsonObject.put("category", idea.getCategory());
-            jsonObject.put("creator", idea.getCreator());
-            jsonObject.put("publishDate", idea.getPublishDate());
-            jsonObject.put("language", idea.getLanguage());
-            jsonObject.put("hotRank", idea.getHotRank());
-            jsonObject.put("trendingRank", idea.getTrendingRank());
-            // jsonObject.put("likeUsers", idea.getLikeUsers());
-            jsonObject.put("numberLikes", idea.getNumberLikes());
-            // jsonObject.put("followers", idea.getFollowerUsers());
-            jsonObject.put("numberFollowers", idea.getNumberFollowers());
-            // jsonObject.put("comments", idea.getComments());
-            jsonObject.put("numberComments", idea.getNumberComments());
-
-            ideasArray.put(jsonObject) ;
+            ideasArray.put(idea.toJSONObject()) ;
         }
 
         return ideasArray;
