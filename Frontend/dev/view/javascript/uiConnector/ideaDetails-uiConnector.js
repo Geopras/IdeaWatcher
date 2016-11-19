@@ -21,6 +21,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			var htmlFollowerButton = null;
 			var htmlSubmitButton = null;
 			var currentUser = null;
+			var currentIdea = null;
 
 			// endregion
 
@@ -64,9 +65,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				 };
 
 				// eventlisteners hinzufügen
-				htmlLikeButton.addEventListener('click', changeImageLike);
+				htmlLikeButton.addEventListener('click', changeLikeStatus);
 				htmlFollowerButton.addEventListener('click',
-						changeImageFollower);
+						changeFollowerStatus);
 
 				localizeView();
 
@@ -91,6 +92,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				comment1.text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sagittis turpis eu eleifend finibus. Praesent non nisi tempor, imperdiet diam eu, tincidunt ex. Morbi laoreet sollicitudin faucibus. Praesent vitae velit blandit nunc posuere vehicula. Etiam sed augue quam. In hendrerit dictum nullam. ';
 				
 				var ideaObject = ideaWatcher.model.Idea;
+				ideaObject.ideaId = '936DA01F-9ABD-4D9D-80C7-02AF85C822A8';
 				ideaObject.name = 'TestObjekt Idee';
 				ideaObject.description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sagittis turpis eu eleifend finibus. Praesent non nisi tempor, imperdiet diam eu, tincidunt ex. Morbi laoreet sollicitudin faucibus. Praesent vitae velit blandit nunc posuere vehicula. Etiam sed augue quam. In hendrerit dictum nullam. ';
 				ideaObject.creator = creator;
@@ -133,21 +135,50 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			}
 			// endregion
 
-			function changeImageLike() {
+			function changeLikeStatus() {
 				if (htmlLikeButton.style.backgroundImage == 'url("./resources/img/gluehbirneLeuchtet.png")') {
 					htmlLikeButton.style.backgroundImage = 'url("./resources/img/gluehbirneAus.png")';
+					var exObj = {
+							 userId: currentUser.username,
+							 ideaId:  currentIdea.ideaId,
+							 action: 'unlike'
+							 };
 				} else {
 					htmlLikeButton.style.backgroundImage = 'url("./resources/img/gluehbirneLeuchtet.png")';
+					var exObj = {
+							 userId: currentUser.username,
+							 ideaId: currentIdea.ideaId,
+							 action: 'like'
+							 };
 				}
+				
+				
+						 console.log(exObj);
+						
+						 ideaWatcher.controller.IdeaDetails.tryToChangeLike(exObj);
+						 
 			}
 
-			function changeImageFollower() {
+			function changeFollowerStatus() {
 
 				if (htmlFollowerButton.style.backgroundImage == 'url("./resources/img/sternAn.jpg")') {
 					htmlFollowerButton.style.backgroundImage = 'url("./resources/img/sternAus.jpg")';
+					var exObj = {
+							 userId: currentUser.username,
+							 ideaId:  currentIdea.ideaId,
+							 action: 'unfollow'
+							 };
 				} else {
 					htmlFollowerButton.style.backgroundImage = 'url("./resources/img/sternAn.jpg")';
+					var exObj = {
+							 userId: currentUser.username,
+							 ideaId:  currentIdea.ideaId,
+							 action: 'follow'
+							 };
 				}
+				console.log(exObj);
+				
+				 ideaWatcher.controller.IdeaDetails.tryToChangeFollower(exObj);
 			}
 
 			// region localizeView
@@ -167,33 +198,34 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 				console.log('Starte erstellen der Liste...');
 				
+				currentIdea = obj.additionalData.ideaobject;
 				htmlView = document.querySelector('.ideaDetails_view');
-				creator = obj.additionalData.ideaobject.creator;
+				creator = currentIdea.creator;
 				
 				//header
 				htmlIdeaHeader = document.querySelector('#ideaDetails_ideaHeader_h1');
-				htmlIdeaHeader.textContent = obj.additionalData.ideaobject.name;
+				htmlIdeaHeader.textContent = currentIdea.name;
 				//description
 				htmlIdeaDescription = document.querySelector('#ideaDetails_description_div');
-				htmlIdeaDescription.textContent = obj.additionalData.ideaobject.description;
+				htmlIdeaDescription.textContent = currentIdea.description;
 				//iconbar
 					
 					//likebutton
 					htmlLikeButton = document.querySelector('#ideaDetails_like_button');
-					setLikeButtonPicture(htmlLikeButton, obj.additionalData.ideaobject);
+					setLikeButtonPicture(htmlLikeButton, currentIdea);
 					//number of likes
 					htmlLikesSpan = document.querySelector('#ideaDetails_likes_span');
-					htmlLikesSpan.textContent = obj.additionalData.ideaobject.numberLikes;
+					htmlLikesSpan.textContent = currentIdea.numberLikes;
 					
 					//starbutton
 					htmlFollowerButton = document.querySelector('#ideaDetails_follower_button');
-					setFollowerButtonPicture(htmlFollowerButton, obj.additionalData.ideaobject);
+					setFollowerButtonPicture(htmlFollowerButton, currentIdea);
 					//number of followers
 					htmlFollowerSpan = document.querySelector('#ideaDetails_follower_span');
-					htmlFollowerSpan.textContent = obj.additionalData.ideaobject.numberFollowers;
+					htmlFollowerSpan.textContent = currentIdea.numberFollowers;
 					//number of comments
 					htmlCommentsSpan = document.querySelector('#ideaDetails_comments_span');
-					htmlCommentsSpan.textContent = obj.additionalData.ideaobject.numberComments;
+					htmlCommentsSpan.textContent = currentIdea.numberComments;
 
 					//contactlink
 					
@@ -207,7 +239,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				//list of old comments
 				htmlOldCommentsSection = document.querySelector('#ideaDetails_existingComments_section');	
 				
-				var comments = obj.additionalData.ideaobject.comments;
+				var comments = currentIdea.comments;
 				comments.forEach(function(comment){
 					//div ideaDetails_CommentNameAndText_div
 				var htmlOneCommentDiv = document.createElement('div');
@@ -246,10 +278,6 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				//append all elements to view
 				htmlView.appendChild(htmlOldCommentsSection);
 				
-				
-				htmlLikeButton.addEventListener('click', changeImageLike);
-				htmlFollowerButton.addEventListener('click',
-						changeImageFollower);
 			}
 			
 			function setLikeButtonPicture(htmlLikeButton, ideaObject) {
