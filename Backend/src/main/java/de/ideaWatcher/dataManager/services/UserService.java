@@ -3,11 +3,13 @@ package main.java.de.ideaWatcher.dataManager.services;
 import com.mongodb.BasicDBObject;
 import main.java.de.ideaWatcher.dataManager.BCrypt;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Klasse fuer Zugriff auf User-Datenbank
@@ -16,8 +18,8 @@ public class UserService {
 
     private DbConnectionService dbConnectionService;
 
-    public UserService(String dbCollectionName) {
-        this.dbConnectionService = new DbConnectionService(dbCollectionName);
+    public UserService(String collectionName) {
+        this.dbConnectionService = new DbConnectionService(collectionName);
     }
 
     /**
@@ -104,7 +106,7 @@ public class UserService {
     }
 
     /**
-     * PrÃ¼ft, ob die UserID bereits in der DB vorhanden ist
+     * Prüft, ob die UserID bereits in der DB vorhanden ist
      * @param userId {String} eindeutige UserID
      * @return {boolean} TRUE oder FALSE je nachdem, ob UserID existiert
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
@@ -213,7 +215,7 @@ public class UserService {
 
     private Document buildUserDocument(IUser user) {
 
-        return new Document("username", user.getUserName() )
+        return new Document("userName", user.getUserName() )
                 .append("password", user.getPassword())
                 .append("email", user.getEmail())
                 .append("isMailPublic", user.getIsMailPublic())
@@ -236,5 +238,17 @@ public class UserService {
         } else {
             return false;
         }
+    }
+    public void addUserList(List<IUser> userList) throws Exception {
+        List<Document> userListDoc = new ArrayList<>();
+        for( IUser idea : userList){
+            userListDoc.add(buildUserDocument(idea));
+        }        
+        
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        }
+        dbConnectionService.getCollection().insertMany(userListDoc);
+        dbConnectionService.closeConnection();
     }
 }
