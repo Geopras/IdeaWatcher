@@ -15,9 +15,9 @@ public interface IUser {
 
     /**
      * Legt die User ID fest
-     * @param userId {String} User ID
+     * @param objectId {String} User ID
      */
-    void setUserId(String userId);
+    void setUserId(String objectId);
 
     /**
      * Gibt den Benutzernamen zurueck

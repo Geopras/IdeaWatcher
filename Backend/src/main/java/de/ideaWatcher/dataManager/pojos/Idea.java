@@ -11,7 +11,8 @@ import java.util.List;
  * POJO fuer Austausch eines Idee-Objekts
  */
 public class Idea implements IIdea {
-
+    
+    private String ideaID;
     private String name;
     private String description;
     private String category;
@@ -20,12 +21,14 @@ public class Idea implements IIdea {
     private String language;
     private Double hotRank;
     private Double trendingRank;
-    private List<IUser> likeUsers;
-    private List<IUser> followerUsers;
+    private Double freshRank;
+    private List<String> likeUsers;
+    private List<String> followerUsers;
     private Long numberLikes;
     private Long numberFollowers;
     private List<String> comments;
     private Long numberComments;
+    
 
     @Override
     public String getName() {
@@ -108,12 +111,12 @@ public class Idea implements IIdea {
     }
 
     @Override
-    public List<IUser> getLikeUsers() {
+    public List<String> getLikeUsers() {
         return this.likeUsers;
     }
 
     @Override
-    public void setLikeUsers(List<IUser> likeUsers) {
+    public void setLikeUsers(List<String> likeUsers) {
         this.likeUsers = likeUsers;
     }
 
@@ -128,12 +131,12 @@ public class Idea implements IIdea {
     }
 
     @Override
-    public List<IUser> getFollowerUsers() {
+    public List<String> getFollowerUsers() {
         return this.followerUsers;
     }
 
     @Override
-    public void setFollowerUsers(List<IUser> followerUsers) {
+    public void setFollowerUsers(List<String> followerUsers) {
         this.followerUsers = followerUsers;
     }
 
@@ -167,11 +170,32 @@ public class Idea implements IIdea {
         this.numberComments = numberComments;
     }
 
+    @Override
+    public Double getFreshRank() {
+        return this.freshRank;
+    }
+
+    @Override
+    public void setFreshRank(Double freshRank) {
+        this.freshRank = freshRank;
+    }
+    
+    @Override
+    public String getIdeaID() {
+        return ideaID;
+    }
+    
+    @Override
+    public void setIdeaID( String ideaID) {
+       this.ideaID = ideaID;
+    }
+    
     /**
      * Gibt eine leere Instanz der Idea-Klasse zurueck
      * @return {Idea} idea object
      */
     public Idea() {
+        this.ideaID = "";
         this.name = "";
         this.description = "";
         this.category = "";
@@ -180,6 +204,7 @@ public class Idea implements IIdea {
         this.language = "";
         this.hotRank = new Double(0.0);
         this.trendingRank = new Double(0.0);
+        this.freshRank = new Double(0.0);
         this.likeUsers = new ArrayList<>();
         this.numberLikes = new Long(0);
         this.followerUsers = new ArrayList<>();

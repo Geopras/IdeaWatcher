@@ -4,6 +4,9 @@ import com.mongodb.BasicDBObject;
 import main.java.de.ideaWatcher.dataManager.BCrypt;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
+
+import java.util.ArrayList;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -15,7 +18,7 @@ public class UserService {
     private DbConnectionService dbConnectionService;
 
     public UserService() {
-        this.dbConnectionService = new DbConnectionService("testLogin");
+        this.dbConnectionService = new DbConnectionService("Users");
     }
 
     /**
@@ -34,7 +37,7 @@ public class UserService {
                 Document userDoc = dbConnectionService.getCollection()
                         .find(new BasicDBObject("_id", new ObjectId
                                 (userId))).first();
-                return buildUser(userDoc, userId);
+                return buildUser(userDoc);
             } else {
                 throw new Exception("userIdNotExist");
             }
@@ -62,6 +65,7 @@ public class UserService {
                 userDoc = dbConnectionService.getCollection()
                         .find(new BasicDBObject("userName", userNameOrEmail))
                         .first();
+                System.out.println("ID: " + userDoc.get("_id").toString());
                 return userDoc.get("_id").toString();
             }
             else if (this.existsEmail(userNameOrEmail)) {
@@ -82,10 +86,10 @@ public class UserService {
         }
     }
 
-    private IUser buildUser(Document userDoc, String userId) {
+    private IUser buildUser(Document userDoc) {
 
         IUser user = new User();
-        user.setUserId(userId);
+        user.setUserId(userDoc.getObjectId("_id").toString());
         user.setUserName(userDoc.getString("userName"));
         user.setPassword(userDoc.getString("password"));
         user.setEmail(userDoc.getString("email"));
@@ -211,16 +215,6 @@ public class UserService {
 
     private Document buildUserDocument(IUser user) {
 
-        //TODO: Documents für createdIdeas und followedIdeas erzeugen
-        int sizeCreatedIdeas = user.getCreatedIdeas().size();
-
-        if (user.getCreatedIdeas() != null && user.getCreatedIdeas().size() > 0) {
-            Document createdIdeas = new Document();
-            for (int i = 0; i < user.getCreatedIdeas().size(); i++) {
-
-            }
-        }
-
         return new Document("username", user.getUserName() )
                 .append("password", user.getPassword())
                 .append("email", user.getEmail())
@@ -230,9 +224,9 @@ public class UserService {
                 .append("gender", user.getGender())
                 .append("language", user.getLanguage())
                 .append("pictureURL", user.getPictureURL())
-                .append( "createdIdeas", null)
+                .append( "createdIdeas", new ArrayList<Document>()) // statt null eine ArrayList -- noch nicht getestet 17.11.16
                 .append("numberCreatedIdeas", user.getNumberCreatedIdeas())
-                .append( "followedIdeas", null)
+                .append( "followedIdeas", new ArrayList<Document>())  // statt null eine ArrayList -- noch nicht getestet 17.11.16
                 .append("numberFollowed", user.getNumberFollowedIdeas());
     }
 

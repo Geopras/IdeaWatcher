@@ -24,20 +24,25 @@ public interface IIdea {
     void setHotRank(double hotRank);
     Double getTrendingRank();
     void setTrendingRank(double trendingRank);
+    Double getFreshRank();
+    void setFreshRank(Double double1);
     /**
      * Gibt eine Liste von Usern zurueck, die die Idee geliked haben
      * @return {List<IUser>} Liste von Usern
      */
-    List<IUser> getLikeUsers();
-    void setLikeUsers(List<IUser> likeUsers);
+    List<String> getLikeUsers();
+    void setLikeUsers(List<String> list);
     Long getNumberLikes();
     void setNumberLikes(Long numberLikes);
-    List<IUser> getFollowerUsers();
-    void setFollowerUsers(List<IUser> followerUsers);
+    List<String> getFollowerUsers();
+    void setFollowerUsers(List<String> followerUsers);
     Long getNumberFollowers();
     void setNumberFollowers(Long numberFollowers);
     List<String> getComments();
     void setComments(List<String> comments);
     Long getNumberComments();
     void setNumberComments(Long numberComments);
+    String getIdeaID();
+    void setIdeaID(String ideaID);
+    
 }
