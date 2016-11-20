@@ -3,6 +3,7 @@ package main.java.de.ideaWatcher.webApi.manager;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.webApi.core.*;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
+import main.java.de.ideaWatcher.webApi.thread.RankCalculationDaemon;
 
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -36,6 +37,18 @@ public class IdeaManager {
         allIdeasSnapshot = getTestIdeas();
         // Starte nun die automatische Erneuerung des allIdeasSnapshots
         startRankCalculationScheduler();
+    }
+
+    public Lock getLockAllIdeasSnapshot() {
+        return lockAllIdeasSnapshot;
+    }
+
+    public List<IIdea> getAllIdeasSnapshot() {
+        return allIdeasSnapshot;
+    }
+
+    public void setAllIdeasSnapshot(List<IIdea> allIdeasSnapshot) {
+        this.allIdeasSnapshot = allIdeasSnapshot;
     }
 
     /**
@@ -123,65 +136,8 @@ public class IdeaManager {
         //Erstelle einen ThreadPool, der einen Tread enthält
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        Runnable getAllIdeasSnapshot = new Runnable() {
-            @Override public void run() {
-
-                double hotRatingLikes = 0.5;
-                double hotRatingFollows = 0.3;
-                double hotRatingAge = 0.2;
-                double trendingRatingLikes = 0.3;
-                double trendingRatingFollows = 0.1;
-                double trendingRatingAge = 0.6;
-                long comparableStartTime = new Date().getTime();
-
-                // TODO: die Ideen müssen aus dem DataManager geholt werden
-                // Hole die Ideen aus der Datenbank
-                // hier wird erstmal nur mit Testideen gearbeitet
-                List<IIdea> ideas = getTestIdeas();
-
-                long maxLikes = Collections.max(ideas, new IdeaLikesComparator()).getNumberLikes();
-                long maxFollowers = Collections.max(ideas, new IdeaFollowersComparator()).getNumberFollowers();
-
-                Date oldestPublishDate = Collections.min(ideas, new IdeaAgeComparator()).getPublishDate();
-                // alter der ältesten Idee in Sekunden
-                long maxAge = (comparableStartTime - oldestPublishDate.getTime()) / 1000;
-
-                for (IIdea idea : ideas){
-
-                    double likeRatio = ((double) idea.getNumberLikes()) / maxLikes;
-                    double followRatio = ((double) idea.getNumberFollowers()) / maxFollowers;
-                    double ageRatio = ((double)(maxAge -
-                            ((comparableStartTime - idea.getPublishDate().getTime()) / 1000)))
-                            / maxAge;
-
-                    idea.setHotRank(likeRatio * hotRatingLikes +
-                            followRatio * hotRatingFollows +
-                            ageRatio * hotRatingAge);
-
-                    idea.setTrendingRank(likeRatio * trendingRatingLikes +
-                            followRatio * trendingRatingFollows +
-                            ageRatio * trendingRatingAge);
-                }
-
-                try {
-                    // sorge dafür, dass nicht auf den allIDeasSnapshot zugegriffen wird
-                    lockAllIdeasSnapshot.lock();
-
-                    // leere den allIDeasSnapshot ...
-                    allIdeasSnapshot.clear();
-                    // und befülle ihn mit den neu berechneten Rankings
-                    allIdeasSnapshot.addAll(ideas);
-
-                    //TODO: Rankings zurück in die DB schreiben
-                } finally {
-                    // gebe den allIdeasSnapshot wieder frei
-                    lockAllIdeasSnapshot.unlock();
-                }
-            }
-        };
-
         // Füre getAllIdeasSnapshot alle X Timeunits aus mit einer Startverzoegerung von X Timeunits
-        scheduler.scheduleAtFixedRate(getAllIdeasSnapshot,
+        scheduler.scheduleAtFixedRate(new RankCalculationDaemon(),
                 0,
                 IdeaManager.REFRESH_RANKING_TIME,
                 IdeaManager.REFRESH_RANKING_TIMEUNIT);

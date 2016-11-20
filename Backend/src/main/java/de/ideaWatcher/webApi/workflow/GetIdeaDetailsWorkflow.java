@@ -80,7 +80,7 @@ public class GetIdeaDetailsWorkflow  implements IWorkflow {
 
 
             response.setResult("success");
-            response.setData(foundIdea.toJSONObject());
+            //response.setData(foundIdea.toJSONObject());
             return response;
         } catch (Exception ex) {
             response.setErrorMessage("SIdea_getIdeaDetails_error");
