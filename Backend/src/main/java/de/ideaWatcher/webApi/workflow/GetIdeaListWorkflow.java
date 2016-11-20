@@ -107,7 +107,7 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         JSONArray ideasArray = new JSONArray();
 
         for (IIdea idea : ideas){
-            //ideasArray.put(idea.toJSONObject()) ;
+            ideasArray.put(idea.toJSONObject()) ;
         }
 
         return ideasArray;
