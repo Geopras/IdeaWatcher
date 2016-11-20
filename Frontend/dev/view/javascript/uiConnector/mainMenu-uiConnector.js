@@ -128,6 +128,28 @@ ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
             var listType = clickEvent.target.attributes.getNamedItem('data-buttonid').nodeValue;
             console.log('IdeaList vom Typ: "' + listType + '" geklickt');
 
+            switch (listType) {
+
+                case ('HOT'):
+                    this.style.background = '#4096ee';
+                    document.getElementById('mainMenu_trending_button').style.background = '#3a3a3a';
+                    document.getElementById('mainMenu_fresh_button').style.background = '#3a3a3a';
+                    break;
+                case ('TRENDING'):
+                    this.style.background = '#4096ee';
+                    document.getElementById('mainMenu_hot_button').style.background = '#3a3a3a';
+                    document.getElementById('mainMenu_fresh_button').style.background = '#3a3a3a';
+                    break;
+                case ('FRESH'):
+                    this.style.background = '#4096ee';
+                    document.getElementById('mainMenu_trending_button').style.background = '#3a3a3a';
+                    document.getElementById('mainMenu_hot_button').style.background = '#3a3a3a';
+                    break;
+                default:
+                    console.log('Es wurde die data-buttonid "' +
+                        listType + '" NICHT gefunden');
+            }
+
             var category = ideaWatcher.model.IdeaList.Category.NONE;
             ideaWatcher.controller.IdeaList
                 .updateIdeaList(listType, category, 1, 10, true);
