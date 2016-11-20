@@ -16,13 +16,16 @@ ideaWatcher.core.Localizer.signUp = {
 		passwordNotMatching : 'The passwords are not matching.',
         passwordRepeated: "Password repeated",
         passwordTooShort : 'The password has to be at least 8 characters long.',
-        SSignup_addUser_error: "An error occuring while adding the user to the database. Please contact the WebApi administrator.",
-    	SSignup_existsUser_error: "The database query for your sign-up has failed. Please contact the WebApi administrator.",
-    	SSignup_username_already_exists: "Sign-up has failed because this username already exists.",
+        registration : 'Registration',
+        signup_ERROR: {
+            SSignup_addUser_error: "An error occuring while adding the user to the database. Please contact the WebApi administrator.",
+            SSignup_existsUser_error: "The database query for your sign-up has failed. Please contact the WebApi administrator.",
+            SSignup_username_already_exists: "Sign-up has failed because this username already exists."
+        },
+        signup_SUCCESS: 'Registration successful.',
         submit: "Register Now!",
         userExists : 'This username is already taken.',
-        userName: "Username",
-		
+        userName: "Username"
     },
     de_DE: {
         header: "Registrierung",
@@ -37,12 +40,15 @@ ideaWatcher.core.Localizer.signUp = {
 		passwordNotMatching : 'Die Passwörter stimmen nicht überein.',
 		passwordRepeated: "Passwort wiederholen",
 		passwordTooShort : 'Das Passwort muss mindestens 8 Zeichen lang sein.',
-		SSignup_addUser_error: "Die Registrierung ist bei der Datenbankoperation \"Hinzufügen eines neuen Benutzers\" fehlgeschlagen. Bitte wenden Sie sich an den WebApi-Administrator.",
-    	SSignup_existsUser_error: "Die Registrierung ist bei der Datenbankabfrage, ob der Benutzer bereits existiert, fehlgeschlagen. Bitte wenden Sie sich an den WebApi-Administrator.",
-    	SSignup_username_already_exists: "Die Registrierung ist nicht möglich, da der Benutzername bereits existiert.",
+        registration : 'Registrierung',
+        signup_ERROR: {
+            SSignup_addUser_error: "Die Registrierung ist bei der Datenbankoperation \"Hinzufügen eines neuen Benutzers\" fehlgeschlagen. Bitte wenden Sie sich an den WebApi-Administrator.",
+            SSignup_existsUser_error: "Die Registrierung ist bei der Datenbankabfrage, ob der Benutzer bereits existiert, fehlgeschlagen. Bitte wenden Sie sich an den WebApi-Administrator.",
+            SSignup_username_already_exists: "Die Registrierung ist nicht möglich, da der Benutzername bereits existiert."
+        },
+        signup_SUCCESS: 'Registrierung erfolgreich durchgeführt!',
 		submit: "Registriere Mich!",
 		userExists : 'Benutzername bereits vergeben.',
-		userName: "Benutzername",
-        
+		userName: "Benutzername"
     }
-}
+};
