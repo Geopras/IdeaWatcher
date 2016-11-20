@@ -273,9 +273,15 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 // Idee zugeordnet werden kann:
                 ideaElement.setAttribute('data-ideaid', idea.ideaId);
 
+                // den Aktiviert-Status der Icons setzen
+                setLikedState(likeImage);
+
                 // Click-Event dranhängen, damit die IdeaDetails-View
                 // aufgerufen werden kann
-                ideaElement.addEventListener('click', handleIdeaClickEvent);
+                ideaName.addEventListener('click', handleIdeaClickEvent);
+                // und damit die Ideen geliked und gefollowed werden koennen
+                likeImage.addEventListener('click', handleLikeClickEvent);
+                followersImage.addEventListener('click', handleFollowClickEvent);
 
                 htmlList.appendChild(ideaElement);
 
@@ -290,7 +296,10 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         function handleIdeaClickEvent(clickEvent) {
 
-            var ideaId = clickEvent.target.attributes.getNamedItem('data-ideaid').nodeValue;
+            //var ideaId = clickEvent.target.attributes.getNamedItem('data-ideaid').nodeValue;
+
+            var ideaElement = getMyIdeaContainer(clickEvent.target);
+            var ideaId = ideaElement.attributes.getNamedItem('data-ideaid').nodeValue;
 
             var exObj = Object.create(ideaWatcher.model.ExchangeObject.SwitchView);
             exObj.viewId = ideaWatcher.model.Navigation.ViewId.IDEADETAILS;
@@ -298,6 +307,30 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             exObj.additionalData.ideaId = ideaId;
 
             ideaWatcher.core.Navigator.switchView(exObj);
+        }
+
+        /**
+         * Gibt für das übergebene Element das übergeordnete IdeaElement_div zurück
+         * @param element
+         * @returns {*}
+         */
+        function getMyIdeaContainer (element) {
+            while ((element = element.parentElement) && !element.classList.contains('ideaList_ideaElement_div'));
+            return element;
+        }
+
+        function setLikedState(likeImage) {
+            var likeUsers = likeImage.parents
+        }
+
+        function handleLikeClickEvent(clickEvent) {
+
+            clickEvent.target.src = './resources/img/alreadyLiked.svg';
+        }
+
+        function handleFollowClickEvent(clickEvent) {
+
+            clickEvent.target.src = './resources/img/alreadyFollowed.svg';
         }
 
         // Lade die nächsten Ideen, wenn ans Ende gescrollt

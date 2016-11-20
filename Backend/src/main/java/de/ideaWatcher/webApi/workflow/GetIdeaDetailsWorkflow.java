@@ -87,7 +87,9 @@ public class GetIdeaDetailsWorkflow  implements IWorkflow {
 
             List<IComment> testComments = new ArrayList<IComment>();
             IComment testComment1 = new Comment();
-            testComment1.setCreator(bspCreator);
+            testComment1.setUserId("12345");
+            testComment1.setUserName("HansWurst");
+            testComment1.setPictureURL("");
             testComment1.setPublishDate(new Date());
             testComment1.setText("Jo, das ist eine ganz feine Idee.");
             testComments.add(testComment1);
