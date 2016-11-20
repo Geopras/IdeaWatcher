@@ -24,7 +24,6 @@ public class Idea implements IIdea {
     private String language;
     private Double hotRank;
     private Double trendingRank;
-    private Double freshRank;
     private List<String> likeUsers;
     private List<String> followerUsers;
     private Long numberLikes;
@@ -172,16 +171,6 @@ public class Idea implements IIdea {
     public void setNumberComments(Long numberComments) {
         this.numberComments = numberComments;
     }
-
-    @Override
-    public Double getFreshRank() {
-        return this.freshRank;
-    }
-
-    @Override
-    public void setFreshRank(Double freshRank) {
-        this.freshRank = freshRank;
-    }
     
     @Override
     public String getIdeaID() {
@@ -244,7 +233,6 @@ public class Idea implements IIdea {
         this.language = "";
         this.hotRank = new Double(0.0);
         this.trendingRank = new Double(0.0);
-        this.freshRank = new Double(0.0);
         this.likeUsers = new ArrayList<>();
         this.numberLikes = new Long(0);
         this.followerUsers = new ArrayList<>();

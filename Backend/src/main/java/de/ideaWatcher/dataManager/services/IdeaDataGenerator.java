@@ -22,11 +22,11 @@ public class IdeaDataGenerator {
     }
  */
 
-    private IdeaService ideaService;
+   // private IdeaService ideaService;
     private UserService userService;
     
-    public IdeaDataGenerator(IdeaService ideaService, UserService userService) {
-        this.ideaService = ideaService;
+    public IdeaDataGenerator( UserService userService) {
+      //  this.ideaService = ideaService;
         this.userService = userService;
     }
     public void createRandomUserCollection( int count ) throws Exception{
@@ -42,7 +42,7 @@ public class IdeaDataGenerator {
         for( IUser u : userList){
             userService.addUser(u);
         }
-        
+
     }
     
     public void createRandomIdeaCollection(int count) throws Exception{
@@ -59,11 +59,7 @@ public class IdeaDataGenerator {
         List<IIdea> ideaList = new ArrayList<IIdea>();
         IIdea idea = new Idea();
         //List<Document> ideaListDoc = new ArrayList<Document>();
-        
-        int ranCatChoise = 0;
-        
-        
-        
+
         for(int i = 0; i < count; i++){
   
             
@@ -72,23 +68,8 @@ public class IdeaDataGenerator {
         //    idea.setCreator("user" + i);
             
         }
-        ideaService.addIdeaList(ideaList);
-        
         
 
-        
-        /*
-         * Business & Science
-            Computer & Electronics
-            Gadget
-            Home & Garden
-            Sports & Outdoor
-            Toys, Children & Pets
-            Other
-         * 
-         * 
-         */
-        
         String deinFan = "deinFan";
 
         String name = "meine Idee";
@@ -146,6 +127,7 @@ public class IdeaDataGenerator {
             .append("comments", "alles nur bluber... blub..." + generatedRandomValue)
             .append("numberComments", interestedUsers.size());
         
+    //        ideaService.addIdeaList(ideaList);
 
         }
         

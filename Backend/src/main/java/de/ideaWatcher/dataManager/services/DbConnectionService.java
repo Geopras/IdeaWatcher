@@ -14,7 +14,7 @@ public class DbConnectionService {
     private MongoDatabase db;
     private MongoCollection<Document> collection;
     private String collectionName;
-    private String serverName;
+  //  private String serverName;
     private boolean isOpen;
 
     public MongoClient getMongoClient() {
@@ -33,8 +33,7 @@ public class DbConnectionService {
         return this.isOpen;
     }
 
-    public DbConnectionService(String serverName, String collectionName) {
-        this.serverName = serverName;
+    public DbConnectionService( String collectionName) {
         this.collectionName = collectionName;
     }
 
@@ -44,7 +43,7 @@ public class DbConnectionService {
             this.mongoClient = new MongoClient("localhost", 27017);
             //this.db = mongoClient.getDatabase("ideaWatcher");
             //this.collection = db.getCollection("ideaWatchUser");
-            this.db = this.mongoClient.getDatabase(this.serverName);
+            this.db = this.mongoClient.getDatabase("local");
             this.collection = this.db.getCollection(this.collectionName);
 
             this.isOpen = true;

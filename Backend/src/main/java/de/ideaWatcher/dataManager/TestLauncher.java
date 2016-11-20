@@ -9,15 +9,16 @@ import main.java.de.ideaWatcher.dataManager.services.UserService;
 public class TestLauncher {
 
     public static void main(String[] args) throws Exception {
-        UserService us = new UserService("ideawatch", "users");
-        IdeaService is = new IdeaService("ideawatch", "ideas");
+        UserService us = new UserService( "users");
+ //       IdeaService is = new IdeaService("ideawatch", "ideas");
         
-        UserController uc = new UserController(us);
-        IdeaController ic = new IdeaController(is);
-        IdeaDataGenerator test = new IdeaDataGenerator(is, us);
+        
+       // UserController uc = new UserController(us);
+       // IdeaController ic = new IdeaController(is);
+        IdeaDataGenerator test = new IdeaDataGenerator(us);
         
         test.createRandomUserCollection(9);
-        test.createRandomIdeaCollection(10);
+       // test.createRandomIdeaCollection(10);
 
     }
 

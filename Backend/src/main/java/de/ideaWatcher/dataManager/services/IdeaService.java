@@ -16,8 +16,8 @@ public class IdeaService {
 
     private DbConnectionService dbConnectionService;
 
-    public IdeaService(String serverName, String collectionName) {
-        this.dbConnectionService = new DbConnectionService(serverName, collectionName);
+    public IdeaService(String collectionName) {
+        this.dbConnectionService = new DbConnectionService(collectionName);
     }
     public List<IIdea> getAllIdeas() throws Exception {
         // ToDo
@@ -52,7 +52,6 @@ public class IdeaService {
         idea.setLanguage(ideaDoc.getString("language"));
         idea.setHotRank(ideaDoc.getDouble("hotRank"));
         idea.setTrendingRank(ideaDoc.getDouble("trendingRank"));
-        idea.setFreshRank(ideaDoc.getDouble("freshRank"));
         idea.setLikeUsers((List<String>) ideaDoc.get("likeUsers" ));
         idea.setNumberLikes(ideaDoc.getLong("numberLikes"));
         idea.setFollowerUsers((List<String>) ideaDoc.get("followerUsers"));
@@ -93,7 +92,6 @@ public class IdeaService {
             .append("language", idea.getLanguage())
             .append("hotRank", idea.getHotRank())
             .append("trendingRank", idea.getTrendingRank())
-            .append("freshRank", idea.getFreshRank())
             .append("likeUsers", idea.getLikeUsers())
             .append("numberLikes", idea.getNumberLikes())
             .append( "followerUsers", idea.getFollowerUsers())

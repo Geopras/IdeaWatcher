@@ -26,8 +26,6 @@ public interface IIdea {
     void setHotRank(double hotRank);
     Double getTrendingRank();
     void setTrendingRank(double trendingRank);
-    Double getFreshRank();
-    void setFreshRank(Double double1);
     /**
      * Gibt eine Liste von Usern zurueck, die die Idee geliked haben
      * @return {List<IUser>} Liste von Usern
