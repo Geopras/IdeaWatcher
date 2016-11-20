@@ -215,7 +215,21 @@ public class UserService {
 
     private Document buildUserDocument(IUser user) {
 
+<<<<<<< HEAD
         return new Document("username", user.getUserName() )
+=======
+        //TODO: Documents für createdIdeas und followedIdeas erzeugen
+        int sizeCreatedIdeas = user.getCreatedIdeas().size();
+
+        if (user.getCreatedIdeas() != null && user.getCreatedIdeas().size() > 0) {
+            Document createdIdeas = new Document();
+            for (int i = 0; i < user.getCreatedIdeas().size(); i++) {
+
+            }
+        }
+
+        return new Document("userName", user.getUserName() )
+>>>>>>> refs/remotes/origin/dev
                 .append("password", user.getPassword())
                 .append("email", user.getEmail())
                 .append("isMailPublic", user.getIsMailPublic())

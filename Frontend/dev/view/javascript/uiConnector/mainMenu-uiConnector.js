@@ -53,7 +53,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
                 .querySelector('.mainMenu_switch');
 
             htmlHomeButton
-                .addEventListener('click', handleButtonNavigation);
+                .addEventListener('click', handleButtonNavigationHome);
             htmlHotButton.addEventListener('click',
                 handleButtonNavigationHot);
             htmlFreshButton.addEventListener('click',
@@ -81,13 +81,20 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
             localizeView();
         }
 
-        function handleButtonNavigation(clickEvent) {
+        function handleButtonNavigationHome(clickEvent) {
 
             console.log('htmlBtnHome geklickt');
-            ideaWatcher.core.Navigator.switchView({
-                viewId: 'HotIdeaList',
-                url: 'ideaWatcher.html'
-            });
+
+            var exObj = ideaWatcher.model.GetIdeasData.RequestData;
+            exObj.listType = 'HOT';
+            exObj.category = '';
+            exObj.destinationUrl = 'ideaWatcher.html';
+            exObj.fromRank = 1;
+            exObj.toRank = 10;
+            exObj.isRenderNewIdeaList = 'TRUE';
+            console.log(exObj);
+
+            ideaWatcher.controller.IdeaList.updateIdeaList(exObj);
         }
 
         function handleButtonNavigationLogin(clickEvent) {
@@ -117,35 +124,57 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
             console.log('htmlUserButton geklickt');
             ideaWatcher.core.Navigator.switchView({
                 viewId: 'profile',
-                url: 'myProfile'
+                url: 'myProfile',
             });
         }
 
         function handleButtonNavigationHot(clickEvent) {
 
             console.log('htmlHotButton geklickt');
-            ideaWatcher.core.Navigator.switchView({
-                viewId: 'HotIdeaList',
-                url: 'HotIdeaList'
-            });
+
+            var exObj = ideaWatcher.model.GetIdeasData.RequestData;
+            exObj.listType = 'HOT';
+            exObj.category = '';
+            exObj.destinationUrl = 'HotIdeaList';
+            exObj.fromRank = 1;
+            exObj.toRank = 10;
+            exObj.isRenderNewIdeaList = 'TRUE';
+            console.log(exObj);
+
+            ideaWatcher.controller.IdeaList.updateIdeaList(exObj);
         }
 
         function handleButtonNavigationFresh(clickEvent) {
 
             console.log('htmlFreshButton geklickt');
-            ideaWatcher.core.Navigator.switchView({
-                viewId: 'FreshIdeaList',
-                url: 'FreshIdeaList'
-            });
+
+            var exObj = ideaWatcher.model.GetIdeasData.RequestData;
+            exObj.listType = 'FRESH';
+            exObj.category = '';
+            exObj.destinationUrl = 'FreshIdeaList';
+            exObj.fromRank = 1;
+            exObj.toRank = 10;
+            exObj.isRenderNewIdeaList = 'TRUE';
+            console.log(exObj);
+
+            ideaWatcher.controller.IdeaList.updateIdeaList(exObj);
         }
 
         function handleButtonNavigationTrending(clickEvent) {
 
             console.log('htmlTrendingButton geklickt');
-            ideaWatcher.core.Navigator.switchView({
-                viewId: 'TrendingIdeaList',
-                url: 'TrendingIdeaList'
-            });
+
+            var exObj = ideaWatcher.model.GetIdeasData.RequestData;
+            exObj.listType = 'TRENDING';
+            exObj.category = '';
+            exObj.destinationUrl = 'TrendingIdeaList';
+            exObj.fromRank = 1;
+            exObj.toRank = 10;
+            exObj.isRenderNewIdeaList = 'TRUE';
+
+            console.log(exObj);
+
+            ideaWatcher.controller.IdeaList.updateIdeaList(exObj);
         }
 
         function handleButtonNavigationCategory(clickEvent) {
@@ -169,7 +198,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu
 
                 language = ideaWatcher.core.Localizer.setLanguage('de_DE');
             }
-            ideaWatcher.core.Localizer.localzeCurrentViews();
+            ideaWatcher.core.Localizer.localizeCurrentViews();
         }
 
         function localizeView() {

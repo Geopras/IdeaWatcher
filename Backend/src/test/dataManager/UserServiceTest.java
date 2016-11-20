@@ -4,6 +4,7 @@ import main.java.de.ideaWatcher.dataManager.services.UserService;
 import org.junit.Assert;
 import org.junit.Test;
 
+
 /**
  * Created by geopras on 09.11.16.
  */

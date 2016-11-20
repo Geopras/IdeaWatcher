@@ -16,6 +16,7 @@ public class IdeaService {
     private DbConnectionService dbConnectionService;
 
     public IdeaService() {
+<<<<<<< HEAD
         this.dbConnectionService = new DbConnectionService("Ideas");
     }
     public List<IIdea> getAllIdeas() throws Exception {
@@ -99,5 +100,8 @@ public class IdeaService {
             .append("numberFollowers", idea.getNumberFollowers())
             .append("comments", idea.getComments())
             .append("numberComments", idea.getNumberComments());
+=======
+        this.dbConnectionService = new DbConnectionService("ideaCollection");
+>>>>>>> refs/remotes/origin/dev
     }
 }

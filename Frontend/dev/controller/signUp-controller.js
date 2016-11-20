@@ -38,7 +38,7 @@ ideaWatcher.controller.Signup = ideaWatcher.controller.Signup || (function () {
     {
         // das könnte man in das Model auslagern... sinnvoll?
         var exSignupRequest = ideaWatcher.model.Request;
-        exSignupRequest.destination = 'SSignup/signupRequest';
+        exSignupRequest.destination = 'SSignup/addUserRequest';
         exSignupRequest.data = {
             userName: userName,
             email: email,

@@ -2,6 +2,8 @@ package main.java.de.ideaWatcher.dataManager.pojos;
 
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -171,6 +173,7 @@ public class Idea implements IIdea {
     }
 
     @Override
+<<<<<<< HEAD
     public Double getFreshRank() {
         return this.freshRank;
     }
@@ -190,6 +193,44 @@ public class Idea implements IIdea {
        this.ideaID = ideaID;
     }
     
+=======
+    public JSONObject toJSONObject() {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("name", this.getName());
+        jsonObject.put("description", this.getDescription());
+        jsonObject.put("category", this.getCategory());
+        jsonObject.put("publishDate", this.getPublishDate());
+        jsonObject.put("language", this.getLanguage());
+        jsonObject.put("hotRank", this.getHotRank());
+        jsonObject.put("trendingRank", this.getTrendingRank());
+        // jsonObject.put("likeUsers", idea.getLikeUsers());
+        jsonObject.put("numberLikes", this.getNumberLikes());
+        // jsonObject.put("followers", idea.getFollowerUsers());
+        jsonObject.put("numberFollowers", this.getNumberFollowers());
+        // jsonObject.put("comments", idea.getComments());
+        jsonObject.put("numberComments", this.getNumberComments());
+
+        JSONObject jsonCreator = new JSONObject();
+        jsonCreator.put("userId", this.getCreator().getUserId());
+        jsonCreator.put("userName", this.getCreator().getUserName());
+        jsonCreator.put("email", this.getCreator().getEmail());
+        jsonCreator.put("isMailPublic", this.getCreator().getIsMailPublic());
+
+        jsonCreator.put("creator", jsonCreator);
+
+        JSONArray likeUsersArray = new JSONArray();
+        JSONArray followersArray = new JSONArray();
+        JSONArray commentsArray = new JSONArray();
+
+        //TODO: hier müsste man jetzt durch die likeUsers, followUsers und comments
+        // iterieren und die Ergebnisse in JSONObjekte packen, die man dann in die
+        // entsprechenden Arrays schmeißt und für die Attribute puttet
+
+        return jsonObject;
+    }
+
+>>>>>>> refs/remotes/origin/dev
     /**
      * Gibt eine leere Instanz der Idea-Klasse zurueck
      * @return {Idea} idea object

@@ -1,7 +1,7 @@
 package main.java.de.ideaWatcher.webApi.core;
 
 
-import main.java.de.ideaWatcher.dataManager.pojos.Idea;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 
 import java.util.Comparator;
 
@@ -9,7 +9,7 @@ import java.util.Comparator;
  * Vergleicht zwei Ideen anhand ihres Hot-Rankings.
  * Die Idee mit dem kleineren Ranking wird vor die mit dem größeren Ranking sortiert.
  */
-public class IdeaHotRankComparator implements Comparator<Idea> {
+public class IdeaHotRankComparator implements Comparator<IIdea> {
 
     private boolean reverse;
 
@@ -25,7 +25,7 @@ public class IdeaHotRankComparator implements Comparator<Idea> {
         this.reverse = reverse;
     }
 
-    public int compare(Idea idea1, Idea idea2) {
+    public int compare(IIdea idea1, IIdea idea2) {
 
         if (idea1.getHotRank() == null && idea2.getHotRank() == null) {
             return 0;
