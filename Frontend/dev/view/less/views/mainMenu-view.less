@@ -99,7 +99,7 @@
 .mainMenu_languageSwitch_div label{
   //  height: 60px;
   padding: 20px;
-  margin: -3px -25px 0px 0px;
+  margin: -3px 0px 0px 0px;
   float: right;
 }
 
@@ -168,9 +168,37 @@ input:checked + .mainMenu_languageSwitch_slider:before {
   height: 60px;
   padding: 20px;
   float: right;
-  transition: all 500ms;
 }
 
-.mainMenu_mySearch_li img:hover {
-  background: #4096ee;
+.mainMenu_mySearch_li img {
+  padding: 20px;
+  height: 60px;
+  float: right;
+  transition:all 500ms;
 }
+
+.mainMenu_mySearch_li ul li {
+  min-width: 150px;
+}
+
+.mainMenu_mySearch_li:hover ul {
+  height:auto;
+  right: 0;
+}
+
+.mainMenu_dropdownMySearch_ul {
+  position: absolute;
+  background: #3a3a3a;
+  overflow:hidden;
+  height: 0;
+}
+
+.mainMenu_mySearch_li ul li div input{
+  margin: -10px -10px 0px -10px;
+  padding: 10px 0px 10px 0px;
+}
+
+.mainMenu_mySearch_li ul li div:hover{
+  background: #3a3a3a;
+}
+
