@@ -5,7 +5,6 @@ import main.java.de.ideaWatcher.webApi.core.*;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.thread.RankCalculationDaemon;
-import main.java.de.ideaWatcher.webApi.workflow.LoginWorkflow;
 
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -13,7 +12,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -26,7 +24,7 @@ public class IdeaManager {
     public final int REFRESH_RANKING_TIME = 30;
     public final TimeUnit REFRESH_RANKING_TIMEUNIT = TimeUnit.SECONDS;
 
-    private static final Logger log = Logger.getLogger( LoginWorkflow.class.getName() );
+    private static final Logger log = Logger.getLogger( IdeaManager.class.getName() );
 
     // Liste aller Ideen aus der Datenbank ohne vollständige Detailinfos.
     // Sie dient der Filterung und der Suche.

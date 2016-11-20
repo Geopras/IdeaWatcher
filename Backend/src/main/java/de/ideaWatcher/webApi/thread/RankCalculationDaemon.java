@@ -44,7 +44,15 @@ public class RankCalculationDaemon extends Thread {
         // TODO: die Ideen müssen aus dem DataManager geholt werden
         // Hole die Ideen aus der Datenbank
         // hier wird erstmal nur mit Testideen gearbeitet
-        List<IIdea> ideas = ideaManager.getTestIdeas();
+        List<IIdea> ideas;
+        try {
+            ideas = ideaManager.getTestIdeas(); //this.ideaController.getAllIdeas(); //
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Ein Fehler ist bei der Abfrage aller Ideen" +
+                    " aus der Datenbank aufgetreten.\nFehlermeldung: " + e
+                    .toString());
+            return;
+        }
 
         long maxLikes = Collections.max(ideas, new IdeaLikesComparator()).getNumberLikes();
         long maxFollowers = Collections.max(ideas, new IdeaFollowersComparator()).getNumberFollowers();
