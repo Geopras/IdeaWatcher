@@ -25,15 +25,9 @@ public class IdeaManager {
     public final TimeUnit REFRESH_RANKING_TIMEUNIT = TimeUnit.SECONDS;
 
     private static final Logger log = Logger.getLogger( IdeaManager.class.getName() );
-
-    // Liste aller Ideen aus der Datenbank ohne vollständige Detailinfos.
-    // Sie dient der Filterung und der Suche.
-    // Detailinfos müssen separat aus der DB geholt werden.
     private List<IIdea> allIdeasSnapshot;
-
-    // Monitor, der den konkurrierenden Zugriff auf die allIdeasSnapshot-Liste legt
     private final Lock lockAllIdeasSnapshot = new ReentrantLock();
-
+    private ScheduledExecutorService rankCalculationScheduler;
     private IIdeaController ideaController;
 
     public IdeaManager() {
@@ -59,16 +53,34 @@ public class IdeaManager {
         startRankCalculationScheduler();
     }
 
+    /**
+     * Monitor, der den konkurrierenden Zugriff auf die allIdeasSnapshot-Liste legt
+     * @return
+     */
     public Lock getLockAllIdeasSnapshot() {
         return lockAllIdeasSnapshot;
     }
 
+    /**
+     *  Liste aller Ideen aus der Datenbank ohne vollständige Detailinfos.
+     *  Sie dient der Filterung und der Suche.
+     *  Detailinfos müssen separat aus der DB geholt werden.
+     * @return
+     */
     public List<IIdea> getAllIdeasSnapshot() {
         return allIdeasSnapshot;
     }
 
     public void setAllIdeasSnapshot(List<IIdea> allIdeasSnapshot) {
         this.allIdeasSnapshot = allIdeasSnapshot;
+    }
+
+    /**
+     * ThreadPool, der RankCalculationDaemon ausführt.
+     * @return
+     */
+    public ScheduledExecutorService getRankCalculationScheduler() {
+        return rankCalculationScheduler;
     }
 
     /**
@@ -151,13 +163,14 @@ public class IdeaManager {
      */
     private void startRankCalculationScheduler(){
         //Erstelle einen ThreadPool, der einen Tread enthält
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        rankCalculationScheduler = Executors.newScheduledThreadPool(1);
 
         // Füre getAllIdeasSnapshot alle X Timeunits aus mit einer Startverzoegerung von X Timeunits
-        scheduler.scheduleAtFixedRate(new RankCalculationDaemon(),
+        rankCalculationScheduler.scheduleAtFixedRate(new RankCalculationDaemon(),
                 0,
                 this.REFRESH_RANKING_TIME,
                 this.REFRESH_RANKING_TIMEUNIT);
+
     }
 
     /**
