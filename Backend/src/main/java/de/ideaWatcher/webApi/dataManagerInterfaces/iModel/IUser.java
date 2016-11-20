@@ -69,4 +69,6 @@ public interface IUser {
     void setNumberFollowedIdeas(Double numberFollowedIdeas);
 
     JSONObject toJSONObject();
+
+    JSONObject toSmallJSONObject();
 }
