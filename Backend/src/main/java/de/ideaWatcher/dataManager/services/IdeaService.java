@@ -15,8 +15,8 @@ public class IdeaService {
 
     private DbConnectionService dbConnectionService;
 
-    public IdeaService() {
-        this.dbConnectionService = new DbConnectionService("Ideas");
+    public IdeaService(String collectionName) {
+        this.dbConnectionService = new DbConnectionService(collectionName);
     }
     public List<IIdea> getAllIdeas() throws Exception {
         // ToDo

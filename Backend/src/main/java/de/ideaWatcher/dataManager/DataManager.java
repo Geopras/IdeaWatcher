@@ -31,6 +31,6 @@ public class DataManager implements IDataManager {
     @Override
     public void initialize() {
         this.userController = new UserController(new UserService());
-        this.ideaController = new IdeaController(new IdeaService());
+        this.ideaController = new IdeaController(new IdeaService("ideas"));
     }
 }
