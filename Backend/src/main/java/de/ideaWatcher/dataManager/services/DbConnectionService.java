@@ -40,13 +40,13 @@ public class DbConnectionService {
 
         try {
             this.mongoClient = new MongoClient("localhost", 27017);
-            this.db = mongoClient.getDatabase("ideaWatch");
+            //this.db = mongoClient.getDatabase("ideaWatcher");
             //this.collection = db.getCollection("ideaWatchUser");
-            //this.db = this.mongoClient.getDatabase("local");
+            this.db = this.mongoClient.getDatabase("local");
             this.collection = this.db.getCollection(this.collectionName);
 
             this.isOpen = true;
-            System.out.println("MongoDB-Verbindung geöffnet");
+            System.out.println("MongoDB-Verbindung geÃ¶ffnet");
         } catch (Exception ex) {
 
             throw new Exception(ex);
