@@ -1,16 +1,22 @@
 package main.java.de.ideaWatcher.webApi.workflow;
 
+import main.java.de.ideaWatcher.dataManager.pojos.Comment;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
+import main.java.de.ideaWatcher.webApi.core.JSONBuilder;
 import main.java.de.ideaWatcher.webApi.core.Response;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -78,9 +84,17 @@ public class GetIdeaDetailsWorkflow  implements IWorkflow {
                     "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
                     "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung");
 
+            List<IComment> testComments = new ArrayList<IComment>();
+            IComment testComment1 = new Comment();
+            testComment1.setCreator(bspCreator);
+            testComment1.setPublishDate(new Date());
+            testComment1.setText("Jo, das ist eine ganz feine Idee.");
+            testComments.add(testComment1);
+
+            foundIdea.setComments(testComments);
 
             response.setResult("success");
-            response.setData(foundIdea.toJSONObject());
+            response.setData(JSONBuilder.getIdeaDetailsJSONObject(foundIdea));
             return response;
         } catch (Exception ex) {
             response.setErrorMessage("SIdea_getIdeaDetails_error");

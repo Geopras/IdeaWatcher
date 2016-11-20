@@ -45,6 +45,4 @@ public interface IIdea {
     String getIdeaID();
     void setIdeaID(String ideaID);
 
-    JSONObject toJSONObject();
-    
 }

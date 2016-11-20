@@ -168,34 +168,6 @@ public class User implements IUser {
         this.numberFollowedIdeas = numberFollowedIdeas;
     }
 
-    @Override
-    public JSONObject toJSONObject() {
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("userID", this.getUserId());
-        jsonObject.put("userName", this.getUserName());
-        jsonObject.put("email", this.getEmail());
-        jsonObject.put("isMailPublic", this.getIsMailPublic());
-        jsonObject.put("surname", this.getSurname());
-        jsonObject.put("firstName", this.getFirstname());
-        jsonObject.put("gender", this.getGender());
-        jsonObject.put("language", this.getLanguage());
-
-        return jsonObject;
-    }
-
-    @Override
-    public JSONObject toSmallJSONObject() {
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("userID", this.getUserId());
-        jsonObject.put("userName", this.getUserName());
-        jsonObject.put("email", this.getEmail());
-        jsonObject.put("isMailPublic", this.getIsMailPublic());
-
-        return jsonObject;
-    }
-
     /**
      * Gibt eine leere Instanz der User-Klasse zurueck
      * @return {User} user object

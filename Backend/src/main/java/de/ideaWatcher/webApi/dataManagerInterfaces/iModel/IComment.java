@@ -13,6 +13,4 @@ public interface IComment {
     void setCreator(IUser creator);
     Date getPublishDate();
     void setPublishDate(Date publishDate);
-
-    JSONObject toJSONObject();
 }

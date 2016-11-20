@@ -42,14 +42,4 @@ public class Comment implements IComment {
         this.publishDate = publishDate;
     }
 
-    @Override
-    public JSONObject toJSONObject() {
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("text", this.getText());
-        jsonObject.put("publishDate", this.getPublishDate());
-        jsonObject.put("creator", this.getCreator().toSmallJSONObject());
-
-        return jsonObject;
-    }
 }

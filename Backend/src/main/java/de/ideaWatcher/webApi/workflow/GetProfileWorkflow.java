@@ -2,11 +2,11 @@ package main.java.de.ideaWatcher.webApi.workflow;
 
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
+import main.java.de.ideaWatcher.webApi.core.JSONBuilder;
 import main.java.de.ideaWatcher.webApi.core.Response;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IUserController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
-import org.json.JSONObject;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +38,7 @@ public class GetProfileWorkflow implements IWorkflow {
         try {
             foundUser = this.user.getUser(userId);
             response.setResult("success");
-            response.setData(foundUser.toJSONObject());
+            response.setData(JSONBuilder.getFullUserJSONObject(foundUser));
             return response;
         } catch (Exception ex) {
             response.setErrorMessage("SProfile_getUser_error");
