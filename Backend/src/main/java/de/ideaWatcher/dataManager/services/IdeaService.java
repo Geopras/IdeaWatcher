@@ -5,9 +5,12 @@ import java.util.List;
 
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import org.bson.Document;
+
+import main.java.de.ideaWatcher.dataManager.pojos.Comment;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 
 /**
  * Service fuer Zugriff auf Datenbank
@@ -47,7 +50,8 @@ public class IdeaService {
         idea.setName(ideaDoc.getString("name"));
         idea.setDescription(ideaDoc.getString("description"));
         idea.setCategory(ideaDoc.getString("catagory"));
-        idea.setCreator(ideaDoc.get("creator", User.class));
+      //  idea.setCreator(ideaDoc.get("creator", User.class));
+        idea.setCreator((IUser) ideaDoc.get("creator"));
         idea.setPublishDate(ideaDoc.getDate("publishedDate"));
         idea.setLanguage(ideaDoc.getString("language"));
         idea.setHotRank(ideaDoc.getDouble("hotRank"));
@@ -70,14 +74,18 @@ public class IdeaService {
         dbConnectionService.closeConnection();
     }
     public void addIdeaList(List<IIdea> ideaList) throws Exception {
-        List<Document> ideaListDoc = new ArrayList<>();
+        List<Document> ideaListDoc = new ArrayList<Document>();
+        Document ideaDoc;
         for( IIdea idea : ideaList){
-            ideaListDoc.add(buildIdeaDocument(idea));
+            //ideaListDoc.add(buildIdeaDocument(idea));
+            ideaDoc = new Document();
+            ideaDoc = buildIdeaDocument(idea);
+            ideaListDoc.add(ideaDoc);
         }        
         
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
-        }
+        }     
         dbConnectionService.getCollection().insertMany(ideaListDoc);
         dbConnectionService.closeConnection();
     }
@@ -87,7 +95,7 @@ public class IdeaService {
         return new Document("name", idea.getName())
             .append("description", idea.getDescription())
             .append("catagory", idea.getCategory())
-            .append("creator", idea.getCreator())
+            .append("creator", buildUserDocument(idea.getCreator()))
             .append("publishedDate", idea.getPublishDate())
             .append("language", idea.getLanguage())
             .append("hotRank", idea.getHotRank())
@@ -99,4 +107,21 @@ public class IdeaService {
             .append("comments", idea.getComments())
             .append("numberComments", idea.getNumberComments());
     }
+    private Document buildUserDocument(IUser user) {
+
+        return new Document("userName", user.getUserName() )
+                .append("password", user.getPassword())
+                .append("email", user.getEmail())
+                .append("isMailPublic", user.getIsMailPublic())
+                .append("surname", user.getSurname())
+                .append("firstName", user.getFirstname())
+                .append("gender", user.getGender())
+                .append("language", user.getLanguage())
+                .append("pictureURL", user.getPictureURL())
+                .append( "createdIdeas", new ArrayList<Document>()) // statt null eine ArrayList -- noch nicht getestet 17.11.16
+                .append("numberCreatedIdeas", user.getNumberCreatedIdeas())
+                .append( "followedIdeas", new ArrayList<Document>())  // statt null eine ArrayList -- noch nicht getestet 17.11.16
+                .append("numberFollowed", user.getNumberFollowedIdeas());
+    }
+    
 }
