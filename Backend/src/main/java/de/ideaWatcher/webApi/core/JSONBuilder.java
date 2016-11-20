@@ -26,7 +26,7 @@ public class JSONBuilder {
 
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("ideaId", idea.getIdeaID());
+        jsonObject.put("ideaId", idea.getIdeaId());
         jsonObject.put("name", idea.getName());
         jsonObject.put("description", idea.getDescription());
         jsonObject.put("category", idea.getCategory());
