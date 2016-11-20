@@ -111,7 +111,7 @@ ideaWatcher.core.Localizer.IdeaList = {
                 header: 'Hot Business Ideas'
             },
             de_DE: {
-                header: 'Heiße Ideen im Bereich "Business"'
+                header: 'Top Ideen im Bereich "Business"'
             }
         },
         COMPUTER: {
@@ -119,7 +119,7 @@ ideaWatcher.core.Localizer.IdeaList = {
                 header: 'Hot Computer Ideas'
             },
             de_DE: {
-                header: 'Heiße Ideen im Bereich "Computer &' +
+                header: 'Top Ideen im Bereich "Computer &' +
                 ' Elektrogeräte"'
             }
         },
@@ -128,7 +128,7 @@ ideaWatcher.core.Localizer.IdeaList = {
                 header: 'Hot Gadget Ideas'
             },
             de_DE: {
-                header: 'Heiße Ideen im Bereich "Gadget"'
+                header: 'Top Ideen im Bereich "Gadget"'
             }
         },
         HOMEGARDEN: {
@@ -136,7 +136,7 @@ ideaWatcher.core.Localizer.IdeaList = {
                 header: 'Hot Home & Garden Ideas'
             },
             de_DE: {
-                header: 'Heiße Ideen im Bereich "Heim & Garten"'
+                header: 'Top Ideen im Bereich "Heim & Garten"'
             }
         },
         NONE: {
@@ -144,7 +144,7 @@ ideaWatcher.core.Localizer.IdeaList = {
                 header: 'Hot Ideas'
             },
             de_DE: {
-                header: 'Alle heißen Ideen'
+                header: 'Alle top Ideen'
             }
         },
         OTHER: {
@@ -152,7 +152,7 @@ ideaWatcher.core.Localizer.IdeaList = {
                 header: 'Hot Other Ideas'
             },
             de_DE: {
-                header: 'Heiße Ideen im Bereich "Sonstiges"'
+                header: 'Top Ideen im Bereich "Sonstiges"'
             }
         },
         SPORTS: {
@@ -160,7 +160,7 @@ ideaWatcher.core.Localizer.IdeaList = {
                 header: 'Hot Sports Ideas'
             },
             de_DE: {
-                header: 'Heiße Ideen im Bereich "Sport"'
+                header: 'Top Ideen im Bereich "Sport"'
             }
         },
         TOYS: {
@@ -168,7 +168,7 @@ ideaWatcher.core.Localizer.IdeaList = {
                 header: 'Hot Toys Ideas'
             },
             de_DE: {
-                header: 'Heiße Ideen im Bereich "Spielzeuge"'
+                header: 'Top Ideen im Bereich "Spielzeuge"'
             }
         }
     },

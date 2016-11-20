@@ -31,7 +31,7 @@ ideaWatcher.core.Localizer.MainMenuButtonLabels = ideaWatcher.core.Localizer.Mai
             FRESH: 'Neu',
             GADGET: 'Gadget',
             HOMEGARDEN: 'Haushalt & Garten',
-            HOT: 'Heiß',
+            HOT: 'Top',
             LOGIN: 'Anmeldung',
             LOGOUT: 'Abmelden',
             OTHER: 'Sonstiges',
