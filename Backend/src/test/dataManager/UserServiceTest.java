@@ -14,7 +14,7 @@ public class UserServiceTest {
     public void validatePassword_should_return_true_if_password_is_correct() {
 
         String password = "Test1234";
-        UserService userService = new UserService();
+        UserService userService = new UserService("testLogin");
         String hashedPassword = userService.hashPassword(password);
         System.out.println(hashedPassword);
         Assert.assertTrue(userService.validatePassword("Test1234", hashedPassword));

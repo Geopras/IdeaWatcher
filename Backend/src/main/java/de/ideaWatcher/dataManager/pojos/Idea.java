@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Idea implements IIdea {
     
-    private String ideaID;
+    private String ideaId;
     private String name;
     private String description;
     private String category;
@@ -183,13 +183,13 @@ public class Idea implements IIdea {
     }
     
     @Override
-    public String getIdeaID() {
-        return ideaID;
+    public String getIdeaId() {
+        return ideaId;
     }
     
     @Override
-    public void setIdeaID( String ideaID) {
-       this.ideaID = ideaID;
+    public void setIdeaId( String ideaId) {
+       this.ideaId = ideaId;
     }
 
     @Override
@@ -197,6 +197,7 @@ public class Idea implements IIdea {
 
         JSONObject jsonObject = new JSONObject();
 
+        jsonObject.put("ideaId", this.getIdeaId());
         jsonObject.put("name", this.getName());
         jsonObject.put("description", this.getDescription());
         jsonObject.put("category", this.getCategory());
@@ -235,7 +236,7 @@ public class Idea implements IIdea {
      * @return {Idea} idea object
      */
     public Idea() {
-        this.ideaID = "";
+        this.ideaId = "";
         this.name = "";
         this.description = "";
         this.category = "";

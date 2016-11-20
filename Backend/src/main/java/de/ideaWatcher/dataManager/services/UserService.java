@@ -16,8 +16,8 @@ public class UserService {
 
     private DbConnectionService dbConnectionService;
 
-    public UserService() {
-        this.dbConnectionService = new DbConnectionService("testLogin");
+    public UserService(String dbCollectionName) {
+        this.dbConnectionService = new DbConnectionService(dbCollectionName);
     }
 
     /**

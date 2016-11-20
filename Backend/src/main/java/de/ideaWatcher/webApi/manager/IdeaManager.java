@@ -230,7 +230,7 @@ public class IdeaManager {
             // Zeitraum letzte 5 Jahre
             calendar.add(Calendar.DAY_OF_MONTH, (-1 * r.nextInt(365 * 5)));
 
-            newIdea.setIdeaID(String.format("%s", i));
+            newIdea.setIdeaId(String.format("%s", i));
             newIdea.setPublishDate(calendar.getTime());
             newIdea.setNumberLikes((long) r.nextInt(1000));
             newIdea.setNumberFollowers((long) r.nextInt(100));

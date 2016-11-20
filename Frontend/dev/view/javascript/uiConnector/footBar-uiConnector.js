@@ -5,7 +5,7 @@ ideaWatcher.view.FootBar = ideaWatcher.view.FootBar
         // Event Globale Initialisierung
         var evIni = {
             topic : 'internal/ini',
-            cbFunction : cbiIni
+            cbFunction : cbIni
         };
 
         var evLocalizeView = {
@@ -23,7 +23,7 @@ ideaWatcher.view.FootBar = ideaWatcher.view.FootBar
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         // endregion
 
-        function cbiIni() {
+        function cbIni() {
             console.log('ini Event');
             htmlView = document.querySelector('.footBar_view');
             htmlAboutButton = document.querySelector('.footBar_about_button');
@@ -38,8 +38,8 @@ ideaWatcher.view.FootBar = ideaWatcher.view.FootBar
 
             console.log('htmlBtnAbout geklickt');
             ideaWatcher.core.Navigator.switchView({
-                viewId : 'About',
-                url : 'About'
+                viewId : 'about',
+                url : 'about'
             });
         }
 

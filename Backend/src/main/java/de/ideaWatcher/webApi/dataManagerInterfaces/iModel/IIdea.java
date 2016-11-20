@@ -44,8 +44,8 @@ public interface IIdea {
     void setComments(List<String> comments);
     Long getNumberComments();
     void setNumberComments(Long numberComments);
-    String getIdeaID();
-    void setIdeaID(String ideaID);
+    String getIdeaId();
+    void setIdeaId(String ideaId);
 
     JSONObject toJSONObject();
     

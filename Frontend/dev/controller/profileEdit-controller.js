@@ -61,9 +61,7 @@ ideaWatcher.controller.ProfileEdit = ideaWatcher.controller.ProfileEdit || (func
         //region Callback: Internal - SwitchView
         function cbSwitchView(obj)
         {
-            cbShowView({
-                shouldShow: obj.shouldShow
-            });
+            cbShowView(obj);
         }
         //endregion
 

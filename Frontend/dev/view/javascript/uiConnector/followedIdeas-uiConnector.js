@@ -48,7 +48,7 @@
 //             //endregion
 //
 //             //region register Callbacks
-//             // wam.logic.Login.registerVerificationError(cbShowVerificationError);
+//             // wam.logic.UserSession.registerVerificationError(cbShowVerificationError);
 //             ideaWatcher.controller.FollowedIdeas.registerShowView(cbShowView);
 //             ideaWatcher.controller.FollowedIdeas.registerRenderList(cbRenderList);
 //             //endregion
