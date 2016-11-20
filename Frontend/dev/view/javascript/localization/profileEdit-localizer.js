@@ -59,4 +59,4 @@ ideaWatcher.core.Localizer.ProfileEdit = {
             ' Bitte versuchen Sie es später erneut.'
         }
     }
-}
+};

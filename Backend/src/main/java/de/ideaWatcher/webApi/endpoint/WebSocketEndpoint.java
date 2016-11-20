@@ -19,7 +19,7 @@ public class WebSocketEndpoint {
         try {
             if (session.isOpen()) {
                 // Validierung des Tokens mit UserID
-                // außer bei Login -> dort nur UserID und Token erzeugen
+                // außer bei UserSession -> dort nur UserID und Token erzeugen
                 String response = InstanceManager.getRequestManager().getResponse(request);
                 session.getBasicRemote().sendText(response);
             }

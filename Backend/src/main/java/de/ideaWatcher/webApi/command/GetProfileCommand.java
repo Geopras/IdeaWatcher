@@ -12,8 +12,8 @@ public class GetProfileCommand<IRequest, IResponse> implements ICommand<IRequest
         IResponse> {
 
     /**
-     * Command mit Login-Daten ausfuehren
-     * @param data {JsonObject} Login-Daten
+     * Command mit UserSession-Daten ausfuehren
+     * @param data {JsonObject} UserSession-Daten
      * @return {JsonObject} Ergebnis des Workflow als Antwort
      */
     @Override

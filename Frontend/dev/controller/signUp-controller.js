@@ -8,10 +8,15 @@ ideaWatcher.controller.Signup = ideaWatcher.controller.Signup || (function () {
         topic: 'switchView/signup',
         cbFunction: cbSwitchView
     };
+    var evGetRegistrationResponse = {
+        topic: 'SSignup/addUserRequest-response',
+        cbFunction: cbRegistrationResponse
+    };
     //endregion
 
     //region subscribe to events
     ideaWatcher.core.MessageBroker.subscribe(evSwitchView);
+    ideaWatcher.core.MessageBroker.subscribe(evGetRegistrationResponse);
     //endregion
 
     //region TryToSignup
@@ -75,10 +80,39 @@ ideaWatcher.controller.Signup = ideaWatcher.controller.Signup || (function () {
     }
     //endregion
 
+    //region Callback: RegistrationResponse
+    function cbRegistrationResponse(exObj){
+        var currrentLanguage = ideaWatcher.core.Localizer.getLanguage();
+
+        var displayTextRegistration = ideaWatcher.core.Localizer.signUp[currrentLanguage].registration;
+        var displayTextError = 'default';
+
+        if(exObj.result === 'ok') {
+
+            ideaWatcher.controller.GlobalNotification.showNotification(
+                ideaWatcher.model.GlobalNotificationType.SUCCESS,
+                displayTextRegistration,
+                ideaWatcher.core.Localizer.signUp[currrentLanguage].signup_SUCCESS,
+                4000);
+
+            ideaWatcher.core.Navigator.switchView({
+                viewId: 'login',
+                url: 'myLogin'
+            });
+        }
+        else {
+            displayTextError = ideaWatcher.core.Localizer.signUp[currrentLanguage].signup_ERROR[exObj.error];
+
+            ideaWatcher.controller.GlobalNotification.showNotification(
+            ideaWatcher.model.GlobalNotificationType.ERROR,
+            displayTextRegistration,
+            displayTextError,
+            4000);
+        }
+    }
+    //endregion
+
     //region register Callbacks
-    // function pubRegisterVerificationError(cb) {
-    //     cbVerificationError = cb;
-    // }
     function pubRegisterShowView(cb) {
         cbShowView = cb;
     }

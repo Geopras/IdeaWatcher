@@ -29,7 +29,7 @@ public class InstanceManager {
         return ideaManager;
     }
 
-    public static void initialize() {
+    public static void initialize() throws Exception {
         requestManager = new RequestManager();
         requestManager.initialize();
         dataManager = new DataManager();

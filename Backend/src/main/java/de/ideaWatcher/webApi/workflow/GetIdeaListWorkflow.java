@@ -1,15 +1,15 @@
 package main.java.de.ideaWatcher.webApi.workflow;
 
 
-import main.java.de.ideaWatcher.dataManager.pojos.Idea;
-import main.java.de.ideaWatcher.webApi.core.*;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
+import main.java.de.ideaWatcher.webApi.core.IRequest;
+import main.java.de.ideaWatcher.webApi.core.IResponse;
+import main.java.de.ideaWatcher.webApi.core.Response;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,12 +19,6 @@ import java.util.logging.Logger;
 public class GetIdeaListWorkflow  implements IWorkflow {
 
     private static final Logger log = Logger.getLogger( GetIdeaListWorkflow.class.getName() );
-    private IIdeaController ideaController;
-
-    public GetIdeaListWorkflow() {
-
-        this.ideaController = InstanceManager.getDataManager().getIdeaController();
-    }
 
     @Override
     public IResponse getResponse(IRequest request) {
@@ -35,8 +29,8 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         String category;
         int fromRank;
         int toRank;
-        String destinationUrl;
-        String isRenderNewIdeaList;
+        boolean isRenderNewIdeaList;
+        boolean isReachedEnd = false;
 
         // Workflow-Antwort instanziieren
         IResponse response = new Response();
@@ -47,8 +41,7 @@ public class GetIdeaListWorkflow  implements IWorkflow {
             category = data.getString("category");
             fromRank = data.getInt("fromRank");
             toRank = data.getInt("toRank");
-            destinationUrl = data.getString("destinationUrl");
-            isRenderNewIdeaList = data.getString("isRenderNewIdeaList");
+            isRenderNewIdeaList = data.getBoolean("isRenderNewIdeaList");
 
         } catch (Exception ex) {
             response.setErrorMessage("SIdeaList_getIdeasRequestData_error");
@@ -67,8 +60,33 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         }
 
         // Suche die Ideen im vorgehaltenen Snapshot
+
         List<IIdea> filteredIdeas = InstanceManager.getIdeaManager()
                 .filterIdeas(listType, category, fromRank, toRank);
+
+//        try {
+//            allIdeas = this.ideaController.getAllIdeas();
+//        } catch (Exception e) {
+//            log.log(Level.SEVERE, "Beim Abrufen der Ideen aus der Datenbank " +
+//                    "ist ein Fehler aufgetreten.\nFehlermeldung: " + e.toString());
+//            response.setErrorMessage("SIdeaList_getIdeasFromDb_error");
+//            response.setResult("error");
+//            return response;
+//        }
+
+        // Prüfe, ob der gewünschte Bereich möglich ist:
+        int countIdeas = filteredIdeas.size();
+        if (fromRank <= countIdeas && toRank > filteredIdeas.size()) {
+            toRank = countIdeas;
+            isReachedEnd = true;
+        } else if (fromRank > countIdeas) {
+
+            log.log(Level.SEVERE, "Die Angabe 'toRank = " + toRank + "' bei " +
+                    "der Abfrage 'getIdeas' ist größer als die vorhandene " +
+                    "Anzahl an Ideen (" + countIdeas + ").");
+            response.setResult("error");
+            response.setErrorMessage("SIdeaList_fromRankTooLarge_error");
+        }
 
         //TODO: an dieser Stelle muessten jetzt fuer die Filter-Ergebnisse die vollen Daten aus der DB
         // nachgeladen werden
@@ -78,8 +96,8 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         responseData.put("listType", listType);
         responseData.put("category", category);
         responseData.put("ideas", this.ideaDataToJSONObject(filteredIdeas));
-        responseData.put("destinationUrl", destinationUrl);
         responseData.put("isRenderNewIdeaList", isRenderNewIdeaList);
+        responseData.put("isReachedEnd", isReachedEnd);
         response.setData(responseData);
         return response;
     }

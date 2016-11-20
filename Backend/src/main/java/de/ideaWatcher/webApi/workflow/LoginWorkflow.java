@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Workflow zur Validierung eines Login-Versuchs
+ * Workflow zur Validierung eines UserSession-Versuchs
  */
 public class LoginWorkflow implements IWorkflow {
 
@@ -26,7 +26,8 @@ public class LoginWorkflow implements IWorkflow {
 
     /**
      * Fuehre den Workflow aus und gib das Ergebnis als Response-Objekt zurueck.
-     * @return {JsonObject} JSON-String als Ergebnis des Workflow
+     * @param request {IRequest} Java-Request-Objekt, das die Daten beinhaltet
+     * @return {IResponse} Response-Objekt mit Ergebnis des Workflow
      */
     public IResponse getResponse(IRequest request) {
 
