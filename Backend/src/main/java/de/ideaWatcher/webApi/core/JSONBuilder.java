@@ -14,6 +14,7 @@ public class JSONBuilder {
     public static JSONObject getCommentJSONObject(IComment comment) {
         JSONObject jsonObject = new JSONObject();
 
+        jsonObject.put("commentId", comment.getCommentId());
         jsonObject.put("text", comment.getText());
         jsonObject.put("publishDate", comment.getPublishDate());
         jsonObject.put("creator", getSmallUserJSONObject(comment.getCreator()));

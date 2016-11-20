@@ -7,6 +7,8 @@ import java.util.Date;
 
 public interface IComment {
 
+    String getCommentId();
+    void setCommentId(String commentId);
     String getText();
     void setText(String text);
     IUser getCreator();

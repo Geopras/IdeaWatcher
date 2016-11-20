@@ -61,6 +61,7 @@ public class GetIdeaDetailsWorkflow  implements IWorkflow {
             //foundIdea = this.ideaController.getIdea(ideaID);
 
             //Testweise eine Beispiel-Idee erzeugen
+            //foundIdea = ideaController.getIdea(ideaID);
             foundIdea = new Idea();
             IUser bspCreator = new User();
             bspCreator.setUserName("HansWurst");

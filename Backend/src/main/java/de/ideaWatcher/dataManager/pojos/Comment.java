@@ -8,9 +8,20 @@ import java.util.Date;
 
 public class Comment implements IComment {
 
+    private String commentId;
     private String text;
     private IUser creator;
     private Date publishDate;
+
+    @Override
+    public String getCommentId() {
+        return this.commentId;
+    }
+
+    @Override
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
 
     @Override
     public String getText() {
