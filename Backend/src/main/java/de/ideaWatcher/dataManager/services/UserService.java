@@ -4,11 +4,10 @@ import com.mongodb.BasicDBObject;
 import main.java.de.ideaWatcher.dataManager.BCrypt;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
-
-import java.util.ArrayList;
-
 import org.bson.Document;
 import org.bson.types.ObjectId;
+
+import java.util.ArrayList;
 
 /**
  * Klasse fuer Zugriff auf User-Datenbank
@@ -18,7 +17,7 @@ public class UserService {
     private DbConnectionService dbConnectionService;
 
     public UserService() {
-        this.dbConnectionService = new DbConnectionService("Users");
+        this.dbConnectionService = new DbConnectionService("testLogin");
     }
 
     /**

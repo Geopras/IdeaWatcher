@@ -16,6 +16,29 @@ public class TokenManager {
         this.tokenMap = new HashMap<>();
     }
 
+    public void deleteToken(String userId) throws Exception {
+
+        if (existsUser(userId)) {
+            try {
+                this.tokenMap.remove(userId);
+            } catch (Exception ex) {
+                throw new Exception("token_delete_error");
+            }
+        } else {
+            throw new Exception("user_not_exists");
+        }
+
+    }
+
+    public boolean existsUser(String userId) {
+
+        if (this.tokenMap.get(userId) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public String generateToken(String userId) throws Exception {
 
         String newToken = UUID.randomUUID().toString();

@@ -3,12 +3,15 @@
 	"name" : "meine Idee0",
 	"descripton" : "Es soll...0",
 	"category" : "welche Kategorie?",
-	"creator" : "User0",
+	"creator" : {
+		"userId": "",
+		"email": "",
+	},
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -209,9 +212,9 @@
 	"creator" : "User1",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -425,7 +428,7 @@
 		}
 	],
 	"comments" : [],
-	"numberComments" : NumberInt("0")
+	"numberComments" : "0.5"
 },
 {
 	"_id" : ObjectId("582c7d8865a321130441fd95"),
@@ -435,9 +438,9 @@
 	"creator" : "User2",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -540,7 +543,7 @@
 		}
 	],
 	"comments" : [],
-	"numberComments" : NumberInt("0")
+	"numberComments" : "0.5"
 },
 {
 	"_id" : ObjectId("582c7d8865a321130441fd96"),
@@ -550,9 +553,9 @@
 	"creator" : "User3",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -824,9 +827,9 @@
 	"creator" : "User4",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -948,9 +951,9 @@
 	"creator" : "User5",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -1159,9 +1162,9 @@
 	"creator" : "User6",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -1265,9 +1268,9 @@
 	"creator" : "User7",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -1563,9 +1566,9 @@
 	"creator" : "User8",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -1741,9 +1744,9 @@
 	"creator" : "User9",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -1874,9 +1877,9 @@
 	"creator" : "User10",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -2076,9 +2079,9 @@
 	"creator" : "User11",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -2251,9 +2254,9 @@
 	"creator" : "User12",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -2366,9 +2369,9 @@
 	"creator" : "User13",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -2505,9 +2508,9 @@
 	"creator" : "User14",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -2728,9 +2731,9 @@
 	"creator" : "User15",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -2843,9 +2846,9 @@
 	"creator" : "User16",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -3021,9 +3024,9 @@
 	"creator" : "User17",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -3187,9 +3190,9 @@
 	"creator" : "User18",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -3296,9 +3299,9 @@
 	"creator" : "User19",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -3459,9 +3462,9 @@
 	"creator" : "User20",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -3709,9 +3712,9 @@
 	"creator" : "User21",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -3965,9 +3968,9 @@
 	"creator" : "User22",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -4083,9 +4086,9 @@
 	"creator" : "User23",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -4165,9 +4168,9 @@
 	"creator" : "User24",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -4337,9 +4340,9 @@
 	"creator" : "User25",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -4500,9 +4503,9 @@
 	"creator" : "User26",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -4636,9 +4639,9 @@
 	"creator" : "User27",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -4835,9 +4838,9 @@
 	"creator" : "User28",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -5004,9 +5007,9 @@
 	"creator" : "User29",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -5209,9 +5212,9 @@
 	"creator" : "User30",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -5351,9 +5354,9 @@
 	"creator" : "User31",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -5523,9 +5526,9 @@
 	"creator" : "User32",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -5734,9 +5737,9 @@
 	"creator" : "User33",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -5936,9 +5939,9 @@
 	"creator" : "User34",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -6162,9 +6165,9 @@
 	"creator" : "User35",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -6280,9 +6283,9 @@
 	"creator" : "User36",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -6422,9 +6425,9 @@
 	"creator" : "User37",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -6561,9 +6564,9 @@
 	"creator" : "User38",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -6772,9 +6775,9 @@
 	"creator" : "User39",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -7076,9 +7079,9 @@
 	"creator" : "User40",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -7242,9 +7245,9 @@
 	"creator" : "User41",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -7342,9 +7345,9 @@
 	"creator" : "User42",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -7409,9 +7412,9 @@
 	"creator" : "User43",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -7656,9 +7659,9 @@
 	"creator" : "User44",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -7744,9 +7747,9 @@
 	"creator" : "User45",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -7871,9 +7874,9 @@
 	"creator" : "User46",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -7974,9 +7977,9 @@
 	"creator" : "User47",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -8176,9 +8179,9 @@
 	"creator" : "User48",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -8291,9 +8294,9 @@
 	"creator" : "User49",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -8379,9 +8382,9 @@
 	"creator" : "User50",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -8560,9 +8563,9 @@
 	"creator" : "User51",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -8651,9 +8654,9 @@
 	"creator" : "User52",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -8778,9 +8781,9 @@
 	"creator" : "User53",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -8926,9 +8929,9 @@
 	"creator" : "User54",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -9179,9 +9182,9 @@
 	"creator" : "User55",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -9310,7 +9313,7 @@
 	"numberLikes" : NumberInt("41"),
 	"followers" : [ ],
 	"comments" : "alles nur bluber... blub...814",
-	"numberComments" : NumberInt("0")
+	"numberComments" : "0.5"
 },
 {
 	"_id" : ObjectId("582c7d8865a321130441fdcb"),
@@ -9320,9 +9323,9 @@
 	"creator" : "User56",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -9531,9 +9534,9 @@
 	"creator" : "User57",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -9802,9 +9805,9 @@
 	"creator" : "User58",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -10097,9 +10100,9 @@
 	"creator" : "User59",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -10323,9 +10326,9 @@
 	"creator" : "User60",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -10510,9 +10513,9 @@
 	"creator" : "User61",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -10730,9 +10733,9 @@
 	"creator" : "User62",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -10893,9 +10896,9 @@
 	"creator" : "User63",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -11167,9 +11170,9 @@
 	"creator" : "User64",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -11354,9 +11357,9 @@
 	"creator" : "User65",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -11478,9 +11481,9 @@
 	"creator" : "User66",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -11683,9 +11686,9 @@
 	"creator" : "User67",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -11739,7 +11742,7 @@
 	"numberLikes" : NumberInt("16"),
 	"followers" : [ ],
 	"comments" : "alles nur bluber... blub...544",
-	"numberComments" : NumberInt("0")
+	"numberComments" : "0.5"
 },
 {
 	"_id" : ObjectId("582c7d8865a321130441fdd7"),
@@ -11749,9 +11752,9 @@
 	"creator" : "User68",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -11873,9 +11876,9 @@
 	"creator" : "User69",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -12030,9 +12033,9 @@
 	"creator" : "User70",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -12166,9 +12169,9 @@
 	"creator" : "User71",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -12305,9 +12308,9 @@
 	"creator" : "User72",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -12402,9 +12405,9 @@
 	"creator" : "User73",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -12592,9 +12595,9 @@
 	"creator" : "User74",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -12761,9 +12764,9 @@
 	"creator" : "User75",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -12948,9 +12951,9 @@
 	"creator" : "User76",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -13225,9 +13228,9 @@
 	"creator" : "User77",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -13514,9 +13517,9 @@
 	"creator" : "User78",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -13680,9 +13683,9 @@
 	"creator" : "User79",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -13966,9 +13969,9 @@
 	"creator" : "User80",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -14180,9 +14183,9 @@
 	"creator" : "User81",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -14382,9 +14385,9 @@
 	"creator" : "User82",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -14428,9 +14431,9 @@
 	"creator" : "User83",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -14576,9 +14579,9 @@
 	"creator" : "User84",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -14769,9 +14772,9 @@
 	"creator" : "User85",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -14962,9 +14965,9 @@
 	"creator" : "User86",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -15137,9 +15140,9 @@
 	"creator" : "User87",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -15267,9 +15270,9 @@
 	"creator" : "User88",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -15505,9 +15508,9 @@
 	"creator" : "User89",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -15707,9 +15710,9 @@
 	"creator" : "User90",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -15864,9 +15867,9 @@
 	"creator" : "User91",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -16060,9 +16063,9 @@
 	"creator" : "User92",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -16181,9 +16184,9 @@
 	"creator" : "User93",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -16359,9 +16362,9 @@
 	"creator" : "User94",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -16627,9 +16630,9 @@
 	"creator" : "User95",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -16829,9 +16832,9 @@
 	"creator" : "User96",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -17034,9 +17037,9 @@
 	"creator" : "User97",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -17086,9 +17089,9 @@
 	"creator" : "User98",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"
@@ -17369,9 +17372,9 @@
 	"creator" : "User99",
 	"publishedDate " : "01.01.1800",
 	"language" : "german",
-	"hotRank" : NumberInt("0"),
-	"trendingRank" : NumberInt("0"),
-	"freshRank" : NumberInt("0"),
+	"hotRank" : "0.5",
+	"trendingRank" : "0.5",
+	"freshRank" : "0.5",
 	"likeUsers" : [
 		{
 			"userName" : "deinFan0"

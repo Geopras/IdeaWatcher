@@ -19,8 +19,8 @@ public class IdeaController implements IIdeaController {
 
     @Override
     public String addNewIdea(IIdea idea) throws Exception {
-        // ToDO
-        return "";
+
+        return this.ideaService.addIdea(idea);
     }
 
     @Override
@@ -32,7 +32,8 @@ public class IdeaController implements IIdeaController {
     @Override
     public List<IIdea> getAllIdeas() throws Exception {
         // ToDO
-        return null;
+        return this.ideaService.getAllIdeas();
+
     }
 
     @Override
