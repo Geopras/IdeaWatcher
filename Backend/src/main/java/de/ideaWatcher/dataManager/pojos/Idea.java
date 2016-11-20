@@ -1,5 +1,6 @@
 package main.java.de.ideaWatcher.dataManager.pojos;
 
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.json.JSONArray;
@@ -28,7 +29,7 @@ public class Idea implements IIdea {
     private List<String> followerUsers;
     private Long numberLikes;
     private Long numberFollowers;
-    private List<String> comments;
+    private List<IComment> comments;
     private Long numberComments;
     
 
@@ -153,12 +154,12 @@ public class Idea implements IIdea {
     }
 
     @Override
-    public List<String> getComments() {
+    public List<IComment> getComments() {
         return this.comments;
     }
 
     @Override
-    public void setComments(List<String> comments) {
+    public void setComments(List<IComment> comments) {
         this.comments = comments;
     }
 
@@ -208,20 +209,19 @@ public class Idea implements IIdea {
         jsonObject.put("numberLikes", this.getNumberLikes());
         // jsonObject.put("followers", idea.getFollowerUsers());
         jsonObject.put("numberFollowers", this.getNumberFollowers());
-        // jsonObject.put("comments", idea.getComments());
+
         jsonObject.put("numberComments", this.getNumberComments());
 
-        JSONObject jsonCreator = new JSONObject();
-        jsonCreator.put("userId", this.getCreator().getUserId());
-        jsonCreator.put("userName", this.getCreator().getUserName());
-        jsonCreator.put("email", this.getCreator().getEmail());
-        jsonCreator.put("isMailPublic", this.getCreator().getIsMailPublic());
-
-        jsonCreator.put("creator", jsonCreator);
+        jsonObject.put("creator", this.getCreator().toSmallJSONObject());
 
         JSONArray likeUsersArray = new JSONArray();
         JSONArray followersArray = new JSONArray();
+
         JSONArray commentsArray = new JSONArray();
+        for (IComment comment : this.getComments()){
+            commentsArray.put(comment.toJSONObject());
+        }
+        jsonObject.put("comments", commentsArray);
 
         //TODO: hier müsste man jetzt durch die likeUsers, followUsers und comments
         // iterieren und die Ergebnisse in JSONObjekte packen, die man dann in die

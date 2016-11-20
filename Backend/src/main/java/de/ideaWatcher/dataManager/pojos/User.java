@@ -172,6 +172,7 @@ public class User implements IUser {
     public JSONObject toJSONObject() {
         JSONObject jsonObject = new JSONObject();
 
+        jsonObject.put("userID", this.getUserId());
         jsonObject.put("userName", this.getUserName());
         jsonObject.put("email", this.getEmail());
         jsonObject.put("isMailPublic", this.getIsMailPublic());
@@ -179,6 +180,18 @@ public class User implements IUser {
         jsonObject.put("firstName", this.getFirstname());
         jsonObject.put("gender", this.getGender());
         jsonObject.put("language", this.getLanguage());
+
+        return jsonObject;
+    }
+
+    @Override
+    public JSONObject toSmallJSONObject() {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("userID", this.getUserId());
+        jsonObject.put("userName", this.getUserName());
+        jsonObject.put("email", this.getEmail());
+        jsonObject.put("isMailPublic", this.getIsMailPublic());
 
         return jsonObject;
     }

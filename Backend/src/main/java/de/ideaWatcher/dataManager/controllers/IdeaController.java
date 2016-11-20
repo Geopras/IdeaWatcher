@@ -20,7 +20,8 @@ public class IdeaController implements IIdeaController {
     @Override
     public String addNewIdea(IIdea idea) throws Exception {
 
-        return this.ideaService.addIdea(idea);
+        this.ideaService.addIdea(idea);
+        return "";
     }
 
     @Override

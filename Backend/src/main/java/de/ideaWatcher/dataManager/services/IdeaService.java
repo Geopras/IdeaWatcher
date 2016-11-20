@@ -3,6 +3,7 @@ package main.java.de.ideaWatcher.dataManager.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import org.bson.Document;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
@@ -20,7 +21,7 @@ public class IdeaService {
     }
     public List<IIdea> getAllIdeas() throws Exception {
         // ToDo
-        // fehlende Fehlerbehandlungen sollten noch hinzugefügt werden
+        // fehlende Fehlerbehandlungen sollten noch hinzugefï¿½gt werden
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
@@ -56,7 +57,7 @@ public class IdeaService {
         idea.setNumberLikes(ideaDoc.getLong("numberLikes"));
         idea.setFollowerUsers((List<String>) ideaDoc.get("followerUsers"));
         idea.setNumberFollowers(ideaDoc.getLong("numberFollowers"));
-        idea.setComments((List<String>) ideaDoc.get("comments"));
+        idea.setComments((List<IComment>) ideaDoc.get("comments"));
         idea.setNumberComments(ideaDoc.getLong("numberComments"));
 
         return idea;
