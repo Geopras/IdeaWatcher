@@ -10,7 +10,9 @@ public class Comment implements IComment {
 
     private String commentId;
     private String text;
-    private IUser creator;
+    private String userId;
+    private String userName;
+    private String pictureURL;
     private Date publishDate;
 
     @Override
@@ -34,13 +36,33 @@ public class Comment implements IComment {
     }
 
     @Override
-    public IUser getCreator() {
-        return this.creator;
+    public String getUserId() {
+        return this.userId;
     }
 
     @Override
-    public void setCreator(IUser creator) {
-        this.creator = creator;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public String getUserName() {
+        return this.userName;
+    }
+
+    @Override
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    @Override
+    public String getPictureURL() {
+        return this.pictureURL;
+    }
+
+    @Override
+    public void setPictureURL(String pictureURL) {
+        this.pictureURL = pictureURL;
     }
 
     @Override

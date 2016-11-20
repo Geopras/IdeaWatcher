@@ -17,7 +17,9 @@ public class JSONBuilder {
         jsonObject.put("commentId", comment.getCommentId());
         jsonObject.put("text", comment.getText());
         jsonObject.put("publishDate", comment.getPublishDate());
-        jsonObject.put("creator", getSmallUserJSONObject(comment.getCreator()));
+        jsonObject.put("userId", comment.getUserId());
+        jsonObject.put("userName", comment.getUserName());
+        jsonObject.put("pictureURL", comment.getPictureURL());
 
         return jsonObject;
     }
