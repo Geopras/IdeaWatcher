@@ -67,6 +67,4 @@ public interface IUser {
     void setFollowedIdeas(List<IIdea> followedIdeas);
     Double getNumberFollowedIdeas();
     void setNumberFollowedIdeas(Double numberFollowedIdeas);
-
-    JSONObject toJSONObject();
 }

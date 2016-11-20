@@ -14,6 +14,7 @@ public class DbConnectionService {
     private MongoDatabase db;
     private MongoCollection<Document> collection;
     private String collectionName;
+  //  private String serverName;
     private boolean isOpen;
 
     public MongoClient getMongoClient() {
@@ -32,7 +33,7 @@ public class DbConnectionService {
         return this.isOpen;
     }
 
-    public DbConnectionService(String collectionName) {
+    public DbConnectionService( String collectionName) {
         this.collectionName = collectionName;
     }
 
@@ -46,7 +47,7 @@ public class DbConnectionService {
             this.collection = this.db.getCollection(this.collectionName);
 
             this.isOpen = true;
-            System.out.println("MongoDB-Verbindung geÃ¶ffnet");
+            System.out.println("MongoDB-Verbindung geöffnet");
         } catch (Exception ex) {
 
             throw new Exception(ex);

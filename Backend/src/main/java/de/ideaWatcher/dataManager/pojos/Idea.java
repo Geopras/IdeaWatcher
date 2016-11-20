@@ -1,5 +1,6 @@
 package main.java.de.ideaWatcher.dataManager.pojos;
 
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.json.JSONArray;
@@ -23,12 +24,11 @@ public class Idea implements IIdea {
     private String language;
     private Double hotRank;
     private Double trendingRank;
-    private Double freshRank;
     private List<String> likeUsers;
     private List<String> followerUsers;
     private Long numberLikes;
     private Long numberFollowers;
-    private List<String> comments;
+    private List<IComment> comments;
     private Long numberComments;
     
 
@@ -153,12 +153,12 @@ public class Idea implements IIdea {
     }
 
     @Override
-    public List<String> getComments() {
+    public List<IComment> getComments() {
         return this.comments;
     }
 
     @Override
-    public void setComments(List<String> comments) {
+    public void setComments(List<IComment> comments) {
         this.comments = comments;
     }
 
@@ -171,16 +171,6 @@ public class Idea implements IIdea {
     public void setNumberComments(Long numberComments) {
         this.numberComments = numberComments;
     }
-
-    @Override
-    public Double getFreshRank() {
-        return this.freshRank;
-    }
-
-    @Override
-    public void setFreshRank(Double freshRank) {
-        this.freshRank = freshRank;
-    }
     
     @Override
     public String getIdeaId() {
@@ -190,45 +180,6 @@ public class Idea implements IIdea {
     @Override
     public void setIdeaId( String ideaId) {
        this.ideaId = ideaId;
-    }
-
-    @Override
-    public JSONObject toJSONObject() {
-
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("ideaId", this.getIdeaId());
-        jsonObject.put("name", this.getName());
-        jsonObject.put("description", this.getDescription());
-        jsonObject.put("category", this.getCategory());
-        jsonObject.put("publishDate", this.getPublishDate());
-        jsonObject.put("language", this.getLanguage());
-        jsonObject.put("hotRank", this.getHotRank());
-        jsonObject.put("trendingRank", this.getTrendingRank());
-        // jsonObject.put("likeUsers", idea.getLikeUsers());
-        jsonObject.put("numberLikes", this.getNumberLikes());
-        // jsonObject.put("followers", idea.getFollowerUsers());
-        jsonObject.put("numberFollowers", this.getNumberFollowers());
-        // jsonObject.put("comments", idea.getComments());
-        jsonObject.put("numberComments", this.getNumberComments());
-
-        JSONObject jsonCreator = new JSONObject();
-        jsonCreator.put("userId", this.getCreator().getUserId());
-        jsonCreator.put("userName", this.getCreator().getUserName());
-        jsonCreator.put("email", this.getCreator().getEmail());
-        jsonCreator.put("isMailPublic", this.getCreator().getIsMailPublic());
-
-        jsonCreator.put("creator", jsonCreator);
-
-        JSONArray likeUsersArray = new JSONArray();
-        JSONArray followersArray = new JSONArray();
-        JSONArray commentsArray = new JSONArray();
-
-        //TODO: hier müsste man jetzt durch die likeUsers, followUsers und comments
-        // iterieren und die Ergebnisse in JSONObjekte packen, die man dann in die
-        // entsprechenden Arrays schmeißt und für die Attribute puttet
-
-        return jsonObject;
     }
 
     /**
@@ -245,7 +196,6 @@ public class Idea implements IIdea {
         this.language = "";
         this.hotRank = new Double(0.0);
         this.trendingRank = new Double(0.0);
-        this.freshRank = new Double(0.0);
         this.likeUsers = new ArrayList<>();
         this.numberLikes = new Long(0);
         this.followerUsers = new ArrayList<>();

@@ -184,7 +184,7 @@ public class UserService {
      * @return {String} von der DB generierte UserID
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
      */
-    public String addUser(IUser user) throws Exception {
+    public void addUser(IUser user) throws Exception {
 
         // Prüfen, ob der Username oder die Email bereits existiert
         if (existsUserName(user.getUserName()) && !existsEmail(user.getEmail())){
@@ -199,7 +199,6 @@ public class UserService {
             }
             dbConnectionService.getCollection().insertOne(buildUserDocument
                     (user));
-            return getUserId(user.getUserName());
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {

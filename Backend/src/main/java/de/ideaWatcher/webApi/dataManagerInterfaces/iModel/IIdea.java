@@ -26,8 +26,6 @@ public interface IIdea {
     void setHotRank(double hotRank);
     Double getTrendingRank();
     void setTrendingRank(double trendingRank);
-    Double getFreshRank();
-    void setFreshRank(Double double1);
     /**
      * Gibt eine Liste von Usern zurueck, die die Idee geliked haben
      * @return {List<IUser>} Liste von Usern
@@ -40,13 +38,11 @@ public interface IIdea {
     void setFollowerUsers(List<String> followerUsers);
     Long getNumberFollowers();
     void setNumberFollowers(Long numberFollowers);
-    List<String> getComments();
-    void setComments(List<String> comments);
+    List<IComment> getComments();
+    void setComments(List<IComment> comments);
     Long getNumberComments();
     void setNumberComments(Long numberComments);
     String getIdeaId();
     void setIdeaId(String ideaId);
 
-    JSONObject toJSONObject();
-    
 }

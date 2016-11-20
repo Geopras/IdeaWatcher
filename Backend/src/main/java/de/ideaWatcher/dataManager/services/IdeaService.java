@@ -1,12 +1,13 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
+import org.bson.Document;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
-import org.bson.Document;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Service fuer Zugriff auf Datenbank
@@ -20,7 +21,7 @@ public class IdeaService {
     }
     public List<IIdea> getAllIdeas() throws Exception {
         // ToDo
-        // fehlende Fehlerbehandlungen sollten noch hinzugefuegt werden
+        // fehlende Fehlerbehandlungen sollten noch hinzugef�gt werden
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
@@ -51,24 +52,23 @@ public class IdeaService {
         idea.setLanguage(ideaDoc.getString("language"));
         idea.setHotRank(ideaDoc.getDouble("hotRank"));
         idea.setTrendingRank(ideaDoc.getDouble("trendingRank"));
-        idea.setFreshRank(ideaDoc.getDouble("freshRank"));
         idea.setLikeUsers((List<String>) ideaDoc.get("likeUsers" ));
         idea.setNumberLikes(ideaDoc.getLong("numberLikes"));
         idea.setFollowerUsers((List<String>) ideaDoc.get("followerUsers"));
         idea.setNumberFollowers(ideaDoc.getLong("numberFollowers"));
-        idea.setComments((List<String>) ideaDoc.get("comments"));
+        idea.setComments((List<IComment>) ideaDoc.get("comments"));
         idea.setNumberComments(ideaDoc.getLong("numberComments"));
 
         return idea;
     }
-    public String addIdea(IIdea idea) throws Exception {
+
+    public void addIdea(IIdea idea) throws Exception {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
-        Document ideaDocument = buildIdeaDocument(idea);
-        dbConnectionService.getCollection().insertOne(ideaDocument);
+        dbConnectionService.getCollection().insertOne(buildIdeaDocument
+                (idea));
         dbConnectionService.closeConnection();
-        return ideaDocument.getString("_id");
     }
 
     public void addIdeaList(List<IIdea> ideaList) throws Exception {
@@ -94,7 +94,6 @@ public class IdeaService {
             .append("language", idea.getLanguage())
             .append("hotRank", idea.getHotRank())
             .append("trendingRank", idea.getTrendingRank())
-            .append("freshRank", idea.getFreshRank())
             .append("likeUsers", idea.getLikeUsers())
             .append("numberLikes", idea.getNumberLikes())
             .append( "followerUsers", idea.getFollowerUsers())
