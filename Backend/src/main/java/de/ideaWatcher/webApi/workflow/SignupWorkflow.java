@@ -48,7 +48,7 @@ public class SignupWorkflow implements IWorkflow {
             if (existsUserName) {
                 existsUser = true;
             } else {
-                boolean existsEmail = this.user.existsEmail(userName);
+                boolean existsEmail = this.user.existsEmail(email);
                 if (existsEmail) {
                     existsUser = true;
                 }
