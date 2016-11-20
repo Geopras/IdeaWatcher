@@ -2,7 +2,9 @@ package main.java.de.ideaWatcher.webApi.manager;
 
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.webApi.core.*;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
+import main.java.de.ideaWatcher.webApi.workflow.LoginWorkflow;
 
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -10,6 +12,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Führt in regelmäßigen Abständen den Ranking-Algorithmus aus
@@ -18,8 +22,10 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class IdeaManager {
 
-    public static final int REFRESH_RANKING_TIME = 30;
-    public static final TimeUnit REFRESH_RANKING_TIMEUNIT = TimeUnit.SECONDS;
+    public final int REFRESH_RANKING_TIME = 30;
+    public final TimeUnit REFRESH_RANKING_TIMEUNIT = TimeUnit.SECONDS;
+
+    private static final Logger log = Logger.getLogger( LoginWorkflow.class.getName() );
 
     // Liste aller Ideen aus der Datenbank ohne vollständige Detailinfos.
     // Sie dient der Filterung und der Suche.
@@ -29,11 +35,27 @@ public class IdeaManager {
     // Monitor, der den konkurrierenden Zugriff auf die allIdeasSnapshot-Liste legt
     private final Lock lockAllIdeasSnapshot = new ReentrantLock();
 
+    private IIdeaController ideaController;
 
-    public void initialize(){
+    public IdeaManager() {
+
+        this.ideaController = InstanceManager.getDataManager()
+                .getIdeaController();
+    }
+
+    public void initialize() throws Exception {
         // initial, bevor der Ranking Algorithmus ein mal durchgelaufen ist,
         // soll der Snapshot mit den letzten Werten aus der Datenbank befüllt werden
         allIdeasSnapshot = getTestIdeas();
+
+//        try {
+//            this.allIdeasSnapshot = this.ideaController.getAllIdeas();
+//        } catch (Exception e) {
+//            log.log(Level.SEVERE, "Ein Fehler ist bei der Abfrage aller Ideen" +
+//                    " aus der Datenbank aufgetreten.\nFehlermeldung: " + e
+//                    .toString());
+//            throw new Exception("getAllIdeas_error");
+//        }
         // Starte nun die automatische Erneuerung des allIdeasSnapshots
         startRankCalculationScheduler();
     }
@@ -83,7 +105,6 @@ public class IdeaManager {
                         }
                     }
                 }
-
             } else {
 
                 switch (listType){
@@ -105,9 +126,7 @@ public class IdeaManager {
                         filteredIdeas.add(allIdeasSnapshot.get(i));
                     }
                 }
-
             }
-
         } finally {
             lockAllIdeasSnapshot.unlock();
         }
@@ -123,68 +142,74 @@ public class IdeaManager {
         //Erstelle einen ThreadPool, der einen Tread enthält
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        Runnable getAllIdeasSnapshot = new Runnable() {
-            @Override public void run() {
+        Runnable getAllIdeasSnapshot = () -> {
 
-                double hotRatingLikes = 0.5;
-                double hotRatingFollows = 0.3;
-                double hotRatingAge = 0.2;
-                double trendingRatingLikes = 0.3;
-                double trendingRatingFollows = 0.1;
-                double trendingRatingAge = 0.6;
-                long comparableStartTime = new Date().getTime();
+            double hotRatingLikes = 0.5;
+            double hotRatingFollows = 0.3;
+            double hotRatingAge = 0.2;
+            double trendingRatingLikes = 0.3;
+            double trendingRatingFollows = 0.1;
+            double trendingRatingAge = 0.6;
+            long comparableStartTime = new Date().getTime();
 
-                // TODO: die Ideen müssen aus dem DataManager geholt werden
-                // Hole die Ideen aus der Datenbank
-                // hier wird erstmal nur mit Testideen gearbeitet
-                List<IIdea> ideas = getTestIdeas();
+            // TODO: die Ideen müssen aus dem DataManager geholt werden
+            // Hole die Ideen aus der Datenbank
+            // hier wird erstmal nur mit Testideen gearbeitet
+            List<IIdea> ideas = new ArrayList<>(); //
+            try {
+                ideas = getTestIdeas(); //this.ideaController.getAllIdeas(); //
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "Ein Fehler ist bei der Abfrage aller Ideen" +
+                        " aus der Datenbank aufgetreten.\nFehlermeldung: " + e
+                        .toString());
+                return;
+            }
 
-                long maxLikes = Collections.max(ideas, new IdeaLikesComparator()).getNumberLikes();
-                long maxFollowers = Collections.max(ideas, new IdeaFollowersComparator()).getNumberFollowers();
+            long maxLikes = Collections.max(ideas, new IdeaLikesComparator()).getNumberLikes();
+            long maxFollowers = Collections.max(ideas, new IdeaFollowersComparator()).getNumberFollowers();
 
-                Date oldestPublishDate = Collections.min(ideas, new IdeaAgeComparator()).getPublishDate();
-                // alter der ältesten Idee in Sekunden
-                long maxAge = (comparableStartTime - oldestPublishDate.getTime()) / 1000;
+            Date oldestPublishDate = Collections.min(ideas, new IdeaAgeComparator()).getPublishDate();
+            // alter der ältesten Idee in Sekunden
+            long maxAge = (comparableStartTime - oldestPublishDate.getTime()) / 1000;
 
-                for (IIdea idea : ideas){
+            for (IIdea idea : ideas){
 
-                    double likeRatio = ((double) idea.getNumberLikes()) / maxLikes;
-                    double followRatio = ((double) idea.getNumberFollowers()) / maxFollowers;
-                    double ageRatio = ((double)(maxAge -
-                            ((comparableStartTime - idea.getPublishDate().getTime()) / 1000)))
-                            / maxAge;
+                double likeRatio = ((double) idea.getNumberLikes()) / maxLikes;
+                double followRatio = ((double) idea.getNumberFollowers()) / maxFollowers;
+                double ageRatio = ((double)(maxAge -
+                        ((comparableStartTime - idea.getPublishDate().getTime()) / 1000)))
+                        / maxAge;
 
-                    idea.setHotRank(likeRatio * hotRatingLikes +
-                            followRatio * hotRatingFollows +
-                            ageRatio * hotRatingAge);
+                idea.setHotRank(likeRatio * hotRatingLikes +
+                        followRatio * hotRatingFollows +
+                        ageRatio * hotRatingAge);
 
-                    idea.setTrendingRank(likeRatio * trendingRatingLikes +
-                            followRatio * trendingRatingFollows +
-                            ageRatio * trendingRatingAge);
-                }
+                idea.setTrendingRank(likeRatio * trendingRatingLikes +
+                        followRatio * trendingRatingFollows +
+                        ageRatio * trendingRatingAge);
+            }
 
-                try {
-                    // sorge dafür, dass nicht auf den allIDeasSnapshot zugegriffen wird
-                    lockAllIdeasSnapshot.lock();
+            try {
+                // sorge dafür, dass nicht auf den allIDeasSnapshot zugegriffen wird
+                lockAllIdeasSnapshot.lock();
 
-                    // leere den allIDeasSnapshot ...
-                    allIdeasSnapshot.clear();
-                    // und befülle ihn mit den neu berechneten Rankings
-                    allIdeasSnapshot.addAll(ideas);
+                // leere den allIDeasSnapshot ...
+                allIdeasSnapshot.clear();
+                // und befülle ihn mit den neu berechneten Rankings
+                allIdeasSnapshot.addAll(ideas);
 
-                    //TODO: Rankings zurück in die DB schreiben
-                } finally {
-                    // gebe den allIdeasSnapshot wieder frei
-                    lockAllIdeasSnapshot.unlock();
-                }
+                //TODO: Rankings zurück in die DB schreiben
+            } finally {
+                // gebe den allIdeasSnapshot wieder frei
+                lockAllIdeasSnapshot.unlock();
             }
         };
 
         // Füre getAllIdeasSnapshot alle X Timeunits aus mit einer Startverzoegerung von X Timeunits
         scheduler.scheduleAtFixedRate(getAllIdeasSnapshot,
                 0,
-                IdeaManager.REFRESH_RANKING_TIME,
-                IdeaManager.REFRESH_RANKING_TIMEUNIT);
+                this.REFRESH_RANKING_TIME,
+                this.REFRESH_RANKING_TIMEUNIT);
     }
 
     /**
@@ -205,6 +230,7 @@ public class IdeaManager {
             // Zeitraum letzte 5 Jahre
             calendar.add(Calendar.DAY_OF_MONTH, (-1 * r.nextInt(365 * 5)));
 
+            newIdea.setIdeaID(String.format("%s", i));
             newIdea.setPublishDate(calendar.getTime());
             newIdea.setNumberLikes((long) r.nextInt(1000));
             newIdea.setNumberFollowers((long) r.nextInt(100));

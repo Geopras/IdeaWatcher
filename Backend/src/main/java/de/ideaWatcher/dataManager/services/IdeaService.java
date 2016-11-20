@@ -1,12 +1,12 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bson.Document;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
+import org.bson.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Service fuer Zugriff auf Datenbank
@@ -16,17 +16,17 @@ public class IdeaService {
     private DbConnectionService dbConnectionService;
 
     public IdeaService() {
-        this.dbConnectionService = new DbConnectionService("Ideas");
+        this.dbConnectionService = new DbConnectionService("ideaCollection");
     }
     public List<IIdea> getAllIdeas() throws Exception {
         // ToDo
-        // fehlende Fehlerbehandlungen sollten noch hinzugefügt werden
+        // fehlende Fehlerbehandlungen sollten noch hinzugefuegt werden
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
-        List<Document> ideasDoc = dbConnectionService.getCollection().find().into(new ArrayList<Document>());
+        List<Document> ideasDoc = dbConnectionService.getCollection().find().into(new ArrayList<>());
         dbConnectionService.closeConnection();
-        List<IIdea> ideas = new ArrayList<IIdea>();
+        List<IIdea> ideas = new ArrayList<>();
         for(Document d : ideasDoc){
             ideas.add(buildIdea(d));
         }
@@ -35,7 +35,7 @@ public class IdeaService {
     
     public List<IIdea> getAllIdeasSmart (){
         // ToDo
-        List<IIdea> ideaList = new ArrayList<IIdea>();
+        List<IIdea> ideaList = new ArrayList<>();
         return ideaList;
     }
     
@@ -61,20 +61,22 @@ public class IdeaService {
 
         return idea;
     }
-    public void addIdea(IIdea idea) throws Exception {
+    public String addIdea(IIdea idea) throws Exception {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
-        dbConnectionService.getCollection().insertOne(buildIdeaDocument
-                (idea));
+        Document ideaDocument = buildIdeaDocument(idea);
+        dbConnectionService.getCollection().insertOne(ideaDocument);
         dbConnectionService.closeConnection();
+        return ideaDocument.getString("_id");
     }
+
     public void addIdeaList(List<IIdea> ideaList) throws Exception {
         List<Document> ideaListDoc = new ArrayList<>();
         for( IIdea idea : ideaList){
             ideaListDoc.add(buildIdeaDocument(idea));
-        }        
-        
+        }
+
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }

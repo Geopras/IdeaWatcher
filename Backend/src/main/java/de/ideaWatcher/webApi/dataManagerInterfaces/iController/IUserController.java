@@ -51,7 +51,7 @@ public interface IUserController {
     IUser getUser(String userId) throws Exception;
 
     /**
-     * Methode gibt UserID zur Login Angabe (Username oder email) zurueck
+     * Methode gibt UserID zur UserSession Angabe (Username oder email) zurueck
      * @param userNameOrEmail {String} Username oder Email
      * @return {String} die zugehoerige UserID
      * @throws Exception falls es beim Holen des Users zu irgendwelchen Problemen gekommen ist

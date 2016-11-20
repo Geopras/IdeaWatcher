@@ -1,5 +1,7 @@
 package main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel;
 
+import org.json.JSONObject;
+
 import java.util.Date;
 import java.util.List;
 
@@ -44,5 +46,7 @@ public interface IIdea {
     void setNumberComments(Long numberComments);
     String getIdeaID();
     void setIdeaID(String ideaID);
+
+    JSONObject toJSONObject();
     
 }

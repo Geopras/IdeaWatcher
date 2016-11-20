@@ -17,7 +17,6 @@ public class RequestManager {
 
     private CommandMap<IRequest, IResponse> workflowMapping;
 
-
     /**
      * Erstellt eine neue Instanz des RequestManager
      */
@@ -38,7 +37,7 @@ public class RequestManager {
 
     private void initializeCommandMap() {
 
-        this.workflowMapping.addCommand("SLogin/validateRequest",
+        this.workflowMapping.addCommand("SLogin/loginRequest",
                 new LoginCommand());
         this.workflowMapping.addCommand("SSignup/addUserRequest",
                 new SignupCommand());
@@ -50,7 +49,8 @@ public class RequestManager {
                 new GetIdeaListCommand());
         this.workflowMapping.addCommand("SIdea/getIdeaDetailsRequest",
                 new GetIdeaDetailsCommand());
-
+        this.workflowMapping.addCommand("SLogout/logoutRequest",
+                new LogoutCommand());
     }
 
     /**
