@@ -1,16 +1,14 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
-import org.bson.Document;
-
-import main.java.de.ideaWatcher.dataManager.pojos.Comment;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
+import org.bson.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Service fuer Zugriff auf Datenbank
@@ -129,8 +127,8 @@ public class IdeaService {
         user.setGender(userDoc.getString("gender"));
         user.setLanguage(userDoc.getString("language"));
         user.setPictureURL(userDoc.getString("pictureUrl"));
-        user.setNumberCreatedIdeas(userDoc.getDouble("numberCreatedIdeas"));
-        user.setNumberFollowedIdeas(userDoc.getDouble("numberFollowedIdeas"));
+        user.setNumberCreatedIdeas(userDoc.getLong("numberCreatedIdeas"));
+        user.setNumberFollowedIdeas(userDoc.getLong("numberFollowedIdeas"));
         return user;
     }
     

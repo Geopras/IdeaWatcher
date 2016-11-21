@@ -3,7 +3,6 @@ package main.java.de.ideaWatcher.dataManager.services;
 import com.mongodb.BasicDBObject;
 import main.java.de.ideaWatcher.dataManager.BCrypt;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -100,13 +99,13 @@ public class UserService {
         user.setGender(userDoc.getString("gender"));
         user.setLanguage(userDoc.getString("language"));
         user.setPictureURL(userDoc.getString("pictureUrl"));
-        user.setNumberCreatedIdeas(userDoc.getDouble("numberCreatedIdeas"));
-        user.setNumberFollowedIdeas(userDoc.getDouble("numberFollowedIdeas"));
+        user.setNumberCreatedIdeas(userDoc.getLong("numberCreatedIdeas"));
+        user.setNumberFollowedIdeas(userDoc.getLong("numberFollowedIdeas"));
         return user;
     }
 
     /**
-     * Prüft, ob die UserID bereits in der DB vorhanden ist
+     * Prï¿½ft, ob die UserID bereits in der DB vorhanden ist
      * @param userId {String} eindeutige UserID
      * @return {boolean} TRUE oder FALSE je nachdem, ob UserID existiert
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
