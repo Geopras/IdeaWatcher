@@ -6,8 +6,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			var htmlIdeaHeader = null;
 			var htmlIdeaDescription = null;
 			var htmlLikesSpan = null;
-			var htmlLikeButton = null;
-			var htmlFollowerButton = null;
+			var htmlLikeImg = null;
+			var htmlFollowerImg = null;
 			var htmlCommentTextInput = null;
 			var htmlFollowerSpan = null;
 			var htmlCommentsSpan = null;
@@ -42,10 +42,10 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 				// region assign html elements
 				htmlView = document.querySelector('.ideaDetails_view');
-				htmlLikeButton = document
-						.querySelector('#ideaDetails_like_button');
-				htmlFollowerButton = document
-						.querySelector('#ideaDetails_follower_button');
+				htmlLikeImg = document
+						.querySelector('#ideaDetails_like_img');
+				htmlFollowerImg = document
+						.querySelector('#ideaDetails_follower_img');
 				htmlCommentTextInput = document
 						.querySelector('#ideaDetails_comment_input');
 
@@ -63,8 +63,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				};
 
 				// eventlisteners hinzufügen
-				htmlLikeButton.addEventListener('click', changeLikeStatus);
-				htmlFollowerButton.addEventListener('click',
+				htmlLikeImg.addEventListener('click', changeLikeStatus);
+				htmlFollowerImg.addEventListener('click',
 						changeFollowerStatus);
 
 				// endregion
@@ -110,15 +110,15 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					var currentUserId = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
 					
-					if (htmlLikeButton.style.backgroundImage == 'url("./resources/img/bulb_on.png")') {
-						htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_off.png")';
+					if (htmlLikeImg.src == './resources/img/bulb_on.png') {
+						htmlLikeImg.src = './resources/img/bulb_off.png';
 						var exObj = {
 							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
 							action : 'unlike'
 						};
 					} else {
-						htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_on.png")';
+						htmlLikeImg.src = './resources/img/bulb_on.png';
 						var exObj = {
 							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
@@ -138,15 +138,15 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					var currentUserId = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
 					
-					if (htmlFollowerButton.style.backgroundImage == 'url("./resources/img/favorite_on.png")') {
-						htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_off.png")';
+					if (htmlFollowerImg.src == '/resources/img/favorite_on.png') {
+						htmlFollowerImg.src = './resources/img/favorite_off.png';
 						var exObj = {
 							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
 							action : 'unfollow'
 						};
 					} else {
-						htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_on.png")';
+						htmlFollowerImg.src = './resources/img/favorite_on.png';
 						var exObj = {
 							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
@@ -181,18 +181,18 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				// iconbar
 
 				// likebutton
-				htmlLikeButton = document
-						.querySelector('#ideaDetails_like_button');
-				setLikeButtonPicture(htmlLikeButton, currentIdea);
+				htmlLikeImg = document
+						.querySelector('#ideaDetails_like_img');
+				setLikeButtonPicture(htmlLikeImg, currentIdea);
 				// number of likes
 				htmlLikesSpan = document
 						.querySelector('#ideaDetails_likes_span');
 				htmlLikesSpan.textContent = currentIdea.numberLikes;
 
 				// starbutton
-				htmlFollowerButton = document
-						.querySelector('#ideaDetails_follower_button');
-				setFollowerButtonPicture(htmlFollowerButton, currentIdea);
+				htmlFollowerImg = document
+						.querySelector('#ideaDetails_follower_img');
+				setFollowerButtonPicture(htmlFollowerImg, currentIdea);
 				// number of followers
 				htmlFollowerSpan = document
 						.querySelector('#ideaDetails_follower_span');
@@ -272,7 +272,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				cbLocalizeView();
 			}
 
-			function setLikeButtonPicture(htmlLikeButton, ideaObject) {
+			function setLikeButtonPicture(htmlLikeImg, ideaObject) {
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUser = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
@@ -280,17 +280,17 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					// wenn der Nutzer die Idee schon gelikt hat, dann zeige die
 					// leuchtende Glühbirne, ansonsten die nicht leuchtende
 					if (ideaObject.likeUsers.includes(currentUser)) {
-						htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_on.png")';
+						htmlLikeImg.src = './resources/img/bulb_on.png';
 					} else {
-						htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_off.png")';
+						htmlLikeImg.src = './resources/img/bulb_off.png';
 					}
 				} else {
 					
-					htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_off.png")';
+					htmlLikeImg.src = './resources/img/bulb_off.png';
 				}
 			}
 
-			function setFollowerButtonPicture(htmlFollowerButton, ideaObject) {
+			function setFollowerButtonPicture(htmlFollowerImg, ideaObject) {
 
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUser = ideaWatcher.controller.UserSession
@@ -299,13 +299,13 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					// wenn der Nutzer der Idee schon folgt, soll der leuchtende
 					// Stern angezeigt werden, ansonsten der nicht leuchtende
 					if (ideaObject.followers.includes(currentUser)) {
-						htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_on.png")';
+						htmlFollowerImg.src = './resources/img/favorite_on.png';
 					} else {
-						htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_off.png")';
+						htmlFollowerImg.src = './resources/img/favorite_off.png';
 					}
 				} else {
 					
-					htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_off.png")';
+					htmlFollowerImg.src = './resources/img/favorite_off.png';
 				}
 
 			}
