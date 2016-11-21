@@ -107,22 +107,22 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			function changeLikeStatus() {
 
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
-					var currentUser = ideaWatcher.controller.UserSession
+					var currentUserId = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
 					
 					if (htmlLikeButton.style.backgroundImage == 'url("./resources/img/bulb_on.png")') {
 						htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_off.png")';
 						var exObj = {
-							userId : currentUser.userId,
+							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
 							action : 'unlike'
 						};
 					} else {
 						htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_on.png")';
 						var exObj = {
-							userId : currentUser.userId,
+							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
-							sdjfdsjfn : 'like'
+							action : 'like'
 						};
 					}
 					console.log(exObj);
@@ -135,20 +135,20 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			function changeFollowerStatus() {
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
-					var currentUser = ideaWatcher.controller.UserSession
+					var currentUserId = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
 					
 					if (htmlFollowerButton.style.backgroundImage == 'url("./resources/img/favorite_on.png")') {
 						htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_off.png")';
 						var exObj = {
-							userId : currentUser.username,
+							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
 							action : 'unfollow'
 						};
 					} else {
 						htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_on.png")';
 						var exObj = {
-							userId : currentUser.username,
+							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
 							action : 'follow'
 						};
@@ -311,6 +311,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			}
 			
 			function cbLikeFollowResponse(exObj) {
+
+				var language = ideaWatcher.core.Localizer.getLanguage();
+
 				if (exObj.result == 'success'){
 
 					//TODO Glühbirne ändern und Like Follows hochzaehlen
