@@ -320,7 +320,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         }
 
         function setLikedState(likeImage) {
-            var likeUsers = likeImage.parents
+            var likeUsers = likeImage.parents;
         }
 
         function handleLikeClickEvent(clickEvent) {
