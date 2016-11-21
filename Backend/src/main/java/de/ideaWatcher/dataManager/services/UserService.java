@@ -67,7 +67,7 @@ public class UserService {
                     .first();
             // Wenn userName gefunden, dann gib userId zurück
             if (userDoc != null) {
-                System.out.println("ID: " + userDoc.get("_id").toString());
+                //System.out.println("ID: " + userDoc.get("_id").toString());
                 return userDoc.get("_id").toString();
             }
             // // Wenn userName nicht gefunden, dann nach email schauen
@@ -226,7 +226,7 @@ public class UserService {
                 .append( "createdIdeas", new ArrayList<Document>()) // statt null eine ArrayList -- noch nicht getestet 17.11.16
                 .append("numberCreatedIdeas", user.getNumberCreatedIdeas())
                 .append( "followedIdeas", new ArrayList<Document>())  // statt null eine ArrayList -- noch nicht getestet 17.11.16
-                .append("numberFollowed", user.getNumberFollowedIdeas());
+                .append("numberFollowedIdeas", user.getNumberFollowedIdeas());
     }
 
     public boolean validatePassword(String plaintextPassword, String
