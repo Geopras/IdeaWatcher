@@ -320,10 +320,21 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         }
 
         function setLikedState(likeImage) {
-            var likeUsers = likeImage.parents;
+            var ideaElement = getMyIdeaContainer(likeImage);
+            var ideaId = ideaElement.attributes.getNamedItem('data-ideaid').nodeValue;
+
+            var myIdea = cbGetIdea(ideaId);
+
         }
 
         function handleLikeClickEvent(clickEvent) {
+
+            if (ideaWatcher.controller.UserSession.isUserLoggedIn()){
+                var currentUser = ideaWatcher.controller.UserSession.getCurrentUserId();
+                console.log(currentUser);
+            } else {
+                console.log("kein User angemeldet");
+            }
 
             clickEvent.target.src = './resources/img/alreadyLiked.svg';
         }
