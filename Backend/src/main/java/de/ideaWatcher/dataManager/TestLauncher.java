@@ -36,14 +36,14 @@ public class TestLauncher {
         List<IIdea> ideaList = new ArrayList<IIdea>();
         ideaList = is.getAllIdeas();
         // Beispiele
-        System.out.println("Größe der Liste: " + ideaList.size());
-        System.out.println("Ausgabe: " + ideaList.get(50).getName());
+        System.out.println("Grï¿½ï¿½e der Liste: " + ideaList.size());
+        System.out.println("Ausgabe: " + ideaList.get(49).getName());
     }
 
     public static void main(String[] args) throws Exception {
 
-       // createTestData();
-        getData();
+       //createTestData();
+       getData();
 
     }
 }

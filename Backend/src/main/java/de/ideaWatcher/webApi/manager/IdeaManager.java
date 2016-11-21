@@ -12,6 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -167,7 +168,7 @@ public class IdeaManager {
 
         // Füre getAllIdeasSnapshot alle X Timeunits aus mit einer Startverzoegerung von X Timeunits
         rankCalculationScheduler.scheduleAtFixedRate(new RankCalculationDaemon(),
-                0,
+                this.REFRESH_RANKING_TIME,
                 this.REFRESH_RANKING_TIME,
                 this.REFRESH_RANKING_TIMEUNIT);
 
