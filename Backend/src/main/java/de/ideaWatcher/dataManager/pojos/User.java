@@ -2,8 +2,6 @@ package main.java.de.ideaWatcher.dataManager.pojos;
 
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +22,9 @@ public class User implements IUser {
     private String language;
     private String pictureUrl;
     private List<IIdea> createdIdeas;
-    private Double numberCreatedIdeas;
+    private long numberCreatedIdeas;
     private List<IIdea> followedIdeas;
-    private Double numberFollowedIdeas;
+    private long numberFollowedIdeas;
 
     @Override
     public String getUserId() {
@@ -139,12 +137,12 @@ public class User implements IUser {
     }
 
     @Override
-    public Double getNumberCreatedIdeas() {
+    public long getNumberCreatedIdeas() {
         return this.numberCreatedIdeas;
     }
 
     @Override
-    public void setNumberCreatedIdeas(Double numberCreatedIdeas) {
+    public void setNumberCreatedIdeas(long numberCreatedIdeas) {
         this.numberCreatedIdeas = numberCreatedIdeas;
     }
 
@@ -159,12 +157,12 @@ public class User implements IUser {
     }
 
     @Override
-    public Double getNumberFollowedIdeas() {
+    public long getNumberFollowedIdeas() {
         return this.numberFollowedIdeas;
     }
 
     @Override
-    public void setNumberFollowedIdeas(Double numberFollowedIdeas) {
+    public void setNumberFollowedIdeas(long numberFollowedIdeas) {
         this.numberFollowedIdeas = numberFollowedIdeas;
     }
 
@@ -183,8 +181,8 @@ public class User implements IUser {
         this.language = "";
         this.pictureUrl = "";
         this.createdIdeas = new ArrayList<>();
-        this.numberCreatedIdeas = 0.0;
-        this.numberFollowedIdeas = 0.0;
+        this.numberCreatedIdeas = 0;
+        this.numberFollowedIdeas = 0;
         this.followedIdeas = new ArrayList<>();
     }
 }
