@@ -126,7 +126,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
 
         function pubGetIdea(ideaId) {
 
-            ideaWatcher.controller.IdeaList.getIdea(ideaId);
+            return ideaWatcher.controller.IdeaList.getIdea(ideaId);
         }
 
         function buildRequestComment(exObject)

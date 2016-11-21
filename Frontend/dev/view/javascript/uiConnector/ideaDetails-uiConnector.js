@@ -64,41 +64,41 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function () {
 			htmlFollowerButton.addEventListener('click',
 					changeFollowerStatus);
 
-			var otherUser = ideaWatcher.model.User;
-			var creator = Object.create(otherUser);
-			currentUser = Object.create(otherUser);
-			otherUser.username = 'Erika Mustermann';
-//				otherUser.pictureUrl = '';
-
-			creator.username = 'a';
-			creator.email = 'a@c.de';
-			creator.isMailPublic = true;
-			creator.pictureUrl = './resources/img/gluehbirneLeuchtet.png';
-
-//				var currentUser =  ideaWatcher.controller.Login.getUserId();
-			currentUser.username = 'Andi';
-
-			var comment1 = ideaWatcher.model.Comment;
-			comment1.userName = otherUser.username ;
-			comment1.pictureUrl = './resources/img/user.jpg';
-			comment1.createDate = new Date();
-			comment1.text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sagittis turpis eu eleifend finibus. Praesent non nisi tempor, imperdiet diam eu, tincidunt ex. Morbi laoreet sollicitudin faucibus. Praesent vitae velit blandit nunc posuere vehicula. Etiam sed augue quam. In hendrerit dictum nullam. ';
-
-			var ideaObject = ideaWatcher.model.Idea;
-			ideaObject.ideaId = '936DA01F-9ABD-4D9D-80C7-02AF85C822A8';
-			ideaObject.name = 'TestObjekt Idee';
-			ideaObject.description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sagittis turpis eu eleifend finibus. Praesent non nisi tempor, imperdiet diam eu, tincidunt ex. Morbi laoreet sollicitudin faucibus. Praesent vitae velit blandit nunc posuere vehicula. Etiam sed augue quam. In hendrerit dictum nullam. ';
-			ideaObject.creator = creator;
-			ideaObject.publishDate = new Date();
-			ideaObject.likeUsers = [otherUser];
-			ideaObject.numberLikes = 15;
-			ideaObject.followers = [otherUser];
-			ideaObject.numberFollowers = 5;
-			ideaObject.comments = [ comment1, comment1 ];
-			ideaObject.numberComments = 2;
+//			var otherUser = ideaWatcher.model.User;
+//			var creator = Object.create(otherUser);
+//			currentUser = Object.create(otherUser);
+//			otherUser.username = 'Erika Mustermann';
+////				otherUser.pictureUrl = '';
+//
+//			creator.username = 'a';
+//			creator.email = 'a@c.de';
+//			creator.isMailPublic = true;
+//			creator.pictureUrl = './resources/img/gluehbirneLeuchtet.png';
+//
+////				var currentUser =  ideaWatcher.controller.Login.getUserId();
+//			currentUser.username = 'Andi';
+//
+//			var comment1 = ideaWatcher.model.Comment;
+//			comment1.userName = otherUser.username ;
+//			comment1.pictureUrl = './resources/img/user.jpg';
+//			comment1.createDate = new Date();
+//			comment1.text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sagittis turpis eu eleifend finibus. Praesent non nisi tempor, imperdiet diam eu, tincidunt ex. Morbi laoreet sollicitudin faucibus. Praesent vitae velit blandit nunc posuere vehicula. Etiam sed augue quam. In hendrerit dictum nullam. ';
+//
+//			var ideaObject = ideaWatcher.model.Idea;
+//			ideaObject.ideaId = '936DA01F-9ABD-4D9D-80C7-02AF85C822A8';
+//			ideaObject.name = 'TestObjekt Idee';
+//			ideaObject.description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sagittis turpis eu eleifend finibus. Praesent non nisi tempor, imperdiet diam eu, tincidunt ex. Morbi laoreet sollicitudin faucibus. Praesent vitae velit blandit nunc posuere vehicula. Etiam sed augue quam. In hendrerit dictum nullam. ';
+//			ideaObject.creator = creator;
+//			ideaObject.publishDate = new Date();
+//			ideaObject.likeUsers = [otherUser];
+//			ideaObject.numberLikes = 15;
+//			ideaObject.followers = [otherUser];
+//			ideaObject.numberFollowers = 5;
+//			ideaObject.comments = [ comment1, comment1 ];
+//			ideaObject.numberComments = 2;
 
 			// region: ich geb mal was beim Start von außen rein
-			renderView(ideaObject);
+//			renderView(ideaObject);
 			// endregion
 		}
 		// endregion
@@ -109,7 +109,6 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function () {
 
 				var idea = ideaWatcher.controller.IdeaDetails.getIdea(obj.additionalData.ideaId);
 				renderView(idea);
-				//ideaWatcher.controller.IdeaDetails.tryToGetIdea(obj.additionalData.ideaId);
 				htmlView.style.display = 'block';
 			} else {
 				htmlView.style.display = 'none';
@@ -226,42 +225,45 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function () {
 
 			var comments = currentIdea.comments;
 
-			comments.forEach(function(comment){
-
-				//div ideaDetails_CommentNameAndText_div
-				var htmlOneCommentDiv = document.createElement('div');
-				htmlOneCommentDiv.classList.add('ideaDetails_oneComment_div');
-				//img comment.pictureUrl
-				var htmlCommentImage = document.createElement('img');
-				htmlCommentImage.src = comment.pictureUrl;
-				htmlCommentImage.style.width = '30px';
-				htmlCommentImage.style.height = '30px';
-				//div ohne klasse
-				var htmlCommentNameAndTextDiv = document.createElement('div');
-
-				//div ideaDetails_CommentName_div
-				var htmlCommentNameDiv = document.createElement('div');
-				htmlCommentNameDiv.classList.add('ideaDetails_CommentName_div');
-				htmlCommentNameDiv.textContent = comment.userName;
-				//div ideaDetails_CommentText_div
-				var htmlCommentTextDiv = document.createElement('div');
-				htmlCommentTextDiv.classList.add('ideaDetails_CommentText_div');
-				htmlCommentTextDiv.textContent = comment.text;
-				//append 2 divs to div
-				htmlCommentNameAndTextDiv.appendChild(htmlCommentNameDiv);
-				htmlCommentNameAndTextDiv.appendChild(htmlCommentTextDiv);
-
-				//append img und div zu div
-				htmlOneCommentDiv.appendChild(htmlCommentImage);
-				htmlOneCommentDiv.appendChild(htmlCommentNameAndTextDiv);
-
-				//append div zu oldOldComments
-				htmlOldCommentsSection.appendChild(htmlOneCommentDiv);
-			});
-
-			//append all elements to section
-			//append all elements to view
-			htmlView.appendChild(htmlOldCommentsSection);
+			if (comments) {
+				
+				comments.forEach(function(comment){
+	
+					//div ideaDetails_CommentNameAndText_div
+					var htmlOneCommentDiv = document.createElement('div');
+					htmlOneCommentDiv.classList.add('ideaDetails_oneComment_div');
+					//img comment.pictureUrl
+					var htmlCommentImage = document.createElement('img');
+					htmlCommentImage.src = comment.pictureUrl;
+					htmlCommentImage.style.width = '30px';
+					htmlCommentImage.style.height = '30px';
+					//div ohne klasse
+					var htmlCommentNameAndTextDiv = document.createElement('div');
+	
+					//div ideaDetails_CommentName_div
+					var htmlCommentNameDiv = document.createElement('div');
+					htmlCommentNameDiv.classList.add('ideaDetails_CommentName_div');
+					htmlCommentNameDiv.textContent = comment.userName;
+					//div ideaDetails_CommentText_div
+					var htmlCommentTextDiv = document.createElement('div');
+					htmlCommentTextDiv.classList.add('ideaDetails_CommentText_div');
+					htmlCommentTextDiv.textContent = comment.text;
+					//append 2 divs to div
+					htmlCommentNameAndTextDiv.appendChild(htmlCommentNameDiv);
+					htmlCommentNameAndTextDiv.appendChild(htmlCommentTextDiv);
+	
+					//append img und div zu div
+					htmlOneCommentDiv.appendChild(htmlCommentImage);
+					htmlOneCommentDiv.appendChild(htmlCommentNameAndTextDiv);
+	
+					//append div zu oldOldComments
+					htmlOldCommentsSection.appendChild(htmlOneCommentDiv);
+				});
+	
+				//append all elements to section
+				//append all elements to view
+				htmlView.appendChild(htmlOldCommentsSection);
+			}
 
 			cbLocalizeView();
 		}
