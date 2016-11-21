@@ -40,16 +40,16 @@ public class IdeaManager {
     public void initialize() throws Exception {
         // initial, bevor der Ranking Algorithmus ein mal durchgelaufen ist,
         // soll der Snapshot mit den letzten Werten aus der Datenbank befüllt werden
-        allIdeasSnapshot = getTestIdeas();
 
-//        try {
-//            this.allIdeasSnapshot = this.ideaController.getAllIdeas();
-//        } catch (Exception e) {
-//            log.log(Level.SEVERE, "Ein Fehler ist bei der Abfrage aller Ideen" +
-//                    " aus der Datenbank aufgetreten.\nFehlermeldung: " + e
-//                    .toString());
-//            throw new Exception("getAllIdeas_error");
-//        }
+        try {
+            this.allIdeasSnapshot = getTestIdeas();
+            //this.allIdeasSnapshot = this.ideaController.getAllIdeas();
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Ein Fehler ist bei der Abfrage aller Ideen" +
+                    " aus der Datenbank aufgetreten.\nFehlermeldung: " + e
+                    .toString());
+            throw new Exception("getAllIdeas_error");
+        }
         // Starte nun die automatische Erneuerung des allIdeasSnapshots
         startRankCalculationScheduler();
     }

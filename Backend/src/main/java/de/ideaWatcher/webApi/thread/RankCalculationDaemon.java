@@ -48,7 +48,7 @@ public class RankCalculationDaemon extends Thread {
         // hier wird erstmal nur mit Testideen gearbeitet
         List<IIdea> ideas;
         try {
-            // ideas = ideaController.getAllIdeas();
+             //ideas = ideaController.getAllIdeas();
              ideas = ideaManager.getTestIdeas();
         } catch (Exception e) {
             log.log(Level.SEVERE, "Ein Fehler ist bei der Abfrage aller Ideen" +
