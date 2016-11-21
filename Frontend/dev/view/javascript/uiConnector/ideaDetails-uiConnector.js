@@ -16,6 +16,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			var currentIdea = null;
 
+
+		var evLikeFollowResponse = {
+			topic: 'SIdeaDetails/LikeFollowIdeaRequest-response',
+			cbFunction: cbLikeFollowResponse
+		};
 			// endregion
 
 			// region registriere Callbacks beim Controller
@@ -26,6 +31,10 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			ideaWatcher.controller.IdeaDetails
 					.registerGetIdeaResponse(cbGetIdeaResponse);
 			// endregion
+
+		//region subscribe to events
+		ideaWatcher.core.MessageBroker.subscribe(evLikeFollowResponse);
+		//endregion
 
 			// region cbIni
 			function cbIni() {
@@ -104,20 +113,20 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					if (htmlLikeButton.style.backgroundImage == 'url("./resources/img/bulb_on.png")') {
 						htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_off.png")';
 						var exObj = {
-							userId : currentUser.username,
+							userId : currentUser.userId,
 							ideaId : currentIdea.ideaId,
 							action : 'unlike'
 						};
 					} else {
 						htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_on.png")';
 						var exObj = {
-							userId : currentUser.username,
+							userId : currentUser.userId,
 							ideaId : currentIdea.ideaId,
-							action : 'like'
+							sdjfdsjfn : 'like'
 						};
 					}
 					console.log(exObj);
-					ideaWatcher.controller.IdeaDetails.tryToChangeLike(exObj);
+					ideaWatcher.controller.IdeaDetails.tryToChangeLikeFollow(exObj);
 				} else {
 					console.log("kein User angemeldet");
 				}
@@ -147,7 +156,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					console.log(exObj);
 
 					ideaWatcher.controller.IdeaDetails
-							.tryToChangeFollower(exObj);
+							.tryToChangeLikeFollow(exObj);
 				} else {
 					console.log("kein User angemeldet");
 				}
@@ -299,6 +308,29 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_off.png")';
 				}
 
+			}
+			
+			function cbLikeFollowResponse(exObj) {
+				if (exObj.result == 'success'){
+
+					//TODO Glühbirne ändern und Like Follows hochzaehlen
+				} else {
+					var errorMessage = exObj.error;
+
+					var notificationType = ideaWatcher.model.GlobalNotificationType.ERROR;
+					if (exObj.result == "warning"){
+						notificationType = ideaWatcher.model.GlobalNotificationType.WARNING;
+					}
+					if (exObj.result == "info"){
+						notificationType = ideaWatcher.model.GlobalNotificationType.INFO;
+					}
+
+					ideaWatcher.controller.GlobalNotification.showNotification(
+						ideaWatcher.model.GlobalNotificationType.ERROR,
+						ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
+						ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
+						5000);
+				}
 			}
 
 			return {

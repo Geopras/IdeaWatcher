@@ -38,8 +38,8 @@ public class TestLauncher {
 
     public static void main(String[] args) throws Exception {
 
-       // createTestData();
-        getData();
+       //createTestData();
+       getData();
 
     }
 }

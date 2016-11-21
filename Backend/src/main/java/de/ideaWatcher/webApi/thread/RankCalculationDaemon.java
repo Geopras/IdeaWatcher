@@ -4,6 +4,7 @@ package main.java.de.ideaWatcher.webApi.thread;
 import main.java.de.ideaWatcher.webApi.core.IdeaAgeComparator;
 import main.java.de.ideaWatcher.webApi.core.IdeaFollowersComparator;
 import main.java.de.ideaWatcher.webApi.core.IdeaLikesComparator;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.manager.IdeaManager;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
@@ -40,13 +41,15 @@ public class RankCalculationDaemon extends Thread {
         long comparableStartTime = new Date().getTime();
 
         IdeaManager ideaManager = InstanceManager.getIdeaManager();
+        IIdeaController ideaController = InstanceManager.getDataManager().getIdeaController();
 
         // TODO: die Ideen müssen aus dem DataManager geholt werden
         // Hole die Ideen aus der Datenbank
         // hier wird erstmal nur mit Testideen gearbeitet
         List<IIdea> ideas;
         try {
-            ideas = ideaManager.getTestIdeas(); //this.ideaController.getAllIdeas(); //
+            // ideas = ideaController.getAllIdeas();
+             ideas = ideaManager.getTestIdeas();
         } catch (Exception e) {
             log.log(Level.SEVERE, "Ein Fehler ist bei der Abfrage aller Ideen" +
                     " aus der Datenbank aufgetreten.\nFehlermeldung: " + e
@@ -60,6 +63,17 @@ public class RankCalculationDaemon extends Thread {
         Date oldestPublishDate = Collections.min(ideas, new IdeaAgeComparator()).getPublishDate();
         // alter der ältesten Idee in Sekunden
         long maxAge = (comparableStartTime - oldestPublishDate.getTime()) / 1000;
+
+        // Division durch Null verhindern, wenn noch nichts geliked, gefollowed usw. wurde
+        if (maxLikes == 0 ){
+            maxLikes = 1;
+        }
+        if (maxFollowers == 0){
+            maxFollowers = 1;
+        }
+        if (maxAge == 0){
+            maxAge = 1;
+        }
 
         for (IIdea idea : ideas){
 
