@@ -2,7 +2,9 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         //region local vars
         var header = null;
-        var htmlView = null;
+        var htmlMainView = null;
+        var htmlMyIdeasView = null;
+        var htmlMyFollowedIdeasView = null;
         var currentListType = null;
         var currentCategory = null;
         var currentIdeasMap = {};
@@ -32,9 +34,11 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
             currentListType = ideaWatcher.model.IdeaList.ListType.HOT;
             currentCategory = ideaWatcher.model.IdeaList.Category.NONE;
-            currentIdeaList = [];
+
             //region initialize html
-            htmlView = document.querySelector('.ideaList_view');
+            htmlMainView = document.querySelector('.ideaList_view');
+            htmlMyIdeasView = document.querySelector('myIdeas_view');
+            htmlMyFollowedIdeasView = document.querySelector('followedIdeas_view');
             header = document.querySelector('#ideaList_header_h1');
             //endregion
         }
@@ -45,11 +49,11 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             if(exObj.shouldShow)
             {
                 renderView(exObj.additionalData);
-                htmlView.style.display = 'block';
+                htmlMainView.style.display = 'block';
             }
             else
             {
-                htmlView.style.display = 'none';
+                htmlMainView.style.display = 'none';
             }
         }
 
@@ -160,27 +164,25 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
             cbLocalizeView();
 
-            if (isRenderNewIdeaList) {
-
-                currentIdeaList = [];
-                publishedLabels = [];
-                htmlView.removeChild(document.querySelector('.ideaList_sections'));
-                var htmlSections = document.createElement('div');
-                htmlSections.classList.add('ideaList_sections');
-                renderIdeaList(htmlSections, ideasToAppend);
-                htmlView.appendChild(htmlSections);
-
-            } else {
-
-                var htmlSections = htmlView.querySelector('.ideaList_sections');
-                renderIdeaList(htmlSections, ideasToAppend);
-            }
-
-            currentIdeaList.splice(currentIdeaList.length, 0, ideasToAppend);
             if (!currentIdeasMap) {
                 createIdeasMap();
             } else {
                 addToIdeasMap(ideasToAppend);
+            }
+
+            if (isRenderNewIdeaList) {
+
+                publishedLabels = [];
+                htmlMainView.removeChild(document.querySelector('.ideaList_sections'));
+                var htmlSections = document.createElement('div');
+                htmlSections.classList.add('ideaList_sections');
+                renderIdeaList(htmlSections, ideasToAppend);
+                htmlMainView.appendChild(htmlSections);
+
+            } else {
+
+                var htmlSections = htmlMainView.querySelector('.ideaList_sections');
+                renderIdeaList(htmlSections, ideasToAppend);
             }
         }
 
