@@ -37,12 +37,6 @@ public class IdeaService {
         return ideas;
     }
     
-    public List<IIdea> getAllIdeasSmart (){
-        // ToDo
-        List<IIdea> ideaList = new ArrayList<IIdea>();
-        return ideaList;
-    }
-    
     private IIdea buildIdea( Document ideaDoc){
         IIdea idea = new Idea();
         
@@ -50,8 +44,7 @@ public class IdeaService {
         idea.setName(ideaDoc.getString("name"));
         idea.setDescription(ideaDoc.getString("description"));
         idea.setCategory(ideaDoc.getString("catagory"));
-      //  idea.setCreator(ideaDoc.get("creator", User.class));
-        idea.setCreator((IUser) ideaDoc.get("creator"));
+        idea.setCreator(  buildUser( (Document) ideaDoc.get("creator") ) );
         idea.setPublishDate(ideaDoc.getDate("publishedDate"));
         idea.setLanguage(ideaDoc.getString("language"));
         idea.setHotRank(ideaDoc.getDouble("hotRank"));
@@ -122,6 +115,23 @@ public class IdeaService {
                 .append("numberCreatedIdeas", user.getNumberCreatedIdeas())
                 .append( "followedIdeas", new ArrayList<Document>())  // statt null eine ArrayList -- noch nicht getestet 17.11.16
                 .append("numberFollowed", user.getNumberFollowedIdeas());
+    }
+    
+    private IUser buildUser(Document userDoc) {
+
+        IUser user = new User();
+        user.setUserName(userDoc.getString("userName"));
+        user.setPassword(userDoc.getString("password"));
+        user.setEmail(userDoc.getString("email"));
+        user.setIsMailPublic(userDoc.getBoolean("isMailPublic"));
+        user.setSurname(userDoc.getString("surname"));
+        user.setFirstname(userDoc.getString("firstName"));
+        user.setGender(userDoc.getString("gender"));
+        user.setLanguage(userDoc.getString("language"));
+        user.setPictureURL(userDoc.getString("pictureUrl"));
+        user.setNumberCreatedIdeas(userDoc.getDouble("numberCreatedIdeas"));
+        user.setNumberFollowedIdeas(userDoc.getDouble("numberFollowedIdeas"));
+        return user;
     }
     
 }

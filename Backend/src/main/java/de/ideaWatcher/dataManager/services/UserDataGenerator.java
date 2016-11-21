@@ -22,18 +22,20 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class UserDataGenerator {
 
-    private String collectionName;
-
-    public UserDataGenerator(String collectionName) {
-        this.collectionName = collectionName;
-    }
     public String hashPassword(String password) {
 
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    public List<IUser> createRandomUserList( int count ) throws Exception{
-       
+    public List<IUser> createUsers(String collectionName, int count) throws Exception{
+        List<IUser> userList = new ArrayList<IUser>();
+        userList = createRandomUserList(count);
+        UserService us = new UserService(collectionName);
+        us.addUserList(userList);
+        return userList;
+    }
+    
+    public List<IUser> createRandomUserList( int count ) throws Exception{       
         List<IUser> userList = new ArrayList<IUser>();
         IUser user;
         
@@ -43,13 +45,18 @@ public class UserDataGenerator {
             user.setEmail("test"+i+"@tester.de");
             user.setPassword("password" + getRandomDouble(-100.0, 100.0) );
             user.setIsMailPublic(false);
-           //System.out.println(user.getUserName());
             userList.add(user);
         }
         return userList;
     }
+    public void createIdeas (String collectionName, List<IUser> userList, int count) throws Exception{
+        List<IIdea> ideaList = new ArrayList<IIdea>();
+        IdeaService is = new IdeaService(collectionName);
+        ideaList = createRandomIdeaCollection(count, userList);
+        is.addIdeaList(ideaList);
+    }
     
-    public List<IIdea> createRandomIdeaCollection(int count, List<IUser> userList) throws Exception{
+    private List<IIdea> createRandomIdeaCollection(int count, List<IUser> userList) throws Exception{
         List<IComment> commentList = new ArrayList<IComment>();
         //Comment comment = new Comment();
         
