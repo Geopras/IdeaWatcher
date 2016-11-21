@@ -68,6 +68,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 					var idea = ideaWatcher.controller.IdeaDetails
 							.getIdea(obj.additionalData.ideaId);
+					currentIdea = idea;
 					renderView(idea);
 					htmlView.style.display = 'block';
 				} else {
@@ -96,45 +97,61 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			function changeLikeStatus() {
 
-				if (htmlLikeButton.style.backgroundImage == 'url("./resources/img/bulb_on.png")') {
-					htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_off.png")';
-					var exObj = {
-						userId : currentUser.username,
-						ideaId : currentIdea.ideaId,
-						action : 'unlike'
-					};
+				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
+					var currentUser = ideaWatcher.controller.UserSession
+							.getCurrentUserId();
+					
+					if (htmlLikeButton.style.backgroundImage == 'url("./resources/img/bulb_on.png")') {
+						htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_off.png")';
+						var exObj = {
+							userId : currentUser.username,
+							ideaId : currentIdea.ideaId,
+							action : 'unlike'
+						};
+					} else {
+						htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_on.png")';
+						var exObj = {
+							userId : currentUser.username,
+							ideaId : currentIdea.ideaId,
+							action : 'like'
+						};
+					}
+					console.log(exObj);
+					ideaWatcher.controller.IdeaDetails.tryToChangeLike(exObj);
 				} else {
-					htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_on.png")';
-					var exObj = {
-						userId : currentUser.username,
-						ideaId : currentIdea.ideaId,
-						action : 'like'
-					};
+					console.log("kein User angemeldet");
 				}
-				console.log(exObj);
-				ideaWatcher.controller.IdeaDetails.tryToChangeLike(exObj);
+
 			}
 
 			function changeFollowerStatus() {
+				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
+					var currentUser = ideaWatcher.controller.UserSession
+							.getCurrentUserId();
+					
+					if (htmlFollowerButton.style.backgroundImage == 'url("./resources/img/favorite_on.png")') {
+						htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_off.png")';
+						var exObj = {
+							userId : currentUser.username,
+							ideaId : currentIdea.ideaId,
+							action : 'unfollow'
+						};
+					} else {
+						htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_on.png")';
+						var exObj = {
+							userId : currentUser.username,
+							ideaId : currentIdea.ideaId,
+							action : 'follow'
+						};
+					}
+					console.log(exObj);
 
-				if (htmlFollowerButton.style.backgroundImage == 'url("./resources/img/favorite_on.png")') {
-					htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_off.png")';
-					var exObj = {
-						userId : currentUser.username,
-						ideaId : currentIdea.ideaId,
-						action : 'unfollow'
-					};
+					ideaWatcher.controller.IdeaDetails
+							.tryToChangeFollower(exObj);
 				} else {
-					htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_on.png")';
-					var exObj = {
-						userId : currentUser.username,
-						ideaId : currentIdea.ideaId,
-						action : 'follow'
-					};
+					console.log("kein User angemeldet");
 				}
-				console.log(exObj);
 
-				ideaWatcher.controller.IdeaDetails.tryToChangeFollower(exObj);
 			}
 
 			function renderView(currentIdea) {
@@ -250,7 +267,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUser = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
-					console.log(currentUser);
+					
 					// wenn der Nutzer die Idee schon gelikt hat, dann zeige die
 					// leuchtende Glühbirne, ansonsten die nicht leuchtende
 					if (ideaObject.likeUsers.includes(currentUser)) {
@@ -259,7 +276,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_off.png")';
 					}
 				} else {
-					console.log("kein User angemeldet");
+					
 					htmlLikeButton.style.backgroundImage = 'url("./resources/img/bulb_off.png")';
 				}
 			}
@@ -269,7 +286,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUser = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
-					console.log(currentUser);
+					
 					// wenn der Nutzer der Idee schon folgt, soll der leuchtende
 					// Stern angezeigt werden, ansonsten der nicht leuchtende
 					if (ideaObject.followers.includes(currentUser)) {
@@ -278,7 +295,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_off.png")';
 					}
 				} else {
-					console.log("kein User angemeldet");
+					
 					htmlFollowerButton.style.backgroundImage = 'url("./resources/img/favorite_off.png")';
 				}
 
