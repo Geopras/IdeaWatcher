@@ -10,9 +10,9 @@
 	"language" : "de_DE",
 	"pictureUrl" : "www.image-quelle.de",
 	"createdIdeas" : [ ],
-	"numberCreatedIdeas" : 0,
+	"numberCreatedIdeas" : NumberLong("0"),
 	"followedIdeas" : [ ],
-	"numberFollowedIdeas" : 0
+	"numberFollowedIdeas" : NumberLong("0")
 },
 {
 	"_id" : ObjectId("58238468cc26ba5ef5bfeb94"),
@@ -93,4 +93,20 @@
 		}
 	],
 	"numberFollowedIdeas" : 1
+},
+{
+	"_id" : ObjectId("5831e14bbfc6a23bc904b868"),
+	"password" : "$2a$10$ft0XlFkr2CzgFvHcoBCijueph6AHevlX0Opj.FjtjV3IzE.PiHnDS",
+	"email" : "bla@gmail.org",
+	"isMailPublic" : false,
+	"surname" : "",
+	"firstName" : "",
+	"gender" : "",
+	"language" : "",
+	"createdIdeas" : [ ],
+	"numberCreatedIdeas" : 0,
+	"followedIdeas" : [ ],
+	"username" : "testUser1",
+	"pictureURL" : "",
+	"numberFollowed" : 0
 },

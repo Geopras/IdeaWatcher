@@ -30,13 +30,13 @@ public class UserService {
     public IUser getUser(String userId) throws Exception {
 
         try {
-            if (this.existsUserId(userId)) {
-                if (!dbConnectionService.isOpen()) {
-                    dbConnectionService.openConnection();
-                }
-                Document userDoc = dbConnectionService.getCollection()
-                        .find(new BasicDBObject("_id", new ObjectId
-                                (userId))).first();
+            if (!dbConnectionService.isOpen()) {
+                dbConnectionService.openConnection();
+            }
+            Document userDoc = dbConnectionService.getCollection()
+                    .find(new BasicDBObject("_id", new ObjectId
+                            (userId))).first();
+            if (userDoc != null) {
                 return buildUser(userDoc);
             } else {
                 throw new Exception("userIdNotExist");
@@ -58,23 +58,23 @@ public class UserService {
 
         try {
             Document userDoc;
-            if (this.existsUserName(userNameOrEmail)) {
-                if (!dbConnectionService.isOpen()) {
-                    dbConnectionService.openConnection();
-                }
-                userDoc = dbConnectionService.getCollection()
-                        .find(new BasicDBObject("userName", userNameOrEmail))
-                        .first();
+
+            if (!dbConnectionService.isOpen()) {
+                dbConnectionService.openConnection();
+            }
+            userDoc = dbConnectionService.getCollection()
+                    .find(new BasicDBObject("userName", userNameOrEmail))
+                    .first();
+            // Wenn userName gefunden, dann gib userId zurück
+            if (userDoc != null) {
                 System.out.println("ID: " + userDoc.get("_id").toString());
                 return userDoc.get("_id").toString();
             }
-            else if (this.existsEmail(userNameOrEmail)) {
-                if (!dbConnectionService.isOpen()) {
-                    dbConnectionService.openConnection();
-                }
-                userDoc = dbConnectionService.getCollection()
-                        .find(new BasicDBObject("email", userNameOrEmail))
-                        .first();
+            // // Wenn userName nicht gefunden, dann nach email schauen
+            userDoc = dbConnectionService.getCollection()
+                    .find(new BasicDBObject("email", userNameOrEmail))
+                    .first();
+            if (userDoc != null) {
                 return userDoc.get("_id").toString();
             } else {
                 throw new Exception("getUserId_userNameOrEmailNotExists");
