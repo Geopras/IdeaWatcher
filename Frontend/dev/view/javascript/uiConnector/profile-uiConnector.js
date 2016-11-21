@@ -49,7 +49,7 @@ ideaWatcher.view.Profile = ideaWatcher.view.Profile || (function VProfile() {
             //endregion
 
             //region register Callbacks
-            // wam.logic.Login.registerVerificationError(cbShowVerificationError);
+            // wam.logic.UserSession.registerVerificationError(cbShowVerificationError);
             ideaWatcher.controller.Profile.registerShowView(cbShowView);
             //endregion
 

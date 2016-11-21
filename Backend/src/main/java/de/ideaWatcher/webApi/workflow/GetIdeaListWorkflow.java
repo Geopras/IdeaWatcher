@@ -3,6 +3,7 @@ package main.java.de.ideaWatcher.webApi.workflow;
 
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
+import main.java.de.ideaWatcher.webApi.core.JSONBuilder;
 import main.java.de.ideaWatcher.webApi.core.Response;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
@@ -107,7 +108,7 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         JSONArray ideasArray = new JSONArray();
 
         for (IIdea idea : ideas){
-            ideasArray.put(idea.toJSONObject()) ;
+            ideasArray.put(JSONBuilder.getIdeaListJSONObject(idea)) ;
         }
 
         return ideasArray;

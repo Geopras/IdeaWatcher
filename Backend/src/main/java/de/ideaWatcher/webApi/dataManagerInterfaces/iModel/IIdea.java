@@ -42,9 +42,7 @@ public interface IIdea {
     void setComments(List<IComment> comments);
     Long getNumberComments();
     void setNumberComments(Long numberComments);
-    String getIdeaID();
-    void setIdeaID(String ideaID);
+    String getIdeaId();
+    void setIdeaId(String ideaId);
 
-    JSONObject toJSONObject();
-    
 }

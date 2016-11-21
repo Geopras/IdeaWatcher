@@ -28,18 +28,11 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                 console.log('WebSocket-Verbindung erfolgreich hergestellt!');
                 // callbackFunction(true);
                 isConnected = true;
-                // Zeige die ersten 10 Ideen der Hot-Ideen-Liste an:
-                var exObj = ideaWatcher.model.GetIdeasData.RequestData;
-                exObj.listType = 'HOT';
-                exObj.category = '';
-                exObj.destinationUrl = 'ideaWatcher.html';
-                exObj.fromRank = 1;
-                exObj.toRank = 10;
-                exObj.isRenderNewIdeaList = 'TRUE';
 
                 console.log('Hole die ersten 10 Hot Ideas...');
 
-                ideaWatcher.controller.IdeaList.updateIdeaList(exObj);
+                var listType = ideaWatcher.model.IdeaList.ListType.HOT;
+                ideaWatcher.controller.IdeaList.updateIdeaList(listType, '', 1, 10, true);
             };
 
             // callback function wenn eine Nachricht reinkommt
@@ -60,7 +53,7 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                             .noValidServerResponse, 5000);
                 }
 
-                //region Wenn Login-Antwort, dann Token und UserID speichern
+                //region Wenn UserSession-Antwort, dann Token und UserID speichern
 
                 if (serverMessage.destination.startsWith('SLogin')) {
                     standardHeader.token = serverMessage.token;

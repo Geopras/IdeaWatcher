@@ -124,7 +124,7 @@ ideaWatcher.controller.Signup = ideaWatcher.controller.Signup || (function () {
         // wenn die View ein/ausgeblendet werden soll
         registerShowView: pubRegisterShowView,
         // stellt die Öffentliche Schnittstelle dar, mit der die View dem Controler sagen kann,
-        // dass der Benutzer den Button gedrückt hat und jetzt die Login-Credential an das Backend
+        // dass der Benutzer den Button gedrückt hat und jetzt die UserSession-Credential an das Backend
         //geschickt werden sollen, um den Benutzer zu validieren
         tryToSignup: pubTryToSignup
     };

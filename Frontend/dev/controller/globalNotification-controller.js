@@ -1,9 +1,9 @@
-ideaWatcher.controller.GlobalNotification = ideaWatcher.controller.GlobalNotification || (function CGlobalNotification() {
+ideaWatcher.controller.GlobalNotification = ideaWatcher.controller.GlobalNotification || (function () {
 
     // quick and dirty Hack, nicht zum nachmachen;
     onkeydown = function(e){
         if(e.ctrlKey && e.keyCode == 'I'.charCodeAt(0)){
-            pubShowNotification(ideaWatcher.model.GlobalNotificationType.ERROR,'Login','Login leider' +
+            pubShowNotification(ideaWatcher.model.GlobalNotificationType.ERROR,'UserSession','UserSession leider' +
                 ' fehlgeschlagen', 4000);
         }
     };

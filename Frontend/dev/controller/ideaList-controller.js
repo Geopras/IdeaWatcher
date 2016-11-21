@@ -5,9 +5,12 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         var cbShowView = null;
         var cbLocalize = null;
         var cbGetIdeas = null;
+        var cbGetCurrentListType = null;
+        var cbGetCurrentCategory = null;
+        var cbGetIdea = null;
 
         var evSwitchView = {
-            topic: 'switchView/IdeaList',
+            topic: 'switchView/ideaList',
             cbFunction: cbSwitchView
         };
 
@@ -18,7 +21,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         };
 
         var evLocalizeView = {
-            topic: 'localizeView/IdeaList',
+            topic: 'localizeView/ideaList',
             cbFunction: cbLocalizeView
         };
 
@@ -96,18 +99,56 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             cbGetIdeas = cb;
         }
 
-        // Schnittstelle für andere Controller, um die Ideenliste mit
-        // gewünschten Daten zu aktualisieren
-        function pubUpdateIdeaList(exObject)
+        function pubRegisterGetCurrentListType(cb) {
+            cbGetCurrentListType = cb;
+        }
+
+        function pubRegisterGetCurrentCategory(cb) {
+            cbGetCurrentCategory = cb;
+        }
+
+        /**
+         * Schnittstelle für andere Controller, um die Ideenliste mit
+         * gewünschten Daten zu aktualisieren
+         * @param listType {IdeaList.ListType} spezieller Ideenlistentyp
+         * @param category {IdeaList.Category} spezieller Ideenkategorietyp
+         * @param from {number} Startindex der nach Typ gefilterten Ideenlise
+         * @param to {number} Endindex der nach Typ gefilterten Ideenlise
+         * @param isRenderNewIdeaList {boolean} Wenn der Anfang der
+         * gefilterten Ideenliste angezeigt werden soll
+         */
+        function pubUpdateIdeaList(listType, category, from, to, isRenderNewIdeaList)
         {
+            var requestData = ideaWatcher.model.ExchangeObject.IdeaList.RequestData;
+
+            if (!listType) {
+                listType = cbGetCurrentListType();
+            }
+            if (!category) {
+                category = cbGetCurrentCategory();
+            }
+            requestData.listType = listType;
+            requestData.category = category;
+            requestData.fromRank = from;
+            requestData.toRank = to;
+            requestData.isRenderNewIdeaList = isRenderNewIdeaList;
+
             // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
             if (ideaWatcher.core.WebSocketConnector.isConnected()) {
-                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequest(exObject));
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequest(requestData));
             } else {
                 //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
             }
         }
         //endregion
+
+        function pubRegisterGetIdea(cb) {
+            cbGetIdea = cb;
+        }
+
+        function pubGetIdea(ideaId) {
+            return cbGetIdea(ideaId);
+        }
 
         //region build: Request
         function buildRequest(exObject)
@@ -125,10 +166,14 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         return {
             // hier kann die View eine Methode(ui-Connector) registrieren, die gerufen wird,
             // wenn die View ein/ausgeblendet werden soll
+            getIdea: pubGetIdea,
             registerInitializeView: pubRegisterInitializeView,
             registerShowView: pubRegisterShowView,
             registerLocalizeView: pubRegisterLocalizeView,
             registerGetIdeasResponse: pubRegisterGetIdeasResponse,
+            registerGetCurrentListType: pubRegisterGetCurrentListType,
+            registerGetCurrentCategory: pubRegisterGetCurrentCategory,
+            registerGetIdea: pubRegisterGetIdea,
             updateIdeaList: pubUpdateIdeaList
         };
 

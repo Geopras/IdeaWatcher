@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class Idea implements IIdea {
     
-    private String ideaID;
+    private String ideaId;
     private String name;
     private String description;
     private String category;
@@ -173,50 +173,13 @@ public class Idea implements IIdea {
     }
     
     @Override
-    public String getIdeaID() {
-        return ideaID;
+    public String getIdeaId() {
+        return ideaId;
     }
     
     @Override
-    public void setIdeaID( String ideaID) {
-       this.ideaID = ideaID;
-    }
-
-    @Override
-    public JSONObject toJSONObject() {
-
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("name", this.getName());
-        jsonObject.put("description", this.getDescription());
-        jsonObject.put("category", this.getCategory());
-        jsonObject.put("publishDate", this.getPublishDate());
-        jsonObject.put("language", this.getLanguage());
-        jsonObject.put("hotRank", this.getHotRank());
-        jsonObject.put("trendingRank", this.getTrendingRank());
-        // jsonObject.put("likeUsers", idea.getLikeUsers());
-        jsonObject.put("numberLikes", this.getNumberLikes());
-        // jsonObject.put("followers", idea.getFollowerUsers());
-        jsonObject.put("numberFollowers", this.getNumberFollowers());
-
-        jsonObject.put("numberComments", this.getNumberComments());
-
-        jsonObject.put("creator", this.getCreator().toSmallJSONObject());
-
-        JSONArray likeUsersArray = new JSONArray();
-        JSONArray followersArray = new JSONArray();
-
-        JSONArray commentsArray = new JSONArray();
-        for (IComment comment : this.getComments()){
-            commentsArray.put(comment.toJSONObject());
-        }
-        jsonObject.put("comments", commentsArray);
-
-        //TODO: hier müsste man jetzt durch die likeUsers, followUsers und comments
-        // iterieren und die Ergebnisse in JSONObjekte packen, die man dann in die
-        // entsprechenden Arrays schmeißt und für die Attribute puttet
-
-        return jsonObject;
+    public void setIdeaId( String ideaId) {
+       this.ideaId = ideaId;
     }
 
     /**
@@ -224,7 +187,7 @@ public class Idea implements IIdea {
      * @return {Idea} idea object
      */
     public Idea() {
-        this.ideaID = "";
+        this.ideaId = "";
         this.name = "";
         this.description = "";
         this.category = "";

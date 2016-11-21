@@ -27,6 +27,7 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         ideaWatcher.core.MessageBroker.subscribe(evSaveResponse);
         ideaWatcher.core.MessageBroker.subscribe(evUserDataReceived);
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
+        ideaWatcher.controller.ProfileEdit.registerShowView(cbShowView);
         //endregion
 
         var htmlForm = null;

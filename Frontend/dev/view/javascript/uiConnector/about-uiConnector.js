@@ -5,11 +5,11 @@ ideaWatcher.view.About = ideaWatcher.view.About
         // Event Globale Initialisierung
         var evIni = {
             topic : 'internal/ini',
-            cbFunction : cbiIni
+            cbFunction : cbIni
         };
 
         var evLocalizeView = {
-            topic: 'localizeView/About',
+            topic: 'localizeView/about',
             cbFunction: localizeView
         };
 
@@ -23,7 +23,7 @@ ideaWatcher.view.About = ideaWatcher.view.About
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         // endregion
 
-        function cbiIni() {
+        function cbIni() {
             console.log('ini Event');
             htmlView = document.querySelector('.about_view');
             htmlHeader = document.getElementById('about_header');

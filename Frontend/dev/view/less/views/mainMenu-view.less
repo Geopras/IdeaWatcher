@@ -13,129 +13,13 @@
   font-size: 16px;
 }
 
-.mainMenu_view .mainMenu_logo_button img{
-  height: 60px;
-  padding: 2px;
-  float: left;
-  cursor: pointer;
-}
-
-.mainMenu_view .mainMenu_logo_button img:hover {
-  background: #4096ee;
-}
-
-.mainMenu_view .mainMenu_language_toggle label{
-//  height: 60px;
-  padding: 20px;
-  margin: -3px -25px 0px 0px;
-  float: right;
-}
-
-.mainMenu_switch {
-  position: relative;
-  display: inline-block;
-  width: 88px;
-  height: 25px;
-}
-
-.mainMenu_switch input {display:none;}
-
-.mainMenu_slider {
-  position: absolute;
-  cursor: pointer;
-  top: 26px;
-  left: 0;
-  right: 32px;
-  bottom: 0;
-  background-color: blue;
-  background-image: url("./resources/img/en.png");
-  background-size: 30px 14px;
-  opacity: 0.9;
-//  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.mainMenu_slider:before {
-  position: absolute;
-  content: "";
-  height: 25px;
-  width: 35px;
-  left: 0px;
-  bottom: -6px;
-  background-color: green;
-  background-image: url("./resources/img/de.jpg");
-  background-size: 35px 25px;
-  transition: 0.4s;
-}
-
-input:checked + .mainMenu_slider {
-  background-color: red;
-  background-image: url("./resources/img/de.jpg");
-  background-size: 25px 15px;
-//  transition: 0.4s;
-}
-
-input:checked + .mainMenu_slider:before {
-  -webkit-transform: translateX(21px);
-  -ms-transform: translateX(21px);
-  transform: translateX(21px);
-  background-color: yellow;
-  background-image: url("./resources/img/en.png");
-  background-size: 35px 25px;
-}
-
-.mainMenu_slider.round {
-  border-radius: 50px;
-}
-
-.mainMenu_slider.round:before {
-  border-radius: 20%;
-}
-
-.mainMenu_view .mainMenu_lupe_button img{
-  height: 60px;
-  padding: 20px;
-  float: right;
-  transition: all 500ms;
-}
-
-.mainMenu_view .mainMenu_lupe_button img:hover {
-  background: #4096ee;
-}
-
-.mainMenu_view .mainMenu_user_button img{
-  height: 60px;
-  padding: 20px;
-  float: right;
-  transition: all 500ms;
-}
-
-.mainMenu_view .mainMenu_user_button img:hover {
-  background: #4096ee;
-}
-
-.mainMenu_login_button{
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 1px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 17px 10px;
-  cursor: pointer;
-  border-radius: 12px;
-  float:right;
-}
-
 .mainMenu_view nav ul {
   margin: 0;
   padding: 0;
   cursor: pointer;
 }
 
-.mainMenu_view nav a {
+.mainMenu_view nav div {
   display: block;
   color: #fff;
   text-decoration: none;
@@ -149,63 +33,171 @@ input:checked + .mainMenu_slider:before {
 }
 
 .mainMenu_view nav ul li:hover {
-  background: #4096ee;
-}
-
-.mainMenu_view nav ul li a {
-  padding: 20px;
-}
-
-.mainMenu_view nav ul li ul li {
-  min-width: 200px;
+  background: #4096ee !important;
 }
 
 .mainMenu_view nav ul li div {
+  padding: 20px;
   height: 60px;
   transition:all 500ms;
 }
 
-.mainMenu_view nav ul li:hover ul {
-  height:auto;
-  opacity:1;
+.mainMenu_user_li img {
+  padding: 20px;
+  height: 60px;
+  float: right;
+  transition:all 500ms;
 }
 
-.mainMenu_view nav ul li ul {
+.mainMenu_homeButton_li img{
+  height: 60px;
+  padding: 2px;
+  float: left;
+  cursor: pointer;
+}
+
+// Dropdown-Menüs
+
+.mainMenu_category_li ul li {
+  min-width: 210px;
+}
+
+.mainMenu_category_li:hover ul {
+  height:auto;
+}
+
+.mainMenu_user_li ul li {
+  min-width: 150px;
+}
+
+.mainMenu_user_li:hover ul {
+  height:auto;
+  right: 0;
+}
+
+.mainMenu_dropdownCategories_ul {
   position: absolute;
   background: #3a3a3a;
   overflow:hidden;
   height: 0;
 }
 
-.mainMenu_user_button_list_ul {
-    background: #000000;
+.mainMenu_dropdownUserNoLogin_ul {
+  position: absolute;
+  background: #3a3a3a;
+  overflow:hidden;
+  height: 0;
 }
 
-.mainMenu_user_button_dropdown {
-    position: relative;
-    display: inline-block;
+.mainMenu_dropdownUserWithLogin_ul {
+  position: absolute;
+  background: #3a3a3a;
+  overflow:hidden;
+  height: 0;
 }
 
-.mainMenu_user_button_dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    min-width: 120px;
-    margin: 60px 0px 0px 0px;
-    background: #3a3a3a;
+.mainMenu_languageSwitch_div label{
+  //  height: 60px;
+  padding: 20px;
+  margin: -3px 0px 0px 0px;
+  float: right;
 }
 
-.mainMenu_user_button_dropdown-content a {
-    color: black;
-    padding: 20px;
-    text-decoration: none;
-    display: block;
+.mainMenu_languageSwitch_label {
+  position: relative;
+  display: inline-block;
+  width: 88px;
+  height: 25px;
 }
 
-.mainMenu_user_button_dropdown-content a:hover {
-    background: #4096ee;
+.mainMenu_languageSwitch_label input {display:none;}
+
+.mainMenu_languageSwitch_slider {
+  position: absolute;
+  cursor: pointer;
+  top: 26px;
+  left: 0;
+  right: 32px;
+  bottom: 0;
+  background-color: blue;
+  background-image: url("./resources/img/en.png");
+  background-size: 30px 14px;
+  opacity: 0.9;
+  //  -webkit-transition: .4s;
+  transition: .4s;
 }
 
-.mainMenu_user_button_dropdown:hover .mainMenu_user_button_dropdown-content {
-    display: block;
+.mainMenu_languageSwitch_slider:before {
+  position: absolute;
+  content: "";
+  height: 25px;
+  width: 35px;
+  left: 0px;
+  bottom: -6px;
+  background-color: green;
+  background-image: url("./resources/img/de.jpg");
+  background-size: 35px 25px;
+  transition: 0.4s;
+}
+
+input:checked + .mainMenu_languageSwitch_slider {
+  background-color: red;
+  background-image: url("./resources/img/de.jpg");
+  background-size: 25px 15px;
+  //  transition: 0.4s;
+}
+
+input:checked + .mainMenu_languageSwitch_slider:before {
+  -webkit-transform: translateX(21px);
+  -ms-transform: translateX(21px);
+  transform: translateX(21px);
+  background-color: yellow;
+  background-image: url("./resources/img/en.png");
+  background-size: 35px 25px;
+}
+
+.mainMenu_languageSwitch_slider.round {
+  border-radius: 50px;
+}
+
+.mainMenu_languageSwitch_slider.round:before {
+  border-radius: 20%;
+}
+
+.mainMenu_mySearch_li img{
+  height: 60px;
+  padding: 20px;
+  float: right;
+}
+
+.mainMenu_mySearch_li img {
+  padding: 20px;
+  height: 60px;
+  float: right;
+  transition:all 500ms;
+}
+
+.mainMenu_mySearch_li ul li {
+  min-width: 150px;
+}
+
+.mainMenu_mySearch_li:hover ul {
+  height:auto;
+  right: 0;
+}
+
+.mainMenu_dropdownMySearch_ul {
+  position: absolute;
+  background: #3a3a3a;
+  overflow:hidden;
+  height: 0;
+}
+
+.mainMenu_mySearch_li ul li div input{
+  margin: -10px -10px 0px -10px;
+  padding: 10px 0px 10px 0px;
+}
+
+.mainMenu_mySearch_li ul li div:hover{
+  background: #3a3a3a;
 }

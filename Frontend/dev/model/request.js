@@ -1,5 +1,6 @@
 ideaWatcher.model.Request = ideaWatcher.model.Request || {
-    destination: '',
-    data: {},
-    token: ''
-};
+        destination: '',
+        data: {},
+        token: '',
+        userId: ''
+    };

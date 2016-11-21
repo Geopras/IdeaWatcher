@@ -46,7 +46,7 @@ public class IdeaService {
     private IIdea buildIdea( Document ideaDoc){
         IIdea idea = new Idea();
         
-        idea.setIdeaID(ideaDoc.getObjectId("_id").toString());
+        idea.setIdeaId(ideaDoc.getObjectId("_id").toString());
         idea.setName(ideaDoc.getString("name"));
         idea.setDescription(ideaDoc.getString("description"));
         idea.setCategory(ideaDoc.getString("catagory"));

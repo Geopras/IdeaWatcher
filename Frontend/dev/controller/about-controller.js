@@ -2,7 +2,7 @@ ideaWatcher.controller.About = ideaWatcher.controller.About || (function CAbout(
 
         var cbShowView = null;
         var evSwitchView = {
-            topic: 'switchView/About',
+            topic: 'switchView/about',
             cbFunction: cbSwitchView
         };
 
