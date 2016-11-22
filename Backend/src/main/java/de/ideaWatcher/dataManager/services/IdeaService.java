@@ -5,6 +5,8 @@ import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
+
 import org.bson.Document;
 
 import com.mongodb.client.model.Filters;
@@ -141,6 +143,16 @@ public class IdeaService {
     
     public void deleteUser(String ideaId){
         dbConnectionService.getCollection().findOneAndDelete(Filters.eq("_id", ideaId));   
+    }
+    
+    public ICreator userToCreator(IUser user){
+        ICreator creator = new Creator();
+        creator.setUserId(user.getUserId());
+        creator.setUserName(user.getUserName());
+        creator.setEmail(user.getEmail());
+        creator.setIsMailPublic(user.getIsMailPublic());
+        creator.setPictureURL(user.getPictureURL());
+        return creator;
     }
     
 }

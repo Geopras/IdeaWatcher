@@ -13,12 +13,14 @@ gulp.task('jsTransform', function(){
     // Auswahl der Ausgangsdateien
     return gulp.src([
         '../dev/core/namespace.js',
+        '../dev/model/**/*',
         '../dev/core/messageBroker.js',
         '../dev/core/navigator.js',
-        '../dev/core/websocketConnector.js',
+        '../dev/core/webSocketConnector.js',
         '../dev/core/localizer.js',
         '../dev/controller/**/*',
         '../dev/view/javascript/**/*'
+
     ])
     //Verkettung der Dateien
     .pipe(concat('ideaWatcher.js'))
@@ -61,14 +63,19 @@ gulp.task('buildhtml', function () {
     // Auswahl der Ausgangsdateien -> Reihenfolge wichtig!
     return gulp.src([
         '../dev/view/html/head.html',
-        '../dev/view/html/login-view.html',
+        '../dev/view/html/globalNotification-view.html',
+        '../dev/view/html/mainMenu-view.html',
+        '../dev/view/html/lohin-view.html',
         '../dev/view/html/ideaList-view.html',
         '../dev/view/html/ideaDetails-view.html',
         '../dev/view/html/ideaCreation-view.html',
         '../dev/view/html/profile-view.html',
+        '../dev/view/html/myIdeas-view.html',
+        '../dev/view/html/followedIdeas-view.html',
         '../dev/view/html/profileEdit-view.html',
         '../dev/view/html/signUp-view.html',
-        '../dev/view/html/impress-view.html',
+        '../dev/view/html/about-view.html',
+        '../dev/view/html/footBar-view.html',
         '../dev/view/html/foot.html'
     ])
     //Verkettung der Dateien

@@ -1,8 +1,8 @@
-ideaWatcher.core.Navigator = ideaWatcher.core.Navigator || (function CNavigator() {
+ideaWatcher.core.Navigator = ideaWatcher.core.Navigator || (function () {
 
         //region local vars
-        var currentView = 'login';
-        var startView = 'login';
+        var currentView = 'ideaList';
+        var startView = 'ideaList';
         //endregion
 
         //region EventListener registrieren(popstate)
@@ -40,8 +40,15 @@ ideaWatcher.core.Navigator = ideaWatcher.core.Navigator || (function CNavigator(
             currentView = newView;
         }
 
+        function pubGetCurrentView() {
+
+            return currentView;
+        }
+
         return {
-            switchView: prepareSwitch
+            switchView: prepareSwitch,
+            // gibt die aktuell angezeigte View zurück
+            getCurrentView: pubGetCurrentView
         };
 
     })();

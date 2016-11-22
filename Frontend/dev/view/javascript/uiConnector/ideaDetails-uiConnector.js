@@ -20,6 +20,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				topic : 'SIdeaDetails/LikeFollowIdeaRequest-response',
 				cbFunction : cbLikeFollowResponse
 			};
+
+			var evUserDataReceived = {
+				topic: 'SIdea/getIdeaDetailsRequest',
+				cbFunction: cbIdeaDetailsDataReceived
+			};
 			// endregion
 
 			// region registriere Callbacks beim Controller
@@ -83,14 +88,41 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			}
 			// endregion
 
+			function cbIdeaDetailsDataReceived(exObj) {
+				if (exObj.result == 'success'){
+
+					// var ideaDetailsObject = Object.create(ideaWatcher.model.Idea);
+					// ideaDetailsObject.category = exObj.data.category;
+					// //ideaDetailsObject.comments
+					// //ideaDetailsObject.creator
+					// ideaDetailsObject.description = exObj.data.description;
+					// ideaDetailsObject.
+
+					renderView(exObj.data)
+				} else {
+					var errorMessage = exObj.error;
+
+					ideaWatcher.controller.GlobalNotification.showNotification(
+						ideaWatcher.core.Localizer.IdeaDetails[language].ideaDetails,
+						ideaWatcher.core.Localizer.IdeaDetails[language].errorMessage[errorMessage],
+						5000);
+				}
+			}
+
 			// region showView
 			function cbShowView(obj) {
 				if (obj.shouldShow) {
 
-					var idea = ideaWatcher.controller.IdeaDetails
-							.getIdea(obj.additionalData.ideaId);
-					currentIdea = idea;
-					renderView(idea);
+					// var idea = ideaWatcher.controller.IdeaDetails
+					// 		.getIdea(obj.additionalData.ideaId);
+					// currentIdea = idea;
+					// renderView(idea);
+
+					var ideaId = obj.additionalData.ideaId;
+					ideaWatcher.controller.IdeaDetails.tryToLoadIdeaData(ideaId);
+
+					// request losschicken
+
 					htmlView.style.display = 'block';
 				} else {
 					htmlView.style.display = 'none';

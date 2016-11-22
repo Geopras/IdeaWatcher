@@ -1,6 +1,7 @@
 package main.java.de.ideaWatcher.webApi.workflow;
 
 import main.java.de.ideaWatcher.dataManager.pojos.Comment;
+import main.java.de.ideaWatcher.dataManager.pojos.Creator;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.core.IRequest;
@@ -9,6 +10,7 @@ import main.java.de.ideaWatcher.webApi.core.JSONBuilder;
 import main.java.de.ideaWatcher.webApi.core.Response;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
@@ -63,7 +65,7 @@ public class GetIdeaDetailsWorkflow  implements IWorkflow {
             //Testweise eine Beispiel-Idee erzeugen
             //foundIdea = ideaController.getIdea(ideaID);
             foundIdea = new Idea();
-            IUser bspCreator = new User();
+            ICreator bspCreator = new Creator();
             bspCreator.setUserName("HansWurst");
             bspCreator.setUserId("12345");
             bspCreator.setEmail("hans@wurst.de");

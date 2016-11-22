@@ -85,6 +85,29 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             cbGetIdea = cb;
         }
 
+        function pubTryToLoadIdeaData(exObject)
+        {
+            // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
+            if (ideaWatcher.core.WebSocketConnector.isConnected()) {
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestLoadIdeaData(exObject));
+            } else {
+                //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
+            }
+        }
+
+        function buildRequestLoadIdeaData(ideaId)
+        {
+            var exLoadUserDataRequest = ideaWatcher.model.Request;
+
+            exLoadUserDataRequest.destination = 'SIdea/getIdeaDetailsRequest';
+            var exObj = {
+                ideaId : ideaId,
+            };
+            exLoadUserDataRequest.data = exObj;
+
+            return exLoadUserDataRequest;
+        }
+
         function pubTryToComment(exObject)
         {
             // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
@@ -169,7 +192,8 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             registerShowView: pubRegisterShowView,
             tryToComment: pubTryToComment,
             tryToChangeLikeFollow: pubTryToChangeLikeFollow,
-            tryToGetIdea: pubTryToGetIdea
+            tryToGetIdea: pubTryToGetIdea,
+            tryToLoadIdeaData: pubTryToLoadIdeaData
         };
 
     })();

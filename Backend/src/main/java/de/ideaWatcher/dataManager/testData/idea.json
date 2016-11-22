@@ -11,19 +11,18 @@
 {
   "ideas": [
     {
-      "idea_id": "",
-      "ideaname": "Neue Idee",
+      "name": "Idee1",
       "text": "",
       "category": "",
-      "idea_creator":{
-        "user_id": "",
-        "username": "",
-        "email": "",
-        "mail_public_available": true
+      "creator":{
+        "username": "user1",
+        "email": "user1@gmail.com",
+        "isMailPublic": true
       },
-      "publish_date": "",
-      "hot_rank": 0,
-      "trending_rank": 0,
+      "publishDate": "",
+      "language": "de_DE",
+      "hotRank": 0,
+      "trendingRank": 0,
       "fresh_rank": 0,
       "likes": [],
       "number_likes": 0,
@@ -52,6 +51,7 @@
         "mail_public_available": true
       },
       "publish_date": "2016-10-30T18:25:43.511Z",
+      "language": "german",
       "hot_rank": 1,
       "trending_rank": 2,
       "fresh_rank": 2,
@@ -104,6 +104,7 @@
         "mail_public_available": true
       },
       "publish_date": "2016-10-31T23:40:55.511Z",
+      "language": "german",
       "hot_rank": 2,
       "trending_rank": 1,
       "fresh_rank": 1,

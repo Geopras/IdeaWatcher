@@ -30,7 +30,6 @@ public class IdeaController implements IIdeaController {
     @Override
     public List<IIdea> getAllIdeas() throws Exception {
         return this.ideaService.getAllIdeas();
-
     }
 
     @Override

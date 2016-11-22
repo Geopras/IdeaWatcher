@@ -1,37 +1,55 @@
-		<!----------------------------------- View : signUp --------------------------------->
-		<div class="v-signUp-view">
-			<h1>Werde Ideengeber!</h1>
-			<form>
-				<!-- action="hierhin_wird_es_mit_submit_geschickt" -->
-				<div class="required-input">
-					<p>
-						<label for="uname">Benutzername</label><br> <input id="uname"
-							type="text" required />
-					</p>
-		
-				</div>
-		
-				<div class="required-input">
-					<p>
-						<label for="mail">Email</label><br> <input id="mail"
-							type="email" placeholder="email@example.org" required />
-					</p>
-				</div>
-				
-				<div class="required-input">
-					<p>
-						<label for="password">Passwort</label><br> <input id="password"
-							type="password" placeholder="******"/>
-					</p>
-				</div>
-				
-				<div class="required-input">
-					<p>
-						<label for="passwordrepeat">Passwort bestätigen</label><br> <input id="passwordrepeat"
-							type="password" placeholder="******"/>
-					</p>
-				</div>
-				<p><input type="submit" value="Jetzt registrieren!"></p>
-			</form>
-		
+
+<!----------------------------------- View : signUp --------------------------------->
+<div class="signUp_view">
+	<h1 class="signUp_header">Sign Up</h1>
+	<form class="signup_form">
+		<!-- action="hierhin_wird_es_mit_submit_geschickt" -->
+		<div>
+			<p>
+				<label id="signUp_userName_label" for="signUp_userName_input"
+					class="required-input">Username</label><span
+					class="signUp_error_span"><label
+					class="signUp_userNameError_label" for="signUp_userName_input"></label></span><br>
+				<input id="signUp_userName_input" type="text" required />
+			</p>
+
 		</div>
+
+		<div>
+			<p>
+				<label id="signUp_mail_label" for="signUp_mail_input"
+					class="required-input">Email</label><span class="signUp_error_span"><label
+					class="signUp_mailError_label" for="signUp_mail_input"></label></span><br>
+				<input id="signUp_mail_input" type="email"
+					placeholder="email@example.org" required />
+			</p>
+		</div>
+
+		<div>
+			<p>
+				<label id="signUp_password_label" for="signUp_password_input"
+					class="required-input">Password</label><span
+					class="signUp_error_span"><label
+					class="signUp_passwordError_label" for="signUp_password_input"></label></span><br>
+				<input id="signUp_password_input" type="password"
+					placeholder="******" required />
+			</p>
+		</div>
+
+		<div>
+			<p>
+				<label id="signUp_passwordRepeated_label"
+					for="signUp_passwordRepeated_input" class="required-input">
+					Password Repeated</label><span class="signUp_error_span"><label
+					class="signUp_passwordRepeatedError_label"
+					for="signUp_passwordRepeated_input"></label></span><br> <input
+					id="signUp_passwordRepeated_input" type="password"
+					placeholder="******" required />
+			</p>
+		</div>
+		<p>
+			<input id="signUp_submit_button" type="submit" value="Register Now!">
+		</p>
+	</form>
+
+</div>
