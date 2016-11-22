@@ -1,9 +1,13 @@
 package main.java.de.ideaWatcher.webApi.manager;
 
+import main.java.de.ideaWatcher.dataManager.pojos.Comment;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
+import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.core.*;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.thread.RankCalculationDaemon;
 
 import java.util.*;
@@ -182,6 +186,22 @@ public class IdeaManager {
         List<IIdea> ideas = new ArrayList<>();
         Random r = new Random();
         Calendar calendar;
+        
+        IUser user = new User();
+        user.setUserId("654");
+        user.setEmail("email@test.org");
+        user.setIsMailPublic(false);
+        user.setPictureURL("");
+        user.setUserName("Renate Test");
+        
+        IComment comment = new Comment();
+        comment.setPictureURL("");
+        comment.setUserId(user.getUserId());
+        comment.setText("Das ist ein Testkommentar. Mal sehn ob man den sieht.");
+        comment.setUserName(user.getUserName());
+        
+        List<IComment> comments = new ArrayList<>();
+        comments.add(comment);
 
         // erzeuge 100 Testideen
         for (int i = 0; i < 100; i++){
@@ -198,6 +218,8 @@ public class IdeaManager {
             newIdea.setNumberFollowers((long) r.nextInt(100));
             newIdea.setName("Idee Nummer " + i);
             newIdea.setDescription("Eine ganz tolle Idee");
+            newIdea.setComments(comments);
+            newIdea.setCreator(user);
 
             ideas.add(newIdea);
         }
