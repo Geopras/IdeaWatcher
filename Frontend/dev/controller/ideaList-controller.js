@@ -143,7 +143,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         //endregion
 
         function pubRegisterGetIdea(cb) {
-            cbGetIdea = cb;
+             return cbGetIdea = cb;
         }
 
         function pubGetIdea(ideaId) {

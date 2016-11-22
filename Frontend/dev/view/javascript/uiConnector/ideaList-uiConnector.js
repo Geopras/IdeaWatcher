@@ -2,7 +2,9 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         //region local vars
         var header = null;
-        var htmlView = null;
+        var htmlMainView = null;
+        var htmlMyIdeasView = null;
+        var htmlMyFollowedIdeasView = null;
         var currentListType = null;
         var currentCategory = null;
         var currentIdeasMap = {};
@@ -32,9 +34,11 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
             currentListType = ideaWatcher.model.IdeaList.ListType.HOT;
             currentCategory = ideaWatcher.model.IdeaList.Category.NONE;
-            currentIdeaList = [];
+
             //region initialize html
-            htmlView = document.querySelector('.ideaList_view');
+            htmlMainView = document.querySelector('.ideaList_view');
+            htmlMyIdeasView = document.querySelector('myIdeas_view');
+            htmlMyFollowedIdeasView = document.querySelector('followedIdeas_view');
             header = document.querySelector('#ideaList_header_h1');
             //endregion
         }
@@ -45,11 +49,11 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             if(exObj.shouldShow)
             {
                 renderView(exObj.additionalData);
-                htmlView.style.display = 'block';
+                htmlMainView.style.display = 'block';
             }
             else
             {
-                htmlView.style.display = 'none';
+                htmlMainView.style.display = 'none';
             }
         }
 
@@ -160,27 +164,25 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
             cbLocalizeView();
 
-            if (isRenderNewIdeaList) {
-
-                currentIdeaList = [];
-                publishedLabels = [];
-                htmlView.removeChild(document.querySelector('.ideaList_sections'));
-                var htmlSections = document.createElement('div');
-                htmlSections.classList.add('ideaList_sections');
-                renderIdeaList(htmlSections, ideasToAppend);
-                htmlView.appendChild(htmlSections);
-
-            } else {
-
-                var htmlSections = htmlView.querySelector('.ideaList_sections');
-                renderIdeaList(htmlSections, ideasToAppend);
-            }
-
-            currentIdeaList.splice(currentIdeaList.length, 0, ideasToAppend);
             if (!currentIdeasMap) {
                 createIdeasMap();
             } else {
                 addToIdeasMap(ideasToAppend);
+            }
+
+            if (isRenderNewIdeaList) {
+
+                publishedLabels = [];
+                htmlMainView.removeChild(document.querySelector('.ideaList_sections'));
+                var htmlSections = document.createElement('div');
+                htmlSections.classList.add('ideaList_sections');
+                renderIdeaList(htmlSections, ideasToAppend);
+                htmlMainView.appendChild(htmlSections);
+
+            } else {
+
+                var htmlSections = htmlMainView.querySelector('.ideaList_sections');
+                renderIdeaList(htmlSections, ideasToAppend);
             }
         }
 
@@ -216,6 +218,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
                 var likes = document.createElement('li');
                 var likeImage = document.createElement('img');
+                likeImage.classList.add('ideaList_likeButton');
                 likeImage.src = './resources/img/likeIcon.svg';
                 likeImage.width = 20;
                 likeImage.height = 20;
@@ -226,6 +229,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
                 var followers = document.createElement('li');
                 var followersImage = document.createElement('img');
+                followersImage.classList.add('ideaList_followButton');
                 followersImage.src = './resources/img/star_bright.svg';
                 followersImage.width = 20;
                 followersImage.height = 20;
@@ -272,16 +276,18 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 // IdeaID in einem data-attribut speichern, damit später die
                 // Idee zugeordnet werden kann:
                 ideaElement.setAttribute('data-ideaid', idea.ideaId);
+                ideaName.setAttribute('data-ideaid', idea.ideaId);
+                likeImage.setAttribute('data-ideaid', idea.ideaId);
+                followersImage.setAttribute('data-ideaid', idea.ideaId);
 
                 // den Aktiviert-Status der Icons setzen
                 setLikedState(likeImage);
+                setFollowState(followersImage);
 
                 // Click-Event dranhängen, damit die IdeaDetails-View
                 // aufgerufen werden kann
                 ideaName.addEventListener('click', handleIdeaClickEvent);
-                // und damit die Ideen geliked und gefollowed werden koennen
-                likeImage.addEventListener('click', handleLikeClickEvent);
-                followersImage.addEventListener('click', handleFollowClickEvent);
+
 
                 htmlList.appendChild(ideaElement);
 
@@ -296,10 +302,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         function handleIdeaClickEvent(clickEvent) {
 
-            //var ideaId = clickEvent.target.attributes.getNamedItem('data-ideaid').nodeValue;
-
-            var ideaElement = getMyIdeaContainer(clickEvent.target);
-            var ideaId = ideaElement.attributes.getNamedItem('data-ideaid').nodeValue;
+            var ideaId = clickEvent.target.attributes.getNamedItem('data-ideaid').nodeValue;
 
             var exObj = Object.create(ideaWatcher.model.ExchangeObject.SwitchView);
             exObj.viewId = ideaWatcher.model.Navigation.ViewId.IDEADETAILS;
@@ -309,28 +312,44 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             ideaWatcher.core.Navigator.switchView(exObj);
         }
 
-        /**
-         * Gibt für das übergebene Element das übergeordnete IdeaElement_div zurück
-         * @param element
-         * @returns {*}
-         */
-        function getMyIdeaContainer (element) {
-            while ((element = element.parentElement) && !element.classList.contains('ideaList_ideaElement_div'));
-            return element;
-        }
-
         function setLikedState(likeImage) {
-            var likeUsers = likeImage.parents
+            var ideaId = likeImage.attributes.getNamedItem('data-ideaid').nodeValue;
+
+            var ideaObject = cbGetIdea(ideaId);
+
+            if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
+                var currentUser = ideaWatcher.controller.UserSession
+                    .getCurrentUserId();
+                // wenn der Nutzer die Idee schon gelikt hat, dann zeige die
+                // leuchtende Glühbirne, ansonsten die nicht leuchtende
+                if (ideaObject.likeUsers.includes(currentUser)) {
+                    likeImage.src = './resources/img/bulb_on.png';
+                } else {
+                    likeImage.src = './resources/img/bulb_off.png';
+                }
+            } else {
+                likeImage.src = './resources/img/bulb_off.png';
+            }
         }
 
-        function handleLikeClickEvent(clickEvent) {
+        function setFollowState(followImage) {
+            var ideaId = followImage.attributes.getNamedItem('data-ideaid').nodeValue;
 
-            clickEvent.target.src = './resources/img/alreadyLiked.svg';
-        }
+            var ideaObject = cbGetIdea(ideaId);
 
-        function handleFollowClickEvent(clickEvent) {
-
-            clickEvent.target.src = './resources/img/alreadyFollowed.svg';
+            if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
+                var currentUser = ideaWatcher.controller.UserSession
+                    .getCurrentUserId();
+                // wenn der Nutzer der Idee schon folgt, soll der leuchtende
+                // Stern angezeigt werden, ansonsten der nicht leuchtende
+                if (ideaObject.followers.includes(currentUser)) {
+                    followImage.src = './resources/img/favorite_on.png';
+                } else {
+                    followImage.src = './resources/img/favorite_off.png';
+                }
+            } else {
+                followImage.src = './resources/img/favorite_off.png';
+            }
         }
 
         // Lade die nächsten Ideen, wenn ans Ende gescrollt

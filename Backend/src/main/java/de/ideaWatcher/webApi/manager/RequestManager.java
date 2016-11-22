@@ -51,6 +51,8 @@ public class RequestManager {
                 new GetIdeaDetailsCommand());
         this.workflowMapping.addCommand("SLogout/logoutRequest",
                 new LogoutCommand());
+        this.workflowMapping.addCommand("SIdeaDetails/LikeFollowIdeaRequest",
+                new LikeFollowCommand());
     }
 
     /**

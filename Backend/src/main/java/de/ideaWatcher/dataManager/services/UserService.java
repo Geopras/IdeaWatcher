@@ -8,6 +8,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Klasse fuer Zugriff auf User-Datenbank
@@ -16,8 +17,8 @@ public class UserService {
 
     private DbConnectionService dbConnectionService;
 
-    public UserService(String dbCollectionName) {
-        this.dbConnectionService = new DbConnectionService(dbCollectionName);
+    public UserService(String collectionName) {
+        this.dbConnectionService = new DbConnectionService(collectionName);
     }
 
     /**
@@ -29,13 +30,13 @@ public class UserService {
     public IUser getUser(String userId) throws Exception {
 
         try {
-            if (this.existsUserId(userId)) {
-                if (!dbConnectionService.isOpen()) {
-                    dbConnectionService.openConnection();
-                }
-                Document userDoc = dbConnectionService.getCollection()
-                        .find(new BasicDBObject("_id", new ObjectId
-                                (userId))).first();
+            if (!dbConnectionService.isOpen()) {
+                dbConnectionService.openConnection();
+            }
+            Document userDoc = dbConnectionService.getCollection()
+                    .find(new BasicDBObject("_id", new ObjectId
+                            (userId))).first();
+            if (userDoc != null) {
                 return buildUser(userDoc);
             } else {
                 throw new Exception("userIdNotExist");
@@ -57,23 +58,23 @@ public class UserService {
 
         try {
             Document userDoc;
-            if (this.existsUserName(userNameOrEmail)) {
-                if (!dbConnectionService.isOpen()) {
-                    dbConnectionService.openConnection();
-                }
-                userDoc = dbConnectionService.getCollection()
-                        .find(new BasicDBObject("userName", userNameOrEmail))
-                        .first();
-                System.out.println("ID: " + userDoc.get("_id").toString());
+
+            if (!dbConnectionService.isOpen()) {
+                dbConnectionService.openConnection();
+            }
+            userDoc = dbConnectionService.getCollection()
+                    .find(new BasicDBObject("userName", userNameOrEmail))
+                    .first();
+            // Wenn userName gefunden, dann gib userId zurück
+            if (userDoc != null) {
+                //System.out.println("ID: " + userDoc.get("_id").toString());
                 return userDoc.get("_id").toString();
             }
-            else if (this.existsEmail(userNameOrEmail)) {
-                if (!dbConnectionService.isOpen()) {
-                    dbConnectionService.openConnection();
-                }
-                userDoc = dbConnectionService.getCollection()
-                        .find(new BasicDBObject("email", userNameOrEmail))
-                        .first();
+            // // Wenn userName nicht gefunden, dann nach email schauen
+            userDoc = dbConnectionService.getCollection()
+                    .find(new BasicDBObject("email", userNameOrEmail))
+                    .first();
+            if (userDoc != null) {
                 return userDoc.get("_id").toString();
             } else {
                 throw new Exception("getUserId_userNameOrEmailNotExists");
@@ -98,13 +99,13 @@ public class UserService {
         user.setGender(userDoc.getString("gender"));
         user.setLanguage(userDoc.getString("language"));
         user.setPictureURL(userDoc.getString("pictureUrl"));
-        user.setNumberCreatedIdeas(userDoc.getDouble("numberCreatedIdeas"));
-        user.setNumberFollowedIdeas(userDoc.getDouble("numberFollowedIdeas"));
+        user.setNumberCreatedIdeas(userDoc.getLong("numberCreatedIdeas"));
+        user.setNumberFollowedIdeas(userDoc.getLong("numberFollowedIdeas"));
         return user;
     }
 
     /**
-     * Prüft, ob die UserID bereits in der DB vorhanden ist
+     * Pr�ft, ob die UserID bereits in der DB vorhanden ist
      * @param userId {String} eindeutige UserID
      * @return {boolean} TRUE oder FALSE je nachdem, ob UserID existiert
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
@@ -213,7 +214,7 @@ public class UserService {
 
     private Document buildUserDocument(IUser user) {
 
-        return new Document("username", user.getUserName() )
+        return new Document("userName", user.getUserName() )
                 .append("password", user.getPassword())
                 .append("email", user.getEmail())
                 .append("isMailPublic", user.getIsMailPublic())
@@ -225,7 +226,7 @@ public class UserService {
                 .append( "createdIdeas", new ArrayList<Document>()) // statt null eine ArrayList -- noch nicht getestet 17.11.16
                 .append("numberCreatedIdeas", user.getNumberCreatedIdeas())
                 .append( "followedIdeas", new ArrayList<Document>())  // statt null eine ArrayList -- noch nicht getestet 17.11.16
-                .append("numberFollowed", user.getNumberFollowedIdeas());
+                .append("numberFollowedIdeas", user.getNumberFollowedIdeas());
     }
 
     public boolean validatePassword(String plaintextPassword, String
@@ -236,5 +237,17 @@ public class UserService {
         } else {
             return false;
         }
+    }
+    public void addUserList(List<IUser> userList) throws Exception {
+        List<Document> userListDoc = new ArrayList<>();
+        for( IUser idea : userList){
+            userListDoc.add(buildUserDocument(idea));
+        }        
+        
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        }
+        dbConnectionService.getCollection().insertMany(userListDoc);
+        dbConnectionService.closeConnection();
     }
 }

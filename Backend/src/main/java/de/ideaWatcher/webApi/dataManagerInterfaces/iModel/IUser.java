@@ -1,7 +1,5 @@
 package main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel;
 
-import org.json.JSONObject;
-
 import java.util.List;
 
 /**
@@ -61,10 +59,10 @@ public interface IUser {
     void setPictureURL(String pictureURL);
     List<IIdea> getCreatedIdeas();
     void setCreatedIdeas(List<IIdea> createdIdeas);
-    Double getNumberCreatedIdeas();
-    void setNumberCreatedIdeas(Double numberCreatedIdeas);
+    long getNumberCreatedIdeas();
+    void setNumberCreatedIdeas(long numberCreatedIdeas);
     List<IIdea> getFollowedIdeas();
     void setFollowedIdeas(List<IIdea> followedIdeas);
-    Double getNumberFollowedIdeas();
-    void setNumberFollowedIdeas(Double numberFollowedIdeas);
+    long getNumberFollowedIdeas();
+    void setNumberFollowedIdeas(long numberFollowedIdeas);
 }

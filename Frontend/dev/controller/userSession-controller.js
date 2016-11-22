@@ -7,6 +7,9 @@ ideaWatcher.controller.UserSession = ideaWatcher.controller.UserSession || (func
         var cbLoginRes = null;
         var cbLogoutRes = null;
 
+        var currentUserId = null;
+        var isUserLoggedInFlag = false;
+
         //region Event Globale Initialisierung
         var evIni = {
             topic: 'internal/ini',
@@ -60,10 +63,25 @@ ideaWatcher.controller.UserSession = ideaWatcher.controller.UserSession || (func
         }
 
         function cbLoginResponse(obj) {
+
+            if (obj.result === 'valid') {
+                currentUserId = obj.userId;
+                isUserLoggedInFlag = true;
+            } else {
+                currentUserId = null;
+                isUserLoggedInFlag = false;
+            }
+
             cbLoginRes(obj);
         }
 
         function cbLogoutResponse(obj) {
+
+            if (obj.result === 'success') {
+                currentUserId = null;
+                isUserLoggedInFlag = false;
+            }
+
             cbLogoutRes(obj);
         }
         //endregion
@@ -159,6 +177,14 @@ ideaWatcher.controller.UserSession = ideaWatcher.controller.UserSession || (func
 
         //endregion
 
+        function pubIsUserLoggedIn() {
+            return isUserLoggedInFlag;
+        }
+
+        function pubGetCurrentUserId() {
+            return currentUserId;
+        }
+
         // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
         return {
 
@@ -176,7 +202,9 @@ ideaWatcher.controller.UserSession = ideaWatcher.controller.UserSession || (func
             // dass der Benutzer den Button gedrückt hat und jetzt die UserSession-Credential an das Backend
             //geschickt werden sollen, um den Benutzer zu validieren
             tryToLogin: pubTryToLogin,
-            tryToLogout: pubTryToLogout
+            tryToLogout: pubTryToLogout,
+            isUserLoggedIn: pubIsUserLoggedIn,
+            getCurrentUserId: pubGetCurrentUserId
         };
 
     })();

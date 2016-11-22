@@ -32,6 +32,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             topic: 'SIdeaDetails/getIdeaRequest-response',
             cbFunction: cbGetIdeaResponse
         };
+
         //endregion
 
         //region subscribe to events
@@ -94,21 +95,11 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             }
         }
 
-        function pubTryToChangeLike(exObject)
+        function pubTryToChangeLikeFollow(exObject)
         {
             // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
             if (ideaWatcher.core.WebSocketConnector.isConnected()) {
-                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestLike(exObject));
-            } else {
-                //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
-            }
-        }
-
-        function pubTryToChangeFollower(exObject)
-        {
-            // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
-            if (ideaWatcher.core.WebSocketConnector.isConnected()) {
-                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestFollow(exObject));
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestLikeFollow(exObject));
             } else {
                 //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
             }
@@ -126,37 +117,27 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
 
         function pubGetIdea(ideaId) {
 
-            ideaWatcher.controller.IdeaList.getIdea(ideaId);
+            return ideaWatcher.controller.IdeaList.getIdea(ideaId);
         }
 
         function buildRequestComment(exObject)
         {
             var exCommentRequest = ideaWatcher.model.Request;
 
-            exCommentRequest.destination = 'SIdeaDetails/commentIdea';
+            exCommentRequest.destination = 'SIdeaDetails/commentIdeaRequest';
             exCommentRequest.data = exObject;
 
             return exCommentRequest;
         }
 
-        function buildRequestLike(exObject)
+        function buildRequestLikeFollow(exObject)
         {
             var exLikeRequest = ideaWatcher.model.Request;
 
-            exLikeRequest.destination = 'SIdeaDetails/likeIdea';
+            exLikeRequest.destination = 'SIdeaDetails/LikeFollowIdeaRequest';
             exLikeRequest.data = exObject;
 
             return exLikeRequest;
-        }
-
-        function buildRequestFollow(exObject)
-        {
-            var exFollowRequest = ideaWatcher.model.Request;
-
-            exFollowRequest.destination = 'SIdeaDetails/followIdea';
-            exFollowRequest.data = exObject;
-
-            return exFollowRequest;
         }
 
         function buildRequestGetIdea(exObject)
@@ -187,8 +168,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             registerGetIdeaResponse: pubRegisterGetIdeaResponse,
             registerShowView: pubRegisterShowView,
             tryToComment: pubTryToComment,
-            tryToChangeLike: pubTryToChangeLike,
-            tryToChangeFollower: pubTryToChangeFollower,
+            tryToChangeLikeFollow: pubTryToChangeLikeFollow,
             tryToGetIdea: pubTryToGetIdea
         };
 
