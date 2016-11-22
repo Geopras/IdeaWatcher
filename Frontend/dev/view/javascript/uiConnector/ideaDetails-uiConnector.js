@@ -16,11 +16,10 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			var currentIdea = null;
 
-
-		var evLikeFollowResponse = {
-			topic: 'SIdeaDetails/LikeFollowIdeaRequest-response',
-			cbFunction: cbLikeFollowResponse
-		};
+			var evLikeFollowResponse = {
+				topic : 'SIdeaDetails/LikeFollowIdeaRequest-response',
+				cbFunction : cbLikeFollowResponse
+			};
 			// endregion
 
 			// region registriere Callbacks beim Controller
@@ -32,9 +31,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					.registerGetIdeaResponse(cbGetIdeaResponse);
 			// endregion
 
-		//region subscribe to events
-		ideaWatcher.core.MessageBroker.subscribe(evLikeFollowResponse);
-		//endregion
+			// region subscribe to events
+			ideaWatcher.core.MessageBroker.subscribe(evLikeFollowResponse);
+			// endregion
 
 			// region cbIni
 			function cbIni() {
@@ -42,8 +41,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 				// region assign html elements
 				htmlView = document.querySelector('.ideaDetails_view');
-				htmlLikeImg = document
-						.querySelector('#ideaDetails_like_img');
+				htmlLikeImg = document.querySelector('#ideaDetails_like_img');
 				htmlFollowerImg = document
 						.querySelector('#ideaDetails_follower_img');
 				htmlCommentTextInput = document
@@ -60,12 +58,26 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				htmlView.onsubmit = function onSubmit(event) {
 
 					event.preventDefault();
+
+					if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
+						var currentUserId = ideaWatcher.controller.UserSession
+								.getCurrentUserId();
+						// TODO: Kommentar abschicken
+						var exObj = {
+							userId : currentUserId,
+							ideaId : currentIdea.ideaId,
+							text : '' // Kommentartext
+						};
+						console.log('Kommentar wird im UIConnector abgeschickt.')
+						//TODO: Hier muss noch die entsprechende Methode des Controllers aufgerufen werden
+					} else {
+						console.log("kein User angemeldet");
+					}
 				};
 
 				// eventlisteners hinzufügen
 				htmlLikeImg.addEventListener('click', changeLikeStatus);
-				htmlFollowerImg.addEventListener('click',
-						changeFollowerStatus);
+				htmlFollowerImg.addEventListener('click', changeFollowerStatus);
 
 				// endregion
 			}
@@ -95,6 +107,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				htmlSubmitButton = document
 						.querySelector('#ideaDetails_commentSubmit_button');
 				htmlSubmitButton.value = ideaWatcher.core.Localizer.ideaDetails[language].submit;
+				var htmlContactLink = document
+						.querySelector('#ideaDetails_contact_a');
+				htmlContactLink.textContent = ideaWatcher.core.Localizer.ideaDetails[language].contact;
 
 			}
 			// endregion
@@ -109,7 +124,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUserId = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
-					
+
 					if (htmlLikeImg.src == './resources/img/bulb_on.png') {
 						htmlLikeImg.src = './resources/img/bulb_off.png';
 						var exObj = {
@@ -126,7 +141,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						};
 					}
 					console.log(exObj);
-					ideaWatcher.controller.IdeaDetails.tryToChangeLikeFollow(exObj);
+					ideaWatcher.controller.IdeaDetails
+							.tryToChangeLikeFollow(exObj);
 				} else {
 					console.log("kein User angemeldet");
 				}
@@ -137,7 +153,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUserId = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
-					
+
 					if (htmlFollowerImg.src == '/resources/img/favorite_on.png') {
 						htmlFollowerImg.src = './resources/img/favorite_off.png';
 						var exObj = {
@@ -181,8 +197,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				// iconbar
 
 				// likebutton
-				htmlLikeImg = document
-						.querySelector('#ideaDetails_like_img');
+				htmlLikeImg = document.querySelector('#ideaDetails_like_img');
 				setLikeButtonPicture(htmlLikeImg, currentIdea);
 				// number of likes
 				htmlLikesSpan = document
@@ -204,11 +219,15 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 				// contactlink
 
-				var mailaddress = creator.email;
-				var mailto = 'mailto: ' + mailaddress;
 				var htmlContactLink = document
 						.querySelector('#ideaDetails_contact_a');
-				htmlContactLink.href = mailto;
+				if (creator.isMailPublic) {
+					var mailaddress = creator.email;
+					var mailto = 'mailto: ' + mailaddress;
+					htmlContactLink.href = mailto;
+				} else {
+					htmlContactLink.style.display = 'none';
+				}
 				// set userPicture in new Comment section
 				var htmlUserImage = document
 						.querySelector('#ideaDetails_userPicture_img');
@@ -276,7 +295,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUser = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
-					
+
 					// wenn der Nutzer die Idee schon gelikt hat, dann zeige die
 					// leuchtende Glühbirne, ansonsten die nicht leuchtende
 					if (ideaObject.likeUsers.includes(currentUser)) {
@@ -285,7 +304,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						htmlLikeImg.src = './resources/img/bulb_off.png';
 					}
 				} else {
-					
+
 					htmlLikeImg.src = './resources/img/bulb_off.png';
 				}
 			}
@@ -295,7 +314,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUser = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
-					
+
 					// wenn der Nutzer der Idee schon folgt, soll der leuchtende
 					// Stern angezeigt werden, ansonsten der nicht leuchtende
 					if (ideaObject.followers.includes(currentUser)) {
@@ -304,35 +323,44 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						htmlFollowerImg.src = './resources/img/favorite_off.png';
 					}
 				} else {
-					
+
 					htmlFollowerImg.src = './resources/img/favorite_off.png';
 				}
 
 			}
-			
+
 			function cbLikeFollowResponse(exObj) {
 
 				var language = ideaWatcher.core.Localizer.getLanguage();
 
-				if (exObj.result == 'success'){
+				if (exObj.result == 'success') {
 
-					//TODO Glühbirne ändern und Like Follows hochzaehlen
+					switch (exObj.data.action) {
+					case 'like':
+						htmlLikesSpan.textContent = exObj.data.newNumber;
+						break;
+					case 'follow':
+						htmlFollowerSpan.textContent = exObj.data.newNumber;
+						break;
+					}
+					// TODO Glühbirne ändern und Like Follows hochzaehlen
 				} else {
 					var errorMessage = exObj.error;
 
 					var notificationType = ideaWatcher.model.GlobalNotificationType.ERROR;
-					if (exObj.result == "warning"){
+					if (exObj.result == "warning") {
 						notificationType = ideaWatcher.model.GlobalNotificationType.WARNING;
 					}
-					if (exObj.result == "info"){
+					if (exObj.result == "info") {
 						notificationType = ideaWatcher.model.GlobalNotificationType.INFO;
 					}
 
-					ideaWatcher.controller.GlobalNotification.showNotification(
-						ideaWatcher.model.GlobalNotificationType.ERROR,
-						ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
-						ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
-						5000);
+					ideaWatcher.controller.GlobalNotification
+							.showNotification(
+									ideaWatcher.model.GlobalNotificationType.ERROR,
+									ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
+									ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
+									5000);
 				}
 			}
 
