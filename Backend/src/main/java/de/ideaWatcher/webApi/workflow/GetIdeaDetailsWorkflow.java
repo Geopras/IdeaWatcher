@@ -47,7 +47,7 @@ public class GetIdeaDetailsWorkflow  implements IWorkflow {
 
         // Prüfe, ob die im Data-Objekt uebergebenen Parameter OK sind
         try {
-            ideaID = data.getString("ideaID");
+            ideaID = data.getString("ideaId");
 
         } catch (Exception ex) {
             response.setErrorMessage("SIdea_getIdeaDetailsRequestData_error");
