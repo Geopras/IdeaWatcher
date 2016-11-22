@@ -65,7 +65,7 @@ gulp.task('buildhtml', function () {
         '../dev/view/html/head.html',
         '../dev/view/html/globalNotification-view.html',
         '../dev/view/html/mainMenu-view.html',
-        '../dev/view/html/lohin-view.html',
+        '../dev/view/html/login-view.html',
         '../dev/view/html/ideaList-view.html',
         '../dev/view/html/ideaDetails-view.html',
         '../dev/view/html/ideaCreation-view.html',

@@ -13,6 +13,8 @@ ideaWatcher.model.IdeaList = ideaWatcher.model.IdeaList || {
         ListType: {
             FRESH: 'FRESH',
             HOT: 'HOT',
+            MYFOLLOWEDIDEAS: 'MYFOLLOWEDIDEAS',
+            MYIDEAS: 'MYIDEAS',
             TRENDING: 'TRENDING'
         }
     };

@@ -1,4 +1,4 @@
-ideaWatcher.view.Profile = ideaWatcher.view.Profile || (function VProfile() {
+ideaWatcher.view.Profile = ideaWatcher.view.Profile || (function () {
 
         //region local vars
         // Event Globale Initialisierung
@@ -8,17 +8,17 @@ ideaWatcher.view.Profile = ideaWatcher.view.Profile || (function VProfile() {
         };
 
         var evLocalizeViewMyIdeas = {
-                topic: 'localizeView/myIdeas',
+                topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.MYIDEAS.NONE,
                 cbFunction: localizeView
             };
         
         var evLocalizeViewFollowedIdeas = {
-                topic: 'localizeView/followedIdeas',
+                topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.MYFOLLOWEDIDEAS.NONE,
                 cbFunction: localizeView
             };
         
         var evLocalizeViewProfileEdit = {
-                topic: 'localizeView/profileEdit',
+                topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.MYPROFILE,
                 cbFunction: localizeView
             };
         var htmlView = null;

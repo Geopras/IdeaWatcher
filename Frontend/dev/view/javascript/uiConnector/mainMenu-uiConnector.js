@@ -1,7 +1,6 @@
-ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
+ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
 
         // region local vars
-        // Event Globale Initialisierung
 
         var htmlView;
         var htmlMainMenuParentNode;
@@ -10,14 +9,17 @@ ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
         var isLoginSuccessful;
         var htmlUserDropdownNoLogin;
         var htmlUserDropdownWithLogin;
+        var lastClickedButton
+        var currentClickedButton;
 
         // endregion
 
         // region subscribe to events
-        ideaWatcher.controller.Navigation.registerInitializeView(cbIni);
-        ideaWatcher.controller.Navigation.registerLocalizeView(cbLocalizeView);
-        ideaWatcher.controller.Navigation.registerLoginSuccessful(cbLoginSuccessful);
-        ideaWatcher.controller.Navigation.registerLogoutSuccessful(cbLogoutSuccessful);
+        ideaWatcher.controller.MainMenu.registerInitializeView(cbIni);
+        ideaWatcher.controller.MainMenu.registerLocalizeView(cbLocalizeView);
+        ideaWatcher.controller.MainMenu.registerLoginSuccessful(cbLoginSuccessful);
+        ideaWatcher.controller.MainMenu.registerLogoutSuccessful(cbLogoutSuccessful);
+        ideaWatcher.controller.MainMenu.registerGetCurrentClickedButtonId(cbGetCurrentClickedButtonId);
         // endregion
 
         //region Callback Functions
@@ -31,12 +33,12 @@ ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
             htmlUserDropdownNoLogin = document.querySelector('.mainMenu_dropdownUserNoLogin_ul');
             htmlUserDropdownWithLogin = document.querySelector('.mainMenu_dropdownUserWithLogin_ul');
 
-            // Navigation-Buttonliste:
+            // MainMenu-Buttonliste:
             htmlMainMenuParentNode = document.querySelector('.mainMenu_buttons_ul');
-            // Navigation-Buttons:
+            // MainMenu-Buttons:
             htmlMainMenuChildNodes = htmlMainMenuParentNode.children;
 
-            // Gehe alle Navigation-Buttons durch, speichere sie und hänge
+            // Gehe alle MainMenu-Buttons durch, speichere sie und hänge
             // EventListener dran: (falls eine Button-Klasse unbekannt ist,
             // wird das in der Console gemeldet):
             for (var i = 0; i < htmlMainMenuChildNodes.length; i++) {
@@ -65,11 +67,38 @@ ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
                         initializeLanguageSwitchButton();
                         break;
                     default:
-                        console.log('Es wurde die Navigation-Button-Klasse "' +
+                        console.log('Es wurde die MainMenu-Button-Klasse "' +
                             childClass + '" NICHT im' +
                             ' mainMenu-uiConnector initialisiert!');
                 }
             }
+            // Untermenü in Profilansicht muss auch gespeichert werden:
+
+            // MainMenu-Buttonliste:
+            htmlMainMenuParentNode = document.querySelector('.profileView_subMenuButtons');
+            // MainMenu-Buttons:
+            htmlMainMenuChildNodes = htmlMainMenuParentNode.children;
+
+            for (i = 0; i < htmlMainMenuChildNodes.length; i++) {
+
+                mainMenuElement = htmlMainMenuChildNodes[i];
+                childClass = mainMenuElement.className;
+
+                switch (childClass) {
+
+                    case ('mainMenu_ideaList_li'):
+                        initializeIdeaListButton(mainMenuElement);
+                        break;
+                    case ('profileView_myProfileButton_li'):
+                        initializeNavigationButton(mainMenuElement);
+                        break;
+                    default:
+                        console.log('Es wurde die Profil-Menu-Button-Klasse "' +
+                            childClass + '" NICHT im' +
+                            ' mainMenu-uiConnector initialisiert!');
+                }
+            }
+
             cbLocalizeView();
         }
 
@@ -102,9 +131,14 @@ ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
                 .updateIdeaList('', '', 1, 10, true);
         }
 
+        function cbGetCurrentClickedButtonId() {
+
+            return currentClickedButtonId;
+        }
+
         //endregion
 
-        //region Initialisiere und speichere Navigation-Buttons
+        //region Initialisiere und speichere MainMenu-Buttons
 
         //region Home-Button
         function initializeHomeButton(htmlELement) {
@@ -126,30 +160,8 @@ ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
         function handleIdeaListButton(clickEvent) {
 
             var listType = clickEvent.target.attributes.getNamedItem('data-buttonid').nodeValue;
+            handleCurrentButtonClick(clickEvent);
             console.log('IdeaList vom Typ: "' + listType + '" geklickt');
-
-            switch (listType) {
-
-                case ('HOT'):
-//                    this.style.background = '#4096ee';
-                    document.getElementById('mainMenu_hot_button').style.background = '#4096ee';
-                    document.getElementById('mainMenu_trending_button').style.background = '#3a3a3a';
-                    document.getElementById('mainMenu_fresh_button').style.background = '#3a3a3a';
-                    break;
-                case ('TRENDING'):
-                    this.style.background = '#4096ee';
-                    document.getElementById('mainMenu_hot_button').style.background = '#3a3a3a';
-                    document.getElementById('mainMenu_fresh_button').style.background = '#3a3a3a';
-                    break;
-                case ('FRESH'):
-                    this.style.background = '#4096ee';
-                    document.getElementById('mainMenu_trending_button').style.background = '#3a3a3a';
-                    document.getElementById('mainMenu_hot_button').style.background = '#3a3a3a';
-                    break;
-                default:
-                    console.log('Es wurde die data-buttonid "' +
-                        listType + '" NICHT gefunden');
-            }
 
             var category = ideaWatcher.model.IdeaList.Category.NONE;
             ideaWatcher.controller.IdeaList
@@ -183,6 +195,7 @@ ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
         function handleCategoryButton(clickEvent) {
 
             var category = clickEvent.target.attributes.getNamedItem('data-buttonid').nodeValue;
+            handleCurrentButtonClick(clickEvent);
             console.log('Kategorie: "' + category + '" geklickt');
 
             ideaWatcher.controller.IdeaList.updateIdeaList('', category, 1, 10, true);
@@ -206,8 +219,14 @@ ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
             for (var j = 0; j < userButtonWithLoginNodes.length; j++) {
 
                 var htmlElement = userButtonWithLoginNodes[j];
-                var userButton = htmlElement.getElementsByTagName('div').item(0);;
-                if (userButton.getAttribute('data-buttonid') === 'LOGOUT') {
+                var userButton = htmlElement.getElementsByTagName('div').item(0);
+                var buttonId = userButton.getAttribute('data-buttonid');
+
+                if (htmlElement.className === 'mainMenu_ideaList_li') {
+                    initializeIdeaListButton(htmlElement);
+                    continue;
+                }
+                else if (buttonId === ideaWatcher.model.Navigation.ButtonId.LOGOUT) {
                     initializeLogoutButton(userButton);
                 } else {
                     initializeNavigationButton(htmlElement);
@@ -217,15 +236,16 @@ ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
         //endregion
 
         //region Logout-Button
-        function initializeLogoutButton(logoutButton) {
+        function initializeLogoutButton(button) {
 
-            logoutButton.addEventListener('click', handleLogoutButton);
-            htmlMainMenuButtons.push(logoutButton);
+            button.addEventListener('click', handleLogoutButton);
+            htmlMainMenuButtons.push(button);
         }
 
         function handleLogoutButton(clickEvent) {
 
-            ideaWatcher.controller.Navigation.logoutUser();
+            handleCurrentButtonClick(clickEvent);
+            ideaWatcher.controller.MainMenu.logoutUser();
         }
         //endregion
 
@@ -249,7 +269,8 @@ ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
         function handleNavigationButton(clickEvent) {
 
             var buttonId = clickEvent.target.attributes.getNamedItem('data-buttonid').nodeValue;
-            console.log('Navigation-Button ' + buttonId + ' geklickt');
+            handleCurrentButtonClick(clickEvent);
+            console.log('MainMenu-Button ' + buttonId + ' geklickt');
 
             ideaWatcher.core.Navigator.switchView({
                 viewId: ideaWatcher.model.Navigation.ViewId[buttonId],
@@ -269,6 +290,7 @@ ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
 
         function handleCheckboxLanguageSwitch(clickEvent) {
 
+            handleCurrentButtonClick(clickEvent);
             var language = ideaWatcher.core.Localizer.getLanguage();
 
             if (language === 'de_DE') {
@@ -295,6 +317,21 @@ ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
                 htmlUserDropdownNoLogin.style.display = 'block';
                 htmlUserDropdownWithLogin.style.display = 'none';
             }
+        }
+        //endregion
+
+        //region Was soll passieren, wenn irgendein Button geklickt wird
+
+        function handleCurrentButtonClick(clickEvent) {
+
+            if (!lastClickedButton) {
+                lastClickedButton = clickEvent.target;
+            } else {
+                lastClickedButton = currentClickedButton;
+            }
+            currentClickedButton = clickEvent.target;
+            lastClickedButton.style.background = '#3a3a3a';
+            currentClickedButton.style.background = '#4096ee';
         }
         //endregion
 

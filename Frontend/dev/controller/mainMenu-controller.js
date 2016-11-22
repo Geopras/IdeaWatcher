@@ -1,9 +1,10 @@
-ideaWatcher.controller.Navigation = ideaWatcher.controller.Navigation || (function () {
+ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function () {
 
         var cbInitView = null;
         var cbLocalize = null;
         var cbLoginSuccess = null;
         var cbLogoutSuccess = null;
+        var cbGetCurrentClickedButtonId = null;
 
         //region Events Initialisieren
         var evIni = {
@@ -51,6 +52,7 @@ ideaWatcher.controller.Navigation = ideaWatcher.controller.Navigation || (functi
         function cbLogoutSuccessful(obj) {
             cbLogoutSuccess(obj);
         }
+
         //endregion
 
         //region Registrierung der internen (von uiConnectoren) Callbacks
@@ -69,17 +71,29 @@ ideaWatcher.controller.Navigation = ideaWatcher.controller.Navigation || (functi
         function pubRegisterLogoutSuccessful(cb) {
             cbLogoutSuccess = cb;
         }
+
+        function pubRegisterCurrentClickedButtonId(cb) {
+
+            cbGetCurrentClickedButtonId = cb;
+        }
         //endregion
 
         //region Nach außen angebotene Methoden
         function pubLogout() {
             ideaWatcher.controller.UserSession.tryToLogout();
         }
+
+        function pubGetCurrentClickedButtonId() {
+
+            return cbGetCurrentClickedButtonId();
+        }
         //endregion
 
         return {
 
+            getCurrentClickedButtonId: pubGetCurrentClickedButtonId,
             logoutUser: pubLogout,
+            registerGetCurrentClickedButtonId: pubRegisterCurrentClickedButtonId,
             registerInitializeView: pubRegisterInitializeView,
             registerLocalizeView: pubRegisterLocalizeView,
             registerLoginSuccessful: pubRegisterLoginSuccessful,

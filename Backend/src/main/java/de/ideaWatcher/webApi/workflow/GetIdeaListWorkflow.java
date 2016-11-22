@@ -62,8 +62,15 @@ public class GetIdeaListWorkflow  implements IWorkflow {
 
         // Suche die Ideen im vorgehaltenen Snapshot
 
-        List<IIdea> filteredIdeas = InstanceManager.getIdeaManager()
-                .filterIdeas(listType, category, fromRank, toRank);
+        List<IIdea> filteredIdeas = null;
+        try {
+            filteredIdeas = InstanceManager.getIdeaManager()
+                    .filterIdeas(listType, category, fromRank, toRank);
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Ein Fehler ist bei der Filterung" +
+                    " der Ideen.\nFehlermeldung: " + e.toString());
+            response.setErrorMessage("SIdeaList_filterIdeas_error");
+        }
 
 //        try {
 //            allIdeas = this.ideaController.getAllIdeas();

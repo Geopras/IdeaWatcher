@@ -1,11 +1,25 @@
         <!----------------------------------- View : profile --------------------------------->
         <div class="profile_view">
             <!----------------------------------- View : userProfile : tabs --------------------------->
-
             <nav>
-                <ul>
-                    <li><a class="profileSubMenu_myIdeas_button">My Ideas</a></li>
-                    <li><a class="profileSubMenu_followedIdeas_button">Followed Ideas</a></li>
-                    <li><a class="profileSubMenu_profileEdit_button">Profile</a></li>
+                <ul class="profileView_subMenuButtons">
+                    <li class="mainMenu_ideaList_li">
+                        <div class="profileSubMenu_myIdeas_button"
+                            data-buttonid="MYIDEAS">
+                            My Ideas
+                        </div>
+                    </li>
+                    <li class="mainMenu_ideaList_li">
+                        <div class="profileSubMenu_followedIdeas_button"
+                            data-buttonid="MYFOLLOWEDIDEAS">
+                            My Followed Ideas
+                        </div>
+                    </li>
+                    <li class="profileView_myProfileButton_li">
+                        <div class="profileSubMenu_profileEdit_button"
+                           data-buttonid="MYPROFILE">
+                            My Profile
+                        </div>
+                    </li>
                 </ul>
             </nav>

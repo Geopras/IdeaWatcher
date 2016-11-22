@@ -2,9 +2,17 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         //region local vars
         var header = null;
-        var htmlMainView = null;
+        var htmlIdeaListView = null;
         var htmlMyIdeasView = null;
         var htmlMyFollowedIdeasView = null;
+        var htmlProfileView = null;
+        var htmlIdeaListHeader = null;
+        var htmlMyIdeasHeader = null;
+        var htmlMyFollowedIdeasHeader = null;
+        var htmlIdeaListSections = null;
+        var htmlMyIdeasSections = null;
+        var htmlMyFollowedIdeasSections = null;
+        var htmlCreateIdeaButton = null;
         var currentListType = null;
         var currentCategory = null;
         var currentIdeasMap = {};
@@ -23,10 +31,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         ideaWatcher.controller.IdeaList.registerGetIdea(cbGetIdea);
         //endregion
 
-        // ideaWatcher.core.MessageBroker.subscribe(evLocalizeViewFresh);
-        // ideaWatcher.core.MessageBroker.subscribe(evLocalizeViewTrending);
-        //endregion
-
+        //region Callback-Functions
         //region cbIni
         function cbIni()
         {
@@ -36,10 +41,19 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             currentCategory = ideaWatcher.model.IdeaList.Category.NONE;
 
             //region initialize html
-            htmlMainView = document.querySelector('.ideaList_view');
-            htmlMyIdeasView = document.querySelector('myIdeas_view');
-            htmlMyFollowedIdeasView = document.querySelector('followedIdeas_view');
-            header = document.querySelector('#ideaList_header_h1');
+            htmlIdeaListView = document.querySelector('.ideaList_view');
+            htmlMyIdeasView = document.querySelector('.myIdeas_view');
+            htmlMyFollowedIdeasView = document.querySelector('.myFollowedIdeas_view');
+            header = document.querySelector('.ideaList_header_h1');
+            htmlIdeaListHeader = document.querySelector('.ideaList_header_h1');
+            htmlProfileView = document.querySelector('.profile_view');
+            htmlMyIdeasHeader = document.querySelector('.myIdeas_header_h1');
+            htmlMyFollowedIdeasHeader = document.querySelector('.followedIdeas_header_h1');
+            htmlIdeaListSections = document.querySelector('.ideaList_sections');
+            htmlMyIdeasSections = document.querySelector('.myIdeas_sections');
+            htmlMyFollowedIdeasSections = document.querySelector('.myFollowedIdeas_sections');
+            htmlCreateIdeaButton = document.querySelector('.myIdeas_createNewIdea_button');
+            htmlCreateIdeaButton.addEventListener('click', handleCreateIdeaClickEvent);
             //endregion
         }
         //endregion
@@ -48,12 +62,36 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
             if(exObj.shouldShow)
             {
+                var listType = exObj.additionalData.listType;
                 renderView(exObj.additionalData);
-                htmlMainView.style.display = 'block';
+
+                switch (listType) {
+                    case (ideaWatcher.model.IdeaList.ListType.MYIDEAS):
+                        htmlProfileView.style.display = 'block';
+                        htmlIdeaListView.style.display = 'none';
+                        htmlMyIdeasView.style.display = 'block';
+                        htmlMyFollowedIdeasView.style.display = 'none';
+                        break;
+                    case (ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS):
+                        htmlProfileView.style.display = 'block';
+                        htmlIdeaListView.style.display = 'none';
+                        htmlMyIdeasView.style.display = 'none';
+                        htmlMyFollowedIdeasView.style.display = 'block';
+                        break;
+                    default:
+                        htmlProfileView.style.display = 'none';
+                        htmlIdeaListView.style.display = 'block';
+                        htmlMyIdeasView.style.display = 'none';
+                        htmlMyFollowedIdeasView.style.display = 'none';
+                }
+
             }
             else
             {
-                htmlMainView.style.display = 'none';
+                htmlProfileView.style.display = 'none';
+                htmlIdeaListView.style.display = 'none';
+                htmlMyIdeasView.style.display = 'none';
+                htmlMyFollowedIdeasView.style.display = 'none';
             }
         }
 
@@ -66,9 +104,24 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
             if (header) {
 
+                switch (currentListType) {
+                    case (ideaWatcher.model.IdeaList.ListType.MYIDEAS):
+                        header = htmlMyIdeasHeader;
+                        break;
+                    case (ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS):
+                        header = htmlMyFollowedIdeasHeader;
+                        break;
+                    default:
+                        header = htmlIdeaListHeader;
+
+                }
+
                 header.textContent = ideaWatcher.core.Localizer
                     .IdeaList[currentListType][currentCategory][language]
                     .header;
+            }
+            if (htmlCreateIdeaButton) {
+                htmlCreateIdeaButton.textContent = ideaWatcher.core.Localizer.IdeaList.CreateNewIdeaButtonLabel[language];
             }
             var countPublishedLabels = publishedLabels.length;
             if (countPublishedLabels > 0) {
@@ -128,7 +181,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             currentCategory = responseData.category;
 
             ideaWatcher.core.Navigator.switchView({
-                viewId: 'ideaList',
+                viewId: ideaWatcher.model.Navigation.ViewId[currentListType][currentCategory],
                 url: ideaWatcher.model.Navigation.ViewUrl[currentListType][currentCategory],
                 additionalData: responseData
             });
@@ -149,13 +202,17 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 return currentIdeasMap[ideaId];
             }
         }
+        //endregion
 
-        function renderView(exObj) {
+        //region Render-Funktionen
+
+        function renderView(ideaListData) {
 
             //region Extrahiere Renderdaten:
-            var ideasToAppend = exObj.ideas;
+            var listType = ideaListData.listType;
+            var ideasToAppend = ideaListData.ideas;
             var isRenderNewIdeaList;
-            if (exObj.isRenderNewIdeaList === false) {
+            if (ideaListData.isRenderNewIdeaList === false) {
                 isRenderNewIdeaList = false;
             } else {
                 isRenderNewIdeaList = true;
@@ -170,18 +227,33 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 addToIdeasMap(ideasToAppend);
             }
 
+
+            var htmlParentNode;
+            var htmlSectionsClassName;
+            var htmlSections;
+            if (listType === ideaWatcher.model.IdeaList.ListType.MYIDEAS) {
+                htmlParentNode = document.querySelector('.myIdeas_view');
+                htmlSections = document.querySelector('.myIdeas_sections');
+
+            } else if (listType === ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS) {
+                htmlParentNode = document.querySelector('.myFollowedIdeas_view');
+                htmlSections = document.querySelector('.myFollowedIdeas_sections');
+            } else {
+                htmlParentNode = document.querySelector('.ideaList_view');
+                htmlSections = document.querySelector('.ideaList_sections');
+            }
+            htmlSectionsClassName = htmlSections.className;
+
             if (isRenderNewIdeaList) {
 
                 publishedLabels = [];
-                htmlMainView.removeChild(document.querySelector('.ideaList_sections'));
-                var htmlSections = document.createElement('div');
-                htmlSections.classList.add('ideaList_sections');
+                htmlParentNode.removeChild(htmlSections);
+                htmlSections = document.createElement('div');
+                htmlSections.classList.add(htmlSectionsClassName);
                 renderIdeaList(htmlSections, ideasToAppend);
-                htmlMainView.appendChild(htmlSections);
+                htmlParentNode.appendChild(htmlSections);
 
             } else {
-
-                var htmlSections = htmlMainView.querySelector('.ideaList_sections');
                 renderIdeaList(htmlSections, ideasToAppend);
             }
         }
@@ -300,6 +372,15 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             });
         }
 
+        //endregion
+
+        //region EventHandler
+        // ClickEventHandler für CreateNewIdeaButton
+        function handleCreateIdeaClickEvent(clickEvent) {
+
+            ideaWatcher.controller.IdeaList.navigateToCreateIdeaView();
+        }
+
         function handleIdeaClickEvent(clickEvent) {
 
             var ideaId = clickEvent.target.attributes.getNamedItem('data-ideaid').nodeValue;
@@ -311,6 +392,9 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
             ideaWatcher.core.Navigator.switchView(exObj);
         }
+        //endregion
+
+        //region Hilfsfunktionen
 
         function setLikedState(likeImage) {
             var ideaId = likeImage.attributes.getNamedItem('data-ideaid').nodeValue;
@@ -369,7 +453,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 ' Ideen des Typs "' + currentListType + '" der Kategorie "' +
                 currentCategory + '"');
 
-            var lengthIdeaList = currentIdeaList.length;
+            var lengthIdeaList = currentIdeasMap.length;
             ideaWatcher.controller.IdeaList
                 .updateIdeaList(currentListType, currentCategory,
                    lengthIdeaList , lengthIdeaList + countIdeasPerRequest, false);
@@ -396,6 +480,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 }
             }
         }
+        //endregion
 
         return {
 
