@@ -31,7 +31,7 @@ public class DataManager implements IDataManager {
     @Override
     public void initialize() {
         //TODO: Hier Name der jeweiligen Collection (json-Datei) angeben
-        this.userController = new UserController(new UserService());
-        this.ideaController = new IdeaController(new IdeaService());
+        this.userController = new UserController(new UserService("testLogin"));
+        this.ideaController = new IdeaController(new IdeaService("ideaCollection"));
     }
 }
