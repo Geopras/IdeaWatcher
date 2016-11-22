@@ -16,6 +16,8 @@ import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
+import test.dataManager.UserServiceTest;
+
 import static com.mongodb.client.model.Filters.eq;
 
 
@@ -59,6 +61,7 @@ public class UserDataGenerator {
     private List<IIdea> createRandomIdeaCollection(int count, List<IUser> userList) throws Exception{
         List<IComment> commentList = new ArrayList<IComment>();
         //Comment comment = new Comment();
+        IdeaService is = new IdeaService("ideasCollection");
         
         List<String> catagoryList = new ArrayList<>();
 
@@ -88,7 +91,7 @@ public class UserDataGenerator {
             ranNumber = getRandomInt(0, catagoryList.size()-1);
             idea.setCategory(catagoryList.get(ranNumber));
             ranNumber = getRandomInt(0, userList.size()-1);
-            idea.setCreator(userList.get(ranNumber));
+            idea.setCreator(   is.userToCreator(userList.get(ranNumber) ) );
             idea.setDescription("Meine Idee Nummer: " + i);
             idea.setFollowerUsers(nameList);
             idea.setNumberFollowers((long) nameList.size());
