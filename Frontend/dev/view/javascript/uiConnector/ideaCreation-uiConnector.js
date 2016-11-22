@@ -1,24 +1,16 @@
-ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function VCreateIdea() {
+ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
         //region local vars
-        // Event Globale Initialisierung
-        var evIni = {
-            topic: 'internal/ini',
-            cbFunction: cbIni
-        };
 
-        var evLocalizeView = {
-               topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.CREATEIDEA,
-                cbFunction: localizeView
-            };
 
         var htmlView = null;
         var htmlProfileView = null;
         var createIdea = null;
 
         //region subscribe to events
-        ideaWatcher.core.MessageBroker.subscribe(evIni);
-        ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
+        ideaWatcher.controller.ideaCreation.registerInitializeView(cbIni);
+        ideaWatcher.controller.ideaCreation.registerShowView(cbShowView);
+        ideaWatcher.controller.ideaCreation.registerLocalizeView(cbLocalizeView);
         //endregion
 
         //region lade zu internationalisierende HTML-Elemente
@@ -42,9 +34,10 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function VCrea
         //region cbIni
         function cbIni()
         {
-            console.log('Initialisiere UIConnector ProfileEdit');
+            console.log('Initialisiere UIConnector ideaCreation');
 
             //region assign html elements
+            htmlView = document.querySelector('.ideaCreation_view');
             htmlViewHeadline = document.getElementById('ideaCreation_newIdea');
             htmlName = document.getElementById('ideaCreation_name_label');
             htmlCategory = document.getElementById('ideaCreation_category_label');
@@ -63,12 +56,25 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function VCrea
             //endregion
 
             // lokalisiere die View anhand der global definierten Sprache
-            localizeView();
+            cbLocalizeView();
 
         }
         //endregion
 
-        function localizeView() {
+        function cbShowView(exObj) {
+
+            if(exObj.shouldShow)
+            {
+                cbLocalizeView();
+                htmlView.style.display = 'block';
+            } else {
+
+                htmlView.style.display = 'none';
+            }
+
+        }
+
+        function cbLocalizeView() {
 
             var language = ideaWatcher.core.Localizer.getLanguage();
 

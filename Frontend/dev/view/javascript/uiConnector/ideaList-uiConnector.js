@@ -48,7 +48,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             htmlIdeaListHeader = document.querySelector('.ideaList_header_h1');
             htmlProfileView = document.querySelector('.profile_view');
             htmlMyIdeasHeader = document.querySelector('.myIdeas_header_h1');
-            htmlMyFollowedIdeasHeader = document.querySelector('.followedIdeas_header_h1');
+            htmlMyFollowedIdeasHeader = document.querySelector('.myFollowedIdeas_header_h1');
             htmlIdeaListSections = document.querySelector('.ideaList_sections');
             htmlMyIdeasSections = document.querySelector('.myIdeas_sections');
             htmlMyFollowedIdeasSections = document.querySelector('.myFollowedIdeas_sections');
@@ -453,7 +453,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 ' Ideen des Typs "' + currentListType + '" der Kategorie "' +
                 currentCategory + '"');
 
-            var lengthIdeaList = currentIdeasMap.length;
+            var lengthIdeaList = Object.keys(currentIdeasMap).length;
             ideaWatcher.controller.IdeaList
                 .updateIdeaList(currentListType, currentCategory,
                    lengthIdeaList , lengthIdeaList + countIdeasPerRequest, false);
