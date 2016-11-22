@@ -1,0 +1,19 @@
+{
+  "lists": {
+    "gender": [
+      "male",
+      "female"
+    ],
+    "category": [
+      "gadget",
+      "garden",
+      "sports",
+      "house_Keeping",
+      "website"
+    ],
+    "language": [
+      "german",
+      "english"
+    ]
+  }
+}

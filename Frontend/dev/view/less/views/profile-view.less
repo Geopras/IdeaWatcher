@@ -1,0 +1,102 @@
+.profile_view {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+// Zeugs für das neue Menü
+
+.profile_view nav {
+  box-sizing: border-box;
+  float: left;
+  width: 100%;
+  background: #3a3a3a;
+  font-size: 16px;
+}
+
+.profile_view nav ul {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.profile_view nav a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+}
+
+.profile_view nav ul li {
+  position: relative;
+  float: left;
+  list-style: none;
+  transition:all 500ms;
+}
+
+.profile_view nav ul li:hover {
+  background: #4096ee;
+}
+
+.profile_view nav ul li a {
+  padding: 20px;
+}
+
+.profile_view nav ul li:hover ul {
+  height:auto;
+  opacity:1;
+}
+
+.profile_view nav ul li ul {
+  position: absolute;
+  background: #3a3a3a;
+  overflow:hidden;
+  height: 0;
+}
+
+
+// Zeugs für das alte Menü:
+
+.profile_view ul.tab {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  text-align: center;
+}
+
+// Float the list items side by side 
+.profile_view ul.tab li {
+  float: left;
+}
+
+// Style the links inside the list items 
+.profile_view ul.tab li a {
+  display: inline-block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+// Change background color of links on hover 
+.profile_view ul.tab li a:hover {
+  background-color: #ddd;
+}
+
+// Create an active/current tablink class 
+.profile_view ul.tab li a:focus, .active {
+  background-color: #ccc;
+}
+
+// tab content 
+.profile_view .profile_tabContent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
