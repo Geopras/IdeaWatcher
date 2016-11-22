@@ -48,12 +48,24 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                     ideaWatcher.controller.GlobalNotification.showNotification(
                         ideaWatcher.model.GlobalNotificationType.ERROR,
                         ideaWatcher.core.Localizer.WebSocketConnector[language]
-                            .headline,
+                            .errorMessage.headline,
                         ideaWatcher.core.Localizer.WebSocketConnector[language]
-                            .noValidServerResponse, 5000);
+                            .errorMessage.noValidServerResponse, 5000);
                 }
 
-                //region Wenn UserSession-Antwort, dann Token und UserID speichern
+                // Falls eine Fehlermeldung wegen ungültiger
+                // Token-Validierung zurückkommt, dann diese ausgeben:
+                if (serverMessage.errorMessage === 'token_not_valid') {
+                    ideaWatcher.controller.GlobalNotification.showNotification(
+                        ideaWatcher.model.GlobalNotificationType.ERROR,
+                        ideaWatcher.core.Localizer.WebSocketConnector[language]
+                            .errorMessage.headline,
+                        ideaWatcher.core.Localizer.WebSocketConnector[language]
+                            .errorMessage.token_not_valid, 5000);
+                }
+
+                //region Wenn UserSession-Antwort, dann Token und UserID
+                // speichern:
 
                 if (serverMessage.destination.startsWith('SLogin')) {
                     standardHeader.token = serverMessage.token;
@@ -77,9 +89,10 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                 var language = ideaWatcher.core.Localizer.getLanguage();
                 ideaWatcher.controller.GlobalNotification.showNotification(
                     ideaWatcher.model.GlobalNotificationType.ERROR,
-                    ideaWatcher.core.Localizer.WebSocketConnector[language].headline,
                     ideaWatcher.core.Localizer.WebSocketConnector[language]
-                        .connectionInterrupted, 5000);
+                        .errorMessage.headline,
+                    ideaWatcher.core.Localizer.WebSocketConnector[language]
+                        .errorMessage.connectionInterrupted, 5000);
                 isConnected = false;
             };
             webSocket.onclose = function (event) {
@@ -100,9 +113,10 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                 var language = ideaWatcher.core.Localizer.getLanguage();
                 ideaWatcher.controller.GlobalNotification.showNotification(
                     ideaWatcher.model.GlobalNotificationType.ERROR,
-                    ideaWatcher.core.Localizer.WebSocketConnector[language].headline,
                     ideaWatcher.core.Localizer.WebSocketConnector[language]
-                        .connectionClosed, 5000);
+                        .errorMessage.headline,
+                    ideaWatcher.core.Localizer.WebSocketConnector[language]
+                        .errorMessage.connectionClosed, 5000);
                 // besser als Objekt schreiben um nicht zu verwirren?
                 // callbackfunction(false, {
                 //     code: event.code,
