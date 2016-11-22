@@ -131,7 +131,8 @@ ideaWatcher.view.Navigation = ideaWatcher.view.Navigation || (function () {
             switch (listType) {
 
                 case ('HOT'):
-                    this.style.background = '#4096ee';
+//                    this.style.background = '#4096ee';
+                    document.getElementById('mainMenu_hot_button').style.background = '#4096ee';
                     document.getElementById('mainMenu_trending_button').style.background = '#3a3a3a';
                     document.getElementById('mainMenu_fresh_button').style.background = '#3a3a3a';
                     break;
