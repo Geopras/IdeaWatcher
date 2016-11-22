@@ -6,53 +6,60 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
  * Klasse für Creator-Objekt
  */
 public class Creator implements ICreator {
+    
+    private String userId;
+    private String userName;
+    private String email;
+    private boolean isMailPublic;
+    private String pictureURL;
+    
     @Override
     public String getUserId() {
-        return null;
+        return this.userId;
     }
 
     @Override
     public void setUserId(String userId) {
-
+        this.userId = userId;
     }
 
     @Override
     public String getUserName() {
-        return null;
+        return this.userName;
     }
 
     @Override
     public void setUserName(String userName) {
-
+        this.userName = userName;
     }
 
     @Override
     public String getEmail() {
-        return null;
+        return this.email;
     }
 
     @Override
     public void setEmail(String email) {
-
+        this.email = email;
     }
 
     @Override
     public boolean getIsMailPublic() {
-        return false;
+        return this.isMailPublic;
     }
 
     @Override
     public void setIsMailPublic(boolean isMailPublic) {
-
+        this.isMailPublic = isMailPublic;
     }
 
     @Override
     public String getPictureURL() {
-        return null;
+        return this.pictureURL;
     }
 
     @Override
     public void setPictureURL(String pictureURL) {
-
+        this.pictureURL = pictureURL;
     }
 }
