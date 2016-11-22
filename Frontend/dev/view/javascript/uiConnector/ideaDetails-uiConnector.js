@@ -68,8 +68,10 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 							ideaId : currentIdea.ideaId,
 							text : '' // Kommentartext
 						};
-						console.log('Kommentar wird im UIConnector abgeschickt.')
-						//TODO: Hier muss noch die entsprechende Methode des Controllers aufgerufen werden
+						console
+								.log('Kommentar wird im UIConnector abgeschickt.')
+						// TODO: Hier muss noch die entsprechende Methode des
+						// Controllers aufgerufen werden
 					} else {
 						console.log("kein User angemeldet");
 					}
@@ -229,10 +231,19 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					htmlContactLink.style.display = 'none';
 				}
 				// set userPicture in new Comment section
-				var htmlUserImage = document
-						.querySelector('#ideaDetails_userPicture_img');
-				if (creator.pictureUrl) {
-					htmlUserImage.src = creator.pictureUrl;
+				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
+					var currentUserId = ideaWatcher.controller.UserSession
+							.getCurrentUserId();
+					var htmlNewCommentForm = document
+							.querySelector('#ideaDetails_newComment_form');
+					htmlNewCommentForm.style.display = 'block';
+					var htmlUserImage = document
+							.querySelector('#ideaDetails_userPicture_img');
+					if (creator.pictureUrl) {
+						htmlUserImage.src = creator.pictureUrl;
+					}
+				} else {
+					console.log('Kein Nutzer angemeldet.');
 				}
 
 				// list of old comments
