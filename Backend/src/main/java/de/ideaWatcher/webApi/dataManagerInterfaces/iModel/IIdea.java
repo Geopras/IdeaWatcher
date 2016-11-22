@@ -16,8 +16,8 @@ public interface IIdea {
     void setDescription(String description);
     String getCategory();
     void setCategory(String category);
-    IUser getCreator();
-    void setCreator(IUser creator);
+    ICreator getCreator();
+    void setCreator(ICreator creator);
     Date getPublishDate();
     void setPublishDate(Date publishDate);
     String getLanguage();

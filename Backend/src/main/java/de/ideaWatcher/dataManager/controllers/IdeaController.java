@@ -18,30 +18,28 @@ public class IdeaController implements IIdeaController {
     }
 
     @Override
-    public void addNewIdea(IIdea idea) throws Exception {
-
+    public void addNewIdea(IIdea idea, String userId) throws Exception {
+        this.ideaService.addIdea(idea, userId);
     }
 
     @Override
     public IIdea getIdea(String ideaId) throws Exception {
-        // ToDO
-        return null;
+        return this.ideaService.getIdea(ideaId);
     }
 
     @Override
     public List<IIdea> getAllIdeas() throws Exception {
-        // ToDO
         return this.ideaService.getAllIdeas();
 
     }
 
     @Override
     public void deleteIdea(String ideaId) throws Exception {
-        // ToDO
+        this.ideaService.deleteUser(ideaId);
     }
 
     @Override
-    public void changeIdea(String ideaId, IIdea idea) throws Exception {
-        // ToDO
+    public void updateIdea(IIdea idea) throws Exception {
+        this.ideaService.updateIdea(idea);
     }
 }

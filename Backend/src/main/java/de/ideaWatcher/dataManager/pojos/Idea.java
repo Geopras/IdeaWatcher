@@ -1,6 +1,7 @@
 package main.java.de.ideaWatcher.dataManager.pojos;
 
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.json.JSONArray;
@@ -19,7 +20,7 @@ public class Idea implements IIdea {
     private String name;
     private String description;
     private String category;
-    private IUser creator;
+    private ICreator creator;
     private Date publishDate;
     private String language;
     private Double hotRank;
@@ -63,12 +64,12 @@ public class Idea implements IIdea {
     }
 
     @Override
-    public IUser getCreator() {
+    public ICreator getCreator() {
         return this.creator;
     }
 
     @Override
-    public void setCreator(IUser creator) {
+    public void setCreator(ICreator creator) {
         this.creator = creator;
     }
 
@@ -191,7 +192,7 @@ public class Idea implements IIdea {
         this.name = "";
         this.description = "";
         this.category = "";
-        this.creator = new User();
+        this.creator = new Creator();
         this.publishDate = new Date();
         this.language = "";
         this.hotRank = new Double(0.0);
