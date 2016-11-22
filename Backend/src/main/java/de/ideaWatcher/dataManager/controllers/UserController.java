@@ -87,11 +87,11 @@ public class UserController implements IUserController {
 
     @Override
     public void deleteUser(String userId) throws Exception {
-
+        userService.deleteUser(userId);
     }
 
     @Override
-    public void changeUser(String userId, IUser user) throws Exception {
-
+    public void updateUser(IUser user) throws Exception {
+        userService.updateUser(user);
     }
 }

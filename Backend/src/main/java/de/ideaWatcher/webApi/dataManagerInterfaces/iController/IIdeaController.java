@@ -15,7 +15,7 @@ public interface IIdeaController {
      * @return {String} von Datenbank generierte IdeaID
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      */
-    void addNewIdea(IIdea idea) throws Exception;
+    void addNewIdea(IIdea idea, String userId) throws Exception;
 
     /**
      * Gibt eine vorhandene Idee zurueck
@@ -46,5 +46,5 @@ public interface IIdeaController {
      * @param idea {IIdea} neues Idea-Objekt
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      */
-    void changeIdea(String ideaId, IIdea idea) throws Exception;
+    void updateIdea(IIdea idea) throws Exception;
 }

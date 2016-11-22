@@ -1,8 +1,13 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
+
 import main.java.de.ideaWatcher.dataManager.BCrypt;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -250,4 +255,15 @@ public class UserService {
         dbConnectionService.getCollection().insertMany(userListDoc);
         dbConnectionService.closeConnection();
     }
+    
+    public UpdateResult updateUser(IUser user){
+        Document newDoc = new Document();
+        newDoc = buildUserDocument(user);     
+        UpdateResult ur = dbConnectionService.getCollection().replaceOne(Filters.eq("_id", newDoc.get("_id")), newDoc);
+        return ur;
+    }
+    public void deleteUser(String userId){
+        dbConnectionService.getCollection().findOneAndDelete(Filters.eq("_id", userId));   
+    }
+
 }
