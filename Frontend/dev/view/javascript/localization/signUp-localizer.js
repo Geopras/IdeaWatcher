@@ -20,7 +20,7 @@ ideaWatcher.core.Localizer.signUp = {
         signup_ERROR: {
             SSignup_addUser_error: "An error occuring while adding the user to the database. Please contact the WebApi administrator.",
             SSignup_existsUser_error: "The database query for your sign-up has failed. Please contact the WebApi administrator.",
-            SSignup_username_already_exists: "Sign-up has failed because this username already exists."
+            SSignup_username_already_exists: "Sign-up has failed because this username or E-mail already exists."
         },
         signup_SUCCESS: 'Registration successful.',
         submit: "Register Now!",
@@ -44,7 +44,7 @@ ideaWatcher.core.Localizer.signUp = {
         signup_ERROR: {
             SSignup_addUser_error: "Die Registrierung ist bei der Datenbankoperation \"Hinzufügen eines neuen Benutzers\" fehlgeschlagen. Bitte wenden Sie sich an den WebApi-Administrator.",
             SSignup_existsUser_error: "Die Registrierung ist bei der Datenbankabfrage, ob der Benutzer bereits existiert, fehlgeschlagen. Bitte wenden Sie sich an den WebApi-Administrator.",
-            SSignup_username_already_exists: "Die Registrierung ist nicht möglich, da der Benutzername bereits existiert."
+            SSignup_username_already_exists: "Die Registrierung ist nicht möglich, da der Benutzername oder das Passwort bereits existiert."
         },
         signup_SUCCESS: 'Registrierung erfolgreich durchgeführt!',
 		submit: "Registriere Mich!",
