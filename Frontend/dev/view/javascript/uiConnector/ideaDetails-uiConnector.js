@@ -181,7 +181,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			function renderView(currentIdea) {
 
-				console.log('Starte erstellen der Liste...');
+				console.log('Starte erstellen der Detailansicht...');
+				console.log(currentIdea);
 
 				htmlView = document.querySelector('.ideaDetails_view');
 				var creator = currentIdea.creator;
@@ -199,6 +200,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				// likebutton
 				htmlLikeImg = document.querySelector('#ideaDetails_like_img');
 				setLikeButtonPicture(htmlLikeImg, currentIdea);
+				htmlLikeImg.dataset.ideaId = currentIdea.ideaId;
 				// number of likes
 				htmlLikesSpan = document
 						.querySelector('#ideaDetails_likes_span');
@@ -208,6 +210,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				htmlFollowerImg = document
 						.querySelector('#ideaDetails_follower_img');
 				setFollowerButtonPicture(htmlFollowerImg, currentIdea);
+				htmlFollowerImg.dataset.ideaId = currentIdea.ideaId;
 				// number of followers
 				htmlFollowerSpan = document
 						.querySelector('#ideaDetails_follower_span');
@@ -247,6 +250,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				// list of old comments
 				htmlOldCommentsSection = document
 						.querySelector('#ideaDetails_existingComments_section');
+				htmlOldCommentsSection.textContent = '';
 
 				var comments = currentIdea.comments;
 
@@ -260,7 +264,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 								.add('ideaDetails_oneComment_div');
 						// img comment.pictureUrl
 						var htmlCommentImage = document.createElement('img');
+						if (comment.pictureUrl) {
 						htmlCommentImage.src = comment.pictureUrl;
+						} else {
+							htmlCommentImage.src = './resources/img/user.jpg'
+						}
 						htmlCommentImage.style.width = '30px';
 						htmlCommentImage.style.height = '30px';
 						// div ohne klasse
