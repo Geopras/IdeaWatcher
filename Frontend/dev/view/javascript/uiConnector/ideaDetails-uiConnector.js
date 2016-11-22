@@ -56,11 +56,10 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				// endregion
 
 				// region register Callbacks
-				// wam.logic.Login.registerVerificationError(cbShowVerificationError);
 				ideaWatcher.controller.IdeaDetails.registerShowView(cbShowView);
 				// endregion
 
-				// --> eventuell umbauen für Abschicken des Kommentars
+				//region submit new comment
 				htmlView.onsubmit = function onSubmit(event) {
 
 					event.preventDefault();
@@ -80,15 +79,17 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						console.log("kein User angemeldet");
 					}
 				};
-
+				// endregion
+				
 				// eventlisteners hinzufügen
 				htmlLikeImg.addEventListener('click', changeLikeStatus);
 				htmlFollowerImg.addEventListener('click', changeFollowerStatus);
 
-				// endregion
+				
 			}
 			// endregion
 
+		
 			function cbIdeaDetailsDataReceived(exObj) {
 
 				var language = ideaWatcher.core.Localizer.getLanguage();
