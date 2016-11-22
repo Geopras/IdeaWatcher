@@ -22,7 +22,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			};
 
 			var evUserDataReceived = {
-				topic: 'SIdea/getIdeaDetailsRequest',
+				topic: 'SIdea/getIdeaDetailsRequest-response',
 				cbFunction: cbIdeaDetailsDataReceived
 			};
 			// endregion
@@ -38,6 +38,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			// region subscribe to events
 			ideaWatcher.core.MessageBroker.subscribe(evLikeFollowResponse);
+			ideaWatcher.core.MessageBroker.subscribe(evUserDataReceived);
 			// endregion
 
 			// region cbIni
@@ -89,6 +90,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			// endregion
 
 			function cbIdeaDetailsDataReceived(exObj) {
+
+				var language = ideaWatcher.core.Localizer.getLanguage();
+
 				if (exObj.result == 'success'){
 
 					// var ideaDetailsObject = Object.create(ideaWatcher.model.Idea);
@@ -102,9 +106,19 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				} else {
 					var errorMessage = exObj.error;
 
-					ideaWatcher.controller.GlobalNotification.showNotification(
-						ideaWatcher.core.Localizer.IdeaDetails[language].ideaDetails,
-						ideaWatcher.core.Localizer.IdeaDetails[language].errorMessage[errorMessage],
+					var notificationType = ideaWatcher.model.GlobalNotificationType.ERROR;
+					if (exObj.result == "warning") {
+						notificationType = ideaWatcher.model.GlobalNotificationType.WARNING;
+					}
+					if (exObj.result == "info") {
+						notificationType = ideaWatcher.model.GlobalNotificationType.INFO;
+					}
+
+					ideaWatcher.controller.GlobalNotification
+						.showNotification(
+							notificationType,
+						ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
+						ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
 						5000);
 				}
 			}
@@ -406,7 +420,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 					ideaWatcher.controller.GlobalNotification
 							.showNotification(
-									ideaWatcher.model.GlobalNotificationType.ERROR,
+								notificationType,
 									ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
 									ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
 									5000);
