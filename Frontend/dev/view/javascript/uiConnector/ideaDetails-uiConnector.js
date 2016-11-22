@@ -68,23 +68,6 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 							ideaId : currentIdea.ideaId,
 							text : '' // Kommentartext
 						};
-						console
-								.log('Kommentar wird im UIConnector abgeschickt.')
-						// TODO: Hier muss noch die entsprechende Methode des
-						// Controllers aufgerufen werden
-					} else {
-						console.log("kein User angemeldet");
-					}
-
-					if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
-						var currentUserId = ideaWatcher.controller.UserSession
-								.getCurrentUserId();
-						// TODO: Kommentar abschicken
-						var exObj = {
-							userId : currentUserId,
-							ideaId : currentIdea.ideaId,
-							text : '' // Kommentartext
-						};
 						console.log('Kommentar wird im UIConnector abgeschickt.')
 						//TODO: Hier muss noch die entsprechende Methode des Controllers aufgerufen werden
 					} else {
