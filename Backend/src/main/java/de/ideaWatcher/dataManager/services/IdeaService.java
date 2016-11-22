@@ -6,6 +6,7 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.bson.Document;
+import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,16 @@ public class IdeaService {
     public IdeaService(String collectionName) {
         this.dbConnectionService = new DbConnectionService(collectionName);
     }
+    
+    public IIdea getIdea( String ideaId ) throws Exception {
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        }
+        Document fountDoc = dbConnectionService.getCollection().find(eq("_id", ideaId)).first(); 
+        
+        return buildIdea(fountDoc);
+    }
+    
     public List<IIdea> getAllIdeas() throws Exception {
         // ToDo
         // fehlende Fehlerbehandlungen sollten noch hinzugef�gt werden
