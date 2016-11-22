@@ -137,7 +137,7 @@ public class ProfileEditWorkflow implements IWorkflow {
             user.setIsMailPublic(requestIsMailPublic);
             user.setPictureURL(requestPictureUrl);
 
-            this.userController.changeUser(userId, user);
+            this.userController.updateUser(user);
 
             response.setResult("success");
             return response;

@@ -159,10 +159,10 @@ public class LikeFollowWorkflow implements IWorkflow {
 
         try {
             if (ideaChanged){
-                ideaController.changeIdea(ideaId, currentIdea);
+                ideaController.updateIdea(currentIdea);
             }
             if (userChanged){
-                userController.changeUser(userId, currentUser);
+                userController.updateUser(currentUser);
             }
 
             response.setResult("success");

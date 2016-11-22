@@ -1,6 +1,7 @@
 package main.java.de.ideaWatcher.webApi.core;
 
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.json.JSONArray;
@@ -40,7 +41,7 @@ public class JSONBuilder {
         jsonObject.put("numberFollowers", idea.getNumberFollowers());
         jsonObject.put("numberComments", idea.getNumberComments());
 
-        jsonObject.put("creator", JSONBuilder.getSmallUserJSONObject(idea.getCreator()));
+        jsonObject.put("creator", JSONBuilder.getCreatorJSONObject(idea.getCreator()));
         jsonObject.put("likeUsers", new JSONArray(idea.getLikeUsers()));
         jsonObject.put("followers", new JSONArray(idea.getFollowerUsers()));
 
@@ -61,13 +62,13 @@ public class JSONBuilder {
     }
 
 
-    public static JSONObject getSmallUserJSONObject(IUser user) {
+    public static JSONObject getCreatorJSONObject(ICreator creator) {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("userID", user.getUserId());
-        jsonObject.put("userName", user.getUserName());
-        jsonObject.put("email", user.getEmail());
-        jsonObject.put("isMailPublic", user.getIsMailPublic());
+        jsonObject.put("userID", creator.getUserId());
+        jsonObject.put("userName", creator.getUserName());
+        jsonObject.put("email", creator.getEmail());
+        jsonObject.put("isMailPublic", creator.getIsMailPublic());
 
         return jsonObject;
     }

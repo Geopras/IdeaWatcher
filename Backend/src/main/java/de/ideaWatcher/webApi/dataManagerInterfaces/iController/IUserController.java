@@ -81,5 +81,5 @@ public interface IUserController {
      * @throws Exception falls der User nicht existiert oder ein Problem beim
      * Zugriff auf die Datenbank auftrat
      */
-    void changeUser(String userId, IUser user) throws Exception;
+    void updateUser(IUser user) throws Exception;
 }

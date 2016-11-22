@@ -1,11 +1,15 @@
 package main.java.de.ideaWatcher.webApi.manager;
 
+import main.java.de.ideaWatcher.dataManager.pojos.Comment;
+import main.java.de.ideaWatcher.dataManager.pojos.Creator;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
-import main.java.de.ideaWatcher.webApi.core.IdeaAgeComparator;
-import main.java.de.ideaWatcher.webApi.core.IdeaHotRankComparator;
-import main.java.de.ideaWatcher.webApi.core.IdeaTrendingRankComparator;
+import main.java.de.ideaWatcher.dataManager.pojos.User;
+import main.java.de.ideaWatcher.webApi.core.*;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.thread.RankCalculationDaemon;
 
 import java.util.*;
@@ -194,6 +198,22 @@ public class IdeaManager {
         Random r = new Random();
         Calendar calendar;
 
+        ICreator creator = new Creator();
+        creator.setUserId("654");
+        creator.setEmail("email@test.org");
+        creator.setIsMailPublic(false);
+        creator.setPictureURL("");
+        creator.setUserName("Renate Test");
+
+        IComment comment = new Comment();
+        comment.setPictureURL("");
+        comment.setUserId(creator.getUserId());
+        comment.setText("Das ist ein Testkommentar. Mal sehn ob man den sieht.");
+        comment.setUserName(creator.getUserName());
+
+        List<IComment> comments = new ArrayList<>();
+        comments.add(comment);
+
         // erzeuge 100 Testideen
         for (int i = 0; i < 100; i++){
 
@@ -209,6 +229,8 @@ public class IdeaManager {
             newIdea.setNumberFollowers((long) r.nextInt(100));
             newIdea.setName("Idee Nummer " + i);
             newIdea.setDescription("Eine ganz tolle Idee");
+            newIdea.setComments(comments);
+            newIdea.setCreator(creator);
 
             ideas.add(newIdea);
         }

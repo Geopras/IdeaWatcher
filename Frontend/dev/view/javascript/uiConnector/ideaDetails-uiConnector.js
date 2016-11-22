@@ -20,6 +20,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				topic : 'SIdeaDetails/LikeFollowIdeaRequest-response',
 				cbFunction : cbLikeFollowResponse
 			};
+
+			var evUserDataReceived = {
+				topic: 'SIdea/getIdeaDetailsRequest',
+				cbFunction: cbIdeaDetailsDataReceived
+			};
 			// endregion
 
 			// region registriere Callbacks beim Controller
@@ -68,23 +73,6 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 							ideaId : currentIdea.ideaId,
 							text : '' // Kommentartext
 						};
-						console
-								.log('Kommentar wird im UIConnector abgeschickt.')
-						// TODO: Hier muss noch die entsprechende Methode des
-						// Controllers aufgerufen werden
-					} else {
-						console.log("kein User angemeldet");
-					}
-
-					if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
-						var currentUserId = ideaWatcher.controller.UserSession
-								.getCurrentUserId();
-						// TODO: Kommentar abschicken
-						var exObj = {
-							userId : currentUserId,
-							ideaId : currentIdea.ideaId,
-							text : '' // Kommentartext
-						};
 						console.log('Kommentar wird im UIConnector abgeschickt.')
 						//TODO: Hier muss noch die entsprechende Methode des Controllers aufgerufen werden
 					} else {
@@ -100,14 +88,41 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			}
 			// endregion
 
+			function cbIdeaDetailsDataReceived(exObj) {
+				if (exObj.result == 'success'){
+
+					// var ideaDetailsObject = Object.create(ideaWatcher.model.Idea);
+					// ideaDetailsObject.category = exObj.data.category;
+					// //ideaDetailsObject.comments
+					// //ideaDetailsObject.creator
+					// ideaDetailsObject.description = exObj.data.description;
+					// ideaDetailsObject.
+
+					renderView(exObj.data)
+				} else {
+					var errorMessage = exObj.error;
+
+					ideaWatcher.controller.GlobalNotification.showNotification(
+						ideaWatcher.core.Localizer.IdeaDetails[language].ideaDetails,
+						ideaWatcher.core.Localizer.IdeaDetails[language].errorMessage[errorMessage],
+						5000);
+				}
+			}
+
 			// region showView
 			function cbShowView(obj) {
 				if (obj.shouldShow) {
 
-					var idea = ideaWatcher.controller.IdeaDetails
-							.getIdea(obj.additionalData.ideaId);
-					currentIdea = idea;
-					renderView(idea);
+					// var idea = ideaWatcher.controller.IdeaDetails
+					// 		.getIdea(obj.additionalData.ideaId);
+					// currentIdea = idea;
+					// renderView(idea);
+
+					var ideaId = obj.additionalData.ideaId;
+					ideaWatcher.controller.IdeaDetails.tryToLoadIdeaData(ideaId);
+
+					// request losschicken
+
 					htmlView.style.display = 'block';
 				} else {
 					htmlView.style.display = 'none';
@@ -198,7 +213,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			function renderView(currentIdea) {
 
-				console.log('Starte erstellen der Liste...');
+				console.log('Starte erstellen der Detailansicht...');
+				console.log(currentIdea);
 
 				htmlView = document.querySelector('.ideaDetails_view');
 				var creator = currentIdea.creator;
@@ -216,6 +232,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				// likebutton
 				htmlLikeImg = document.querySelector('#ideaDetails_like_img');
 				setLikeButtonPicture(htmlLikeImg, currentIdea);
+				htmlLikeImg.dataset.ideaId = currentIdea.ideaId;
 				// number of likes
 				htmlLikesSpan = document
 						.querySelector('#ideaDetails_likes_span');
@@ -225,6 +242,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				htmlFollowerImg = document
 						.querySelector('#ideaDetails_follower_img');
 				setFollowerButtonPicture(htmlFollowerImg, currentIdea);
+				htmlFollowerImg.dataset.ideaId = currentIdea.ideaId;
 				// number of followers
 				htmlFollowerSpan = document
 						.querySelector('#ideaDetails_follower_span');
@@ -264,6 +282,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				// list of old comments
 				htmlOldCommentsSection = document
 						.querySelector('#ideaDetails_existingComments_section');
+				htmlOldCommentsSection.textContent = '';
 
 				var comments = currentIdea.comments;
 
@@ -277,7 +296,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 								.add('ideaDetails_oneComment_div');
 						// img comment.pictureUrl
 						var htmlCommentImage = document.createElement('img');
+						if (comment.pictureUrl) {
 						htmlCommentImage.src = comment.pictureUrl;
+						} else {
+							htmlCommentImage.src = './resources/img/user.jpg'
+						}
 						htmlCommentImage.style.width = '30px';
 						htmlCommentImage.style.height = '30px';
 						// div ohne klasse
