@@ -83,7 +83,8 @@ public class RequestManager {
 
         if (!requestObject.getDestination().startsWith("SSignup") &&
                 !requestObject.getDestination().startsWith("SLogin") &&
-                !requestObject.getDestination().startsWith("SIdeaList")) {
+                !requestObject.getDestination().startsWith("SIdeaList") &&
+                !requestObject.getDestination().startsWith("SIdea/getIdeaDetailsRequest")) {
 
             // Token validieren
             if (!InstanceManager.getTokenManager()

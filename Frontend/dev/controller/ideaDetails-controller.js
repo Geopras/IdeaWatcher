@@ -97,7 +97,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
 
         function buildRequestLoadIdeaData(ideaId)
         {
-            var exLoadUserDataRequest = ideaWatcher.model.Request;
+            var exLoadUserDataRequest = Object.create(ideaWatcher.model.Request);
 
             exLoadUserDataRequest.destination = 'SIdea/getIdeaDetailsRequest';
             var exObj = {
