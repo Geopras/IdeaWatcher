@@ -4,10 +4,11 @@ import main.java.de.ideaWatcher.dataManager.pojos.Comment;
 import main.java.de.ideaWatcher.dataManager.pojos.Creator;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
-import main.java.de.ideaWatcher.webApi.core.*;
+import main.java.de.ideaWatcher.webApi.core.IdeaAgeComparator;
+import main.java.de.ideaWatcher.webApi.core.IdeaHotRankComparator;
+import main.java.de.ideaWatcher.webApi.core.IdeaTrendingRankComparator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.thread.RankCalculationDaemon;
@@ -198,18 +199,18 @@ public class IdeaManager {
         Random r = new Random();
         Calendar calendar;
 
-        ICreator creator = new Creator();
-        creator.setUserId("654");
-        creator.setEmail("email@test.org");
-        creator.setIsMailPublic(false);
-        creator.setPictureURL("");
-        creator.setUserName("Renate Test");
+        IUser user = new User();
+        user.setUserId("654");
+        user.setEmail("email@test.org");
+        user.setIsMailPublic(false);
+        user.setPictureURL("");
+        user.setUserName("Renate Test");
 
         IComment comment = new Comment();
         comment.setPictureURL("");
-        comment.setUserId(creator.getUserId());
+        comment.setUserId(user.getUserId());
         comment.setText("Das ist ein Testkommentar. Mal sehn ob man den sieht.");
-        comment.setUserName(creator.getUserName());
+        comment.setUserName(user.getUserName());
 
         List<IComment> comments = new ArrayList<>();
         comments.add(comment);
@@ -230,7 +231,7 @@ public class IdeaManager {
             newIdea.setName("Idee Nummer " + i);
             newIdea.setDescription("Eine ganz tolle Idee");
             newIdea.setComments(comments);
-            newIdea.setCreator(creator);
+            newIdea.setCreator(new Creator());
 
             ideas.add(newIdea);
         }

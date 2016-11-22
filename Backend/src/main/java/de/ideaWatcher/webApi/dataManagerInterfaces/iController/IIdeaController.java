@@ -42,7 +42,6 @@ public interface IIdeaController {
 
     /**
      * Aendert eine vorhandene Idee in der Ideen-Collection
-     * @param ideaId {String} eindeutige IdeeID
      * @param idea {IIdea} neues Idea-Objekt
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      */

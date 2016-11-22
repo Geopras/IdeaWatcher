@@ -1,21 +1,18 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.UpdateResult;
 import main.java.de.ideaWatcher.dataManager.pojos.Creator;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
-
 import org.bson.Document;
-
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.UpdateResult;
-
-import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.mongodb.client.model.Filters.eq;
 
 /**
  * Service fuer Zugriff auf Datenbank
@@ -143,16 +140,6 @@ public class IdeaService {
     
     public void deleteUser(String ideaId){
         dbConnectionService.getCollection().findOneAndDelete(Filters.eq("_id", ideaId));   
-    }
-    
-    public ICreator userToCreator(IUser user){
-        ICreator creator = new Creator();
-        creator.setUserId(user.getUserId());
-        creator.setUserName(user.getUserName());
-        creator.setEmail(user.getEmail());
-        creator.setIsMailPublic(user.getIsMailPublic());
-        creator.setPictureURL(user.getPictureURL());
-        return creator;
     }
     
 }

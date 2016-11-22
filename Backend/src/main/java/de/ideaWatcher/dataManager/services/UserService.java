@@ -12,8 +12,6 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import static com.mongodb.client.model.Filters.eq;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -260,17 +258,8 @@ public class UserService {
     
     public UpdateResult updateUser(IUser user){
         Document newDoc = new Document();
-        newDoc = buildUserDocument(user);
-        System.out.println("UserId: " + user.getUserId() );
-       // newDoc.append("_id", user.getUserId());
-       // UpdateResult ur = dbConnectionService.getCollection().replaceOne(Filters.eq("_id", user.getUserId()), newDoc);
-        UpdateResult ur = dbConnectionService.getCollection().updateOne(Filters.eq("_id",  user.getUserId()), newDoc);
-        /*
-        dbConnectionService.getCollection().replaceOne(Filters.eq("_id", conn.getCollection()
-                .find(eq("username", i.getP_creator())).first()
-                    .get("_id")), mySearch);
-        
-        */
+        newDoc = buildUserDocument(user);     
+        UpdateResult ur = dbConnectionService.getCollection().replaceOne(Filters.eq("_id", newDoc.get("_id")), newDoc);
         return ur;
     }
     public void deleteUser(String userId){

@@ -76,7 +76,6 @@ public interface IUserController {
 
     /**
      * Aendert einen vorhandenen User
-     * @param userId {String} eindeutige UserId
      * @param user {IUser} geaendertes User-Objekt
      * @throws Exception falls der User nicht existiert oder ein Problem beim
      * Zugriff auf die Datenbank auftrat
