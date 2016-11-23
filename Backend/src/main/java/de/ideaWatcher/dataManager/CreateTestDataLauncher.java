@@ -28,14 +28,14 @@ public class CreateTestDataLauncher {
 
         UserService userService = new UserService("usersCollection");
         List<IUser> usersList = new ArrayList<IUser>();
-        //usersList = userService.getAllUsers();
+        usersList = userService.getAllUsers();
 
         /* Testdaten anlegen mit CollectionName, User-Liste und Anzahl der Dokumente
          * Name der Collection
          * Eine Liste von usern erzeugen
          * Anzahl der Dokumente die erzeugt werden sollen
          */
-        tdg.createIdeas("ideasCollection", usersList, 50);
+        tdg.createIdeas("ideasCollection", usersList, 100);
     }
 
 
@@ -49,7 +49,7 @@ public class CreateTestDataLauncher {
     }
 
     public static void main(String[] args) throws Exception {
-
+        createTestData();
     }
 
 }

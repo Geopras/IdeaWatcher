@@ -2,6 +2,7 @@ package main.java.de.ideaWatcher.dataManager.services;
 
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
+import main.java.de.ideaWatcher.dataManager.pojos.Comment;
 import main.java.de.ideaWatcher.dataManager.pojos.Creator;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
@@ -27,7 +28,8 @@ public class IdeaService {
     }
     
     private Document buildCreatorDocument(ICreator creator) {
-        return new Document("userName", creator.getUserName() )
+        return new Document("userId", creator.getUserId() )
+                .append("userName", creator.getUserName())
                 .append("email", creator.getEmail())
                 .append("isMailPublic", creator.getIsMailPublic())
                 .append("pictureURL", creator.getPictureURL());
@@ -35,13 +37,56 @@ public class IdeaService {
     
     private ICreator buildCreator(Document creatorDoc) {
         ICreator creator = new Creator();
+        creator.setUserId(creatorDoc.getString("userId"));
         creator.setUserName(creatorDoc.getString("userName"));
         creator.setEmail(creatorDoc.getString("email"));
         creator.setIsMailPublic(creatorDoc.getBoolean("isMailPublic"));
         creator.setPictureURL(creatorDoc.getString("pictureUrl"));
         return creator;
     }
-    
+
+
+    private Document buildCommentDocument(IComment comment) {
+        return new Document("commentId", comment.getCommentId() )
+                .append("userName", comment.getUserName())
+                .append("userId", comment.getUserId())
+                .append("text", comment.getText())
+                .append("pictureURL", comment.getPictureURL())
+                .append("publishDate", comment.getPublishDate());
+    }
+
+    private IComment buildComment(Document commentDoc) {
+        IComment comment = new Comment();
+        comment.setCommentId(commentDoc.getString("commentId"));
+        comment.setUserId(commentDoc.getString("userId"));
+        comment.setUserName(commentDoc.getString("userName"));
+        comment.setText(commentDoc.getString("text"));
+        comment.setPublishDate(commentDoc.getDate("publishDate"));
+        comment.setPictureURL(commentDoc.getString("pictureUrl"));
+        return comment;
+    }
+
+    private List<Document> buildCommentDocumentList(List<IComment> commentList){
+
+        List<Document> commentDocList = new ArrayList<Document>();
+
+        for (IComment comment : commentList){
+            commentDocList.add(buildCommentDocument(comment));
+        }
+        return commentDocList;
+    }
+
+    private List<IComment> buildCommentList(List<Document>  commentDocList){
+
+        List<IComment> commentList = new ArrayList<IComment>();
+
+        for (Document document : commentDocList){
+            commentList.add(buildComment(document));
+        }
+
+        return commentList;
+    }
+
     public IIdea getIdea( String ideaId ) throws Exception {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
@@ -88,6 +133,25 @@ public class IdeaService {
         return idea;
     }
 
+    private Document buildIdeaDocument(IIdea idea) {
+        // ID wird nicht übertragen, da von MongoDB erzeugt!
+        return new Document("name", idea.getName())
+                .append("description", idea.getDescription())
+                .append("catagory", idea.getCategory())
+                .append("creator", buildCreatorDocument(idea.getCreator()))
+                .append("publishedDate", idea.getPublishDate())
+                .append("language", idea.getLanguage())
+                .append("hotRank", idea.getHotRank())
+                .append("trendingRank", idea.getTrendingRank())
+                .append("likeUsers", idea.getLikeUsers())
+                .append("numberLikes", idea.getNumberLikes())
+                .append( "followerUsers", idea.getFollowerUsers())
+                .append("numberFollowers", idea.getNumberFollowers())
+                //.append("comments", idea.getComments())
+                .append("comments", buildCommentDocumentList(idea.getComments()))
+                .append("numberComments", idea.getNumberComments());
+    }
+
     public void addIdea(IIdea idea, String userId) throws Exception {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
@@ -112,24 +176,6 @@ public class IdeaService {
         }     
         dbConnectionService.getCollection().insertMany(ideaListDoc);
         dbConnectionService.closeConnection();
-    }
-    
-    private Document buildIdeaDocument(IIdea idea) {
-        // ID wird nicht übertragen, da von MongoDB erzeugt!
-        return new Document("name", idea.getName())
-            .append("description", idea.getDescription())
-            .append("catagory", idea.getCategory())
-            .append("creator", buildCreatorDocument(idea.getCreator()))
-            .append("publishedDate", idea.getPublishDate())
-            .append("language", idea.getLanguage())
-            .append("hotRank", idea.getHotRank())
-            .append("trendingRank", idea.getTrendingRank())
-            .append("likeUsers", idea.getLikeUsers())
-            .append("numberLikes", idea.getNumberLikes())
-            .append( "followerUsers", idea.getFollowerUsers())
-            .append("numberFollowers", idea.getNumberFollowers())
-            .append("comments", idea.getComments())
-            .append("numberComments", idea.getNumberComments());
     }
     
     public UpdateResult updateIdea(IIdea idea){

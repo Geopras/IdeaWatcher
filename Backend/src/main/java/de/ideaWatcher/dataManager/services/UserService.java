@@ -53,6 +53,21 @@ public class UserService {
         }
     }
 
+        public List<IUser> getAllUsers() throws Exception {
+        // ToDo
+        // fehlende Fehlerbehandlungen sollten noch hinzugef�gt werden
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        }
+        List<Document> usersDoc = dbConnectionService.getCollection().find().into(new ArrayList<Document>());
+        dbConnectionService.closeConnection();
+        List<IUser> users = new ArrayList<IUser>();
+        for(Document d : usersDoc){
+            users.add(buildUser(d));
+        }
+        return users;
+    }
+
     /**
      * Gibt die UserID zu einem Usernamen oder einer Email zurück
      * @param userNameOrEmail {String} Username oder Email

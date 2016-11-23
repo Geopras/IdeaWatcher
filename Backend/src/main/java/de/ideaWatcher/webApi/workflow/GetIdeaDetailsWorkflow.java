@@ -60,43 +60,42 @@ public class GetIdeaDetailsWorkflow  implements IWorkflow {
         //region Den zur Request-UserID zugehoerigen User in DB abfragen
         IIdea foundIdea;
         try {
-            //foundIdea = this.ideaController.getIdea(ideaID);
+            foundIdea = this.ideaController.getIdea(ideaID);
 
             //Testweise eine Beispiel-Idee erzeugen
-            //foundIdea = ideaController.getIdea(ideaID);
-            foundIdea = new Idea();
-            ICreator bspCreator = new Creator();
-            bspCreator.setUserName("HansWurst");
-            bspCreator.setUserId("12345");
-            bspCreator.setEmail("hans@wurst.de");
-            bspCreator.setIsMailPublic(true);
-
-            foundIdea.setCreator(bspCreator);
-            foundIdea.setName("Name einer Testidee");
-            foundIdea.setCategory("gadget");
-            foundIdea.setNumberLikes((long) 1337);
-            foundIdea.setNumberFollowers((long) 42);
-            foundIdea.setNumberComments((long) 2);
-            foundIdea.setDescription("Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
-                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
-                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
-                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
-                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
-                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
-                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
-                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
-                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung");
-
-            List<IComment> testComments = new ArrayList<IComment>();
-            IComment testComment1 = new Comment();
-            testComment1.setUserId("12345");
-            testComment1.setUserName("HansWurst");
-            testComment1.setPictureURL("");
-            testComment1.setPublishDate(new Date());
-            testComment1.setText("Jo, das ist eine ganz feine Idee.");
-            testComments.add(testComment1);
-
-            foundIdea.setComments(testComments);
+//            foundIdea = new Idea();
+//            ICreator bspCreator = new Creator();
+//            bspCreator.setUserName("HansWurst");
+//            bspCreator.setUserId("12345");
+//            bspCreator.setEmail("hans@wurst.de");
+//            bspCreator.setIsMailPublic(true);
+//
+//            foundIdea.setCreator(bspCreator);
+//            foundIdea.setName("Name einer Testidee");
+//            foundIdea.setCategory("gadget");
+//            foundIdea.setNumberLikes((long) 1337);
+//            foundIdea.setNumberFollowers((long) 42);
+//            foundIdea.setNumberComments((long) 2);
+//            foundIdea.setDescription("Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
+//                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
+//                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
+//                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
+//                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
+//                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
+//                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
+//                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
+//                    "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung");
+//
+//            List<IComment> testComments = new ArrayList<IComment>();
+//            IComment testComment1 = new Comment();
+//            testComment1.setUserId("12345");
+//            testComment1.setUserName("HansWurst");
+//            testComment1.setPictureURL("");
+//            testComment1.setPublishDate(new Date());
+//            testComment1.setText("Jo, das ist eine ganz feine Idee.");
+//            testComments.add(testComment1);
+//
+//            foundIdea.setComments(testComments);
 
             response.setResult("success");
             response.setData(JSONBuilder.getIdeaDetailsJSONObject(foundIdea));

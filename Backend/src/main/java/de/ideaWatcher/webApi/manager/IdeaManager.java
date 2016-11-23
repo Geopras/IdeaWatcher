@@ -4,9 +4,7 @@ import main.java.de.ideaWatcher.dataManager.pojos.Comment;
 import main.java.de.ideaWatcher.dataManager.pojos.Creator;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
-import main.java.de.ideaWatcher.webApi.core.IdeaAgeComparator;
-import main.java.de.ideaWatcher.webApi.core.IdeaHotRankComparator;
-import main.java.de.ideaWatcher.webApi.core.IdeaTrendingRankComparator;
+import main.java.de.ideaWatcher.webApi.core.*;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
@@ -45,12 +43,12 @@ public class IdeaManager {
     }
 
     public void initialize() throws Exception {
-        // initial, bevor der Ranking Algorithmus ein mal durchgelaufen ist,
-        // soll der Snapshot mit den letzten Werten aus der Datenbank befüllt werden
 
         try {
-            this.allIdeasSnapshot = getTestIdeas();
-            //this.allIdeasSnapshot = this.ideaController.getAllIdeas();
+            // initial, bevor der Ranking Algorithmus ein mal durchgelaufen ist,
+            // soll der Snapshot mit den letzten Werten aus der Datenbank befüllt werden
+            this.allIdeasSnapshot = this.ideaController.getAllIdeas();
+            //this.allIdeasSnapshot = getTestIdeas();
         } catch (Exception e) {
             log.log(Level.SEVERE, "Ein Fehler ist bei der Abfrage aller Ideen" +
                     " aus der Datenbank aufgetreten.\nFehlermeldung: " + e
@@ -188,6 +186,51 @@ public class IdeaManager {
                 this.REFRESH_RANKING_TIME,
                 this.REFRESH_RANKING_TIMEUNIT);
 
+    }
+
+    public static void calculateRanking(List<IIdea> ideas){
+        double hotRatingLikes = 0.5;
+        double hotRatingFollows = 0.3;
+        double hotRatingAge = 0.2;
+        double trendingRatingLikes = 0.3;
+        double trendingRatingFollows = 0.1;
+        double trendingRatingAge = 0.6;
+        long comparableStartTime = new Date().getTime();
+
+        long maxLikes = Collections.max(ideas, new IdeaLikesComparator()).getNumberLikes();
+        long maxFollowers = Collections.max(ideas, new IdeaFollowersComparator()).getNumberFollowers();
+
+        Date oldestPublishDate = Collections.min(ideas, new IdeaAgeComparator()).getPublishDate();
+        // alter der ältesten Idee in Sekunden
+        long maxAge = (comparableStartTime - oldestPublishDate.getTime()) / 1000;
+
+        // Division durch Null verhindern, wenn noch nichts geliked, gefollowed usw. wurde
+        if (maxLikes == 0 ){
+            maxLikes = 1;
+        }
+        if (maxFollowers == 0){
+            maxFollowers = 1;
+        }
+        if (maxAge == 0){
+            maxAge = 1;
+        }
+
+        for (IIdea idea : ideas){
+
+            double likeRatio = ((double) idea.getNumberLikes()) / maxLikes;
+            double followRatio = ((double) idea.getNumberFollowers()) / maxFollowers;
+            double ageRatio = ((double)(maxAge -
+                    ((comparableStartTime - idea.getPublishDate().getTime()) / 1000)))
+                    / maxAge;
+
+            idea.setHotRank(likeRatio * hotRatingLikes +
+                    followRatio * hotRatingFollows +
+                    ageRatio * hotRatingAge);
+
+            idea.setTrendingRank(likeRatio * trendingRatingLikes +
+                    followRatio * trendingRatingFollows +
+                    ageRatio * trendingRatingAge);
+        }
     }
 
     /**

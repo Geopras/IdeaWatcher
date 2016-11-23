@@ -1,11 +1,13 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
 import main.java.de.ideaWatcher.dataManager.BCrypt;
+import main.java.de.ideaWatcher.dataManager.pojos.Comment;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
+import main.java.de.ideaWatcher.webApi.manager.IdeaManager;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -18,97 +20,127 @@ public class TestDataGenerator {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    public List<IUser> createUsers(String collectionName, int count) throws Exception{
+    public List<IUser> createUsers(String collectionName, int count) throws Exception {
         List<IUser> userList = new ArrayList<IUser>();
-        userList = createRandomUserList(count);
-        UserService us = new UserService(collectionName);
-        us.addUserList(userList);
+        UserService userService = new UserService(collectionName);
+        userList = createRandomUserList(userService, count);
+        userService.addUserList(userList);
         return userList;
     }
 
-    public List<IUser> createRandomUserList( int count ) throws Exception{
+    public List<IUser> createRandomUserList(UserService userService, int count) throws Exception {
+        Random r = new Random();
         List<IUser> userList = new ArrayList<IUser>();
-        IUser user;
 
-        for(int i = 0; i < count; i++){
-            user = new User();
-            user.setUserName("user"+ i);
-            user.setEmail("test"+i+"@tester.de");
-            user.setPassword("password" + getRandomDouble(-100.0, 100.0) );
-            user.setIsMailPublic(false);
-            userList.add(user);
+        List<String> genderList = new ArrayList<>();
+        genderList.add("male");
+        genderList.add("female");
+
+        List<String> languageList = new ArrayList<>();
+        languageList.add("de_DE");
+        languageList.add("en_GB");
+
+        List<String> surnameList = new ArrayList<>();
+        surnameList.add("Müller");
+        surnameList.add("Schmidt");
+        surnameList.add("Schneider");
+        surnameList.add("Fischer");
+        surnameList.add("Meyer");
+        surnameList.add("Weber");
+        surnameList.add("Hofmann");
+        surnameList.add("Wagner");
+        surnameList.add("Becker");
+        surnameList.add("Schulz");
+        surnameList.add("Schulz");
+        surnameList.add("Koch");
+        surnameList.add("Bauer");
+        surnameList.add("Richter");
+        surnameList.add("Klein");
+        surnameList.add("Schröder");
+        surnameList.add("Wolf");
+        surnameList.add("Neumann");
+        surnameList.add("Schwarz");
+        surnameList.add("Schmitz");
+
+        List<String> femaleFirstNameList = new ArrayList<>();
+        femaleFirstNameList.add("Ursula");
+        femaleFirstNameList.add("Carin");
+        femaleFirstNameList.add("Helga");
+        femaleFirstNameList.add("Sabine");
+        femaleFirstNameList.add("Ingrid");
+        femaleFirstNameList.add("Renate");
+        femaleFirstNameList.add("Monica");
+        femaleFirstNameList.add("Susanne");
+        femaleFirstNameList.add("Gisela");
+        femaleFirstNameList.add("Petra");
+
+        List<String> maleFirstNameList = new ArrayList<>();
+        maleFirstNameList.add("Peter");
+        maleFirstNameList.add("Michael");
+        maleFirstNameList.add("Thomas");
+        maleFirstNameList.add("Andreas");
+        maleFirstNameList.add("Wolfgang");
+        maleFirstNameList.add("Klaus");
+        maleFirstNameList.add("Jürgen");
+        maleFirstNameList.add("Günther");
+        maleFirstNameList.add("Stefan");
+        maleFirstNameList.add("Christian");
+
+        for (int i = 0; i < count; i++) {
+            IUser newUser = new User();
+            newUser.setUserName("user" + i);
+            newUser.setEmail("test" + i + "@tester.de");
+            newUser.setPictureURL("./resources/img/user.png");
+            newUser.setPassword(userService.hashPassword("Passwort" + i + "!"));
+
+            int randomMailPublic = r.nextInt(2);
+            if (randomMailPublic == 1){
+                newUser.setIsMailPublic(false);
+            } else{
+                newUser.setIsMailPublic(true);
+            }
+
+            // Erzeuge ein zufälliges Geschlecht
+            int intRandomIndex = r.nextInt(genderList.size());
+            newUser.setGender(genderList.get(intRandomIndex));
+
+            if (newUser.getGender().equals("female")){
+                // Erzeuge einen zufälligen Vornamen
+                intRandomIndex = r.nextInt(femaleFirstNameList.size());
+                newUser.setFirstname(femaleFirstNameList.get(intRandomIndex));
+            } else{
+                // Erzeuge einen zufälligen Vornamen
+                intRandomIndex = r.nextInt(maleFirstNameList.size());
+                newUser.setFirstname(maleFirstNameList.get(intRandomIndex));
+            }
+
+            // Erzeuge einen zufälligen Nachnamen
+            intRandomIndex = r.nextInt(surnameList.size());
+            newUser.setSurname(surnameList.get(intRandomIndex));
+
+            // Erzeuge eine zufällige Sprache
+            intRandomIndex = r.nextInt(languageList.size());
+            newUser.setLanguage(languageList.get(intRandomIndex));
+
+            userList.add(newUser);
         }
         return userList;
     }
-    public void createIdeas (String collectionName, List<IUser> userList, int count) throws Exception{
+
+    public void createIdeas(String collectionName, List<IUser> userList, int count) throws Exception {
         List<IIdea> ideaList = new ArrayList<IIdea>();
-        IdeaService is = new IdeaService(collectionName);
-        ideaList = createRandomIdeaCollection(count, userList);
-        is.addIdeaList(ideaList);
-    }
-
-    private List<IIdea> createRandomIdeaCollection(int count, List<IUser> userList) throws Exception{
-
-
-
-
-        List<IComment> commentList = new ArrayList<IComment>();
-        //Comment comment = new Comment();
-
-        List<String> catagoryList = new ArrayList<>();
-        catagoryList.add("business");
-        catagoryList.add("computer");
-        catagoryList.add("homeAndGarden");
-        catagoryList.add("gadget");
-        catagoryList.add("sports");
-        catagoryList.add("toys");
-        catagoryList.add("other");
-
-        List<IIdea> ideaList = new ArrayList<IIdea>();
-        IIdea idea = new Idea();
-
-        List<String> nameList = new ArrayList<String>();
-
-        int ranNumber = 0;
-
-        for(int i = 0; i < count; i++){
-            idea = new Idea();
-            ranNumber = getRandomInt(0, userList.size());
-            for (int r = 0; r < ranNumber; r++){
-                nameList.add(userList.get(r).getUserName());
-            }
-            ranNumber = getRandomInt(0, userList.size()-1);
-            idea.setComments(commentList);
-            ranNumber = getRandomInt(0, catagoryList.size()-1);
-            idea.setCategory(catagoryList.get(ranNumber));
-            ranNumber = getRandomInt(0, userList.size()-1);
-            //idea.setCreator(userList.get(ranNumber));
-            idea.setDescription("Meine Idee Nummer: " + i);
-            idea.setFollowerUsers(nameList);
-            idea.setNumberFollowers((long) nameList.size());
-            idea.setHotRank(0);
-            idea.setLanguage("deutsch");
-            nameList = new ArrayList<String>();
-            ranNumber = getRandomInt(0, userList.size()-1);
-            for (int r = 0; r < ranNumber; r++){
-                nameList.add(userList.get(r).getUserName());
-            }
-            idea.setLikeUsers(nameList);
-            idea.setName("Klobuerste"+i);
-            idea.setNumberComments(0l);
-            idea.setPublishDate(new Date(System.currentTimeMillis()));
-            idea.setTrendingRank(0.0);
-
-            ideaList.add(idea);
-        }
-        return ideaList;
+        IdeaService ideaService = new IdeaService(collectionName);
+        ideaList = getTestIdeas(ideaService, count, userList);
+        ideaService.addIdeaList(ideaList);
     }
 
     /**
      * Erzeugt eine Liste mit Test-Ideen.
+     *
      * @return
      */
-    public List<IIdea> getTestIdeas(int count, List<IUser> userList){
+    public List<IIdea> getTestIdeas(IdeaService ideaService, int count, List<IUser> userList) {
+
         List<IIdea> ideas = new ArrayList<>();
         Random r = new Random();
         Calendar calendar;
@@ -122,43 +154,144 @@ public class TestDataGenerator {
         catagoryList.add("toys");
         catagoryList.add("other");
 
+        List<String> languageList = new ArrayList<>();
+        languageList.add("de_DE");
+        languageList.add("en_GB");
+
+        String loremIpsum = "Lorem ipsum dolor sit amet, " +
+                "consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore " +
+                "et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et " +
+                "justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus " +
+                "est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing " +
+                "elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam " +
+                "erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. " +
+                "Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+
         // erzeuge 100 Testideen
-        for (int i = 0; i < 100; i++){
+        for (int i = 0; i < count; i++) {
 
             IIdea newIdea = new Idea();
-            calendar =  new GregorianCalendar();
 
+            newIdea.setName("Idee Nummer " + i);
+
+            // erzeuge eine zufällig lange Description
+            String description = loremIpsum;
+            int descriptionLenght = r.nextInt(5);
+            for (int j = 0; j < descriptionLenght; j++) {
+                description += " " + loremIpsum;
+            }
+            newIdea.setDescription(description);
+
+            // erzeuge eine zufällige Kategorie
+            int randomCategoryIndex = r.nextInt(catagoryList.size());
+            newIdea.setCategory(catagoryList.get(randomCategoryIndex));
+
+            // erzeuge einen zufälligen Creator
+            int randomCreatorIndex = r.nextInt(userList.size());
+            newIdea.setCreator(ideaService.userToCreator(userList.get(randomCreatorIndex)));
+            // merke mir die Creator-ID
+            String creatorID = newIdea.getCreator().getUserId();
+
+            // Erzeuge ein zufälliges Publish-Date
             // Zeitraum letzte 5 Jahre
+            calendar = new GregorianCalendar();
             calendar.add(Calendar.DAY_OF_MONTH, (-1 * r.nextInt(365 * 5)));
 
-            newIdea.setIdeaId(String.format("%s", i));
             newIdea.setPublishDate(calendar.getTime());
 
+            // Erzeuge eine zufällige Sprache
+            int randomLanguageIndex = r.nextInt(languageList.size());
+            newIdea.setLanguage(languageList.get(randomLanguageIndex));
 
+            // Erzeuge zufällig likes (maximal so viele, wie in der User-Liste)
+            int numberLikes = r.nextInt(userList.size());
+            newIdea.setNumberLikes((long) numberLikes);
+            List<String> likeUsers = new ArrayList<String>();
 
-            newIdea.setNumberLikes((long) r.nextInt(1000));
+            for (int j = 0; j < numberLikes; j++) {
 
-            int numberLikes = getRandomInt(0, userList.size());
-//            for (int r = 0; r < ranNumber; r++){
-//                nameList.add(userList.get(r).getUserName());
-//            }
+                boolean likeUserAdded = false;
 
-            newIdea.setNumberFollowers((long) r.nextInt(100));
-            newIdea.setName("Idee Nummer " + i);
-            newIdea.setDescription("Eine ganz tolle Idee");
+                while (!likeUserAdded){
+                    int randomLikeUserIndex = r.nextInt(userList.size());
+                    String newLikeUser = userList.get(randomLikeUserIndex).getUserId();
+                    // der like-User darf nicht der Creator sein
+                    // und er darf noch nicht geliked haben
+                    if ( !likeUsers.contains(newLikeUser) && !creatorID.equals(newLikeUser) ){
+                        likeUsers.add(newLikeUser);
+                        likeUserAdded = true;
+                    }
+                }
+            }
+
+            // Erzeuge zufällige followers (maximal halb so viele, wie in der User-Liste)
+            int numberFollowers = r.nextInt(userList.size() / 2);
+            newIdea.setNumberFollowers((long) numberFollowers);
+            List<String> followUsers = new ArrayList<String>();
+
+            for (int j = 0; j < numberFollowers; j++) {
+
+                boolean followUserAdded = false;
+
+                while (!followUserAdded){
+                    int randomFollowUserIndex = r.nextInt(userList.size());
+                    IUser newFollowUser = userList.get(randomFollowUserIndex);
+                    // der follow-User darf nicht der Creator sein
+                    // und er darf noch nicht gefollowed haben
+                    if ( !followUsers.contains(newFollowUser.getUserId()) &&
+                            !creatorID.equals(newFollowUser.getUserId()) ){
+
+                        followUsers.add(newFollowUser.getUserId());
+                        followUserAdded = true;
+
+                    }
+                }
+                // TODO: hier muss noch jeder User aktualisiert werden
+            }
+
+            // Erzeuge zufällige Comments
+            int numberComments = r.nextInt(11);
+            List<IComment> commentList = new ArrayList<IComment>();
+            calendar.setTime(newIdea.getPublishDate());
+
+            for (int j = 0; j < numberComments; j++) {
+
+                IComment newComment = new Comment();
+
+                newComment.setCommentId(java.util.UUID.randomUUID().toString());
+
+                String commentText = "bla";
+                int randomTextLenght = r.nextInt(100);
+                for (int k = 0; k < randomTextLenght; k++){
+                    commentText += " bla";
+                }
+                newComment.setText(commentText);
+
+                int randomCommentCreatorIndex = r.nextInt(userList.size());
+                IUser commentUser = userList.get(randomCommentCreatorIndex);
+
+                newComment.setUserId(commentUser.getUserId());
+                newComment.setUserName(commentUser.getUserName());
+
+                // jeden Tag nen neuen Comment
+                calendar.add(Calendar.DAY_OF_MONTH, (1));
+                newComment.setPublishDate(calendar.getTime());
+
+                newComment.setPictureURL(commentUser.getPictureURL());
+
+                commentList.add(newComment);
+            }
+
+            newIdea.setNumberComments((long) numberComments);
+            newIdea.setComments(commentList);
+
 
             ideas.add(newIdea);
         }
 
+        IdeaManager.calculateRanking(ideas);
+
         return ideas;
-    }
-
-
-    private static int getRandomInt(int x_start, int x_end) {
-        return ThreadLocalRandom.current().nextInt(x_start, x_end + 1 );
-    }
-    private static double getRandomDouble(double x_start, double x_end) {
-        return ThreadLocalRandom.current().nextDouble(x_start, x_end + 1 );
     }
 
 }
