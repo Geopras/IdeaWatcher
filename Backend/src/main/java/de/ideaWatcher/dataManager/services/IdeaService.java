@@ -184,7 +184,7 @@ public class IdeaService {
         dbConnectionService.closeConnection();
     }
     
-    public UpdateResult updateIdea(IIdea idea){
+    public UpdateResult updateIdea(IIdea idea) throws Exception{
         Document newDoc = new Document();
         newDoc = buildIdeaDocument(idea);
         if (!dbConnectionService.isOpen()) {

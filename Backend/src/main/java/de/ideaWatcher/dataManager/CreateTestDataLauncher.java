@@ -36,6 +36,14 @@ public class CreateTestDataLauncher {
          * Anzahl der Dokumente die erzeugt werden sollen
          */
         tdg.createIdeas("ideasCollection", usersList, 100);
+
+
+        IdeaService ideaService = new IdeaService("ideasCollection");
+        List<IIdea> ideaList = new ArrayList<IIdea>();
+        ideaList = ideaService.getAllIdeas();
+
+        // jetzt noch alle TestUser CreatedIdeas und FollowedIdeas anpassen
+        tdg.updateAllTestUsers(ideaList, userService);
     }
 
 

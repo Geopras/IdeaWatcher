@@ -5,6 +5,7 @@ import main.java.de.ideaWatcher.dataManager.pojos.Comment;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.manager.IdeaManager;
@@ -243,7 +244,6 @@ public class TestDataGenerator {
 
                         followUsers.add(newFollowUser.getUserId());
                         followUserAdded = true;
-
                     }
                 }
                 // TODO: hier muss noch jeder User aktualisiert werden
@@ -292,6 +292,32 @@ public class TestDataGenerator {
         IdeaManager.calculateRanking(ideas);
 
         return ideas;
+    }
+
+    public void updateAllTestUsers(List<IIdea> ideasList, UserService userService) throws Exception {
+
+        for (IIdea idea : ideasList){
+
+            // Creator holen
+            ICreator ideaCreator = idea.getCreator();
+            IUser creaorUserObject = userService.getUser(ideaCreator.getUserId());
+
+            // die Idee zu den createdIdeas hinzufügen
+            creaorUserObject.getCreatedIdeas().add(idea);
+            // und speichern
+            userService.updateUser(creaorUserObject);
+
+            // alle FollowUsers durchgehen
+            for (String followUserId : idea.getFollowerUsers()){
+
+                // den jeweiligen User holen
+                IUser followUserObject = userService.getUser(followUserId);
+                // die Idee zu seinen FollowedIdeas hinzufügen
+                followUserObject.getFollowedIdeas().add(idea);
+                // und speichern
+                userService.updateUser(followUserObject);
+            }
+        }
     }
 
 }

@@ -1,11 +1,14 @@
 package main.java.de.ideaWatcher.webApi.manager;
 
+import main.java.de.ideaWatcher.dataManager.pojos.Comment;
+import main.java.de.ideaWatcher.dataManager.pojos.Creator;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.core.*;
-import main.java.de.ideaWatcher.webApi.core.*;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.thread.RankCalculationDaemon;
 
 import java.util.*;
