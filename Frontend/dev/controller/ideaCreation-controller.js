@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (function () {
 
     var cbShowView = null;
@@ -36,7 +35,7 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
     };
 
 })();
-=======
+
 ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (function () {
 
         //region lokale Variablen
@@ -111,4 +110,4 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
         };
 
     })();
->>>>>>> branch 'dev' of https://github.com/Geopras/IdeaWatcher.git
+
