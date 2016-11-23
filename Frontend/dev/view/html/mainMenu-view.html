@@ -3,7 +3,9 @@
         <nav>
             <ul class="mainMenu_buttons_ul">
                 <li class="mainMenu_homeButton_li">
-                    <img src="./resources/img/logo.png" data-buttonid="HOT"/>
+                    <img id="mainMenu_homeButton_img"
+                         src="./resources/img/logo.png"
+                         data-buttonid="HOT"/>
                 </li>
                 <li class="mainMenu_ideaList_li">
                     <div id="mainMenu_hot_button" data-buttonid="HOT">Hot</div>
@@ -67,7 +69,7 @@
                         </li>
                         <li>
                             <div id="mainMenu_login_button" data-buttonid="LOGIN">
-                                UserSession
+                                Login
                             </div>
                         </li>
                     </ul>
@@ -78,13 +80,14 @@
                                 My Profile
                             </div>
                         </li>
-                        <li>
+                        <li class="mainMenu_ideaList_li">
                             <div id="mainMenu_myIdeas_button" data-buttonid="MYIDEAS">
                                 My Ideas
                             </div>
                         </li>
-                        <li>
-                            <div id="mainMenu_followedIdeas_button" data-buttonid="FOLLOWEDIDEAS">
+                        <li class="mainMenu_ideaList_li">
+                            <div id="mainMenu_followedIdeas_button"
+                                 data-buttonid="MYFOLLOWEDIDEAS">
                                 Followed Ideas
                             </div>
                         </li>

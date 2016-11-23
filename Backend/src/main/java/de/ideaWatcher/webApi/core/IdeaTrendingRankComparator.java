@@ -24,6 +24,7 @@ public class IdeaTrendingRankComparator implements Comparator<IIdea> {
         this.reverse = reverse;
     }
 
+    @Override
     public int compare(IIdea idea1, IIdea idea2) {
 
         if (idea1.getTrendingRank() == null && idea2.getTrendingRank() == null) {

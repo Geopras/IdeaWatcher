@@ -4,6 +4,10 @@
 
 ideaWatcher.core.Localizer.IdeaList = {
 
+    CreateNewIdeaButtonLabel: {
+        en_GB: 'Create new idea',
+        de_DE: 'Neue Idee erstellen'
+    },
     Published: {
         en_GB: 'Published',
         de_DE: 'Veröffentlicht'
@@ -11,6 +15,8 @@ ideaWatcher.core.Localizer.IdeaList = {
     Notification: {
         en_GB: {
             Headline: 'Idea List Query',
+            SIdeaList_filterIdeas_error: 'An error occured while asking' +
+            ' for ideas from server. Please try again later.',
             SIdeaList_fromRankTooLarge_error: 'An error occured while asking' +
             ' for ideas from server. Please try again later.',
             SIdeaList_getIdeasBounds_error: 'An error occurred because' +
@@ -24,6 +30,8 @@ ideaWatcher.core.Localizer.IdeaList = {
         },
         de_DE: {
             Headline: 'Ideenlisten-Abfrage',
+            SIdeaList_filterIdeas_error: 'Beim Abfragen weiterer Ideen' +
+            ' vom Server ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.',
             SIdeaList_fromRankTooLarge_error: 'Beim Abfragen weiterer Ideen' +
             ' vom Server ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.',
             SIdeaList_getIdeasBounds_error: 'Aufgrund fehlerhafte Daten' +
@@ -169,6 +177,26 @@ ideaWatcher.core.Localizer.IdeaList = {
             },
             de_DE: {
                 header: 'Top Ideen im Bereich "Spielzeuge"'
+            }
+        }
+    },
+    MYFOLLOWEDIDEAS: {
+        NONE: {
+            en_GB: {
+                header: 'My Followed Ideas'
+            },
+            de_DE: {
+                header: 'Meine verfolgten Ideen'
+            }
+        }
+    },
+    MYIDEAS: {
+        NONE: {
+            en_GB: {
+                header: 'My Created Ideas'
+            },
+            de_DE: {
+                header: 'Meine erstellten Ideen'
             }
         }
     },

@@ -1,22 +1,28 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.UpdateResult;
 import main.java.de.ideaWatcher.dataManager.pojos.Creator;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
-
 import org.bson.Document;
+<<<<<<< HEAD
 import org.bson.types.ObjectId;
 
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
 
 import static com.mongodb.client.model.Filters.eq;
+=======
+>>>>>>> branch 'dev' of https://github.com/Geopras/IdeaWatcher.git
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.mongodb.client.model.Filters.eq;
 
 /**
  * Service fuer Zugriff auf Datenbank
@@ -147,14 +153,19 @@ public class IdeaService {
         return ur;
     }
     
+<<<<<<< HEAD
     public void deleteIdea(String ideaId) throws Exception{
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         } 
         dbConnectionService.getCollection().findOneAndDelete(Filters.eq("_id", new ObjectId (ideaId)));
         dbConnectionService.closeConnection();
+=======
+    public void deleteUser(String ideaId){
+        dbConnectionService.getCollection().findOneAndDelete(Filters.eq("_id", ideaId));
+>>>>>>> branch 'dev' of https://github.com/Geopras/IdeaWatcher.git
     }
-    
+
     public ICreator userToCreator(IUser user){
         ICreator creator = new Creator();
         creator.setUserId(user.getUserId());

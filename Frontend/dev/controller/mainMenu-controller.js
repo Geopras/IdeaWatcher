@@ -1,9 +1,11 @@
-ideaWatcher.controller.Navigation = ideaWatcher.controller.Navigation || (function () {
+ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function () {
 
         var cbInitView = null;
         var cbLocalize = null;
         var cbLoginSuccess = null;
         var cbLogoutSuccess = null;
+        var cbGetCurrentClickedButtonId = null;
+        var cbClickHotButton = null;
 
         //region Events Initialisieren
         var evIni = {
@@ -51,6 +53,7 @@ ideaWatcher.controller.Navigation = ideaWatcher.controller.Navigation || (functi
         function cbLogoutSuccessful(obj) {
             cbLogoutSuccess(obj);
         }
+
         //endregion
 
         //region Registrierung der internen (von uiConnectoren) Callbacks
@@ -69,17 +72,39 @@ ideaWatcher.controller.Navigation = ideaWatcher.controller.Navigation || (functi
         function pubRegisterLogoutSuccessful(cb) {
             cbLogoutSuccess = cb;
         }
+
+        function pubRegisterCurrentClickedButtonId(cb) {
+
+            cbGetCurrentClickedButtonId = cb;
+        }
+
+        function pubRegisterClickHotButton(cb) {
+            cbClickHotButton = cb;
+        }
         //endregion
 
         //region Nach außen angebotene Methoden
         function pubLogout() {
             ideaWatcher.controller.UserSession.tryToLogout();
         }
+
+        function pubGetCurrentClickedButtonId() {
+
+            return cbGetCurrentClickedButtonId();
+        }
+
+        function pubClickHotButton() {
+            cbClickHotButton();
+        }
         //endregion
 
         return {
 
+            clickHotButton: pubClickHotButton,
+            getCurrentClickedButtonId: pubGetCurrentClickedButtonId,
             logoutUser: pubLogout,
+            registerClickHotButton: pubRegisterClickHotButton,
+            registerGetCurrentClickedButtonId: pubRegisterCurrentClickedButtonId,
             registerInitializeView: pubRegisterInitializeView,
             registerLocalizeView: pubRegisterLocalizeView,
             registerLoginSuccessful: pubRegisterLoginSuccessful,

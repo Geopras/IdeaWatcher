@@ -1,6 +1,6 @@
 ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function () {
 
-        //region local vars
+        //region local vars & events
         var cbInitView = null;
         var cbShowView = null;
         var cbLocalize = null;
@@ -9,8 +9,18 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         var cbGetCurrentCategory = null;
         var cbGetIdea = null;
 
-        var evSwitchView = {
-            topic: 'switchView/ideaList',
+        var evSwitchViewToIdeaList = {
+            topic: 'switchView/' + ideaWatcher.model.Navigation.ViewId.IDEALIST,
+            cbFunction: cbSwitchView
+        };
+
+        var evSwitchViewToMyIdeas = {
+            topic: 'switchView/' + ideaWatcher.model.Navigation.ViewId.MYIDEAS.NONE,
+            cbFunction: cbSwitchView
+        };
+
+        var evSwitchViewToMyFollowedIdeas = {
+            topic: 'switchView/' + ideaWatcher.model.Navigation.ViewId.MYFOLLOWEDIDEAS.NONE,
             cbFunction: cbSwitchView
         };
 
@@ -21,7 +31,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         };
 
         var evLocalizeView = {
-            topic: 'localizeView/ideaList',
+            topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.IDEALIST,
             cbFunction: cbLocalizeView
         };
 
@@ -30,20 +40,17 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             cbFunction: cbGetIdeasResponse
         };
 
-        // var evIni = Object.create(wam.services.events.Ini);
-        // evIni.cbFunction = cbIni;
         //endregion
 
         //region subscribe to events
-        ideaWatcher.core.MessageBroker.subscribe(evSwitchView);
+
+        ideaWatcher.core.MessageBroker.subscribe(evSwitchViewToIdeaList);
+        ideaWatcher.core.MessageBroker.subscribe(evSwitchViewToMyIdeas);
+        ideaWatcher.core.MessageBroker.subscribe(evSwitchViewToMyFollowedIdeas);
         ideaWatcher.core.MessageBroker.subscribe(evIni);
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         ideaWatcher.core.MessageBroker.subscribe(evGetIdeasResponse);
 
-        // ideaWatcher.core.MessageBroker.subscribe(evSwitchViewFresh);
-        // ideaWatcher.core.MessageBroker.subscribe(evSwitchViewTrending);
-        // wtk.MessageBroker.subscribe(evIni);
-        // wtk.connection.ResponseHandler.subscribe('SLogin/Response', sCBLoginResponse);
         //endregion
 
         //region Callback-Functions für MessageBroker
@@ -64,21 +71,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         }
         //endregion
 
-        //zeigt eigene Ideen des Nutzers im Profil an
-        function buildRequestIdeaListUser(userId)
-        {
-            // das könnte man in das Model auslagern... sinnvoll?
-            var exIdeaListRequest = {
-                destination: 'SIdeaData/listUserRequest',
-                userId: userId
-            };
-
-            return exIdeaListRequest;
-        }
-        //region register Callbacks
-        // function pubRegisterVerificationError(cb) {
-        //     cbVerificationError = cb;
-        // }
+        //region Registrierung der Callbacks vom uiConnector
 
         function pubRegisterInitializeView(cb) {
             cbInitView = cb;
@@ -107,6 +100,13 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             cbGetCurrentCategory = cb;
         }
 
+        function pubRegisterGetIdea(cb) {
+            cbGetIdea = cb;
+        }
+
+        //endregion
+
+        //region nach außen angebotene Schnittstellen-Funktionen
         /**
          * Schnittstelle für andere Controller, um die Ideenliste mit
          * gewünschten Daten zu aktualisieren
@@ -140,17 +140,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
                 //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
             }
         }
-        //endregion
 
-        function pubRegisterGetIdea(cb) {
-             return cbGetIdea = cb;
-        }
-
-        function pubGetIdea(ideaId) {
-            return cbGetIdea(ideaId);
-        }
-
-        //region build: Request
         function buildRequest(exObject)
         {
             var request = ideaWatcher.model.Request;
@@ -160,6 +150,20 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
 
             return request;
         }
+
+        function pubGetIdea(ideaId) {
+            return cbGetIdea(ideaId);
+        }
+
+        function pubNavigateToCreateIdeaView() {
+
+            var exObj = Object.create(ideaWatcher.model.ExchangeObject.SwitchView);
+            exObj.viewId = ideaWatcher.model.Navigation.ViewId.CREATEIDEA;
+            exObj.viewUrl = ideaWatcher.model.Navigation.ViewUrl.CREATEIDEA;
+
+            ideaWatcher.core.Navigator.switchView(exObj);
+        }
+
         //endregion
 
         // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
@@ -167,6 +171,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             // hier kann die View eine Methode(ui-Connector) registrieren, die gerufen wird,
             // wenn die View ein/ausgeblendet werden soll
             getIdea: pubGetIdea,
+            navigateToCreateIdeaView: pubNavigateToCreateIdeaView,
             registerInitializeView: pubRegisterInitializeView,
             registerShowView: pubRegisterShowView,
             registerLocalizeView: pubRegisterLocalizeView,

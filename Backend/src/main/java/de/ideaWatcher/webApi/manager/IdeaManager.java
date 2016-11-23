@@ -4,10 +4,19 @@ import main.java.de.ideaWatcher.dataManager.pojos.Comment;
 import main.java.de.ideaWatcher.dataManager.pojos.Creator;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
+<<<<<<< HEAD
 import main.java.de.ideaWatcher.webApi.core.*;
+=======
+import main.java.de.ideaWatcher.webApi.core.IdeaAgeComparator;
+import main.java.de.ideaWatcher.webApi.core.IdeaHotRankComparator;
+import main.java.de.ideaWatcher.webApi.core.IdeaTrendingRankComparator;
+>>>>>>> branch 'dev' of https://github.com/Geopras/IdeaWatcher.git
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
+<<<<<<< HEAD
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
+=======
+>>>>>>> branch 'dev' of https://github.com/Geopras/IdeaWatcher.git
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.thread.RankCalculationDaemon;
@@ -92,13 +101,14 @@ public class IdeaManager {
 
     /**
      * Filtert den vorgehaltenen Snapshot der Ideenliste entsprechend der uebergebenen Suchkriterien
-     * @param listType Typ der Liste (HOT, TRENDING, FRESH, CATEGORY)
+     * @param listType Typ der Liste (HOT, TRENDING, FRESH, CATEGORY,
+     *                 MYIDEAS, MYFOLLOWEDIDEAS)
      * @param category Kategorie, nach der gesucht werden soll
      * @param fromRank Bsp.: von Ranking 11
      * @param toRank Bsp.: bis Ranking 20
      * @return
      */
-    public List<IIdea> filterIdeas(String listType, String category, int fromRank, int toRank){
+    public List<IIdea> filterIdeas(String listType, String category, int fromRank, int toRank) throws Exception {
 
         List<IIdea> filteredIdeas = new ArrayList<>();
 
@@ -108,7 +118,7 @@ public class IdeaManager {
 
             long allIdeasCount = allIdeasSnapshot.size();
 
-            if (listType.equals("CATEGORY")){
+            if (listType.equals("CATEGORY")) {
 
                 // die Kategorie-Listen werden nach Hot-Ranking sortiert
                 allIdeasSnapshot.sort(new IdeaHotRankComparator(true));
@@ -116,20 +126,20 @@ public class IdeaManager {
                 int numberIdeas = toRank - fromRank + 1;
                 int currentRank = 0;
 
-                if (numberIdeas > 0){
+                if (numberIdeas > 0) {
                     // iteriere durch alle Ideen
-                    for (IIdea idea:allIdeasSnapshot){
+                    for (IIdea idea : allIdeasSnapshot) {
                         // suche dabei nach Ideen der gewuenschten Kategorie
-                        if (idea.getCategory().equals(category)){
+                        if (idea.getCategory().equals(category)) {
                             currentRank += 1;
 
                             // und fuege Sie den Ergebnissen hinzu,
                             // wenn sie im gesuchten Ranking-Bereich liegen
-                            if (currentRank >= fromRank){
+                            if (currentRank >= fromRank) {
                                 filteredIdeas.add(idea);
                             }
 
-                            if (currentRank == toRank){
+                            if (currentRank == toRank) {
                                 break;
                             }
                         }
@@ -137,7 +147,7 @@ public class IdeaManager {
                 }
             } else {
 
-                switch (listType){
+                switch (listType) {
                     case "HOT":
                         allIdeasSnapshot.sort(new IdeaHotRankComparator(true));
                         break;
@@ -147,16 +157,24 @@ public class IdeaManager {
                     case "FRESH":
                         allIdeasSnapshot.sort(new IdeaAgeComparator(true));
                         break;
+                    case "MYIDEAS":
+                        allIdeasSnapshot.sort(new IdeaAgeComparator(true));
+                        break;
+//                    case "MYFOLLOWEDIDEAS":
+//                        allIdeasSnapshot.sort(new IdeaAgeComparator(true));
+//                        break;
                 }
 
                 // Hole die Ideen aus der sortieren Liste entsprechend der gewünschten Bounds
-                for (int i = fromRank - 1; i < toRank; i++){
+                for (int i = fromRank - 1; i < toRank; i++) {
 
-                    if (i < allIdeasCount){
+                    if (i < allIdeasCount) {
                         filteredIdeas.add(allIdeasSnapshot.get(i));
                     }
                 }
             }
+        } catch (Exception ex) {
+            throw new Exception(ex);
         } finally {
             lockAllIdeasSnapshot.unlock();
         }
@@ -205,6 +223,22 @@ public class IdeaManager {
         List<IComment> comments = new ArrayList<>();
         comments.add(comment);
 
+        IUser user = new User();
+        user.setUserId("654");
+        user.setEmail("email@test.org");
+        user.setIsMailPublic(false);
+        user.setPictureURL("");
+        user.setUserName("Renate Test");
+
+        IComment comment = new Comment();
+        comment.setPictureURL("");
+        comment.setUserId(user.getUserId());
+        comment.setText("Das ist ein Testkommentar. Mal sehn ob man den sieht.");
+        comment.setUserName(user.getUserName());
+
+        List<IComment> comments = new ArrayList<>();
+        comments.add(comment);
+
         // erzeuge 100 Testideen
         for (int i = 0; i < 100; i++){
 
@@ -221,7 +255,11 @@ public class IdeaManager {
             newIdea.setName("Idee Nummer " + i);
             newIdea.setDescription("Eine ganz tolle Idee");
             newIdea.setComments(comments);
+<<<<<<< HEAD
             newIdea.setCreator(creator);
+=======
+            newIdea.setCreator(new Creator());
+>>>>>>> branch 'dev' of https://github.com/Geopras/IdeaWatcher.git
 
             ideas.add(newIdea);
         }

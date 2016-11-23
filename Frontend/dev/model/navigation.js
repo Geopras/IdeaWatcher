@@ -1,32 +1,82 @@
 ideaWatcher.model.Navigation = ideaWatcher.model.Navigation || {
 
-        // UserButton: {
-        //     NoLogin: {
-        //         LOGIN: 'LOGIN',
-        //         SIGNUP: 'SIGNUP'
-        //     },
-        //     WithLogin: {
-        //         FOLLOWEDIDEAS: 'FOLLOWEDIDEAS',
-        //         MYIDEAS: 'MYIDEAS',
-        //         MYPROFILE: 'MYPROFILE'
-        //     }
-        // },
+        ButtonId: {
+            BUSINESS: 'BUSINESS',
+            CATEGORY: 'CATEGORY',
+            COMPUTER: 'COMPUTER',
+            FRESH: 'FRESH',
+            GADGET: 'GADGET',
+            HOMEGARDEN: 'HOMEGARDEN',
+            HOT: 'HOT',
+            LANGUAGESWITCH: 'LANGUAGESWITCH',
+            LOGIN: 'LOGIN',
+            LOGOUT: 'LOGOUT',
+            MYIDEAS: 'MYIDEAS',
+            MYFOLLOWEDIDEAS: 'MYFOLLOWEDIDEAS',
+            MYPROFILE: 'MYPROFILE',
+            MYSEARCH: 'MYSEARCH',
+            OTHER:'OTHER',
+            SIGNUP: 'SIGNUP',
+            SPORTS: 'SPORTS',
+            TOYS: 'TOYS',
+            TRENDING: 'TRENDING'
+        },
         ViewId: {
-            FOLLOWEDIDEAS: 'followedIdeas',
+            CREATEIDEA: 'createNewIdea',
             IDEADETAILS: 'ideaDetails',
             IDEALIST: 'ideaList',
             LOGIN: 'login',
-            MYIDEAS: 'myIdeas',
+            MYFOLLOWEDIDEAS: {
+                NONE: 'myFollowedIdeas'
+            },
+            MYIDEAS: {
+                NONE: 'myIdeas'
+            },
             MYPROFILE: 'profileEdit',
             MYSEARCH: 'mySearch',
-            SIGNUP: 'signup'
+            SIGNUP: 'signup',
+            HOT: {
+                BUSINESS: 'ideaList',
+                COMPUTER: 'ideaList',
+                GADGET: 'ideaList',
+                HOMEGARDEN: 'ideaList',
+                NONE: 'ideaList',
+                OTHER: 'ideaList',
+                SPORTS: 'ideaList',
+                TOYS: 'ideaList'
+            },
+            FRESH: {
+                BUSINESS: 'ideaList',
+                COMPUTER: 'ideaList',
+                GADGET: 'ideaList',
+                HOMEGARDEN: 'ideaList',
+                NONE: 'ideaList',
+                OTHER: 'ideaList',
+                SPORTS: 'ideaList',
+                TOYS: 'ideaList'
+            },
+            TRENDING: {
+                BUSINESS: 'ideaList',
+                COMPUTER: 'ideaList',
+                GADGET: 'ideaList',
+                HOMEGARDEN: 'ideaList',
+                NONE: 'ideaList',
+                OTHER: 'ideaList',
+                SPORTS: 'ideaList',
+                TOYS: 'ideaList'
+            }
         },
         ViewUrl: {
-            FOLLOWEDIDEAS: 'followedIdeas',
+            CREATEIDEA: 'createNewIdea',
             IDEADETAILS: 'ideaDetails',
             IDEALIST: 'ideaList',
             LOGIN: 'login',
-            MYIDEAS: 'myIdeas',
+            MYFOLLOWEDIDEAS: {
+                NONE: 'myFollowedIdeas'
+            },
+            MYIDEAS: {
+                NONE: 'myIdeas'
+            },
             MYPROFILE: 'profileEdit',
             MYSEARCH: 'mySearch',
             SIGNUP: 'signup',

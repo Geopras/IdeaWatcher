@@ -29,10 +29,8 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                 // callbackFunction(true);
                 isConnected = true;
 
-                console.log('Hole die ersten 10 Hot Ideas...');
-
-                var listType = ideaWatcher.model.IdeaList.ListType.HOT;
-                ideaWatcher.controller.IdeaList.updateIdeaList(listType, '', 1, 10, true);
+                console.log('Klicke den Hot-Button');
+                ideaWatcher.controller.MainMenu.clickHotButton();
             };
 
             // callback function wenn eine Nachricht reinkommt
