@@ -3,7 +3,6 @@ package main.java.de.ideaWatcher.webApi.workflow;
 import main.java.de.ideaWatcher.dataManager.pojos.Comment;
 import main.java.de.ideaWatcher.dataManager.pojos.Creator;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
-import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.core.JSONBuilder;
@@ -12,7 +11,6 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaCo
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
 import org.json.JSONObject;
 
@@ -73,7 +71,7 @@ public class GetIdeaDetailsWorkflow  implements IWorkflow {
 
             foundIdea.setCreator(bspCreator);
             foundIdea.setName("Name einer Testidee");
-            foundIdea.setCategory("gadget");
+            foundIdea.setCategory("GADGET");
             foundIdea.setNumberLikes((long) 1337);
             foundIdea.setNumberFollowers((long) 42);
             foundIdea.setNumberComments((long) 2);
@@ -87,7 +85,7 @@ public class GetIdeaDetailsWorkflow  implements IWorkflow {
                     "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung " +
                     "Eine wunderschöne Beschreibung Eine wunderschöne Beschreibung");
 
-            List<IComment> testComments = new ArrayList<IComment>();
+            List<IComment> testComments = new ArrayList<>();
             IComment testComment1 = new Comment();
             testComment1.setUserId("12345");
             testComment1.setUserName("HansWurst");

@@ -1,4 +1,4 @@
-ideaWatcher.view.UserSession = ideaWatcher.view.UserSession || (function VLogin() {
+ideaWatcher.view.UserSession = ideaWatcher.view.UserSession || (function () {
 
         //region local vars
         var isLoginSuccessful = false;

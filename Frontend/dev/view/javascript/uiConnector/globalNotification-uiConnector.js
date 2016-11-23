@@ -1,4 +1,4 @@
-ideaWatcher.view.GlobalNotification = ideaWatcher.view.GlobalNotification || (function UIGlobalNotification() {
+ideaWatcher.view.GlobalNotification = ideaWatcher.view.GlobalNotification || (function () {
 
         //region local vars
         var evIni = {

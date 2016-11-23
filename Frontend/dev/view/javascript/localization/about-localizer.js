@@ -2,12 +2,13 @@
 
 // Bitte alphabetisch ordnen!!
 
-ideaWatcher.core.Localizer.About = {
-    en_GB: {
-        header: "About"
+ideaWatcher.core.Localizer.About = ideaWatcher.core.Localizer.About || {
 
-    },
-    de_DE: {
-        header: "Impressum"
-    }
-};
+        en_GB: {
+            header: "About"
+
+        },
+        de_DE: {
+            header: "Impressum"
+        }
+    };

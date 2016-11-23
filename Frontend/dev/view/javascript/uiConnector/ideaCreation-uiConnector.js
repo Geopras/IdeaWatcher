@@ -2,7 +2,6 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
         //region local vars
 
-
         var htmlView = null;
         var htmlProfileView = null;
         var createIdea = null;
@@ -29,6 +28,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
         var htmlPublishButton = null;
         var htmlCancelButton = null;
         var htmlSaveButton = null;
+        var htmlIdeaNameInput = null;
         //endregion
 
         //region cbIni
@@ -53,6 +53,8 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
             htmlPublishButton = document.getElementById('ideaCreation_publish_button');
             htmlCancelButton = document.getElementById('ideaCreation_cancel_button');
             htmlSaveButton = document.getElementById('ideaCreation_save_button');
+            htmlIdeaNameInput = document.getElementById('ideaCreation_name_input');
+
             //endregion
 
             // lokalisiere die View anhand der global definierten Sprache
@@ -65,13 +67,34 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
             if(exObj.shouldShow)
             {
-                cbLocalizeView();
+                renderView(exObj.additionalData.idea);
                 htmlView.style.display = 'block';
             } else {
 
                 htmlView.style.display = 'none';
             }
 
+        }
+
+        function renderView(idea) {
+
+            // Wenn eine Idee mit übergeben wurde, dann soll sie in das
+            // Formular übernommen werden zum Editieren
+            if (idea) {
+
+                htmlIdeaNameInput.textContent = idea.name;
+                htmlDescriptionTextarea.textContent = idea.description;
+                // Setze die gewählte Kategorie
+                var selectBox = document.getElementById('ideaCreation_category_select');
+                var chosenValue = idea.category;
+                for(var i = 0, j = selectBox.options.length; i < j; ++i) {
+                    if(selectBox.options[i].value === chosenValue) {
+                        selectBox.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            cbLocalizeView();
         }
 
         function cbLocalizeView() {
@@ -102,8 +125,17 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
                 ideaWatcher.core.Localizer.CreateIdea[language].category7;
             htmlDescription.textContent =
                 ideaWatcher.core.Localizer.CreateIdea[language].description;
-            htmlDescriptionTextarea.textContent =
-                ideaWatcher.core.Localizer.CreateIdea[language].descriptionTextarea;
+            // Wenn noch Defaulttext drin steht, dann diesen lokalisieren,
+            // sonst ignorieren
+            if (htmlDescriptionTextarea.textContent ===
+                ideaWatcher.core.Localizer.CreateIdea['de_DE'].descriptionTextarea ||
+                htmlDescriptionTextarea.textContent ===
+                ideaWatcher.core.Localizer.CreateIdea['en_GB'].descriptionTextarea) {
+
+                htmlDescriptionTextarea.textContent =
+                    ideaWatcher.core.Localizer.CreateIdea[language].descriptionTextarea;
+            }
+
             htmlPublishButton.setAttribute("value", ideaWatcher.core.Localizer
                 .CreateIdea[language].publish);
             htmlCancelButton.setAttribute("value", ideaWatcher.core.Localizer
