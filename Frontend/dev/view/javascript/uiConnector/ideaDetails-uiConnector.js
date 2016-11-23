@@ -1,5 +1,4 @@
-ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
-		|| (function() {
+ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 
 			var idea = null;
 			var htmlView = null;
@@ -22,13 +21,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			};
 
 			var evUserDataReceived = {
-
-				topic : 'SIdea/getIdeaDetailsRequest-response',
-				cbFunction : cbIdeaDetailsDataReceived
-
 				topic: 'SIdea/getIdeaDetailsRequest-response',
 				cbFunction: cbIdeaDetailsDataReceived
-
 			};
 			// endregion
 
@@ -67,11 +61,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				ideaWatcher.controller.IdeaDetails.registerShowView(cbShowView);
 				// endregion
 
-
-				// region submit new comment
-
 				//region submit new comment
-
 				htmlView.onsubmit = function onSubmit(event) {
 
 					event.preventDefault();
@@ -85,12 +75,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 							ideaId : currentIdea.ideaId,
 							text : htmlCommentTextInput.textContent
 						};
-
-						console
-								.log('Kommentar wird im UIConnector abgeschickt.')
-
 						console.log('Kommentar wird im UIConnector abgeschickt.')
-
 						ideaWatcher.controller.IdeaDetails
 								.tryToSaveComment(exObj);
 
@@ -136,19 +121,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					}
 
 					ideaWatcher.controller.GlobalNotification
-
-							.showNotification(
-									notificationType,
-									ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
-									ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
-									5000);
-
 						.showNotification(
 							notificationType,
 						ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
 						ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
 						5000);
-
 				}
 			}
 
@@ -157,11 +134,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				if (obj.shouldShow) {
 
 					// var idea = ideaWatcher.controller.IdeaDetails
-
-					// .getIdea(obj.additionalData.ideaId);
-
 					// 		.getIdea(obj.additionalData.ideaId);
-
 					// currentIdea = idea;
 					// renderView(idea);
 

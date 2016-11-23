@@ -2,7 +2,7 @@
 
 // Bitte alphabetisch ordnen!!
 
-ideaWatcher.core.Localizer.signUp = {
+ideaWatcher.core.Localizer.signUp = ideaWatcher.core.Localizer.signUp || {
     en_GB: {
         header: "Sign Up",
         mail: "Email",

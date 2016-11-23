@@ -10,4 +10,4 @@ ideaWatcher.core.Localizer.About = {
     de_DE: {
         header: "Impressum"
     }
-}
+};

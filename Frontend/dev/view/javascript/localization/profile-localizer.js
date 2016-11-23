@@ -2,7 +2,7 @@
 
 // Bitte alphabetisch ordnen!!
 
-ideaWatcher.core.Localizer.profile = {
+ideaWatcher.core.Localizer.profile = ideaWatcher.core.Localizer.profile || {
     en_GB: {
     	followedIdeas: 'Followed Ideas',
     	myIdeas: 'My Ideas',
