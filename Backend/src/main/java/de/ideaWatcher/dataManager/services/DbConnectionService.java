@@ -47,7 +47,7 @@ public class DbConnectionService {
             this.collection = this.db.getCollection(this.collectionName);
 
             this.isOpen = true;
-            System.out.println("MongoDB-Verbindung geöffnet");
+            System.out.println("MongoDB-Verbindung geÃ¶ffnet");
         } catch (Exception ex) {
 
             throw new Exception(ex);

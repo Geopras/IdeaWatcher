@@ -1,6 +1,7 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
@@ -9,7 +10,10 @@ import main.java.de.ideaWatcher.dataManager.BCrypt;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
+
+import org.bson.BSON;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -231,8 +235,10 @@ public class UserService {
                 .append("language", user.getLanguage())
                 .append("pictureURL", user.getPictureURL())
                 .append( "createdIdeas", new ArrayList<Document>()) // statt null eine ArrayList -- noch nicht getestet 17.11.16
+                .append( "createdIdeas", "")
                 .append("numberCreatedIdeas", user.getNumberCreatedIdeas())
                 .append( "followedIdeas", new ArrayList<Document>())  // statt null eine ArrayList -- noch nicht getestet 17.11.16
+                .append( "followedIdeas", "") 
                 .append("numberFollowedIdeas", user.getNumberFollowedIdeas());
     }
 
@@ -258,23 +264,26 @@ public class UserService {
         dbConnectionService.closeConnection();
     }
     
-    public UpdateResult updateUser(IUser user){
+    public UpdateResult updateUser(IUser user) throws Exception{
         Document newDoc = new Document();
         newDoc = buildUserDocument(user);
-        System.out.println("UserId: " + user.getUserId() );
-       // newDoc.append("_id", user.getUserId());
-       // UpdateResult ur = dbConnectionService.getCollection().replaceOne(Filters.eq("_id", user.getUserId()), newDoc);
-        UpdateResult ur = dbConnectionService.getCollection().updateOne(Filters.eq("_id",  user.getUserId()), newDoc);
-        /*
-        dbConnectionService.getCollection().replaceOne(Filters.eq("_id", conn.getCollection()
-                .find(eq("username", i.getP_creator())).first()
-                    .get("_id")), mySearch);
         
-        */
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        }
+        UpdateResult ur = dbConnectionService.getCollection().replaceOne(Filters.eq("_id", new ObjectId (user.getUserId())), newDoc);
+   
+        dbConnectionService.closeConnection();
+        
         return ur;
     }
-    public void deleteUser(String userId){
-        dbConnectionService.getCollection().findOneAndDelete(Filters.eq("_id", userId));   
+
+    public void deleteUser(String userId) throws Exception{
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        }
+        dbConnectionService.getCollection().findOneAndDelete(Filters.eq("_id", new ObjectId (userId)));   
+        dbConnectionService.closeConnection();
     }
 
 }
