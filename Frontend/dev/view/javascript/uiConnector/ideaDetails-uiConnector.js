@@ -254,11 +254,13 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			}
 
-			function renderView(crntIdea) {
+
+			function renderView(crtIdea) {
 
 				console.log('Starte erstellen der Detailansicht...');
 				console.log(currentIdea);
-				currentIdea = crntIdea;
+
+				currentIdea = crtIdea;
 
 				htmlView = document.querySelector('.ideaDetails_view');
 				var creator = currentIdea.creator;
