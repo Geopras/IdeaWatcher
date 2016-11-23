@@ -304,6 +304,7 @@ public class TestDataGenerator {
 
             // die Idee zu den createdIdeas hinzufügen
             creaorUserObject.getCreatedIdeas().add(idea);
+            creaorUserObject.setNumberCreatedIdeas(creaorUserObject.getCreatedIdeas().size());
             // und speichern
             userService.updateUser(creaorUserObject);
 
@@ -314,6 +315,7 @@ public class TestDataGenerator {
                 IUser followUserObject = userService.getUser(followUserId);
                 // die Idee zu seinen FollowedIdeas hinzufügen
                 followUserObject.getFollowedIdeas().add(idea);
+                followUserObject.setNumberFollowedIdeas(followUserObject.getFollowedIdeas().size());
                 // und speichern
                 userService.updateUser(followUserObject);
             }

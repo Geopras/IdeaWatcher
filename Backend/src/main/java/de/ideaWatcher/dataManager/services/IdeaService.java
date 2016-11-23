@@ -33,7 +33,7 @@ public class IdeaService {
         this.dbConnectionService = new DbConnectionService(collectionName);
     }
     
-    private Document buildCreatorDocument(ICreator creator) {
+    private static Document buildCreatorDocument(ICreator creator) {
         return new Document("userId", creator.getUserId() )
                 .append("userName", creator.getUserName())
                 .append("email", creator.getEmail())
@@ -154,8 +154,23 @@ public class IdeaService {
                 .append("numberLikes", idea.getNumberLikes())
                 .append( "followerUsers", idea.getFollowerUsers())
                 .append("numberFollowers", idea.getNumberFollowers())
-                //.append("comments", idea.getComments())
                 .append("comments", buildCommentDocumentList(idea.getComments()))
+                .append("numberComments", idea.getNumberComments());
+    }
+
+    public static Document buildSmallIdeaDocument(IIdea idea) {
+        // ID wird nicht übertragen, da von MongoDB erzeugt!
+        return new Document("ideaId", idea.getIdeaId())
+                .append("name", idea.getName())
+                .append("description", idea.getDescription())
+                .append("catagory", idea.getCategory())
+                .append("creator", IdeaService.buildCreatorDocument(idea.getCreator()))
+                .append("publishedDate", idea.getPublishDate())
+                .append("language", idea.getLanguage())
+                .append("hotRank", idea.getHotRank())
+                .append("trendingRank", idea.getTrendingRank())
+                .append("numberLikes", idea.getNumberLikes())
+                .append("numberFollowers", idea.getNumberFollowers())
                 .append("numberComments", idea.getNumberComments());
     }
 
@@ -222,7 +237,7 @@ public class IdeaService {
         dbConnectionService.closeConnection();
     }
     
-    public IIdea buildIdeaToIdeaSmart( IIdea idea){
+    public static IIdea buildIdeaToIdeaSmart( IIdea idea){
         IIdea ideaSmart = new Idea();
         ideaSmart.setCategory(idea.getCategory());
         ideaSmart.setCreator(idea.getCreator());

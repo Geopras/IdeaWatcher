@@ -240,6 +240,16 @@ public class UserService {
 
     private Document buildUserDocument(IUser user) {
 
+        List<Document> createdIdeasList = new ArrayList<Document>();
+        for (IIdea idea : user.getCreatedIdeas()){
+            createdIdeasList.add(IdeaService.buildSmallIdeaDocument(idea));
+        }
+
+        List<Document> followedIdeaList = new ArrayList<Document>();
+        for (IIdea idea : user.getFollowedIdeas()){
+            followedIdeaList.add(IdeaService.buildSmallIdeaDocument(idea));
+        }
+
         return new Document("userName", user.getUserName() )
                 .append("password", user.getPassword())
                 .append("email", user.getEmail())
@@ -249,11 +259,9 @@ public class UserService {
                 .append("gender", user.getGender())
                 .append("language", user.getLanguage())
                 .append("pictureURL", user.getPictureURL())
-                .append( "createdIdeas", new ArrayList<Document>()) // statt null eine ArrayList -- noch nicht getestet 17.11.16
-                .append( "createdIdeas", "")
+                .append( "createdIdeas", createdIdeasList)
                 .append("numberCreatedIdeas", user.getNumberCreatedIdeas())
-                .append( "followedIdeas", new ArrayList<Document>())  // statt null eine ArrayList -- noch nicht getestet 17.11.16
-                .append( "followedIdeas", "") 
+                .append( "followedIdeas", followedIdeaList)
                 .append("numberFollowedIdeas", user.getNumberFollowedIdeas());
     }
 
