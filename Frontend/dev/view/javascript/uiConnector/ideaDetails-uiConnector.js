@@ -22,13 +22,13 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			};
 
 			var evUserDataReceived = {
-<<<<<<< HEAD
+
 				topic : 'SIdea/getIdeaDetailsRequest-response',
 				cbFunction : cbIdeaDetailsDataReceived
-=======
+
 				topic: 'SIdea/getIdeaDetailsRequest-response',
 				cbFunction: cbIdeaDetailsDataReceived
->>>>>>> branch 'dev' of https://github.com/Geopras/IdeaWatcher.git
+
 			};
 			// endregion
 
@@ -67,11 +67,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				ideaWatcher.controller.IdeaDetails.registerShowView(cbShowView);
 				// endregion
 
-<<<<<<< HEAD
+
 				// region submit new comment
-=======
+
 				//region submit new comment
->>>>>>> branch 'dev' of https://github.com/Geopras/IdeaWatcher.git
+
 				htmlView.onsubmit = function onSubmit(event) {
 
 					event.preventDefault();
@@ -85,12 +85,12 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 							ideaId : currentIdea.ideaId,
 							text : htmlCommentTextInput.textContent
 						};
-<<<<<<< HEAD
+
 						console
 								.log('Kommentar wird im UIConnector abgeschickt.')
-=======
+
 						console.log('Kommentar wird im UIConnector abgeschickt.')
->>>>>>> branch 'dev' of https://github.com/Geopras/IdeaWatcher.git
+
 						ideaWatcher.controller.IdeaDetails
 								.tryToSaveComment(exObj);
 
@@ -136,19 +136,19 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					}
 
 					ideaWatcher.controller.GlobalNotification
-<<<<<<< HEAD
+
 							.showNotification(
 									notificationType,
 									ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
 									ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
 									5000);
-=======
+
 						.showNotification(
 							notificationType,
 						ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
 						ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
 						5000);
->>>>>>> branch 'dev' of https://github.com/Geopras/IdeaWatcher.git
+
 				}
 			}
 
@@ -157,11 +157,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				if (obj.shouldShow) {
 
 					// var idea = ideaWatcher.controller.IdeaDetails
-<<<<<<< HEAD
+
 					// .getIdea(obj.additionalData.ideaId);
-=======
+
 					// 		.getIdea(obj.additionalData.ideaId);
->>>>>>> branch 'dev' of https://github.com/Geopras/IdeaWatcher.git
+
 					// currentIdea = idea;
 					// renderView(idea);
 
