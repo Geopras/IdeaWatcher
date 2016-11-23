@@ -8,6 +8,25 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
             en_GB: 'Create new idea',
             de_DE: 'Neue Idee erstellen'
         },
+        DeleteIdea: {
+        	en_GB: {
+        		errorMessage: {
+        			SIdeaList_deleteIdeaData_error: '',
+        			SIdeaList_deleteIdeaGetDBObjects_error: '',
+        			SIdeaList_deleteIdeaIdeaController_error: '',
+        			SIdeaList_deleteIdeaIntegrity_error: ''
+        		}
+        	},
+            de_DE: {
+            	errorMessage: {
+            		SIdeaList_deleteIdeaData_error: '',
+        			SIdeaList_deleteIdeaGetDBObjects_error: '',
+        			SIdeaList_deleteIdeaIdeaController_error: '',
+        			SIdeaList_deleteIdeaIntegrity_error: ''
+            	}
+            	
+            }
+        },
         Published: {
             en_GB: 'Published',
             de_DE: 'Veröffentlicht'
