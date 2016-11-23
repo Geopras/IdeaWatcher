@@ -34,6 +34,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					.registerLocalizeView(cbLocalizeView);
 			ideaWatcher.controller.IdeaDetails
 					.registerGetIdeaResponse(cbGetIdeaResponse);
+			ideaWatcher.controller.IdeaDetails
+			.registerSaveCommentResponse(cbSaveCommentResponse);
+			
 			// endregion
 
 			// region subscribe to events
@@ -71,32 +74,35 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						var exObj = {
 							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
-							text : '' // Kommentartext
+							text : htmlCommentTextInput.textContent
 						};
 						console.log('Kommentar wird im UIConnector abgeschickt.')
-						//TODO: Hier muss noch die entsprechende Methode des Controllers aufgerufen werden
+						ideaWatcher.controller.IdeaDetails
+								.tryToSaveComment(exObj);
+
+						// TODO: Hier muss noch die entsprechende Methode des
+						// Controllers aufgerufen werden
 					} else {
 						console.log("kein User angemeldet");
 					}
 				};
 				// endregion
-				
+
 				// eventlisteners hinzufügen
 				htmlLikeImg.addEventListener('click', changeLikeStatus);
 				htmlFollowerImg.addEventListener('click', changeFollowerStatus);
 
-
 			}
 			// endregion
 
-		
 			function cbIdeaDetailsDataReceived(exObj) {
 
 				var language = ideaWatcher.core.Localizer.getLanguage();
 
-				if (exObj.result == 'success'){
+				if (exObj.result == 'success') {
 
-					// var ideaDetailsObject = Object.create(ideaWatcher.model.Idea);
+					// var ideaDetailsObject =
+					// Object.create(ideaWatcher.model.Idea);
 					// ideaDetailsObject.category = exObj.data.category;
 					// //ideaDetailsObject.comments
 					// //ideaDetailsObject.creator
@@ -134,8 +140,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					// renderView(idea);
 
 					var ideaId = obj.additionalData.ideaId;
-					ideaWatcher.controller.IdeaDetails.tryToLoadIdeaData(ideaId);
-					
+					ideaWatcher.controller.IdeaDetails
+							.tryToLoadIdeaData(ideaId);
+
 					// request losschicken
 
 					htmlView.style.display = 'block';
@@ -164,6 +171,33 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			function cbGetIdeaResponse(response) {
 
 				renderView(response.data.idea);
+			}
+			
+			function cbSaveCommentResponse(response) {
+				var language = ideaWatcher.core.Localizer.getLanguage();
+
+				if (response.result == 'success') {
+
+					renderView(response.data)
+				} else {
+					var errorMessage = response.error;
+
+					var notificationType = ideaWatcher.model.GlobalNotificationType.ERROR;
+					if (response.result == "warning") {
+						notificationType = ideaWatcher.model.GlobalNotificationType.WARNING;
+					}
+					if (response.result == "info") {
+						notificationType = ideaWatcher.model.GlobalNotificationType.INFO;
+					}
+
+					ideaWatcher.controller.GlobalNotification
+							.showNotification(
+									notificationType,
+									ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
+									ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
+									5000);
+				}
+
 			}
 
 			function changeLikeStatus() {
@@ -313,7 +347,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						// img comment.pictureUrl
 						var htmlCommentImage = document.createElement('img');
 						if (comment.pictureUrl) {
-						htmlCommentImage.src = comment.pictureUrl;
+							htmlCommentImage.src = comment.pictureUrl;
 						} else {
 							htmlCommentImage.src = './resources/img/user.jpg'
 						}
@@ -422,7 +456,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 					ideaWatcher.controller.GlobalNotification
 							.showNotification(
-								notificationType,
+									notificationType,
 									ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
 									ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
 									5000);

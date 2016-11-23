@@ -32,6 +32,11 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             topic: 'SIdeaDetails/getIdeaRequest-response',
             cbFunction: cbGetIdeaResponse
         };
+        
+        var evGetSaveCommentResponse = {
+                topic: 'SIdeaDetails/commentIdeaRequest-response',
+                cbFunction: cbSaveCommentResponse
+            };
 
         //endregion
 
@@ -40,6 +45,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         ideaWatcher.core.MessageBroker.subscribe(evSwitchView);
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         ideaWatcher.core.MessageBroker.subscribe(evGetIdeasResponse);
+        ideaWatcher.core.MessageBroker.subscribe(evGetSaveCommentResponse);
         //endregion
 
         function cbInitializeView(obj) {
@@ -52,6 +58,10 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
 
         function cbGetIdeaResponse(obj) {
             cbGetIdeaResp(obj);
+        }
+        
+        function cbSaveCommentResponse(obj) {
+        	cbSaveCommentResp(obj);
         }
 
         //region Callback: Internal - SwitchView
@@ -84,6 +94,10 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         function pubRegisterGetIdea(cb) {
             cbGetIdea = cb;
         }
+        
+        function pubRegisterSaveCommentResponse(cb) {
+            cbSaveCommentResp = cb;
+        }
 
         function pubTryToLoadIdeaData(exObject)
         {
@@ -93,19 +107,6 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             } else {
                 //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
             }
-        }
-
-        function buildRequestLoadIdeaData(ideaId)
-        {
-            var exLoadUserDataRequest = Object.create(ideaWatcher.model.Request);
-
-            exLoadUserDataRequest.destination = 'SIdea/getIdeaDetailsRequest';
-            var exObj = {
-                ideaId : ideaId,
-            };
-            exLoadUserDataRequest.data = exObj;
-
-            return exLoadUserDataRequest;
         }
 
         function pubTryToComment(exObject)
@@ -128,6 +129,16 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             }
         }
 
+        function pubTryToSaveComment(exObject)
+        {
+            // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
+            if (ideaWatcher.core.WebSocketConnector.isConnected()) {
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestSaveComment(exObject));
+            } else {
+                //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
+            }
+        }
+        
         function pubTryToGetIdea(exObject) {
 
             // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
@@ -143,7 +154,21 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             return ideaWatcher.controller.IdeaList.getIdea(ideaId);
         }
 
-        function buildRequestComment(exObject)
+
+        function buildRequestLoadIdeaData(ideaId)
+        {
+            var exLoadUserDataRequest = Object.create(ideaWatcher.model.Request);
+
+            exLoadUserDataRequest.destination = 'SIdea/getIdeaDetailsRequest';
+            var exObj = {
+                ideaId : ideaId,
+            };
+            exLoadUserDataRequest.data = exObj;
+
+            return exLoadUserDataRequest;
+        }
+        
+        function buildRequestSaveComment(exObject)
         {
             var exCommentRequest = ideaWatcher.model.Request;
 
@@ -189,11 +214,13 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             registerInitializeView: pubRegisterInitializeView,
             registerLocalizeView: pubRegisterLocalizeView,
             registerGetIdeaResponse: pubRegisterGetIdeaResponse,
+            registerSaveCommentResponse: pubRegisterSaveCommentResponse,
             registerShowView: pubRegisterShowView,
             tryToComment: pubTryToComment,
             tryToChangeLikeFollow: pubTryToChangeLikeFollow,
             tryToGetIdea: pubTryToGetIdea,
-            tryToLoadIdeaData: pubTryToLoadIdeaData
+            tryToLoadIdeaData: pubTryToLoadIdeaData,
+            tryToSaveComment: pubTryToSaveComment
         };
 
     })();
