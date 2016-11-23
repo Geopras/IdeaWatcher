@@ -31,6 +31,10 @@ public class IdeaController implements IIdeaController {
     public List<IIdea> getAllIdeas() throws Exception {
         return this.ideaService.getAllIdeas();
     }
+    @Override
+    public List<IIdea> getAllIdeasSmart() throws Exception {
+        return this.ideaService.getAllIdeas();
+    }
 
     @Override
     public void deleteIdea(String ideaId) throws Exception {
@@ -40,5 +44,9 @@ public class IdeaController implements IIdeaController {
     @Override
     public void updateIdea(IIdea idea) throws Exception {
         this.ideaService.updateIdea(idea);
+    }
+    @Override
+    public void updateApropertyOfaIdea(String ideaId, String type, String value) throws Exception {
+        this.ideaService.updateApropertyOfaIdea(ideaId, type, value);
     }
 }

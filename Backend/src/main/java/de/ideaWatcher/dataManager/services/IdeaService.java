@@ -8,6 +8,7 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import com.mongodb.client.model.Filters;
@@ -163,6 +164,48 @@ public class IdeaService {
         creator.setIsMailPublic(user.getIsMailPublic());
         creator.setPictureURL(user.getPictureURL());
         return creator;
+    }
+    public void updateApropertyOfaIdea(String ideaId, String type, String value) throws Exception{
+       
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        } 
+        dbConnectionService.getCollection().updateOne(eq("_id", new ObjectId(ideaId)), new Document("$set", new Document(type, value)));
+        dbConnectionService.closeConnection();
+    }
+    
+    public IIdea buildIdeaToIdeaSmart( IIdea idea){
+        IIdea ideaSmart = new Idea();
+        ideaSmart.setCategory(idea.getCategory());
+        ideaSmart.setCreator(idea.getCreator());
+        ideaSmart.setHotRank(idea.getHotRank());
+        ideaSmart.setIdeaId(idea.getIdeaId());
+        ideaSmart.setName(idea.getName());
+        ideaSmart.setNumberComments(idea.getNumberComments());
+        ideaSmart.setNumberFollowers(idea.getNumberFollowers());
+        ideaSmart.setNumberLikes(idea.getNumberLikes());
+        ideaSmart.setPublishDate(idea.getPublishDate());
+        ideaSmart.setTrendingRank(idea.getTrendingRank());
+        
+        return ideaSmart;
+    }
+    
+    
+    public IIdea getIdeaSmart( String ideaId) throws Exception{
+        IIdea ideaSmart = new Idea();
+        ideaSmart = buildIdeaToIdeaSmart(getIdea(ideaId));    
+        return ideaSmart;
+    }
+    
+    public List<IIdea> getAllIdeasSmart() throws Exception{
+        List<IIdea> ideasSmart = new ArrayList<IIdea>();
+        List<IIdea> ideas = new ArrayList<IIdea>();
+        ideas = getAllIdeas();
+        for(IIdea idea : ideas){
+            ideasSmart.add(buildIdeaToIdeaSmart(idea));
+        }
+        
+        return ideasSmart; 
     }
     
 }

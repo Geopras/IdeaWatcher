@@ -12,10 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
 
 public class TestLauncher {
@@ -81,6 +84,15 @@ public class TestLauncher {
          IdeaService is = new IdeaService("ideasCollection");
          is.deleteIdea(idea.getIdeaId());
      }
+     public static void updateApropertyOfaIdea( ) throws Exception{
+       //  ObjectId("58346be56f963f177099728a")
+         String ideaId = "58346be56f963f177099728a";
+         String type = "trendingRank";
+         String value = "10.0";
+         IdeaService is = new IdeaService("ideasCollection");
+         
+         is.updateApropertyOfaIdea(ideaId, type, value);
+     }
 
 
     public static void main(String[] args) throws Exception {
@@ -102,8 +114,9 @@ public class TestLauncher {
         idea.setLanguage("english");
         updateIdea(idea);
         deleteIdea(idea);
+       
         
  */
-
+        updateApropertyOfaIdea( );
     }
 }
