@@ -11,4 +11,4 @@ ideaWatcher.core.Localizer.FootBar = {
         about: 'Impressum',
         copyright_text: '2016 Projektgruppe Ideas4theWorld',
     }
-}
+};
