@@ -85,7 +85,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				htmlLikeImg.addEventListener('click', changeLikeStatus);
 				htmlFollowerImg.addEventListener('click', changeFollowerStatus);
 
-				
+
 			}
 			// endregion
 

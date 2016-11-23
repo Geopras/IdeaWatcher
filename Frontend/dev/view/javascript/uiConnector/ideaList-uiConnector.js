@@ -84,7 +84,6 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                         htmlMyIdeasView.style.display = 'none';
                         htmlMyFollowedIdeasView.style.display = 'none';
                 }
-
             }
             else
             {
@@ -113,7 +112,6 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                         break;
                     default:
                         header = htmlIdeaListHeader;
-
                 }
 
                 header.textContent = ideaWatcher.core.Localizer
@@ -227,7 +225,6 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 addToIdeasMap(ideasToAppend);
             }
 
-
             var htmlParentNode;
             var htmlSectionsClassName;
             var htmlSections;
@@ -244,21 +241,29 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             }
             htmlSectionsClassName = htmlSections.className;
 
+            var isMyIdeas = false;
+            var isMyFollowedIdeas = false;
+            if (listType === ideaWatcher.model.IdeaList.ListType.MYIDEAS) {
+                isMyIdeas = true;
+            }
+            else if (listType === ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS) {
+                isMyFollowedIdeas = true;
+            }
             if (isRenderNewIdeaList) {
 
                 publishedLabels = [];
                 htmlParentNode.removeChild(htmlSections);
                 htmlSections = document.createElement('div');
                 htmlSections.classList.add(htmlSectionsClassName);
-                renderIdeaList(htmlSections, ideasToAppend);
+                renderIdeaList(htmlSections, ideasToAppend, isMyIdeas, isMyFollowedIdeas);
                 htmlParentNode.appendChild(htmlSections);
 
             } else {
-                renderIdeaList(htmlSections, ideasToAppend);
+                renderIdeaList(htmlSections, ideasToAppend, isMyIdeas, isMyFollowedIdeas);
             }
         }
 
-        function renderIdeaList(htmlList, ideaListToAppend) {
+        function renderIdeaList(htmlList, ideaListToAppend, isMyIdeas, isMyFollowedIdeas) {
 
             var language = ideaWatcher.core.Localizer.getLanguage();
             //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
@@ -284,7 +289,6 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 var dataLeft = document.createElement('li');
                 dataLeft.classList.add('ideaList_leftData_li');
                 dataLeft.style.float = 'left';
-                // dataLeft.style.listStyle = 'none';
 
                 var ratings = document.createElement('ul');
 
@@ -324,6 +328,44 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 ratings.appendChild(followers);
                 ratings.appendChild(comments);
 
+                if (isMyIdeas || isMyFollowedIdeas) {
+
+                    var userButtons = document.createElement('li');
+
+                    if (isMyIdeas) {
+
+                        var editButtonImage = document.createElement('img');
+                        editButtonImage.classList.add('ideaList_user_button');
+                        editButtonImage.src = './resources/img/editButton2.svg';
+                        editButtonImage.width = 20;
+                        editButtonImage.height = 20;
+                        editButtonImage.addEventListener('click', handleEditButton);
+
+                        var deleteButtonImage = document.createElement('img');
+                        deleteButtonImage.classList.add('ideaList_user_button');
+                        deleteButtonImage.src = './resources/img/deleteButton1.svg';
+                        deleteButtonImage.width = 20;
+                        deleteButtonImage.height = 20;
+                        deleteButtonImage.addEventListener('click', handleDeleteButton);
+
+                        userButtons.appendChild(editButtonImage);
+                        userButtons.appendChild(deleteButtonImage);
+                    }
+                    else if (isMyFollowedIdeas) {
+
+                        var followButtonImage = document.createElement('img');
+                        followButtonImage.classList.add('ideaList_user_button');
+                        followButtonImage.src = './resources/img/star_bright.svg';
+                        followButtonImage.width = 20;
+                        followButtonImage.height = 20;
+                        followButtonImage.addEventListener('click', handleFollowButton);
+
+                        userButtons.appendChild(followButtonImage);
+                    }
+                    userButtons.setAttribute('data-ideaid', idea.ideaId);
+                    ratings.appendChild(userButtons);
+                }
+
                 dataLeft.appendChild(ratings);
 
                 // PublishDate auf der rechten Seite:
@@ -339,7 +381,6 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
                 dataRow.appendChild(dataRight);
                 dataRow.appendChild(dataLeft);
-
 
                 ideaElement.appendChild(ideaName);
                 ideaElement.appendChild(ideaDescription);
@@ -359,7 +400,6 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 // Click-Event dranhängen, damit die IdeaDetails-View
                 // aufgerufen werden kann
                 ideaName.addEventListener('click', handleIdeaClickEvent);
-
 
                 htmlList.appendChild(ideaElement);
 
@@ -391,6 +431,18 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             exObj.additionalData.ideaId = ideaId;
 
             ideaWatcher.core.Navigator.switchView(exObj);
+        }
+
+        function handleEditButton(clickEvent) {
+            var ideaId = clickEvent.target.parentNode.attributes.getNamedItem('data-ideaid').nodeValue;
+        }
+
+        function handleDeleteButton(clickEvent) {
+            var ideaId = clickEvent.target.parentNode.attributes.getNamedItem('data-ideaid').nodeValue;
+        }
+
+        function handleFollowButton(clickEvent) {
+            var ideaId = clickEvent.target.parentNode.attributes.getNamedItem('data-ideaid').nodeValue;
         }
         //endregion
 
