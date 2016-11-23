@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface IIdeaController {
 
+    
     /**
      * Fuegt eine neue Idee zur Ideen-Collection hinzu
      * @param idea {IIdea} neues Idea-Objekt
@@ -38,6 +39,14 @@ public interface IIdeaController {
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      * Problem gekommen ist
      */
+    
+    /**
+     * Gibt alle vorhandenen Ideen in SmartForm zurueck
+     * @return {List<IIdea} eine List von Idea-Objekten
+     * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
+     */
+    List<IIdea> getAllIdeasSmart() throws Exception;
+    
     void deleteIdea(String ideaId) throws Exception;
 
     /**
@@ -46,4 +55,13 @@ public interface IIdeaController {
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      */
     void updateIdea(IIdea idea) throws Exception;
+    
+    /**
+     * Aktualisiert bestimmtes Feld einer Idee
+     * @param idea {String} ideaId ID des Dokuments
+     * @param idea {String} type Feld des Dokuments in der DB
+     * @param idea {String} value der Wert des Feldes
+     * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
+     */   
+    void updateApropertyOfaIdea(String ideaId, String type, String value) throws Exception;
 }

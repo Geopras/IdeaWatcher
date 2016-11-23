@@ -141,7 +141,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         }
         //endregion
 
-        //region getIdeasResponse
+        //region Response-Callbacks
         function cbGetIdeasResponse(response) {
 
             var language = ideaWatcher.core.Localizer.getLanguage();
@@ -184,6 +184,28 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 additionalData: responseData
             });
         }
+
+        function cbDeleteIdeaResponse(response) {
+
+            var language = ideaWatcher.core.Localizer.getLanguage();
+            // Nach Ergebnis sehen:
+            var result = response.result;
+            var ideaId = response.data.ideaId;
+
+            if (result !== 'success') {
+
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.model.GlobalNotificationType.ERROR,
+                    ideaWatcher.core.Localizer.IdeaList.DeleteIdea[language].errorMessage.header,
+                    ideaWatcher.core.Localizer.IdeaList.DeleteIdea[language].errorMessage[response.errorMessage],
+                    5000);
+                return;
+            }
+
+            if (currentIdeasMap[ideaId]) {
+                delete currentIdeasMap[ideaId];
+            }
+        }
         //endregion
 
         function cbGetCurrentListType() {
@@ -207,6 +229,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         function renderView(ideaListData) {
 
             //region Extrahiere Renderdaten:
+
             var listType = ideaListData.listType;
             var ideasToAppend = ideaListData.ideas;
             var isRenderNewIdeaList;
@@ -242,12 +265,8 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             htmlSectionsClassName = htmlSections.className;
 
             var isMyIdeas = false;
-            var isMyFollowedIdeas = false;
             if (listType === ideaWatcher.model.IdeaList.ListType.MYIDEAS) {
                 isMyIdeas = true;
-            }
-            else if (listType === ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS) {
-                isMyFollowedIdeas = true;
             }
             if (isRenderNewIdeaList) {
 
@@ -255,15 +274,15 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 htmlParentNode.removeChild(htmlSections);
                 htmlSections = document.createElement('div');
                 htmlSections.classList.add(htmlSectionsClassName);
-                renderIdeaList(htmlSections, ideasToAppend, isMyIdeas, isMyFollowedIdeas);
+                renderIdeaList(htmlSections, ideasToAppend, isMyIdeas);
                 htmlParentNode.appendChild(htmlSections);
 
             } else {
-                renderIdeaList(htmlSections, ideasToAppend, isMyIdeas, isMyFollowedIdeas);
+                renderIdeaList(htmlSections, ideasToAppend, isMyIdeas);
             }
         }
 
-        function renderIdeaList(htmlList, ideaListToAppend, isMyIdeas, isMyFollowedIdeas) {
+        function renderIdeaList(htmlList, ideaListToAppend, isMyIdeas) {
 
             var language = ideaWatcher.core.Localizer.getLanguage();
             //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
@@ -422,15 +441,15 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         function handleEditButton(clickEvent) {
             var ideaId = clickEvent.target.parentNode.attributes.getNamedItem('data-ideaid').nodeValue;
+            var idea = currentIdeasMap[ideaId];
+
         }
 
         function handleDeleteButton(clickEvent) {
             var ideaId = clickEvent.target.parentNode.attributes.getNamedItem('data-ideaid').nodeValue;
+
         }
 
-        function handleFollowButton(clickEvent) {
-            var ideaId = clickEvent.target.parentNode.attributes.getNamedItem('data-ideaid').nodeValue;
-        }
         //endregion
 
         //region Hilfsfunktionen
@@ -480,8 +499,10 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             if (document.body.scrollTop > document.body.scrollHeight -
                 window.innerHeight * 1.1) {
 
-                if (ideaWatcher.core.Navigator.getCurrentView() ===
-                    ideaWatcher.model.Navigation.ViewId.IDEALIST) {
+                var currentView = ideaWatcher.core.Navigator.getCurrentView();
+                if (currentView === ideaWatcher.model.Navigation.ViewId.HOT.NONE ||
+                    currentView === ideaWatcher.model.Navigation.ViewId.MYIDEAS.NONE ||
+                    currentView === ideaWatcher.model.Navigation.ViewId.MYFOLLOWEDIDEAS.NONE) {
                     showNextIdeas();
                 }
             }

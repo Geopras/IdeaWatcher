@@ -1,5 +1,4 @@
-ideaWatcher.view.About = ideaWatcher.view.About
-    || (function() {
+ideaWatcher.view.About = ideaWatcher.view.About || (function() {
 
         // region local vars
         // Event Globale Initialisierung

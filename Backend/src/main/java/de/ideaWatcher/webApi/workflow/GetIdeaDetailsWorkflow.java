@@ -3,7 +3,6 @@ package main.java.de.ideaWatcher.webApi.workflow;
 import main.java.de.ideaWatcher.dataManager.pojos.Comment;
 import main.java.de.ideaWatcher.dataManager.pojos.Creator;
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
-import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.core.JSONBuilder;
@@ -12,7 +11,6 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaCo
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
 import org.json.JSONObject;
 

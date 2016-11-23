@@ -1,5 +1,4 @@
-ideaWatcher.view.FootBar = ideaWatcher.view.FootBar
-    || (function() {
+ideaWatcher.view.FootBar = ideaWatcher.view.FootBar || (function() {
 
         // region local vars
         // Event Globale Initialisierung

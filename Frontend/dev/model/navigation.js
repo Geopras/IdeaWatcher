@@ -23,28 +23,6 @@ ideaWatcher.model.Navigation = ideaWatcher.model.Navigation || {
         },
         ViewId: {
             CREATEIDEA: 'createNewIdea',
-            IDEADETAILS: 'ideaDetails',
-            IDEALIST: 'ideaList',
-            LOGIN: 'login',
-            MYFOLLOWEDIDEAS: {
-                NONE: 'myFollowedIdeas'
-            },
-            MYIDEAS: {
-                NONE: 'myIdeas'
-            },
-            MYPROFILE: 'profileEdit',
-            MYSEARCH: 'mySearch',
-            SIGNUP: 'signup',
-            HOT: {
-                BUSINESS: 'ideaList',
-                COMPUTER: 'ideaList',
-                GADGET: 'ideaList',
-                HOMEGARDEN: 'ideaList',
-                NONE: 'ideaList',
-                OTHER: 'ideaList',
-                SPORTS: 'ideaList',
-                TOYS: 'ideaList'
-            },
             FRESH: {
                 BUSINESS: 'ideaList',
                 COMPUTER: 'ideaList',
@@ -55,6 +33,27 @@ ideaWatcher.model.Navigation = ideaWatcher.model.Navigation || {
                 SPORTS: 'ideaList',
                 TOYS: 'ideaList'
             },
+            HOT: {
+                BUSINESS: 'ideaList',
+                COMPUTER: 'ideaList',
+                GADGET: 'ideaList',
+                HOMEGARDEN: 'ideaList',
+                NONE: 'ideaList',
+                OTHER: 'ideaList',
+                SPORTS: 'ideaList',
+                TOYS: 'ideaList'
+            },
+            IDEADETAILS: 'ideaDetails',
+            LOGIN: 'login',
+            MYFOLLOWEDIDEAS: {
+                NONE: 'myFollowedIdeas'
+            },
+            MYIDEAS: {
+                NONE: 'myIdeas'
+            },
+            MYPROFILE: 'profileEdit',
+            MYSEARCH: 'mySearch',
+            SIGNUP: 'signup',
             TRENDING: {
                 BUSINESS: 'ideaList',
                 COMPUTER: 'ideaList',
@@ -64,7 +63,7 @@ ideaWatcher.model.Navigation = ideaWatcher.model.Navigation || {
                 OTHER: 'ideaList',
                 SPORTS: 'ideaList',
                 TOYS: 'ideaList'
-            }
+            },
         },
         ViewUrl: {
             CREATEIDEA: 'createNewIdea',

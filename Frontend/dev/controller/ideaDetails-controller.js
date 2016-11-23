@@ -161,7 +161,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
 
             exLoadUserDataRequest.destination = 'SIdea/getIdeaDetailsRequest';
             var exObj = {
-                ideaId : ideaId,
+                ideaId : ideaId
             };
             exLoadUserDataRequest.data = exObj;
 

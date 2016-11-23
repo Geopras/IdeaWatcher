@@ -4,13 +4,14 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         var cbInitView = null;
         var cbShowView = null;
         var cbLocalize = null;
-        var cbGetIdeas = null;
+        var cbGetIdea = null;
+        var cbDeleteIdeaResp = null;
         var cbGetCurrentListType = null;
         var cbGetCurrentCategory = null;
-        var cbGetIdea = null;
+        var cbGetIdeasResp = null;
 
         var evSwitchViewToIdeaList = {
-            topic: 'switchView/' + ideaWatcher.model.Navigation.ViewId.IDEALIST,
+            topic: 'switchView/' + ideaWatcher.model.Navigation.ViewId.HOT.NONE,
             cbFunction: cbSwitchView
         };
 
@@ -31,13 +32,18 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         };
 
         var evLocalizeView = {
-            topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.IDEALIST,
+            topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.HOT.NONE,
             cbFunction: cbLocalizeView
         };
 
         var evGetIdeasResponse = {
             topic: 'SIdeaList/getIdeasRequest-response',
             cbFunction: cbGetIdeasResponse
+        };
+
+        var evDeleteIdeaResponse = {
+            topic: 'SIdeaList/deleteIdeaRequest-response',
+            cbFunction: cbDeleteIdeaResponse
         };
 
         //endregion
@@ -50,6 +56,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         ideaWatcher.core.MessageBroker.subscribe(evIni);
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         ideaWatcher.core.MessageBroker.subscribe(evGetIdeasResponse);
+        ideaWatcher.core.MessageBroker.subscribe(evDeleteIdeaResponse);
 
         //endregion
 
@@ -67,8 +74,13 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         }
 
         function cbGetIdeasResponse(obj) {
-            cbGetIdeas(obj);
+            cbGetIdeasResp(obj);
         }
+
+        function cbDeleteIdeaResponse(obj) {
+            cbDeleteIdeaResp(obj);
+        }
+
         //endregion
 
         //region Registrierung der Callbacks vom uiConnector
@@ -89,7 +101,11 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
 
         // Schnittstelle für UI-Connector, damit er Daten erhält
         function pubRegisterGetIdeasResponse(cb) {
-            cbGetIdeas = cb;
+            cbGetIdeasResp = cb;
+        }
+
+        function pubRegisterDeleteIdeaResponse(cb) {
+            cbDeleteIdeaResp = cb;
         }
 
         function pubRegisterGetCurrentListType(cb) {
@@ -103,6 +119,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         function pubRegisterGetIdea(cb) {
             cbGetIdea = cb;
         }
+
 
         //endregion
 
@@ -135,13 +152,42 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
 
             // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
             if (ideaWatcher.core.WebSocketConnector.isConnected()) {
-                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequest(requestData));
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildGetIdeasRequest(requestData));
             } else {
                 //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
             }
         }
 
-        function buildRequest(exObject)
+        function buildGetIdeasRequest(exObject)
+        {
+            var request = ideaWatcher.model.Request;
+
+            request.destination = 'SIdeaList/getIdeasRequest';
+            request.data = exObject;
+
+            return request;
+        }
+        
+        function pubSwitchToCreateIdeaView(idea) {
+
+            var exObj = Object.create(ideaWatcher.model.ExchangeObject.SwitchView);
+            exObj.viewId = ideaWatcher.model.Navigation.ViewId.CREATEIDEA;
+            exObj.viewUrl = ideaWatcher.model.Navigation.ViewUrl.CREATEIDEA;
+            exObj.additionalData = idea;
+
+            ideaWatcher.core.Navigator.switchView(exObj);
+        }
+
+        function pubGetIdea(ideaId) {
+            return cbGetIdea(ideaId);
+        }
+
+        function pubTryToDeleteIdea(ideaId) {
+
+
+        }
+
+        function buildDeleteIdeaRequest(exObject)
         {
             var request = ideaWatcher.model.Request;
 
@@ -151,8 +197,18 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             return request;
         }
 
-        function pubGetIdea(ideaId) {
-            return cbGetIdea(ideaId);
+        function pubTryToEditIdea(ideaId) {
+
+        }
+
+        function buildGetIdeasRequest(exObject)
+        {
+            var request = ideaWatcher.model.Request;
+
+            request.destination = 'SIdeaList/getIdeasRequest';
+            request.data = exObject;
+
+            return request;
         }
 
         function pubNavigateToCreateIdeaView() {
@@ -176,9 +232,13 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             registerShowView: pubRegisterShowView,
             registerLocalizeView: pubRegisterLocalizeView,
             registerGetIdeasResponse: pubRegisterGetIdeasResponse,
+            registerGetDeleteIdeaResponse: pubRegisterDeleteIdeaResponse,
             registerGetCurrentListType: pubRegisterGetCurrentListType,
             registerGetCurrentCategory: pubRegisterGetCurrentCategory,
             registerGetIdea: pubRegisterGetIdea,
+            switchToCreateIdeaView: pubSwitchToCreateIdeaView,
+            tryToDeleteIdea: pubTryToDeleteIdea,
+            tryToEditIdea: pubTryToEditIdea,
             updateIdeaList: pubUpdateIdeaList
         };
 
