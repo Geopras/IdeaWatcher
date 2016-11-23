@@ -16,6 +16,8 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -264,7 +266,6 @@ public class UserService {
     
     public UpdateResult updateUser(IUser user) throws Exception{
         Document newDoc = new Document();
-<<<<<<< HEAD
         newDoc = buildUserDocument(user);
         
         if (!dbConnectionService.isOpen()) {
@@ -274,10 +275,6 @@ public class UserService {
    
         dbConnectionService.closeConnection();
         
-=======
-        newDoc = buildUserDocument(user);     
-        UpdateResult ur = dbConnectionService.getCollection().replaceOne(Filters.eq("_id", newDoc.get("_id")), newDoc);
->>>>>>> branch 'dev' of https://github.com/Geopras/IdeaWatcher.git
         return ur;
     }
 
