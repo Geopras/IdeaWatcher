@@ -9,8 +9,9 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         var isLoginSuccessful;
         var htmlUserDropdownNoLogin;
         var htmlUserDropdownWithLogin;
-        var lastClickedButton
+        var lastClickedButton;
         var currentClickedButton;
+        var lastClickedMainIdeaListButton;
 
         // endregion
 
@@ -19,7 +20,8 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         ideaWatcher.controller.MainMenu.registerLocalizeView(cbLocalizeView);
         ideaWatcher.controller.MainMenu.registerLoginSuccessful(cbLoginSuccessful);
         ideaWatcher.controller.MainMenu.registerLogoutSuccessful(cbLogoutSuccessful);
-        ideaWatcher.controller.MainMenu.registerGetCurrentClickedButtonId(cbGetCurrentClickedButtonId);
+        ideaWatcher.controller.MainMenu.registerClickHotButton(cbClickHotButton);
+
         // endregion
 
         //region Callback Functions
@@ -98,7 +100,6 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
                             ' mainMenu-uiConnector initialisiert!');
                 }
             }
-
             cbLocalizeView();
         }
 
@@ -120,20 +121,13 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         function cbLoginSuccessful() {
             isLoginSuccessful = true;
             switchUserDropdown();
+            cbClickHotButton();
         }
 
         function cbLogoutSuccessful() {
             isLoginSuccessful = false;
             switchUserDropdown();
-
-            // Gehe auf die zuletzt angezeigte IdeaList
-            ideaWatcher.controller.IdeaList
-                .updateIdeaList('', '', 1, 10, true);
-        }
-
-        function cbGetCurrentClickedButtonId() {
-
-            return currentClickedButtonId;
+            cbClickHotButton();
         }
 
         //endregion
@@ -320,18 +314,52 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         }
         //endregion
 
+        // click HotButton automatisch
+        function cbClickHotButton() {
+
+            document.getElementById('mainMenu_hot_button').click();
+        }
+
         //region Was soll passieren, wenn irgendein Button geklickt wird
 
         function handleCurrentButtonClick(clickEvent) {
 
+            var clickedButton = clickEvent.target;
             if (!lastClickedButton) {
-                lastClickedButton = clickEvent.target;
+                lastClickedButton = clickedButton;
             } else {
                 lastClickedButton = currentClickedButton;
             }
-            currentClickedButton = clickEvent.target;
-            lastClickedButton.style.background = '#3a3a3a';
-            currentClickedButton.style.background = '#4096ee';
+            currentClickedButton = clickedButton;
+
+            // Wenn HomeButton geklickt, dann Hot-Button klicken
+            if (clickedButton.id === 'mainMenu_homeButton_img') {
+                lastClickedButton.style.background = '#3a3a3a';
+                cbClickHotButton();
+            }
+            // Wenn Hot, Fresh oder Trending geklickt, dann soll dieser
+            // Button markiert und extra gespeichert werden
+            else if (clickedButton.id.toLowerCase().includes('hot') ||
+                clickedButton.id.toLowerCase().includes('fresh') ||
+                clickedButton.id.toLowerCase().includes('trending')) {
+
+                if (lastClickedMainIdeaListButton) {
+                    lastClickedMainIdeaListButton.style.background = '#3a3a3a';
+                }
+                lastClickedMainIdeaListButton = clickedButton;
+                lastClickedButton.style.background = '#3a3a3a';
+                currentClickedButton.style.background = '#4096ee';
+            }
+            // Wenn Kategorie-Button geklickt, dann diesen zusätzlich zu zuletzt
+            // geklickten Hot-, Fresh-, Trending-Button markieren:
+            else if (clickedButton.id.toLowerCase().includes('category')) {
+                lastClickedButton.style.background = '#3a3a3a';
+                lastClickedMainIdeaListButton.style.background = '#4096ee';
+                currentClickedButton.style.background = '#4096ee';
+            } else { // ansonsten Markierung vom letzten Button auflösen
+                lastClickedButton.style.background = '#3a3a3a';
+                lastClickedMainIdeaListButton.style.background = '#3a3a3a';
+            }
         }
         //endregion
 

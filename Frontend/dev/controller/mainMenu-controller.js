@@ -5,6 +5,7 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
         var cbLoginSuccess = null;
         var cbLogoutSuccess = null;
         var cbGetCurrentClickedButtonId = null;
+        var cbClickHotButton = null;
 
         //region Events Initialisieren
         var evIni = {
@@ -76,6 +77,10 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
 
             cbGetCurrentClickedButtonId = cb;
         }
+
+        function pubRegisterClickHotButton(cb) {
+            cbClickHotButton = cb;
+        }
         //endregion
 
         //region Nach außen angebotene Methoden
@@ -87,12 +92,18 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
 
             return cbGetCurrentClickedButtonId();
         }
+
+        function pubClickHotButton() {
+            cbClickHotButton();
+        }
         //endregion
 
         return {
 
+            clickHotButton: pubClickHotButton,
             getCurrentClickedButtonId: pubGetCurrentClickedButtonId,
             logoutUser: pubLogout,
+            registerClickHotButton: pubRegisterClickHotButton,
             registerGetCurrentClickedButtonId: pubRegisterCurrentClickedButtonId,
             registerInitializeView: pubRegisterInitializeView,
             registerLocalizeView: pubRegisterLocalizeView,
