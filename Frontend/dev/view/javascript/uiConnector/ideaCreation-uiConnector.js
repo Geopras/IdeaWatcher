@@ -1,4 +1,3 @@
-<<<<<<< HEAD
  ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function VCreateIdea() {
 
          //region local vars
@@ -117,7 +116,7 @@
 
 
      })();
-=======
+
 ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
         //region local vars
