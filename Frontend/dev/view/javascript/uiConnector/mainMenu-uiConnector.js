@@ -168,6 +168,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
 
             //Category-Hauptbutton
             var categoryButton = document.querySelector('.mainMenu_category_button');
+            categoryButton.addEventListener('click', handleCurrentButtonClick);
             htmlMainMenuButtons.push(categoryButton);
 
             var categoryList = document.querySelector('.mainMenu_dropdownCategories_ul');
@@ -334,7 +335,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
 
             // Wenn HomeButton geklickt, dann Hot-Button klicken
             if (clickedButton.id === 'mainMenu_homeButton_img') {
-                lastClickedButton.style.background = '#3a3a3a';
+                lastClickedButton.style.background = '';
                 cbClickHotButton();
             }
             // Wenn Hot, Fresh oder Trending geklickt, dann soll dieser
@@ -344,22 +345,33 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
                 clickedButton.id.toLowerCase().includes('trending')) {
 
                 if (lastClickedMainIdeaListButton) {
-                    lastClickedMainIdeaListButton.style.background = '#3a3a3a';
+                    lastClickedMainIdeaListButton.style.background = '';
                 }
                 lastClickedMainIdeaListButton = clickedButton;
-                lastClickedButton.style.background = '#3a3a3a';
+                lastClickedButton.style.background = '';
                 currentClickedButton.style.background = '#4096ee';
             }
             // Wenn Kategorie-Button geklickt, dann diesen zusätzlich zu zuletzt
             // geklickten Hot-, Fresh-, Trending-Button markieren:
             else if (clickedButton.id.toLowerCase().includes('category')) {
-                lastClickedButton.style.background = '#3a3a3a';
+                lastClickedButton.style.background = '';
                 lastClickedMainIdeaListButton.style.background = '#4096ee';
                 currentClickedButton.style.background = '#4096ee';
             } else { // ansonsten Markierung vom letzten Button auflösen
-                lastClickedButton.style.background = '#3a3a3a';
-                lastClickedMainIdeaListButton.style.background = '#3a3a3a';
+                lastClickedButton.style.background = '';
+                lastClickedMainIdeaListButton.style.background = '';
             }
+        }
+
+        function resetHoverEffect(button) {
+            button.onmouseover = handleMouseOver;
+            button.onmouseout = handleMouseOut;
+        }
+        function handleMouseOver(mouseEvent) {
+            mouseEvent.target.style.backgroundColor = "#4096ee";
+        }
+        function handleMouseOut(mouseEvent) {
+            mouseEvent.target.style.backgroundColor = "#3a3a3a";
         }
         //endregion
 

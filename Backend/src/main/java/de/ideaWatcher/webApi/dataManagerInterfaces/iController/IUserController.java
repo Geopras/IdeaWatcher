@@ -77,6 +77,7 @@ public interface IUserController {
     /**
      * Aendert einen vorhandenen User
      * @param user {IUser} geaendertes User-Objekt
+     * @return UpdateResult Objekt
      * @throws Exception falls der User nicht existiert oder ein Problem beim
      * Zugriff auf die Datenbank auftrat
      */

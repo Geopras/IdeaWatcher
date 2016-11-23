@@ -9,12 +9,17 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
+
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.UpdateResult;
+
+import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.mongodb.client.model.Filters.eq;
 
 /**
  * Service fuer Zugriff auf Datenbank
@@ -91,8 +96,9 @@ public class IdeaService {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
-        Document foundDoc = dbConnectionService.getCollection().find(eq("_id", ideaId)).first(); 
+        Document foundDoc = dbConnectionService.getCollection().find(eq("_id", new ObjectId (ideaId))).first();
         
+        dbConnectionService.closeConnection();
         return buildIdea(foundDoc);
     }
     
@@ -180,13 +186,21 @@ public class IdeaService {
     
     public UpdateResult updateIdea(IIdea idea){
         Document newDoc = new Document();
-        newDoc = buildIdeaDocument(idea);     
-        UpdateResult ur = dbConnectionService.getCollection().replaceOne(Filters.eq("_id", newDoc.get("_id")), newDoc);
+        newDoc = buildIdeaDocument(idea);
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        }
+        UpdateResult ur = dbConnectionService.getCollection().replaceOne(Filters.eq("_id", new ObjectId (idea.getIdeaId())), newDoc);
+        dbConnectionService.closeConnection();
         return ur;
     }
     
-    public void deleteUser(String ideaId){
-        dbConnectionService.getCollection().findOneAndDelete(Filters.eq("_id", ideaId));
+    public void deleteIdea(String ideaId) throws Exception{
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        }
+        dbConnectionService.getCollection().findOneAndDelete(Filters.eq("_id", new ObjectId (ideaId)));
+        dbConnectionService.closeConnection();
     }
 
     public ICreator userToCreator(IUser user){

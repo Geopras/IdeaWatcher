@@ -1,5 +1,6 @@
 package main.java.de.ideaWatcher.dataManager;
 
+import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.dataManager.services.IdeaService;
 import main.java.de.ideaWatcher.dataManager.services.UserDataGenerator;
@@ -10,6 +11,11 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.UpdateResult;
 
 public class TestLauncher {
@@ -47,27 +53,57 @@ public class TestLauncher {
         return user;
         
     }
-    public static void updateUser(IUser user){
-        UserService us = new UserService("usersCollection");
-        UpdateResult ur = us.updateUser(user);
-        System.out.println(ur.getMatchedCount());
-        System.out.println(ur.getModifiedCount());
-        System.out.println(ur.getUpsertedId());
+    public static void updateUser(IUser user) throws Exception{
+       UserService us = new UserService("usersCollection");
+       UpdateResult ur = us.updateUser(user);
+       System.out.println("Datensätze gefunden: " + ur.getMatchedCount());
+       System.out.println("Datensätze modifiziert: " + ur.getModifiedCount());       
     }
+    public static void deleteUser(IUser user) throws Exception{
+        UserService us = new UserService("usersCollection");
+        us.deleteUser(user.getUserId());
+    }
+    
+    public static IIdea getIdea() throws Exception{
+        IdeaService is = new IdeaService("ideasCollection");
+        IIdea idea = new Idea();
+        idea = is.getIdea("58346be56f963f1770997289");
+        return idea;
+    }
+    
+    public static void updateIdea(IIdea idea) throws Exception{
+        IdeaService is = new IdeaService("ideasCollection");
+        UpdateResult ur = is.updateIdea(idea);
+        System.out.println("Datensätze gefunden: " + ur.getMatchedCount());
+        System.out.println("Datensätze modifiziert: " + ur.getModifiedCount());       
+     }
+     public static void deleteIdea (IIdea idea) throws Exception{
+         IdeaService is = new IdeaService("ideasCollection");
+         is.deleteIdea(idea.getIdeaId());
+     }
+
 
     public static void main(String[] args) throws Exception {
+/*
+ *  in den statischen Methode getIdea() und getUser() müssen gültige ObjektId 
+ *  angegeben werden für das Testen 
+ * 
 
-       //createTestData();
-       //getData();
-
-        //System.out.println("Ausgabe: "+ getUser().getUserName());
         IUser user = new User();
         user = getUser();
-        user.setFirstname("Heinz Rudolf Blödian");
-        
-        System.out.println(user.getFirstname());
-        System.out.println(user.getUserId());
+        user.setFirstname("Heinz Rudolf Blödian3");
+        user.setPictureURL("Link");
         updateUser(user);
+        deleteUser(getUser());
+        createTestData();
+        getData();
+        IIdea idea = new Idea();
+        idea = getIdea();
+        idea.setLanguage("english");
+        updateIdea(idea);
+        deleteIdea(idea);
         
+ */
+
     }
 }

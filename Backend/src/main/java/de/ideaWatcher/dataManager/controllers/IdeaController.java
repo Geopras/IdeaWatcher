@@ -34,7 +34,7 @@ public class IdeaController implements IIdeaController {
 
     @Override
     public void deleteIdea(String ideaId) throws Exception {
-        this.ideaService.deleteUser(ideaId);
+        this.ideaService.deleteIdea(ideaId);
     }
 
     @Override
