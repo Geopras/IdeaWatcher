@@ -328,40 +328,27 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 ratings.appendChild(followers);
                 ratings.appendChild(comments);
 
-                if (isMyIdeas || isMyFollowedIdeas) {
+                if (isMyIdeas) {
 
                     var userButtons = document.createElement('li');
 
-                    if (isMyIdeas) {
+                    var editButtonImage = document.createElement('img');
+                    editButtonImage.classList.add('ideaList_user_button');
+                    editButtonImage.src = './resources/img/editButton2.svg';
+                    editButtonImage.width = 20;
+                    editButtonImage.height = 20;
+                    editButtonImage.addEventListener('click', handleEditButton);
 
-                        var editButtonImage = document.createElement('img');
-                        editButtonImage.classList.add('ideaList_user_button');
-                        editButtonImage.src = './resources/img/editButton2.svg';
-                        editButtonImage.width = 20;
-                        editButtonImage.height = 20;
-                        editButtonImage.addEventListener('click', handleEditButton);
+                    var deleteButtonImage = document.createElement('img');
+                    deleteButtonImage.classList.add('ideaList_user_button');
+                    deleteButtonImage.src = './resources/img/deleteButton1.svg';
+                    deleteButtonImage.width = 20;
+                    deleteButtonImage.height = 20;
+                    deleteButtonImage.addEventListener('click', handleDeleteButton);
 
-                        var deleteButtonImage = document.createElement('img');
-                        deleteButtonImage.classList.add('ideaList_user_button');
-                        deleteButtonImage.src = './resources/img/deleteButton1.svg';
-                        deleteButtonImage.width = 20;
-                        deleteButtonImage.height = 20;
-                        deleteButtonImage.addEventListener('click', handleDeleteButton);
+                    userButtons.appendChild(editButtonImage);
+                    userButtons.appendChild(deleteButtonImage);
 
-                        userButtons.appendChild(editButtonImage);
-                        userButtons.appendChild(deleteButtonImage);
-                    }
-                    else if (isMyFollowedIdeas) {
-
-                        var followButtonImage = document.createElement('img');
-                        followButtonImage.classList.add('ideaList_user_button');
-                        followButtonImage.src = './resources/img/star_bright.svg';
-                        followButtonImage.width = 20;
-                        followButtonImage.height = 20;
-                        followButtonImage.addEventListener('click', handleFollowButton);
-
-                        userButtons.appendChild(followButtonImage);
-                    }
                     userButtons.setAttribute('data-ideaid', idea.ideaId);
                     ratings.appendChild(userButtons);
                 }

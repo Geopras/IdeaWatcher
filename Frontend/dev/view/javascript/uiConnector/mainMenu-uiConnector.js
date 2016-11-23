@@ -336,7 +336,6 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
             // Wenn HomeButton geklickt, dann Hot-Button klicken
             if (clickedButton.id === 'mainMenu_homeButton_img') {
                 lastClickedButton.style.background = '';
-                // resetHoverEffect(lastClickedButton);
                 cbClickHotButton();
             }
             // Wenn Hot, Fresh oder Trending geklickt, dann soll dieser
@@ -350,7 +349,6 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
                 }
                 lastClickedMainIdeaListButton = clickedButton;
                 lastClickedButton.style.background = '';
-                // resetHoverEffect(lastClickedButton);
                 currentClickedButton.style.background = '#4096ee';
             }
             // Wenn Kategorie-Button geklickt, dann diesen zusätzlich zu zuletzt
@@ -362,8 +360,6 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
             } else { // ansonsten Markierung vom letzten Button auflösen
                 lastClickedButton.style.background = '';
                 lastClickedMainIdeaListButton.style.background = '';
-                // resetHoverEffect(lastClickedButton);
-                // resetHoverEffect(lastClickedMainIdeaListButton);
             }
         }
 
