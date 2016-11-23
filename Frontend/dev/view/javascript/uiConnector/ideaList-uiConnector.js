@@ -499,8 +499,10 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             if (document.body.scrollTop > document.body.scrollHeight -
                 window.innerHeight * 1.1) {
 
-                if (ideaWatcher.core.Navigator.getCurrentView() ===
-                    ideaWatcher.model.Navigation.ViewId.IDEALIST) {
+                var currentView = ideaWatcher.core.Navigator.getCurrentView();
+                if (currentView === ideaWatcher.model.Navigation.ViewId.HOT.NONE ||
+                    currentView === ideaWatcher.model.Navigation.ViewId.MYIDEAS.NONE ||
+                    currentView === ideaWatcher.model.Navigation.ViewId.MYFOLLOWEDIDEAS.NONE) {
                     showNextIdeas();
                 }
             }
