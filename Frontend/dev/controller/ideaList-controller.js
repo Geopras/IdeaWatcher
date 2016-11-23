@@ -11,7 +11,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         var cbGetIdeasResp = null;
 
         var evSwitchViewToIdeaList = {
-            topic: 'switchView/' + ideaWatcher.model.Navigation.ViewId.IDEALIST,
+            topic: 'switchView/' + ideaWatcher.model.Navigation.ViewId.HOT.NONE,
             cbFunction: cbSwitchView
         };
 
@@ -32,7 +32,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         };
 
         var evLocalizeView = {
-            topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.IDEALIST,
+            topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.HOT.NONE,
             cbFunction: cbLocalizeView
         };
 
