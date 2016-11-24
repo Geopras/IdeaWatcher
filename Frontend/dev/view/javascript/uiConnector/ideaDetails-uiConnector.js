@@ -12,6 +12,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			var htmlFollowerSpan = null;
 			var htmlCommentsSpan = null;
 			var htmlSubmitButton = null;
+			var htmlEditButton = null;
 			var htmlOldCommentsSection = null;
 
 			var currentIdea = null;
@@ -51,6 +52,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						.querySelector('#ideaDetails_follower_img');
 				htmlCommentTextInput = document
 						.querySelector('#ideaDetails_comment_input');
+				htmlEditButton = document.querySelector('#ideaDetails_editIdea_button');
 
 				// endregion
 
@@ -70,7 +72,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						var exObj = {
 							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
-							text : htmlCommentTextInput.textContent
+							text : htmlCommentTextInput.value
 						};
 						console
 								.log('Kommentar wird im UIConnector abgeschickt.')
@@ -88,6 +90,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				// eventlisteners hinzufügen
 				htmlLikeImg.addEventListener('click', changeLikeStatus);
 				htmlFollowerImg.addEventListener('click', changeFollowerStatus);
+				htmlEditButton.addEventListener('click', navigateToEditView);
 
 			}
 			// endregion
@@ -106,7 +109,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					// ideaDetailsObject.description = exObj.data.description;
 					// ideaDetailsObject.
 
-					renderView(exObj.data)
+					//flag für isOwnIdea erstmal manuell mitgeben
+					renderView(exObj.data, true)
 				} else {
 					var errorMessage = exObj.error;
 
@@ -154,6 +158,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				var htmlContactLink = document
 						.querySelector('#ideaDetails_contact_a');
 				htmlContactLink.textContent = ideaWatcher.core.Localizer.ideaDetails[language].contact;
+				htmlEditButton = document.querySelector('#ideaDetails_editIdea_button');
+				htmlEditButton.textContent = ideaWatcher.core.Localizer.ideaDetails[language].edit;
 
 			}
 			// endregion
@@ -168,7 +174,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 				if (response.result == 'success') {
 
-					renderView(response.data)
+					renderView(response.data.idea)
 				} else {
 					var errorMessage = response.error;
 
@@ -231,7 +237,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					var currentUserId = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
 
-					if (htmlLikeImg.src == './resources/img/bulb_on.png') {
+					if (htmlLikeImg.src == 'http://localhost/dist/private/resources/img/bulb_on.png') {
 						htmlLikeImg.src = './resources/img/bulb_off.png';
 						var exObj = {
 							userId : currentUserId,
@@ -260,7 +266,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					var currentUserId = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
 
-					if (htmlFollowerImg.src == '/resources/img/favorite_on.png') {
+					if (htmlFollowerImg.src == 'http://localhost/dist/private/resources/img/favorite_on.png') {
 						htmlFollowerImg.src = './resources/img/favorite_off.png';
 						var exObj = {
 							userId : currentUserId,
@@ -285,8 +291,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			}
 
-
-			function renderView(crtIdea) {
+			function navigateToEditView() {
+				console.log('Jetzt müsste sich die vorausgefüllte CreateIdeaView öffnen.');
+			}
+			
+			function renderView(crtIdea, isOwnIdea) {
 
 				console.log('Starte erstellen der Detailansicht...');
 				console.log(currentIdea);
@@ -340,6 +349,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				} else {
 					htmlContactLink.style.display = 'none';
 				}
+				
+				if (isOwnIdea) {
+					htmlEditButton.style.display = 'inline';	
+				}
+				
 				// set userPicture in new Comment section
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUserId = ideaWatcher.controller.UserSession
@@ -365,6 +379,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 				if (comments) {
 
+					comments.reverse();
 					comments.forEach(function(comment) {
 
 						// div ideaDetails_CommentNameAndText_div
