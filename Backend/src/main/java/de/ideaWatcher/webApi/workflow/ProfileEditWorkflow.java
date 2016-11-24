@@ -24,11 +24,15 @@ public class ProfileEditWorkflow implements IWorkflow {
 
     public IResponse getResponse(IRequest request) {
 
-        // Die UserID der Anfrage zur Abfrage der Datenbank:
+        // die ID des Users, der die Anfrage gestellt hat
+        // => ein User kann also nur sein eigenes Profil speichern
         String userId = request.getUserId();
 
         // Workflow-Antwort instanziieren
         IResponse response = new Response();
+
+        // das User-Objekt mit den alten Werten aus der Datenbank
+        IUser oldUser;
 
         //region die zum Speichern übermittelten Daten extrahieren
         String requestUsername;
@@ -38,7 +42,6 @@ public class ProfileEditWorkflow implements IWorkflow {
         String requestGender;
         String requestLanguage;
         boolean requestIsMailPublic;
-        String requestPictureUrl;
 
         try {
             JSONObject profileData = request.getData();
@@ -49,7 +52,8 @@ public class ProfileEditWorkflow implements IWorkflow {
             requestGender = profileData.getString("gender");
             requestLanguage = profileData.getString("language");
             requestIsMailPublic = profileData.getBoolean("isMailPublic");
-            requestPictureUrl = profileData.getString("pictureUrl");
+            // Das Profilbild wird noch nicht aktualsiert
+            //requestPictureUrl = profileData.getString("pictureURL");
         } catch (Exception ex) {
             response.setErrorMessage("SProfile_saveRequestData_error");
             response.setResult("error");
@@ -62,9 +66,9 @@ public class ProfileEditWorkflow implements IWorkflow {
         //endregion
 
         //region Den zur Request-UserID zugehoerigen User in DB abfragen
-        IUser foundUser;
+
         try {
-            foundUser = this.userController.getUser(userId);
+            oldUser = this.userController.getUser(userId);
         } catch (Exception ex) {
             response.setErrorMessage("SProfile_getUser_error");
             response.setResult("error");
@@ -77,7 +81,7 @@ public class ProfileEditWorkflow implements IWorkflow {
 
         // Muss nicht geprüft werden, da der Username nicht geändert werden kann
         //region Prüfen, ob sich Benutzername geändert hat
-        if (!requestUsername.equals(foundUser.getUserName())){
+        if (!requestUsername.equals(oldUser.getUserName())){
             // Prüfe, ob der neue UserName noch verfügbar ist
             boolean existsUser;
             try {
@@ -101,7 +105,7 @@ public class ProfileEditWorkflow implements IWorkflow {
 
         // Muss nicht geprüft werden, da die Email nicht geändert werden kann
         //region Prüfen, ob sich Email-Adresse geändert hat
-        if (!requestEmail.equals(foundUser.getEmail())){
+        if (!requestEmail.equals(oldUser.getEmail())){
             // Prüfe, ob die neue Email-Adresse noch verfügbar ist
             boolean existsMail;
             try {
@@ -127,17 +131,15 @@ public class ProfileEditWorkflow implements IWorkflow {
         // Speichere Daten
 
         try {
-            IUser user = new User();
-            user.setUserName(requestUsername);
-            user.setEmail(requestEmail);
-            user.setSurname(requestSurname);
-            user.setFirstname(requestFirstName);
-            user.setGender(requestGender);
-            user.setLanguage(requestLanguage);
-            user.setIsMailPublic(requestIsMailPublic);
-            user.setPictureURL(requestPictureUrl);
+            oldUser.setUserName(requestUsername);
+            oldUser.setEmail(requestEmail);
+            oldUser.setSurname(requestSurname);
+            oldUser.setFirstname(requestFirstName);
+            oldUser.setGender(requestGender);
+            oldUser.setLanguage(requestLanguage);
+            oldUser.setIsMailPublic(requestIsMailPublic);
 
-            this.userController.updateUser(user);
+            this.userController.updateUser(oldUser);
 
             response.setResult("success");
             return response;

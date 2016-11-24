@@ -58,6 +58,11 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         var htmlAlertWarningDiv = null;
         var htmlAlertErrorDiv = null;
 
+        var htmlMaleOption = null;
+        var htmlFemaleOption = null;
+        var htmlGermanOption = null;
+        var htmlEnglishOption = null;
+
         var htmlSubmitButton = null;
         var htmlBrowseImageButton = null;
         //endregion
@@ -90,6 +95,10 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             htmlAlertInfoDiv = document.getElementById("profileEdit_alertInfo_div");
             htmlAlertWarningDiv = document.getElementById("profileEdit_alertWarning_div");
             htmlAlertErrorDiv = document.getElementById("profileEdit_alertError_div");
+            htmlMaleOption = document.getElementById("profileEdit_gender_male");
+            htmlFemaleOption = document.getElementById("profileEdit_gender_female");
+            htmlGermanOption = document.getElementById("profileEdit_language_de");
+            htmlEnglishOption = document.getElementById("profileEdit_language_en");
             htmlSubmitButton = document.getElementById("profileEdit_submit_button");
             htmlBrowseImageButton = document.getElementById("profileEdit_browseImage_button");
             //endregion
@@ -107,7 +116,8 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
                 // prevent page reload
                 event.preventDefault();
 
-                var exObj = ideaWatcher.model.User;
+                var exObj = Object.create(ideaWatcher.model.User);
+                exObj.userId = ideaWatcher.controller.UserSession.getCurrentUserId();
                 exObj.username = htmlUserNameInput.value;
                 exObj.email = htmlEmailInput.value;
                 exObj.isMailPublic = htmlEmailCheckInput.checked;
@@ -115,8 +125,6 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
                 exObj.firstName = htmlFirstNameInput.value;
                 exObj.gender = htmlGenderSelect.value;
                 exObj.language = htmlLanguageSelect.value;
-
-                //TODO (NiceTOHave): Validierung von Username und Mail bei LostFocus vom Input oder so
 
                 ideaWatcher.controller.ProfileEdit.tryToSaveUserData(exObj);
             };
@@ -135,14 +143,24 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
 
             if (exObj.result == 'success'){
                 ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.model.GlobalNotificationType.SUCCESS,
                     ideaWatcher.core.Localizer.ProfileEdit[language].profile,
                     ideaWatcher.core.Localizer.ProfileEdit[language].saveSuccess,
                     5000);
-            } else {
-
+            }else {
                 var errorMessage = exObj.error;
 
-                ideaWatcher.controller.GlobalNotification.showNotification(
+                var notificationType = ideaWatcher.model.GlobalNotificationType.ERROR;
+                if (exObj.result == "warning") {
+                    notificationType = ideaWatcher.model.GlobalNotificationType.WARNING;
+                }
+                if (exObj.result == "info") {
+                    notificationType = ideaWatcher.model.GlobalNotificationType.INFO;
+                }
+
+                ideaWatcher.controller.GlobalNotification
+                    .showNotification(
+                        notificationType,
                     ideaWatcher.core.Localizer.ProfileEdit[language].profile,
                     ideaWatcher.core.Localizer.ProfileEdit[language].errorMessage[errorMessage],
                     5000);
@@ -165,10 +183,20 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             } else {
                 var errorMessage = exObj.error;
 
-                ideaWatcher.controller.GlobalNotification.showNotification(
-                    ideaWatcher.core.Localizer.ProfileEdit[language].profile,
-                    ideaWatcher.core.Localizer.ProfileEdit[language].errorMessage[errorMessage],
-                    5000);
+                var notificationType = ideaWatcher.model.GlobalNotificationType.ERROR;
+                if (exObj.result == "warning") {
+                    notificationType = ideaWatcher.model.GlobalNotificationType.WARNING;
+                }
+                if (exObj.result == "info") {
+                    notificationType = ideaWatcher.model.GlobalNotificationType.INFO;
+                }
+
+                ideaWatcher.controller.GlobalNotification
+                    .showNotification(
+                        notificationType,
+                        ideaWatcher.core.Localizer.ProfileEdit[language].profile,
+                        ideaWatcher.core.Localizer.ProfileEdit[language].errorMessage[errorMessage],
+                        5000);
             }
         }
         //endregion
@@ -178,9 +206,8 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         {
             if(obj.shouldShow)
             {
-                //TODO: Hier würde man jetzt den aktuell angemeldeten Benutzer übergeben
                 var currentUser = {
-                    userName: 'HansWurst2000'
+                    userId: ideaWatcher.controller.UserSession.getCurrentUserId()
                 };
                 ideaWatcher.controller.ProfileEdit.tryToLoadUserData(currentUser);
 
@@ -188,21 +215,6 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
                 htmlProfileView.style.display = 'block';
                 htmlView.style.display = 'block';
 
-                // //TODO: Hier wird nur Testweise ein BeispielUser erzeugt und angezeigt
-                // var testUser = ideaWatcher.model.User;
-                // testUser.username = "HansWurst2000";
-                // testUser.email = "hans.wurst@gmx.de";
-                // testUser.isMailPublic = true;
-                // testUser.surname = "Wurst";
-                // testUser.firstName = "Hans";
-                // testUser.gender = "Male";
-                // testUser.language = "";
-                //
-                // var evTest = {
-                //     topic: 'SProfileEdit/loadUserDataResponse',
-                //     exObject: testUser
-                // };
-                // ideaWatcher.core.MessageBroker.publish(evTest);
             }
             else
             {
@@ -235,6 +247,15 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
                 ideaWatcher.core.Localizer.ProfileEdit[language].gender;
             htmlLanguageLabel.textContent =
                 ideaWatcher.core.Localizer.ProfileEdit[language].language;
+            htmlFemaleOption.textContent =
+                ideaWatcher.core.Localizer.ProfileEdit[language].female;
+            htmlMaleOption.textContent =
+                ideaWatcher.core.Localizer.ProfileEdit[language].male;
+            htmlGermanOption.textContent =
+                ideaWatcher.core.Localizer.ProfileEdit[language].de_DE;
+            htmlEnglishOption.textContent =
+                ideaWatcher.core.Localizer.ProfileEdit[language].en_GB;
+
             htmlSubmitButton.setAttribute("value", ideaWatcher.core.Localizer
                     .ProfileEdit[language].submit);
             htmlBrowseImageButton.setAttribute("value", ideaWatcher.core.Localizer
