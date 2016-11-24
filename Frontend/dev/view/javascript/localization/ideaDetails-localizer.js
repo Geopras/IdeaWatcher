@@ -6,6 +6,7 @@ ideaWatcher.core.Localizer.ideaDetails = ideaWatcher.core.Localizer.ideaDetails 
 
 		en_GB: {
 			contact: 'Contact idea provider',
+			edit: 'Edit',
 			ideaDetails: 'idea details',
 			submit: 'Comment',
 			writeComment: 'Write comment',
@@ -28,6 +29,7 @@ ideaWatcher.core.Localizer.ideaDetails = ideaWatcher.core.Localizer.ideaDetails 
 		},
 		de_DE: {
 			contact: 'Ideengeber kontaktieren',
+			edit: 'Bearbeiten',
 			ideaDetails: 'Ideen-Details',
 			submit: 'Kommentieren',
 			writeComment: 'Schreib einen Kommentar',

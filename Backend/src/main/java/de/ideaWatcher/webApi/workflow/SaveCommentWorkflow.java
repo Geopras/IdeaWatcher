@@ -22,11 +22,14 @@ public class SaveCommentWorkflow implements IWorkflow {
     private static final Logger log = Logger
             .getLogger(ProfileEditWorkflow.class.getName());
     private IIdeaController ideaController;
+    private IUserController userController;
 
     public SaveCommentWorkflow() {
 
         this.ideaController = InstanceManager.getDataManager()
                 .getIdeaController();
+        this.userController = InstanceManager.getDataManager()
+                .getUserController();
     }
 
     public IResponse getResponse(IRequest request) {
@@ -39,6 +42,7 @@ public class SaveCommentWorkflow implements IWorkflow {
         String commentText;
 
         IIdea currentIdea;
+        IUser currentUser;
         IComment currentComment;
 
         try {
@@ -58,6 +62,7 @@ public class SaveCommentWorkflow implements IWorkflow {
         // Objekte aus db holen
         try {
             currentIdea = ideaController.getIdea(ideaId);
+            
         } catch (Exception ex) {
             response.setErrorMessage(
                     "SIdeaDetails_saveCommentGetDBObjects_error");
@@ -67,9 +72,24 @@ public class SaveCommentWorkflow implements IWorkflow {
                             + "\nFehlermeldung: " + ex.getMessage());
             return response;
         }
+        
+        try {
+            currentUser = userController.getUser(userId);
+            
+        } catch (Exception ex) {
+            response.setErrorMessage(
+                    "SIdeaDetails_saveCommentGetDBObjects_error");
+            response.setResult("error");
+            log.log(Level.SEVERE,
+                    "Beim Abrufen des Userobjekts aus der DB ist ein Fehler aufgetreten!"
+                            + "\nFehlermeldung: " + ex.getMessage());
+            return response;
+        }
+        
 
         currentComment = new Comment();
         currentComment.setUserId(userId);
+        currentComment.setUserName(currentUser.getUserName());
         currentComment.setText(commentText);
 
         currentIdea.getComments().add(currentComment);
