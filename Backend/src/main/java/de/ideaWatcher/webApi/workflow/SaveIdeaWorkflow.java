@@ -33,6 +33,7 @@ public class SaveIdeaWorkflow implements IWorkflow{
 		 // Workflow-Antwort instanziieren
         IResponse response = new Response();
         
+        String userId = request.getUserId();
         String ideaStatus;
         String ideaName;
         String description;
@@ -63,7 +64,7 @@ public class SaveIdeaWorkflow implements IWorkflow{
         //create Idea in Backend
         try {
 
-        	ideaController.addNewIdea(newIdea, "123456");
+        	ideaController.addNewIdea(newIdea, userId);
 
             response.setResult("success");
 //            respData.put("idea", JSONBuilder.getIdeaDetailsJSONObject(currentIdea));
