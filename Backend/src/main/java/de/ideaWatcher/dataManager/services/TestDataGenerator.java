@@ -224,6 +224,7 @@ public class TestDataGenerator {
                     }
                 }
             }
+            newIdea.setLikeUsers(likeUsers);
 
             // Erzeuge zufällige followers (maximal halb so viele, wie in der User-Liste)
             int numberFollowers = r.nextInt(userList.size() / 2);
@@ -246,8 +247,8 @@ public class TestDataGenerator {
                         followUserAdded = true;
                     }
                 }
-                // TODO: hier muss noch jeder User aktualisiert werden
             }
+            newIdea.setFollowerUsers(followUsers);
 
             // Erzeuge zufällige Comments
             int numberComments = r.nextInt(11);
