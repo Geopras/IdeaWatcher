@@ -14,6 +14,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			var htmlSubmitButton = null;
 			var htmlEditButton = null;
 			var htmlOldCommentsSection = null;
+			var isLiked = null;
+			var isFollowed = null;
 
 			var currentIdea = null;
 
@@ -250,8 +252,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					var currentUserId = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
 
-					if (htmlLikeImg.src == 'http://localhost/dist/private/resources/img/bulb_on.png') {
+					if (isLiked) {
 						htmlLikeImg.src = './resources/img/bulb_off.png';
+						isLiked = false;
 						var exObj = {
 							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
@@ -259,6 +262,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						};
 					} else {
 						htmlLikeImg.src = './resources/img/bulb_on.png';
+						isLiked = true;
 						var exObj = {
 							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
@@ -279,8 +283,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					var currentUserId = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
 
-					if (htmlFollowerImg.src == 'http://localhost/dist/private/resources/img/favorite_on.png') {
+					if (isFollowed) {
 						htmlFollowerImg.src = './resources/img/favorite_off.png';
+						isFollowed = false;
 						var exObj = {
 							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
@@ -288,6 +293,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						};
 					} else {
 						htmlFollowerImg.src = './resources/img/favorite_on.png';
+						isFollowed = true;
 						var exObj = {
 							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
@@ -430,11 +436,21 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						htmlCommentNameAndTextDiv
 								.appendChild(htmlCommentTextDiv);
 
-						// append img und div zu div
+						//deleteButton
+						var htmlDeleteButtonSpan = document.createElement('span');
+						htmlDeleteButtonSpan.id = ('ideaDetails_deleteButton_span');
+						
+						var htmlCommentDeleteButton = document.createElement('img');
+						htmlCommentDeleteButton.id = ('ideaDetails_deleteButton_img');
+						
+						htmlDeleteButtonSpan.appendChild(htmlCommentDeleteButton);
+						
+						// append img, div und deleteButton zu div
 						htmlOneCommentDiv.appendChild(htmlCommentImage);
 						htmlOneCommentDiv
 								.appendChild(htmlCommentNameAndTextDiv);
-
+						htmlOneCommentDiv.appendChild(htmlDeleteButtonSpan);
+						
 						// append div zu oldOldComments
 						htmlOldCommentsSection.appendChild(htmlOneCommentDiv);
 					});
@@ -456,8 +472,10 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					// leuchtende Glühbirne, ansonsten die nicht leuchtende
 					if (ideaObject.likeUsers.includes(currentUser)) {
 						htmlLikeImg.src = './resources/img/bulb_on.png';
+						isLiked = true;
 					} else {
 						htmlLikeImg.src = './resources/img/bulb_off.png';
+						isLiked = false;
 					}
 				} else {
 
@@ -475,8 +493,10 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					// Stern angezeigt werden, ansonsten der nicht leuchtende
 					if (ideaObject.followers.includes(currentUser)) {
 						htmlFollowerImg.src = './resources/img/favorite_on.png';
+						isFollowed = true;
 					} else {
 						htmlFollowerImg.src = './resources/img/favorite_off.png';
+						isFollowed = false;
 					}
 				} else {
 
