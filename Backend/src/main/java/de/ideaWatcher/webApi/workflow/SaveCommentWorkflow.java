@@ -3,6 +3,7 @@ package main.java.de.ideaWatcher.webApi.workflow;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import main.java.de.ideaWatcher.webApi.core.JSONBuilder;
 import org.json.JSONObject;
 
 import main.java.de.ideaWatcher.dataManager.pojos.Comment;
@@ -79,7 +80,7 @@ public class SaveCommentWorkflow implements IWorkflow {
             ideaController.updateIdea(currentIdea);
 
             response.setResult("success");
-            respData.put("idea", currentIdea);
+            respData.put("idea", JSONBuilder.getIdeaDetailsJSONObject(currentIdea));
             response.setData(respData);
             return response;
 
