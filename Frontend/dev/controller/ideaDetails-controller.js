@@ -38,6 +38,11 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
                 cbFunction: cbSaveCommentResponse
             };
 
+        var evLikeFollowResponse = {
+				topic : 'SIdeaDetails/LikeFollowIdeaRequest-response',
+				cbFunction : cbLikeFollowResponse
+			};
+        
         //endregion
 
         //region subscribe to events
@@ -46,6 +51,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         ideaWatcher.core.MessageBroker.subscribe(evGetIdeasResponse);
         ideaWatcher.core.MessageBroker.subscribe(evGetSaveCommentResponse);
+        ideaWatcher.core.MessageBroker.subscribe(evLikeFollowResponse);
         //endregion
 
         function cbInitializeView(obj) {
@@ -62,6 +68,10 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         
         function cbSaveCommentResponse(obj) {
         	cbSaveCommentResp(obj);
+        }
+        
+        function cbLikeFollowResponse(obj) {
+        	cbLikeFollowResp(obj);
         }
 
         //region Callback: Internal - SwitchView
@@ -97,6 +107,10 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         
         function pubRegisterSaveCommentResponse(cb) {
             cbSaveCommentResp = cb;
+        }
+        
+        function pubRegisterLikeFollowResponse(cb) {
+            cbLikeFollowResp = cb;
         }
 
         function pubTryToLoadIdeaData(exObject)
@@ -216,6 +230,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             registerGetIdeaResponse: pubRegisterGetIdeaResponse,
             registerSaveCommentResponse: pubRegisterSaveCommentResponse,
             registerShowView: pubRegisterShowView,
+            registerLikeFollowResponse: pubRegisterLikeFollowResponse,
             tryToComment: pubTryToComment,
             tryToChangeLikeFollow: pubTryToChangeLikeFollow,
             tryToGetIdea: pubTryToGetIdea,

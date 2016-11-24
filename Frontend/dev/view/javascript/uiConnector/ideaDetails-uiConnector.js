@@ -16,10 +16,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			var currentIdea = null;
 
-			var evLikeFollowResponse = {
-				topic : 'SIdeaDetails/LikeFollowIdeaRequest-response',
-				cbFunction : cbLikeFollowResponse
-			};
+			
 
 			var evUserDataReceived = {
 				topic : 'SIdea/getIdeaDetailsRequest-response',
@@ -36,11 +33,10 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					.registerGetIdeaResponse(cbGetIdeaResponse);
 			ideaWatcher.controller.IdeaDetails
 					.registerSaveCommentResponse(cbSaveCommentResponse);
-
+			ideaWatcher.controller.IdeaDetails.registerLikeFollowResponse(cbLikeFollowResponse);
 			// endregion
 
 			// region subscribe to events
-			ideaWatcher.core.MessageBroker.subscribe(evLikeFollowResponse);
 			ideaWatcher.core.MessageBroker.subscribe(evUserDataReceived);
 			// endregion
 
@@ -192,6 +188,41 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 									5000);
 				}
 
+			}
+
+			function cbLikeFollowResponse(exObj) {
+
+				var language = ideaWatcher.core.Localizer.getLanguage();
+
+				if (exObj.result == 'success') {
+
+					switch (exObj.data.action) {
+					case 'like':
+						htmlLikesSpan.textContent = exObj.data.newNumber;
+						break;
+					case 'follow':
+						htmlFollowerSpan.textContent = exObj.data.newNumber;
+						break;
+					}
+					// TODO Glühbirne ändern und Like Follows hochzaehlen
+				} else {
+					var errorMessage = exObj.error;
+
+					var notificationType = ideaWatcher.model.GlobalNotificationType.ERROR;
+					if (exObj.result == "warning") {
+						notificationType = ideaWatcher.model.GlobalNotificationType.WARNING;
+					}
+					if (exObj.result == "info") {
+						notificationType = ideaWatcher.model.GlobalNotificationType.INFO;
+					}
+
+					ideaWatcher.controller.GlobalNotification
+							.showNotification(
+									notificationType,
+									ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
+									ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
+									5000);
+				}
 			}
 
 			function changeLikeStatus() {
@@ -424,41 +455,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			}
 
-			function cbLikeFollowResponse(exObj) {
-
-				var language = ideaWatcher.core.Localizer.getLanguage();
-
-				if (exObj.result == 'success') {
-
-					switch (exObj.data.action) {
-					case 'like':
-						htmlLikesSpan.textContent = exObj.data.newNumber;
-						break;
-					case 'follow':
-						htmlFollowerSpan.textContent = exObj.data.newNumber;
-						break;
-					}
-					// TODO Glühbirne ändern und Like Follows hochzaehlen
-				} else {
-					var errorMessage = exObj.error;
-
-					var notificationType = ideaWatcher.model.GlobalNotificationType.ERROR;
-					if (exObj.result == "warning") {
-						notificationType = ideaWatcher.model.GlobalNotificationType.WARNING;
-					}
-					if (exObj.result == "info") {
-						notificationType = ideaWatcher.model.GlobalNotificationType.INFO;
-					}
-
-					ideaWatcher.controller.GlobalNotification
-							.showNotification(
-									notificationType,
-									ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
-									ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
-									5000);
-				}
-			}
-
+			
 			return {
 
 			};
