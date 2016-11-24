@@ -379,6 +379,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 				if (comments) {
 
+					comments.reverse();
 					comments.forEach(function(comment) {
 
 						// div ideaDetails_CommentNameAndText_div
