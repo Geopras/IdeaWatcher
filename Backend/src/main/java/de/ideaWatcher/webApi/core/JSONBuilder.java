@@ -65,7 +65,7 @@ public class JSONBuilder {
     public static JSONObject getCreatorJSONObject(ICreator creator) {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("userID", creator.getUserId());
+        jsonObject.put("userId", creator.getUserId());
         jsonObject.put("userName", creator.getUserName());
         jsonObject.put("email", creator.getEmail());
         jsonObject.put("isMailPublic", creator.getIsMailPublic());
