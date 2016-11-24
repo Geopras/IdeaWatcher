@@ -124,7 +124,7 @@ public class UserService {
         user.setFirstname(userDoc.getString("firstName"));
         user.setGender(userDoc.getString("gender"));
         user.setLanguage(userDoc.getString("language"));
-        user.setPictureURL(userDoc.getString("pictureUrl"));
+        user.setPictureURL(userDoc.getString("pictureURL"));
         user.setNumberCreatedIdeas(userDoc.getLong("numberCreatedIdeas"));
         user.setNumberFollowedIdeas(userDoc.getLong("numberFollowedIdeas"));
         return user;
