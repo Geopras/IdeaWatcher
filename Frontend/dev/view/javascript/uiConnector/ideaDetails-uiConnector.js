@@ -52,7 +52,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						.querySelector('#ideaDetails_follower_img');
 				htmlCommentTextInput = document
 						.querySelector('#ideaDetails_comment_input');
-				htmlEditButton = document.querySelector('#ideaDetails_editIdea_button');
+				htmlEditButton = document.querySelector('#ideaDetails_edit_img');
 
 				// endregion
 
@@ -110,7 +110,22 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					// ideaDetailsObject.
 
 					//flag für isOwnIdea erstmal manuell mitgeben
-					renderView(exObj.data, true)
+					var idea = exObj.data;
+					var isOwnIdea = false;
+					
+					if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
+						var currentUserId = ideaWatcher.controller.UserSession
+								.getCurrentUserId();
+						
+						if (idea.creator.userId == currentUserId) {
+							isOwnIdea = true;
+						}
+					} else {
+						//kein User angemeldet
+					}
+					
+					renderView(idea, isOwnIdea);
+					
 				} else {
 					var errorMessage = exObj.error;
 
@@ -157,9 +172,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				htmlSubmitButton.value = ideaWatcher.core.Localizer.ideaDetails[language].submit;
 				var htmlContactLink = document
 						.querySelector('#ideaDetails_contact_a');
-				htmlContactLink.textContent = ideaWatcher.core.Localizer.ideaDetails[language].contact;
 				htmlEditButton = document.querySelector('#ideaDetails_editIdea_button');
-				htmlEditButton.textContent = ideaWatcher.core.Localizer.ideaDetails[language].edit;
 
 			}
 			// endregion
@@ -369,6 +382,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				} else {
 					console.log('Kein Nutzer angemeldet.');
 				}
+				
+				htmlCommentTextInput.value = '';
 
 				// list of old comments
 				htmlOldCommentsSection = document

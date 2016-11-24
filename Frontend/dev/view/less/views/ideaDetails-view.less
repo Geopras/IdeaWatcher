@@ -7,13 +7,13 @@
 }
 //the idea description
 #ideaDetails_description_div {
+	text-align: justify;
 	margin-bottom: 20px;
 }
 //the section that shows the rating of this idea
 #ideaDetails_iconList_section div {
 	line-height: 30px;
 	display: inline;
-
 }
 
 #ideaDetails_like_img {
@@ -49,24 +49,41 @@
 	height: 30px;
 	padding: 0px;
 	margin: 5px;
+	content:  url("./resources/img/comments_bright.svg");
+	background-size: 30px 30px;
 	vertical-align: middle;
 }
 
-#ideaDetails_contact_a:hover {
-	text-decoration: underline;
-	color: #1868d9;
+#ideaDetails_editAndContact_span {
+	float: right;
 }
-
-#ideaDetails_contact_a {
-	text-decoration: none;
-	cursor: pointer;
-    color: #4778d9;
-    margin-left: 10px;
-}
-
-#ideaDetails_editIdea_button {
+#ideaDetails_edit_img {
+	border: 0;
 	display: none;
+	width: 30px;
+	height: 30px;
+	padding: 0px;
+	margin: 5px;
+	content:  url("./resources/img/editButton2.svg");
+	background-size: 30px 30px;
+	vertical-align: middle;
 }
+
+#ideaDetails_edit_img:hover {
+	cursor: pointer;
+}
+
+#ideaDetails_contact_img {
+	width: 30px;
+	height: 30px;
+	padding: 0px;
+	margin: 5px;
+	background-image:  url("./resources/img/mail.svg");
+	background-size: 30px 30px;
+	vertical-align: middle;
+}
+
+
 //items for creating a new comment
 #ideaDetails_newComment_form {
 	
@@ -112,8 +129,4 @@
 
 .ideaDetails_CommentName_div {
 	font-weight: bold;
-}
-
-#ideaDetails_iconList_section button {
-background-color: #e7e7e7;
 }
