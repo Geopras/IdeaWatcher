@@ -127,7 +127,49 @@ public class UserService {
         user.setPictureURL(userDoc.getString("pictureURL"));
         user.setNumberCreatedIdeas(userDoc.getLong("numberCreatedIdeas"));
         user.setNumberFollowedIdeas(userDoc.getLong("numberFollowedIdeas"));
+
+        List<Document> createdIdeasDocList = (List<Document>) userDoc.get("createdIdeas");
+        List<IIdea> createdIdeasList = new ArrayList<IIdea>();
+        for (Document ideaDoc : createdIdeasDocList){
+            createdIdeasList.add(IdeaService.buildSmallIdea(ideaDoc));
+        }
+        user.setCreatedIdeas(createdIdeasList);
+
+        List<Document> followedIdeasDocList = (List<Document>) userDoc.get("followedIdeas");
+        List<IIdea> followedIdeasList = new ArrayList<IIdea>();
+        for (Document ideaDoc : followedIdeasDocList){
+            followedIdeasList.add(IdeaService.buildSmallIdea(ideaDoc));
+        }
+        user.setFollowedIdeas(followedIdeasList);
+
         return user;
+    }
+
+    private Document buildUserDocument(IUser user) {
+
+        List<Document> createdIdeasList = new ArrayList<Document>();
+        for (IIdea idea : user.getCreatedIdeas()){
+            createdIdeasList.add(IdeaService.buildSmallIdeaDocument(idea));
+        }
+
+        List<Document> followedIdeaList = new ArrayList<Document>();
+        for (IIdea idea : user.getFollowedIdeas()){
+            followedIdeaList.add(IdeaService.buildSmallIdeaDocument(idea));
+        }
+
+        return new Document("userName", user.getUserName() )
+                .append("password", user.getPassword())
+                .append("email", user.getEmail())
+                .append("isMailPublic", user.getIsMailPublic())
+                .append("surname", user.getSurname())
+                .append("firstName", user.getFirstname())
+                .append("gender", user.getGender())
+                .append("language", user.getLanguage())
+                .append("pictureURL", user.getPictureURL())
+                .append( "createdIdeas", createdIdeasList)
+                .append("numberCreatedIdeas", user.getNumberCreatedIdeas())
+                .append( "followedIdeas", followedIdeaList)
+                .append("numberFollowedIdeas", user.getNumberFollowedIdeas());
     }
 
     /**
@@ -236,33 +278,6 @@ public class UserService {
     public String hashPassword(String password) {
 
         return BCrypt.hashpw(password, BCrypt.gensalt());
-    }
-
-    private Document buildUserDocument(IUser user) {
-
-        List<Document> createdIdeasList = new ArrayList<Document>();
-        for (IIdea idea : user.getCreatedIdeas()){
-            createdIdeasList.add(IdeaService.buildSmallIdeaDocument(idea));
-        }
-
-        List<Document> followedIdeaList = new ArrayList<Document>();
-        for (IIdea idea : user.getFollowedIdeas()){
-            followedIdeaList.add(IdeaService.buildSmallIdeaDocument(idea));
-        }
-
-        return new Document("userName", user.getUserName() )
-                .append("password", user.getPassword())
-                .append("email", user.getEmail())
-                .append("isMailPublic", user.getIsMailPublic())
-                .append("surname", user.getSurname())
-                .append("firstName", user.getFirstname())
-                .append("gender", user.getGender())
-                .append("language", user.getLanguage())
-                .append("pictureURL", user.getPictureURL())
-                .append( "createdIdeas", createdIdeasList)
-                .append("numberCreatedIdeas", user.getNumberCreatedIdeas())
-                .append( "followedIdeas", followedIdeaList)
-                .append("numberFollowedIdeas", user.getNumberFollowedIdeas());
     }
 
     public boolean validatePassword(String plaintextPassword, String

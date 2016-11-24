@@ -41,7 +41,7 @@ public class IdeaService {
                 .append("pictureURL", creator.getPictureURL());
     }
     
-    private ICreator buildCreator(Document creatorDoc) {
+    public static ICreator buildCreator(Document creatorDoc) {
         ICreator creator = new Creator();
         creator.setUserId(creatorDoc.getString("userId"));
         creator.setUserName(creatorDoc.getString("userName"));
@@ -61,7 +61,7 @@ public class IdeaService {
                 .append("publishDate", comment.getPublishDate());
     }
 
-    private IComment buildComment(Document commentDoc) {
+    public static IComment buildComment(Document commentDoc) {
         IComment comment = new Comment();
         comment.setCommentId(commentDoc.getString("commentId"));
         comment.setUserId(commentDoc.getString("userId"));
@@ -118,7 +118,7 @@ public class IdeaService {
         return ideas;
     }
     
-    private IIdea buildIdea( Document ideaDoc){
+    public static IIdea buildIdea( Document ideaDoc){
         IIdea idea = new Idea();
         
         idea.setIdeaId(ideaDoc.getObjectId("_id").toString());
@@ -134,8 +134,16 @@ public class IdeaService {
         idea.setNumberLikes(ideaDoc.getLong("numberLikes"));
         idea.setFollowerUsers((List<String>) ideaDoc.get("followerUsers"));
         idea.setNumberFollowers(ideaDoc.getLong("numberFollowers"));
-        idea.setComments((List<IComment>) ideaDoc.get("comments"));
         idea.setNumberComments(ideaDoc.getLong("numberComments"));
+
+        idea.setComments((List<IComment>) ideaDoc.get("comments"));
+
+        List<Document> commentsDocList = (List<Document>) ideaDoc.get("comments");
+        List<IComment> commentsList = new ArrayList<IComment>();
+        for (Document commentDoc : commentsDocList){
+            commentsList.add(buildComment(commentDoc));
+        }
+        idea.setComments(commentsList);
 
         return idea;
     }
@@ -172,6 +180,25 @@ public class IdeaService {
                 .append("numberLikes", idea.getNumberLikes())
                 .append("numberFollowers", idea.getNumberFollowers())
                 .append("numberComments", idea.getNumberComments());
+    }
+
+    public static IIdea buildSmallIdea(Document ideaDoc){
+        IIdea idea = new Idea();
+
+        idea.setIdeaId(ideaDoc.getString("ideaId"));
+        idea.setName(ideaDoc.getString("name"));
+        idea.setDescription(ideaDoc.getString("description"));
+        idea.setCategory(ideaDoc.getString("catagory"));
+        idea.setCreator(  buildCreator( (Document) ideaDoc.get("creator") ) );
+        idea.setPublishDate(ideaDoc.getDate("publishedDate"));
+        idea.setLanguage(ideaDoc.getString("language"));
+        idea.setHotRank(ideaDoc.getDouble("hotRank"));
+        idea.setTrendingRank(ideaDoc.getDouble("trendingRank"));
+        idea.setNumberLikes(ideaDoc.getLong("numberLikes"));
+        idea.setNumberFollowers(ideaDoc.getLong("numberFollowers"));
+        idea.setNumberComments(ideaDoc.getLong("numberComments"));
+
+        return idea;
     }
 
     public void addIdea(IIdea idea, String userId) throws Exception {
