@@ -131,6 +131,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function () {
             } else {
                 console.log('Dass Passwort entspricht den Richtlinien.');
                 htmlPasswordRepeatInput.disabled = false;
+                htmlPasswordRepeatInput.focus();
                 htmlPasswordErrorLabel.style.display = 'none';
             }
 
