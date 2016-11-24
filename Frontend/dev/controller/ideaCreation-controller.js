@@ -4,9 +4,7 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
         var cbIni = null;
         var cbShowView = null;
         var cbLocalize = null;
-
         //endregion
-
 
         //region Event Globale Initialisierung
 
@@ -69,6 +67,7 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
             registerInitializeView: pubRegisterInitializeView,
             registerLocalizeView: pubRegisterLocalizeView,
             registerShowView: pubRegisterShowView
+            // tryToCreateNewIdea: pubTryToSignup
         };
 
     })();

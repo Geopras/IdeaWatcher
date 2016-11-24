@@ -16,7 +16,7 @@ ideaWatcher.core.Localizer.CreateIdea = ideaWatcher.core.Localizer.CreateIdea ||
             category6: 'Toys, Children & Pets',
             category7: 'Other',
             description: 'Description',
-            descriptionTextarea: 'Enter Description here',
+            descriptionTextarea: 'Enter your Description here',
             publish: 'Publish',
             cancel: 'Cancel',
             save: 'Save'

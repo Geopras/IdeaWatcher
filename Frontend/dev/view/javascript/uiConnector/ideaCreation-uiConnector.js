@@ -1,10 +1,5 @@
 ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
-        //region local vars
-
-        var htmlView = null;
-        var htmlProfileView = null;
-        var createIdea = null;
 
         //region subscribe to events
         ideaWatcher.controller.ideaCreation.registerInitializeView(cbIni);
@@ -12,10 +7,25 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
         ideaWatcher.controller.ideaCreation.registerLocalizeView(cbLocalizeView);
         //endregion
 
+        // //region local vars
+        // var evIni = {
+        //     topic: 'internal/ini',
+        //     cbFunction: cbIni
+        // };
+        //
+        // var evLocalizeView = {
+        //     topic: 'localizeView/ideaCreation',
+        //     cbFunction: localizeView
+        // };
+
+        var htmlIdeaCreationView = null;
+        var htmlIdeaCreationForm = null;
+
         //region lade zu internationalisierende HTML-Elemente
         var htmlViewHeadline = null;
-        var htmlName = null;
+        var htmlIdeaName = null;
         var htmlCategory = null;
+        var htmlCategorySelect = null;
         var htmlCategory1 = null;
         var htmlCategory2 = null;
         var htmlCategory3 = null;
@@ -31,16 +41,24 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
         var htmlIdeaNameInput = null;
         //endregion
 
+        // //region subscribe to events
+        // ideaWatcher.core.MessageBroker.subscribe(evIni);
+        // ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
+        // //endregion
+
         //region cbIni
         function cbIni()
         {
             console.log('Initialisiere UIConnector ideaCreation');
 
             //region assign html elements
-            htmlView = document.querySelector('.ideaCreation_view');
+            htmlIdeaCreationView = document.querySelector('.ideaCreation_view');
+            htmlIdeaCreationForm = document.querySelector('.ideaCreation_form');
             htmlViewHeadline = document.getElementById('ideaCreation_newIdea');
-            htmlName = document.getElementById('ideaCreation_name_label');
+            htmlIdeaName = document.getElementById('ideaCreation_name_label');
+            htmlIdeaNameInput = document.getElementById('ideaCreation_name_input');
             htmlCategory = document.getElementById('ideaCreation_category_label');
+            htmlCategorySelect = document.getElementById('ideaCreation_category_select');
             htmlCategory1 = document.getElementById('ideaCreation_category_1');
             htmlCategory2 = document.getElementById('ideaCreation_category_2');
             htmlCategory3 = document.getElementById('ideaCreation_category_3');
@@ -53,28 +71,122 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
             htmlPublishButton = document.getElementById('ideaCreation_publish_button');
             htmlCancelButton = document.getElementById('ideaCreation_cancel_button');
             htmlSaveButton = document.getElementById('ideaCreation_save_button');
-            htmlIdeaNameInput = document.getElementById('ideaCreation_name_input');
 
             //endregion
 
-            // lokalisiere die View anhand der global definierten Sprache
+            // region override onSubmit to prevent page reload
+            // htmlIdeaCreationForm.onsubmit = sendIdeaToController;
+            htmlPublishButton.addEventListener('click',  publishIdea);
+            htmlCancelButton.addEventListener('click', cancelIdea);
+            htmlSaveButton.addEventListener('click',  saveIdea);
+            // endregion
+
             cbLocalizeView();
 
         }
         //endregion
 
+        //region
+        function publishIdea()
+        {
+            event.preventDefault();
+
+            if(!checkValidForm()) return;
+
+            var exObj = {
+                ideaName: htmlIdeaNameInput.value,
+                ideaCategory: htmlCategorySelect.value,
+                ideaDescription: htmlDescriptionTextarea.value,
+                ideaStatus: 'publish'
+            };
+            console.log(exObj);
+
+            ideaWatcher.controller.ideaCreation.publishNewIdea(exObj);
+        }
+        //endregion
+
+        function saveIdea()
+        {
+            event.preventDefault();
+
+            if(!checkValidForm()) return;
+
+            var exObj = {
+                ideaName: htmlIdeaNameInput.value,
+                ideaCategory: htmlCategorySelect.value,
+                ideaDescription: htmlDescriptionTextarea.value,
+                ideaStatus: 'save'
+            };
+            console.log(exObj);
+
+            ideaWatcher.controller.ideaCreation.saveNewIdea(exObj);
+        }
+        //endregion
+
+        function cancelIdea() {
+
+            event.preventDefault();
+
+            var exObj = {
+                ideaName: '',
+                ideaCategory: '',
+                ideaDescription: '',
+                ideaStatus: 'cancel'
+            };
+            console.log(exObj);
+
+            ideaWatcher.controller.ideaCreation.cancelNewIdea();
+        }
+        //endregion
+
+        //region checkValidForm
+        function checkValidForm() {
+
+            var ideaName = htmlIdeaNameInput.value;
+            var ideaDescription = htmlDescriptionTextarea.value;
+            var isFormValid = true;
+            var htmlIdeaNameErrorLabel = document.querySelector('.ideaCreation_ideaNameError_label');
+            var htmlIdeaDescriptionErrorLabel = document.querySelector('.ideaCreation_ideaDescriptionError_label');
+            var errorMessage;
+
+            if (ideaName.length < 1) {
+                console.log('Ideen Name zu kurz');
+                errorMessage = ideaWatcher.core.Localizer.ideaCreation[language].ideaNameTooShort;
+                isFormValid = false;
+            } else if (ideaDescription < 1) {
+                console.log('Ideen Beschreibung zu kurz');
+                errorMessage = ideaWatcher.core.Localizer.ideaCreation[language].ideaDescriptionTooShort;
+                isFormValid = false;
+            } else {
+                console.log('Der Name und die Beschreibung der Idee entsprechen den Richtlinien.');
+                htmlIdeaNameErrorLabel.style.display = 'none';
+                htmlIdeaDescriptionErrorLabel.style.display = 'none';
+            }
+
+            if (!isFormValid) {
+                htmlIdeaNameErrorLabel.textContent = errorMessage;
+                htmlIdeaNameErrorLabel.style.display = 'inline';
+                htmlIdeaDescriptionErrorLabel.textContent = errorMessage;
+                htmlIdeaDescriptionErrorLabel.style.display = 'inline';
+            }
+
+            return isFormValid;
+        }
+        //endregion
+
+        //region showView
         function cbShowView(exObj) {
 
             if(exObj.shouldShow)
             {
                 renderView(exObj.additionalData.idea);
-                htmlView.style.display = 'block';
+                htmlIdeaCreationView.style.display = 'block';
             } else {
 
-                htmlView.style.display = 'none';
+                htmlIdeaCreationView.style.display = 'none';
             }
-
         }
+        //endregion
 
         function renderView(idea) {
 
@@ -105,7 +217,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
             htmlViewHeadline.textContent =
                 ideaWatcher.core.Localizer.CreateIdea[language].headline;
-            htmlName.textContent =
+            htmlIdeaName.textContent =
                 ideaWatcher.core.Localizer.CreateIdea[language].name;
             htmlCategory .textContent =
                 ideaWatcher.core.Localizer.CreateIdea[language].category;
