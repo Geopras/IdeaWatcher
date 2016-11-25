@@ -109,10 +109,27 @@ public class IdeaManager {
 
             long allIdeasCount = allIdeasSnapshot.size();
 
-            if (listType.equals("CATEGORY")){
+            switch (listType) {
+                case "HOT":
+                    allIdeasSnapshot.sort(new IdeaHotRankComparator(true));
+                    break;
+                case "MYFOLLOWEDIDEAS":
+                    allIdeasSnapshot.sort(new IdeaHotRankComparator(true));
+                    break;
+                case "TRENDING":
+                    allIdeasSnapshot.sort(new IdeaTrendingRankComparator(true));
+                    break;
+                case "FRESH":
+                    allIdeasSnapshot.sort(new IdeaAgeComparator(true));
+                    break;
+                case "MYIDEAS":
+                    allIdeasSnapshot.sort(new IdeaAgeComparator(true));
+                    break;
+            }
 
-                // die Kategorie-Listen werden nach Hot-Ranking sortiert
-                allIdeasSnapshot.sort(new IdeaHotRankComparator(true));
+            if (!category.toUpperCase().equals("NONE") || category.toUpperCase().equals("") ){
+
+                // es soll nach einer Kategorie gefiltert werden
 
                 int numberIdeas = toRank - fromRank + 1;
                 int currentRank = 0;
@@ -121,7 +138,7 @@ public class IdeaManager {
                     // iteriere durch alle Ideen
                     for (IIdea idea : allIdeasSnapshot) {
                         // suche dabei nach Ideen der gewuenschten Kategorie
-                        if (idea.getCategory().equals(category)) {
+                        if (idea.getCategory().toUpperCase().equals(category.toUpperCase())) {
                             currentRank += 1;
 
                             // und fuege Sie den Ergebnissen hinzu,
@@ -137,20 +154,6 @@ public class IdeaManager {
                     }
                 }
             } else {
-
-                switch (listType) {
-                    case "HOT":
-                    case "MYFOLLOWEDIDEAS":
-                        allIdeasSnapshot.sort(new IdeaHotRankComparator(true));
-                        break;
-                    case "TRENDING":
-                        allIdeasSnapshot.sort(new IdeaTrendingRankComparator(true));
-                        break;
-                    case "FRESH":
-                    case "MYIDEAS":
-                        allIdeasSnapshot.sort(new IdeaAgeComparator(true));
-                        break;
-                }
 
                 // Hole die Ideen aus der sortieren Liste entsprechend der gewünschten Bounds
                 for (int i = fromRank - 1; i < toRank; i++) {

@@ -147,13 +147,13 @@ public class TestDataGenerator {
         Calendar calendar;
 
         List<String> catagoryList = new ArrayList<>();
-        catagoryList.add("business");
-        catagoryList.add("computer");
-        catagoryList.add("homeAndGarden");
-        catagoryList.add("gadget");
-        catagoryList.add("sports");
-        catagoryList.add("toys");
-        catagoryList.add("other");
+        catagoryList.add("BUSINESS");
+        catagoryList.add("COMPUTER");
+        catagoryList.add("HOMEGARDEN");
+        catagoryList.add("GADGET");
+        catagoryList.add("SPORTS");
+        catagoryList.add("TOYS");
+        catagoryList.add("OTHER");
 
         List<String> languageList = new ArrayList<>();
         languageList.add("de_DE");
