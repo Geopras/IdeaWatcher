@@ -103,31 +103,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 				if (exObj.result == 'success') {
 
-					// var ideaDetailsObject =
-					// Object.create(ideaWatcher.model.Idea);
-					// ideaDetailsObject.category = exObj.data.category;
-					// //ideaDetailsObject.comments
-					// //ideaDetailsObject.creator
-					// ideaDetailsObject.description = exObj.data.description;
-					// ideaDetailsObject.
-
-					// flag für isOwnIdea erstmal manuell mitgeben
 					var idea = exObj.data;
-					var isOwnIdea = false;
-
-					if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
-						var currentUserId = ideaWatcher.controller.UserSession
-								.getCurrentUserId();
-
-						if (idea.creator.userId == currentUserId) {
-							isOwnIdea = true;
-						}
-					} else {
-						// kein User angemeldet
-					}
-
-					//renderView(idea, isOwnIdea);
-					renderView(idea, true);
+					
+					renderView(idea);
 
 				} else {
 					var errorMessage = exObj.error;
@@ -312,15 +290,38 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			}
 
+			function deleteComment(clickEvent) {
+
+	            var commentId = clickEvent.target.attributes.getNamedItem('data-comment-id').nodeValue;
+	            var ideaId = clickEvent.target.attributes.getNamedItem('data-idea-id').nodeValue;
+	            console.log('');
+			}
+			
+			
 			function navigateToEditView() {
 				console
 						.log('Jetzt müsste sich die vorausgefüllte CreateIdeaView öffnen.');
 			}
 
-			function renderView(crtIdea, isOwnIdea) {
+			function renderView(crtIdea) {
 
 				console.log('Starte erstellen der Detailansicht...');
-				console.log(currentIdea);
+				
+				//Flag isOwnIdea bestimmen
+				var isOwnIdea = false;
+//
+//				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
+//					var currentUserId = ideaWatcher.controller.UserSession
+//							.getCurrentUserId();
+//
+//					if (idea.creator.userId == currentUserId) {
+//						isOwnIdea = true;
+//					}
+//				} else {
+//					// kein User angemeldet
+//				}
+
+				isOwnIdea = true;
 
 				currentIdea = crtIdea;
 
@@ -371,6 +372,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				} else {
 					htmlContactLink.style.display = 'none';
 				}
+				
+				var htmlEditButton = document
+				.querySelector('#ideaDetails_edit_img');
 
 				if (isOwnIdea) {
 					htmlEditButton.style.display = 'inline';
@@ -397,7 +401,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				// list of old comments
 				htmlOldCommentsTable = document
 						.querySelector('#ideaDetails_existingComments_table');
-				hthtmlOldCommentsTableextContent = '';
+				while (htmlOldCommentsTable.firstChild) {
+					htmlOldCommentsTable.removeChild(htmlOldCommentsTable.firstChild);
+				}
 
 				var comments = currentIdea.comments;
 
@@ -465,7 +471,10 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 									var htmlCommentDeleteButton = document
 											.createElement('img');
 									htmlCommentDeleteButton.id = ('ideaDetails_deleteButton_img');
-
+									htmlCommentDeleteButton.dataset.commentId = comment.commentId;
+									htmlCommentDeleteButton.dataset.ideaId = currentIdea.ideaId;
+									htmlCommentDeleteButton.addEventListener('click', deleteComment);
+									
 									htmlCommentDeleteButtonCell
 											.appendChild(htmlCommentDeleteButton);
 								}

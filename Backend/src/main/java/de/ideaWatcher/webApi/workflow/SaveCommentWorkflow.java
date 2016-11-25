@@ -91,6 +91,7 @@ public class SaveCommentWorkflow implements IWorkflow {
         currentComment.setUserId(userId);
         currentComment.setUserName(currentUser.getUserName());
         currentComment.setText(commentText);
+        currentComment.setCommentId(java.util.UUID.randomUUID().toString());
 
         currentIdea.getComments().add(currentComment);
 
