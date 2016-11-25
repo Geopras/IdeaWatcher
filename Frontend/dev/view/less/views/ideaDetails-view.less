@@ -21,7 +21,6 @@
 	height: 30px;
 	padding: 0px;
 	margin: 5px;
-	//background-image:  url("./resources/img/bulb_off.png");
 	background-size: 30px 30px;
 	vertical-align: middle;
 }
@@ -35,7 +34,6 @@
 	height: 30px;
 	padding: 0px;
 	margin: 5px;
-	//background-image:  url("./resources/img/favorite_off.png");
 	background-size: 30px 30px;
 	vertical-align: middle;
 }
@@ -78,7 +76,7 @@
 	height: 30px;
 	padding: 0px;
 	margin: 5px;
-	background-image:  url("./resources/img/mail.svg");
+	content:  url("./resources/img/mail.svg");
 	background-size: 30px 30px;
 	vertical-align: middle;
 }
@@ -112,21 +110,35 @@
 	vertical-align: middle;
 }
 
-#ideaDetails_existingComments_section {
+#ideaDetails_existingComments_table {
 	margin-top: 20px;
+	width: 100%
 }
 
 //items to display given comments
-.ideaDetails_oneComment_div {
-	display: -webkit-box;
+.ideaDetails_oneComment_tr {
     vertical-align: top;
  	margin-bottom: 10px;   
 }
 
-.ideaDetails_oneComment_div img{
-	margin-right: 5px;
+.ideaDetails_commentImage_td{
+
 }
 
-.ideaDetails_CommentName_div {
-	font-weight: bold;
+.ideaDetails_commentText_td {
+
+}
+
+.ideaDetails_commentDeleteButton_td {
+	text-align: right;
+}
+
+#ideaDetails_deleteButton_img {
+	//width: 30px;
+	//height: 30px;
+	padding: 0px;
+	margin: 5px;
+	content:  url("./resources/img/delete.svg");
+	background-size: 30px 30px;
+	vertical-align: middle;
 }

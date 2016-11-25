@@ -13,13 +13,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			var htmlCommentsSpan = null;
 			var htmlSubmitButton = null;
 			var htmlEditButton = null;
-			var htmlOldCommentsSection = null;
+			var htmlOldCommentsTable = null;
 			var isLiked = null;
 			var isFollowed = null;
 
 			var currentIdea = null;
-
-			
 
 			var evUserDataReceived = {
 				topic : 'SIdea/getIdeaDetailsRequest-response',
@@ -36,7 +34,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					.registerGetIdeaResponse(cbGetIdeaResponse);
 			ideaWatcher.controller.IdeaDetails
 					.registerSaveCommentResponse(cbSaveCommentResponse);
-			ideaWatcher.controller.IdeaDetails.registerLikeFollowResponse(cbLikeFollowResponse);
+			ideaWatcher.controller.IdeaDetails
+					.registerLikeFollowResponse(cbLikeFollowResponse);
 			// endregion
 
 			// region subscribe to events
@@ -54,7 +53,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						.querySelector('#ideaDetails_follower_img');
 				htmlCommentTextInput = document
 						.querySelector('#ideaDetails_comment_input');
-				htmlEditButton = document.querySelector('#ideaDetails_edit_img');
+				htmlEditButton = document
+						.querySelector('#ideaDetails_edit_img');
 
 				// endregion
 
@@ -111,23 +111,24 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					// ideaDetailsObject.description = exObj.data.description;
 					// ideaDetailsObject.
 
-					//flag für isOwnIdea erstmal manuell mitgeben
+					// flag für isOwnIdea erstmal manuell mitgeben
 					var idea = exObj.data;
 					var isOwnIdea = false;
-					
+
 					if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 						var currentUserId = ideaWatcher.controller.UserSession
 								.getCurrentUserId();
-						
+
 						if (idea.creator.userId == currentUserId) {
 							isOwnIdea = true;
 						}
 					} else {
-						//kein User angemeldet
+						// kein User angemeldet
 					}
-					
-					renderView(idea, isOwnIdea);
-					
+
+					//renderView(idea, isOwnIdea);
+					renderView(idea, true);
+
 				} else {
 					var errorMessage = exObj.error;
 
@@ -174,7 +175,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				htmlSubmitButton.value = ideaWatcher.core.Localizer.ideaDetails[language].submit;
 				var htmlContactLink = document
 						.querySelector('#ideaDetails_contact_a');
-				htmlEditButton = document.querySelector('#ideaDetails_editIdea_button');
+				htmlEditButton = document
+						.querySelector('#ideaDetails_editIdea_button');
 
 			}
 			// endregion
@@ -311,9 +313,10 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			}
 
 			function navigateToEditView() {
-				console.log('Jetzt müsste sich die vorausgefüllte CreateIdeaView öffnen.');
+				console
+						.log('Jetzt müsste sich die vorausgefüllte CreateIdeaView öffnen.');
 			}
-			
+
 			function renderView(crtIdea, isOwnIdea) {
 
 				console.log('Starte erstellen der Detailansicht...');
@@ -368,11 +371,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				} else {
 					htmlContactLink.style.display = 'none';
 				}
-				
+
 				if (isOwnIdea) {
-					htmlEditButton.style.display = 'inline';	
+					htmlEditButton.style.display = 'inline';
 				}
-				
+
 				// set userPicture in new Comment section
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUserId = ideaWatcher.controller.UserSession
@@ -388,76 +391,96 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				} else {
 					console.log('Kein Nutzer angemeldet.');
 				}
-				
+
 				htmlCommentTextInput.value = '';
 
 				// list of old comments
-				htmlOldCommentsSection = document
-						.querySelector('#ideaDetails_existingComments_section');
-				htmlOldCommentsSection.textContent = '';
+				htmlOldCommentsTable = document
+						.querySelector('#ideaDetails_existingComments_table');
+				hthtmlOldCommentsTableextContent = '';
 
 				var comments = currentIdea.comments;
 
 				if (comments) {
 
 					comments.reverse();
-					comments.forEach(function(comment) {
+					comments
+							.forEach(function(comment) {
 
-						// div ideaDetails_CommentNameAndText_div
-						var htmlOneCommentDiv = document.createElement('div');
-						htmlOneCommentDiv.classList
-								.add('ideaDetails_oneComment_div');
-						// img comment.pictureUrl
-						var htmlCommentImage = document.createElement('img');
-						if (comment.pictureUrl) {
-							htmlCommentImage.src = comment.pictureUrl;
-						} else {
-							htmlCommentImage.src = './resources/img/user.jpg'
-						}
-						htmlCommentImage.style.width = '30px';
-						htmlCommentImage.style.height = '30px';
-						// div ohne klasse
-						var htmlCommentNameAndTextDiv = document
-								.createElement('div');
+								// create new table row
+								var htmlOneCommentRow = document
+										.createElement('tr');
 
-						// div ideaDetails_CommentName_div
-						var htmlCommentNameDiv = document.createElement('div');
-						htmlCommentNameDiv.classList
-								.add('ideaDetails_CommentName_div');
-						htmlCommentNameDiv.textContent = comment.userName;
-						// div ideaDetails_CommentText_div
-						var htmlCommentTextDiv = document.createElement('div');
-						htmlCommentTextDiv.classList
-								.add('ideaDetails_CommentText_div');
-						htmlCommentTextDiv.textContent = comment.text;
-						// append 2 divs to div
-						htmlCommentNameAndTextDiv
-								.appendChild(htmlCommentNameDiv);
-						htmlCommentNameAndTextDiv
-								.appendChild(htmlCommentTextDiv);
+								// create datacell for img, text and button
+								var htmlCommentImgCell = document
+										.createElement('td');
+								htmlCommentImgCell.classList
+										.add('ideaDetails_commentImage_td');
+								var htmlCommentTextCell = document
+										.createElement('td');
+								htmlCommentTextCell.classList
+										.add('ideaDetails_commentText_td');
+								var htmlCommentDeleteButtonCell = document
+										.createElement('td');
+								htmlCommentDeleteButtonCell.classList
+										.add('ideaDetails_commentDeleteButton_td');
 
-						//deleteButton
-						var htmlDeleteButtonSpan = document.createElement('span');
-						htmlDeleteButtonSpan.id = ('ideaDetails_deleteButton_span');
-						
-						var htmlCommentDeleteButton = document.createElement('img');
-						htmlCommentDeleteButton.id = ('ideaDetails_deleteButton_img');
-						
-						htmlDeleteButtonSpan.appendChild(htmlCommentDeleteButton);
-						
-						// append img, div und deleteButton zu div
-						htmlOneCommentDiv.appendChild(htmlCommentImage);
-						htmlOneCommentDiv
-								.appendChild(htmlCommentNameAndTextDiv);
-						htmlOneCommentDiv.appendChild(htmlDeleteButtonSpan);
-						
-						// append div zu oldOldComments
-						htmlOldCommentsSection.appendChild(htmlOneCommentDiv);
-					});
+								// create img and add to datacell for img
+								var htmlCommentImage = document
+										.createElement('img');
+								if (comment.pictureUrl) {
+									htmlCommentImage.src = comment.pictureUrl;
+								} else {
+									htmlCommentImage.src = './resources/img/user.jpg'
+								}
+								htmlCommentImage.style.width = '30px';
+								htmlCommentImage.style.height = '30px';
 
-					// append all elements to section
-					// append all elements to view
-					htmlView.appendChild(htmlOldCommentsSection);
+								htmlCommentImgCell
+										.appendChild(htmlCommentImage);
+
+								// create name and text and add to datacell for
+								// text
+								var htmlCommentNameAndTextDiv = document
+										.createElement('div');
+								var htmlCommentNameBold = document
+										.createElement('b');
+								htmlCommentNameBold.textContent = comment.userName;
+								var htmlCommentTextDiv = document
+										.createElement('div');
+								htmlCommentTextDiv.textContent = comment.text;
+
+								htmlCommentNameAndTextDiv
+										.appendChild(htmlCommentNameBold);
+								htmlCommentNameAndTextDiv.appendChild(document
+										.createElement('br'));
+								htmlCommentNameAndTextDiv
+										.appendChild(htmlCommentTextDiv);
+								htmlCommentTextCell
+										.appendChild(htmlCommentNameAndTextDiv);
+
+								// create deleteButton and add to datacell for
+								// button
+								if (isOwnIdea) {
+									var htmlCommentDeleteButton = document
+											.createElement('img');
+									htmlCommentDeleteButton.id = ('ideaDetails_deleteButton_img');
+
+									htmlCommentDeleteButtonCell
+											.appendChild(htmlCommentDeleteButton);
+								}
+
+								htmlOneCommentRow
+										.appendChild(htmlCommentImgCell);
+								htmlOneCommentRow
+										.appendChild(htmlCommentTextCell);
+								htmlOneCommentRow
+										.appendChild(htmlCommentDeleteButtonCell);
+
+								htmlOldCommentsTable
+										.appendChild(htmlOneCommentRow);
+
+							});
 				}
 
 				cbLocalizeView();
@@ -505,7 +528,6 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			}
 
-			
 			return {
 
 			};
