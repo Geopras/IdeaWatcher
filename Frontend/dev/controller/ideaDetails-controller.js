@@ -34,7 +34,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         };
         
         var evGetSaveCommentResponse = {
-                topic: 'SIdeaDetails/commentIdeaRequest-response',
+                topic: 'SIdeaDetails/saveCommentIdeaRequest-response',
                 cbFunction: cbSaveCommentResponse
             };
 
@@ -43,6 +43,10 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
 				cbFunction : cbLikeFollowResponse
 			};
         
+        var evDeleteCommentResponse = {
+        		topic: 'SIdeaDetails/deleteCommentIdeaRequest-response',
+        		cbFunction: cbDeleteCommentResponse
+        };
         //endregion
 
         //region subscribe to events
@@ -52,6 +56,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         ideaWatcher.core.MessageBroker.subscribe(evGetIdeasResponse);
         ideaWatcher.core.MessageBroker.subscribe(evGetSaveCommentResponse);
         ideaWatcher.core.MessageBroker.subscribe(evLikeFollowResponse);
+        ideaWatcher.core.MessageBroker.subscribe(evDeleteCommentResponse);
         //endregion
 
         function cbInitializeView(obj) {
@@ -68,6 +73,10 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         
         function cbSaveCommentResponse(obj) {
         	cbSaveCommentResp(obj);
+        }
+        
+        function cbDeleteCommentResponse(obj) {
+        	cbDeleteCommentResp(obj);
         }
         
         function cbLikeFollowResponse(obj) {
@@ -107,6 +116,10 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         
         function pubRegisterSaveCommentResponse(cb) {
             cbSaveCommentResp = cb;
+        }
+        
+        function pubRegisterDeleteCommentResponse(cb) {
+            cbDeleteCommentResp = cb;
         }
         
         function pubRegisterLikeFollowResponse(cb) {
@@ -153,6 +166,17 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             }
         }
         
+        pubTryToDeleteComment
+        function pubTryToDeleteComment(exObject)
+        {
+            // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
+            if (ideaWatcher.core.WebSocketConnector.isConnected()) {
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestDeleteComment(exObject));
+            } else {
+                //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
+            }
+        }
+        
         function pubTryToGetIdea(exObject) {
 
             // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
@@ -186,12 +210,22 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         {
             var exCommentRequest = ideaWatcher.model.Request;
 
-            exCommentRequest.destination = 'SIdeaDetails/commentIdeaRequest';
+            exCommentRequest.destination = 'SIdeaDetails/saveCommentIdeaRequest';
             exCommentRequest.data = exObject;
 
             return exCommentRequest;
         }
 
+        function buildRequestDeleteComment(exObject)
+        {
+            var exCommentRequest = ideaWatcher.model.Request;
+
+            exCommentRequest.destination = 'SIdeaDetails/deleteCommentIdeaRequest';
+            exCommentRequest.data = exObject;
+
+            return exCommentRequest;
+        }
+        
         function buildRequestLikeFollow(exObject)
         {
             var exLikeRequest = ideaWatcher.model.Request;
@@ -229,13 +263,15 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             registerLocalizeView: pubRegisterLocalizeView,
             registerGetIdeaResponse: pubRegisterGetIdeaResponse,
             registerSaveCommentResponse: pubRegisterSaveCommentResponse,
+            registerDeleteCommentResponse: pubRegisterDeleteCommentResponse,
             registerShowView: pubRegisterShowView,
             registerLikeFollowResponse: pubRegisterLikeFollowResponse,
             tryToComment: pubTryToComment,
             tryToChangeLikeFollow: pubTryToChangeLikeFollow,
             tryToGetIdea: pubTryToGetIdea,
             tryToLoadIdeaData: pubTryToLoadIdeaData,
-            tryToSaveComment: pubTryToSaveComment
+            tryToSaveComment: pubTryToSaveComment,
+            tryToDeleteComment: pubTryToDeleteComment,
         };
 
     })();

@@ -109,7 +109,7 @@ public class SaveCommentWorkflow implements IWorkflow {
             response.setErrorMessage("SIdeaDetails_CommentSaveData_error");
             response.setResult("error");
             log.log(Level.SEVERE,
-                    "Beim Speichern der Daten einer Like/Follow Aktion ist ein Fehler aufgetreten!"
+                    "Beim Speichern der Daten des Kommentars ist ein Fehler aufgetreten!"
                             + "\nFehlermeldung: " + ex.getMessage());
             return response;
         }

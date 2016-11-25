@@ -35,6 +35,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			ideaWatcher.controller.IdeaDetails
 					.registerSaveCommentResponse(cbSaveCommentResponse);
 			ideaWatcher.controller.IdeaDetails
+					.registerDeleteCommentResponse(cbDeleteCommentResponse);
+			ideaWatcher.controller.IdeaDetails
 					.registerLikeFollowResponse(cbLikeFollowResponse);
 			// endregion
 
@@ -104,7 +106,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				if (exObj.result == 'success') {
 
 					var idea = exObj.data;
-					
+
 					renderView(idea);
 
 				} else {
@@ -191,6 +193,34 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			}
 
+			function cbDeleteCommentResponse(response) {
+				var language = ideaWatcher.core.Localizer.getLanguage();
+
+				if (response.result == 'success') {
+
+					renderView(response.data.idea)
+				} else {
+					var errorMessage = response.error;
+
+					var notificationType = ideaWatcher.model.GlobalNotificationType.ERROR;
+					if (response.result == "warning") {
+						notificationType = ideaWatcher.model.GlobalNotificationType.WARNING;
+					}
+					if (response.result == "info") {
+						notificationType = ideaWatcher.model.GlobalNotificationType.INFO;
+					}
+
+					ideaWatcher.controller.GlobalNotification
+							.showNotification(
+									notificationType,
+									ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
+									ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
+									5000);
+				}
+
+			}
+			
+			
 			function cbLikeFollowResponse(exObj) {
 
 				var language = ideaWatcher.core.Localizer.getLanguage();
@@ -292,12 +322,22 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			function deleteComment(clickEvent) {
 
-	            var commentId = clickEvent.target.attributes.getNamedItem('data-comment-id').nodeValue;
-	            var ideaId = clickEvent.target.attributes.getNamedItem('data-idea-id').nodeValue;
-	            console.log('');
+				var currentCommentId = clickEvent.target.attributes
+						.getNamedItem('data-comment-id').nodeValue;
+				var currentIdeaId = clickEvent.target.attributes
+						.getNamedItem('data-idea-id').nodeValue;
+
+				var exObj = {
+					commentId : currentCommentId,
+					ideaId : currentIdeaId,
+				};
+
+				console.log(exObj);
+
+				ideaWatcher.controller.IdeaDetails.tryToDeleteComment(exObj);
+
 			}
-			
-			
+
 			function navigateToEditView() {
 				console
 						.log('Jetzt müsste sich die vorausgefüllte CreateIdeaView öffnen.');
@@ -306,20 +346,20 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			function renderView(crtIdea) {
 
 				console.log('Starte erstellen der Detailansicht...');
-				
-				//Flag isOwnIdea bestimmen
+
+				// Flag isOwnIdea bestimmen
 				var isOwnIdea = false;
-//
-//				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
-//					var currentUserId = ideaWatcher.controller.UserSession
-//							.getCurrentUserId();
-//
-//					if (idea.creator.userId == currentUserId) {
-//						isOwnIdea = true;
-//					}
-//				} else {
-//					// kein User angemeldet
-//				}
+				//
+				// if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
+				// var currentUserId = ideaWatcher.controller.UserSession
+				// .getCurrentUserId();
+				//
+				// if (idea.creator.userId == currentUserId) {
+				// isOwnIdea = true;
+				// }
+				// } else {
+				// // kein User angemeldet
+				// }
 
 				isOwnIdea = true;
 
@@ -372,9 +412,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				} else {
 					htmlContactLink.style.display = 'none';
 				}
-				
+
 				var htmlEditButton = document
-				.querySelector('#ideaDetails_edit_img');
+						.querySelector('#ideaDetails_edit_img');
 
 				if (isOwnIdea) {
 					htmlEditButton.style.display = 'inline';
@@ -402,7 +442,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				htmlOldCommentsTable = document
 						.querySelector('#ideaDetails_existingComments_table');
 				while (htmlOldCommentsTable.firstChild) {
-					htmlOldCommentsTable.removeChild(htmlOldCommentsTable.firstChild);
+					htmlOldCommentsTable
+							.removeChild(htmlOldCommentsTable.firstChild);
 				}
 
 				var comments = currentIdea.comments;
@@ -412,6 +453,21 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					comments.reverse();
 					comments
 							.forEach(function(comment) {
+
+								// flag isOwnComment
+								var isOwnComment = false;
+
+								if (ideaWatcher.controller.UserSession
+										.isUserLoggedIn()) {
+									var currentUserId = ideaWatcher.controller.UserSession
+											.getCurrentUserId();
+
+									if (comment.userId == currentUserId) {
+										isOwnComment = true;
+									}
+								} else {
+									// kein User angemeldet
+								}
 
 								// create new table row
 								var htmlOneCommentRow = document
@@ -467,14 +523,15 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 								// create deleteButton and add to datacell for
 								// button
-								if (isOwnIdea) {
+								if (isOwnComment) {
 									var htmlCommentDeleteButton = document
 											.createElement('img');
 									htmlCommentDeleteButton.id = ('ideaDetails_deleteButton_img');
 									htmlCommentDeleteButton.dataset.commentId = comment.commentId;
 									htmlCommentDeleteButton.dataset.ideaId = currentIdea.ideaId;
-									htmlCommentDeleteButton.addEventListener('click', deleteComment);
-									
+									htmlCommentDeleteButton.addEventListener(
+											'click', deleteComment);
+
 									htmlCommentDeleteButtonCell
 											.appendChild(htmlCommentDeleteButton);
 								}

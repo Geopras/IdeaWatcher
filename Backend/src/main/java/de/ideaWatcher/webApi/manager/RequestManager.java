@@ -53,8 +53,10 @@ public class RequestManager {
                 new LogoutCommand());
         this.workflowMapping.addCommand("SIdeaDetails/LikeFollowIdeaRequest",
                 new LikeFollowCommand());
-        this.workflowMapping.addCommand("SIdeaDetails/commentIdeaRequest",
+        this.workflowMapping.addCommand("SIdeaDetails/saveCommentIdeaRequest",
                 new SaveCommentCommand());
+        this.workflowMapping.addCommand("SIdeaDetails/deleteCommentIdeaRequest",
+                new DeleteCommentCommand());
         this.workflowMapping.addCommand("SIdea/deleteIdeaRequest",
                 new DeleteIdeaCommand());
         this.workflowMapping.addCommand("SIdeaCreation/saveIdeaRequest",
