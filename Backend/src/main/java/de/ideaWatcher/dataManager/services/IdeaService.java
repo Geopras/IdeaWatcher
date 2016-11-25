@@ -9,18 +9,13 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
-
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.UpdateResult;
-
-import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.mongodb.client.model.Filters.eq;
 
 /**
  * Service fuer Zugriff auf Datenbank
@@ -97,21 +92,32 @@ public class IdeaService {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
-        Document foundDoc = dbConnectionService.getCollection().find(eq("_id", new ObjectId (ideaId))).first();
-        
-        dbConnectionService.closeConnection();
-        return buildIdea(foundDoc);
+        try {
+            Document foundDoc = dbConnectionService.getCollection().find(eq("_id", new ObjectId (ideaId))).first();
+            return buildIdea(foundDoc);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
+        }
     }
     
     public List<IIdea> getAllIdeas() throws Exception {
-        // ToDo
-        // fehlende Fehlerbehandlungen sollten noch hinzugef�gt werden
+
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
-        List<Document> ideasDoc = dbConnectionService.getCollection().find().into(new ArrayList<Document>());
-        dbConnectionService.closeConnection();
-        List<IIdea> ideas = new ArrayList<IIdea>();
+        List<Document> ideasDoc;
+        try {
+            ideasDoc = dbConnectionService.getCollection().find().into(new
+                    ArrayList<>());
+            dbConnectionService.closeConnection();
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
+        }
+        List<IIdea> ideas = new ArrayList<>();
         for(Document d : ideasDoc){
             ideas.add(buildIdea(d));
         }
@@ -205,9 +211,14 @@ public class IdeaService {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
-        dbConnectionService.getCollection().insertOne(buildIdeaDocument
-                (idea));
-        dbConnectionService.closeConnection();
+        try {
+            dbConnectionService.getCollection().insertOne(buildIdeaDocument
+                    (idea));
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
+        }
     }
     
     public void addIdeaList(List<IIdea> ideaList) throws Exception {

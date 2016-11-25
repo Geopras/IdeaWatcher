@@ -12,6 +12,9 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         var lastClickedButton;
         var currentClickedButton;
         var lastClickedMainIdeaListButton;
+        var currentClickedListType;
+        var currentClickedCategory;
+        var hotButton;
 
         // endregion
 
@@ -20,7 +23,9 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         ideaWatcher.controller.MainMenu.registerLocalizeView(cbLocalizeView);
         ideaWatcher.controller.MainMenu.registerLoginSuccessful(cbLoginSuccessful);
         ideaWatcher.controller.MainMenu.registerLogoutSuccessful(cbLogoutSuccessful);
-        ideaWatcher.controller.MainMenu.registerClickHotButton(cbClickHotButton);
+        ideaWatcher.controller.MainMenu.registerWebSocketConnectionOpen(cbWebSocketConnectionOpen);
+        ideaWatcher.controller.MainMenu.registerGetCurrentClickedListType(cbCurrentClickedListType);
+        ideaWatcher.controller.MainMenu.registerGetCurrentClickedCategory(cbCurrentClickedCategory);
 
         // endregion
 
@@ -100,6 +105,9 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
                             ' mainMenu-uiConnector initialisiert!');
                 }
             }
+            currentClickedListType = ideaWatcher.model.IdeaList.ListType.HOT;
+            currentClickedCategory = ideaWatcher.model.IdeaList.Category.NONE;
+            hotButton = document.getElementById('mainMenu_hot_button');
             cbLocalizeView();
         }
 
@@ -118,16 +126,29 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
             }
         }
 
-        function cbLoginSuccessful() {
+        function cbLoginSuccessful(obj) {
             isLoginSuccessful = true;
             switchUserDropdown();
-            cbClickHotButton();
+            clickHotButton();
         }
 
-        function cbLogoutSuccessful() {
+        function cbLogoutSuccessful(obj) {
             isLoginSuccessful = false;
             switchUserDropdown();
-            cbClickHotButton();
+            clickHotButton();
+        }
+
+        function cbWebSocketConnectionOpen(obj) {
+            console.log('Klicke den Hot-Button');
+            clickHotButton();
+        }
+
+        function cbCurrentClickedListType() {
+            return currentClickedListType;
+        }
+
+        function cbCurrentClickedCategory() {
+            return currentClickedCategory;
         }
 
         //endregion
@@ -153,13 +174,13 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
 
         function handleIdeaListButton(clickEvent) {
 
-            var listType = clickEvent.target.attributes.getNamedItem('data-buttonid').nodeValue;
+            currentClickedListType = clickEvent.target.attributes.getNamedItem('data-buttonid').nodeValue;
             handleCurrentButtonClick(clickEvent);
-            console.log('IdeaList vom Typ: "' + listType + '" geklickt');
+            console.log('IdeaList vom Typ: "' + currentClickedListType + '" geklickt');
 
-            var category = ideaWatcher.model.IdeaList.Category.NONE;
+            currentClickedCategory = ideaWatcher.model.IdeaList.Category.NONE;
             ideaWatcher.controller.IdeaList
-                .updateIdeaList(listType, category, 1, 10, true);
+                .updateIdeaList(currentClickedListType, currentClickedCategory, 1, 10, true);
         }
         //endregion
 
@@ -189,11 +210,11 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
 
         function handleCategoryButton(clickEvent) {
 
-            var category = clickEvent.target.attributes.getNamedItem('data-buttonid').nodeValue;
+            currentClickedCategory = clickEvent.target.attributes.getNamedItem('data-buttonid').nodeValue;
             handleCurrentButtonClick(clickEvent);
-            console.log('Kategorie: "' + category + '" geklickt');
+            console.log('Kategorie: "' + currentClickedCategory + '" geklickt');
 
-            ideaWatcher.controller.IdeaList.updateIdeaList('', category, 1, 10, true);
+            ideaWatcher.controller.IdeaList.updateIdeaList('', currentClickedCategory, 1, 10, true);
         }
         //endregion
 
@@ -316,9 +337,9 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         //endregion
 
         // click HotButton automatisch
-        function cbClickHotButton() {
+        function clickHotButton() {
 
-            document.getElementById('mainMenu_hot_button').click();
+            hotButton.click();
         }
 
         //region Was soll passieren, wenn irgendein Button geklickt wird

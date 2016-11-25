@@ -1,23 +1,5 @@
 ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
-
-        //region subscribe to events
-        ideaWatcher.controller.ideaCreation.registerInitializeView(cbIni);
-        ideaWatcher.controller.ideaCreation.registerShowView(cbShowView);
-        ideaWatcher.controller.ideaCreation.registerLocalizeView(cbLocalizeView);
-        //endregion
-
-        // //region local vars
-        // var evIni = {
-        //     topic: 'internal/ini',
-        //     cbFunction: cbIni
-        // };
-        //
-        // var evLocalizeView = {
-        //     topic: 'localizeView/ideaCreation',
-        //     cbFunction: localizeView
-        // };
-
         var htmlIdeaCreationView = null;
         var htmlIdeaCreationForm = null;
 
@@ -39,12 +21,16 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
         var htmlCancelButton = null;
         var htmlSaveButton = null;
         var htmlIdeaNameInput = null;
+        var isEdit;
         //endregion
 
-        // //region subscribe to events
-        // ideaWatcher.core.MessageBroker.subscribe(evIni);
-        // ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
-        // //endregion
+        //region subscribe to events
+        ideaWatcher.controller.ideaCreation.registerInitializeView(cbIni);
+        ideaWatcher.controller.ideaCreation.registerShowView(cbShowView);
+        ideaWatcher.controller.ideaCreation.registerLocalizeView(cbLocalizeView);
+        ideaWatcher.controller.ideaCreation.registerGetIdeaToEditResponse(cbGetIdeaToEditResponse);
+        ideaWatcher.controller.ideaCreation.registerSaveIdeaResponse(cbSaveIdeaResponse);
+        //endregion
 
         //region cbIni
         function cbIni()
@@ -83,6 +69,9 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
             cbLocalizeView();
 
+            isEdit = false;  // Flag für Save-Button, wenn vorhandene Idee
+            // editiert werden soll
+
         }
         //endregion
 
@@ -111,15 +100,19 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
             if(!checkValidForm()) return;
 
+            var ideaStatus = 'save';
+            if (isEdit) {
+                ideaStatus = 'edit';
+            }
             var exObj = {
                 ideaName: htmlIdeaNameInput.value,
                 ideaCategory: htmlCategorySelect.value,
                 ideaDescription: htmlDescriptionTextarea.value,
-                ideaStatus: 'save'
+                ideaStatus: ideaStatus
             };
             console.log(exObj);
 
-            ideaWatcher.controller.ideaCreation.saveNewIdea(exObj);
+            ideaWatcher.controller.ideaCreation.tryToSaveNewIdea(exObj);
         }
         //endregion
 
@@ -194,6 +187,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
             // Formular übernommen werden zum Editieren
             if (idea) {
 
+                isEdit = true;
                 htmlIdeaNameInput.textContent = idea.name;
                 htmlDescriptionTextarea.textContent = idea.description;
                 // Setze die gewählte Kategorie
@@ -205,6 +199,8 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
                         break;
                     }
                 }
+            } else {
+                isEdit = false;
             }
             cbLocalizeView();
         }
@@ -258,6 +254,57 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
             console.log("Lokalisierung IdeaCreation-View abgeschlossen.");
         }
         //endregion
+
+        //region Response-Callbacks
+        //Callback für Editieren einer Idee
+        function cbGetIdeaToEditResponse(response) {
+
+            var language = ideaWatcher.core.Localizer.getLanguage();
+            // Nach Ergebnis sehen:
+            var result = response.result;
+
+            if (result !== 'success') {
+
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.model.GlobalNotificationType.ERROR,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].Headline,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language][response.errorMessage],
+                    5000);
+                return;
+
+            }
+
+            var exObj = ideaWatcher.model.ExchangeObject.SwitchView;
+            exObj.viewId = ideaWatcher.model.Navigation.ViewId.CREATEIDEA;
+            exObj.viewUrl = ideaWatcher.model.Navigation.ViewUrl.CREATEIDEA;
+            exObj.additionalData = response.data;
+            ideaWatcher.core.Navigator.switchView(exObj);
+        }
+
+        //Callback für Antwort vom Backend nach Versuch Idee zu speichern
+        function cbSaveIdeaResponse(response) {
+
+            var language = ideaWatcher.core.Localizer.getLanguage();
+            // Nach Ergebnis sehen:
+            var result = response.result;
+
+            if (result !== 'success') {
+
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.model.GlobalNotificationType.ERROR,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].Headline,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language][response.errorMessage],
+                    5000);
+                return;
+
+            }
+
+            // var exObj = ideaWatcher.model.ExchangeObject.SwitchView;
+            // exObj.viewId = ideaWatcher.model.Navigation.ViewId.CREATEIDEA;
+            // exObj.viewUrl = ideaWatcher.model.Navigation.ViewUrl.CREATEIDEA;
+            // exObj.additionalData = response.data;
+            // ideaWatcher.core.Navigator.switchView(exObj);
+        }
 
         // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
         return {

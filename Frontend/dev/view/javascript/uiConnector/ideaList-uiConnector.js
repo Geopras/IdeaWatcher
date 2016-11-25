@@ -13,8 +13,6 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         var htmlMyIdeasSections = null;
         var htmlMyFollowedIdeasSections = null;
         var htmlCreateIdeaButton = null;
-        var currentListType = null;
-        var currentCategory = null;
         var currentIdeasMap = {};
         var countIdeasPerRequest = 10;
         var publishedLabels = [];
@@ -26,8 +24,6 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         ideaWatcher.controller.IdeaList.registerShowView(cbShowView);
         ideaWatcher.controller.IdeaList.registerLocalizeView(cbLocalizeView);
         ideaWatcher.controller.IdeaList.registerGetIdeasResponse(cbGetIdeasResponse);
-        ideaWatcher.controller.IdeaList.registerGetCurrentListType(cbGetCurrentListType);
-        ideaWatcher.controller.IdeaList.registerGetCurrentCategory(cbGetCurrentCategory);
         ideaWatcher.controller.IdeaList.registerGetIdea(cbGetIdea);
         //endregion
 
@@ -36,9 +32,6 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         function cbIni()
         {
             console.log('Initialisiere UIConnector IdeaList');
-
-            currentListType = ideaWatcher.model.IdeaList.ListType.HOT;
-            currentCategory = ideaWatcher.model.IdeaList.Category.NONE;
 
             //region initialize html
             htmlIdeaListView = document.querySelector('.ideaList_view');
@@ -62,10 +55,17 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
             if(exObj.shouldShow)
             {
-                var listType = exObj.additionalData.listType;
-                renderView(exObj.additionalData);
+                var responseData = Object.create(ideaWatcher.model.ExchangeObject
+                    .IdeaList.ResponseData);
+                responseData.listType = exObj.additionalData.listType;
+                responseData.category = exObj.additionalData.category;
+                responseData.ideas = exObj.additionalData.ideas;
+                responseData.isReachedEnd = exObj.additionalData.isReachedEnd;
+                responseData.isRenderNewIdeaList = exObj.additionalData.isRenderNewIdeaList;
 
-                switch (listType) {
+                renderView(responseData);
+
+                switch (responseData.listType) {
                     case (ideaWatcher.model.IdeaList.ListType.MYIDEAS):
                         htmlProfileView.style.display = 'block';
                         htmlIdeaListView.style.display = 'none';
@@ -103,7 +103,10 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
             if (header) {
 
-                switch (currentListType) {
+                var listType = ideaWatcher.controller.IdeaList.getCurrentClickedListType();
+                var category = ideaWatcher.controller.IdeaList.getCurrentClickedCategory();
+
+                switch (listType) {
                     case (ideaWatcher.model.IdeaList.ListType.MYIDEAS):
                         header = htmlMyIdeasHeader;
                         break;
@@ -115,7 +118,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 }
 
                 header.textContent = ideaWatcher.core.Localizer
-                    .IdeaList[currentListType][currentCategory][language]
+                    .IdeaList[listType][category][language]
                     .header;
             }
             if (htmlCreateIdeaButton) {
@@ -167,22 +170,20 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 return;
             }
 
-            var responseData = Object.create(ideaWatcher.model.ExchangeObject
-                .IdeaList.ResponseData);
-            responseData.listType = response.data.listType;
-            responseData.ideas = response.data.ideas;
-            responseData.isRenderNewIdeaList = response.data.isRenderNewIdeaList;
-            responseData.category = response.data.category;
-            responseData.isReachedEnd = response.data.isReachedEnd;
+            var listType = response.data.listType;
+            var category = response.data.category;
 
-            currentListType = responseData.listType;
-            currentCategory = responseData.category;
+            if (!currentIdeasMap || response.data.isRenderNewIdeaList) {
+                createCurrentIdeasMap(response.data.ideas);
+            } else {
+                addToCurrentIdeasMap()
+            }
 
-            ideaWatcher.core.Navigator.switchView({
-                viewId: ideaWatcher.model.Navigation.ViewId[currentListType][currentCategory],
-                url: ideaWatcher.model.Navigation.ViewUrl[currentListType][currentCategory],
-                additionalData: responseData
-            });
+            var exObj = ideaWatcher.model.ExchangeObject.SwitchView;
+            exObj.viewId = ideaWatcher.model.Navigation.ViewId[listType][category];
+            exObj.viewUrl = ideaWatcher.model.Navigation.ViewUrl[listType][category];
+            exObj.additionalData = response.data;
+            ideaWatcher.core.Navigator.switchView(exObj);
         }
 
         function cbDeleteIdeaResponse(response) {
@@ -202,19 +203,17 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 return;
             }
 
-            if (currentIdeasMap[ideaId]) {
-                delete currentIdeasMap[ideaId];
-            }
+            // Wenn erfolgreich, dann Ideenliste neu abfragen
+            var listType = ideaWatcher.controller.IdeaList.getCurrentClickedListType();
+            var category = ideaWatcher.controller.IdeaList.getCurrentClickedCategory();
+
+            // Liste neu abfragen
+            ideaWatcher.controller.IdeaList
+                .updateIdeaList(listType, category, 1,
+                    Object.keys(currentIdeasMap).length - 1, true);
+
         }
         //endregion
-
-        function cbGetCurrentListType() {
-            return currentListType;
-        }
-
-        function cbGetCurrentCategory() {
-            return currentCategory;
-        }
 
         function cbGetIdea(ideaId) {
 
@@ -228,34 +227,14 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         function renderView(ideaListData) {
 
-            //region Extrahiere Renderdaten:
-
-            var listType = ideaListData.listType;
-            var ideasToAppend = ideaListData.ideas;
-            var isRenderNewIdeaList;
-            if (ideaListData.isRenderNewIdeaList === false) {
-                isRenderNewIdeaList = false;
-            } else {
-                isRenderNewIdeaList = true;
-            }
-            //endregion
-
-            cbLocalizeView();
-
-            if (!currentIdeasMap) {
-                createIdeasMap();
-            } else {
-                addToIdeasMap(ideasToAppend);
-            }
-
             var htmlParentNode;
             var htmlSectionsClassName;
             var htmlSections;
-            if (listType === ideaWatcher.model.IdeaList.ListType.MYIDEAS) {
+            if (ideaListData.listType === ideaWatcher.model.IdeaList.ListType.MYIDEAS) {
                 htmlParentNode = document.querySelector('.myIdeas_view');
                 htmlSections = document.querySelector('.myIdeas_sections');
 
-            } else if (listType === ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS) {
+            } else if (ideaListData.listType === ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS) {
                 htmlParentNode = document.querySelector('.myFollowedIdeas_view');
                 htmlSections = document.querySelector('.myFollowedIdeas_sections');
             } else {
@@ -265,31 +244,31 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             htmlSectionsClassName = htmlSections.className;
 
             var isMyIdeas = false;
-            if (listType === ideaWatcher.model.IdeaList.ListType.MYIDEAS) {
+            if (ideaListData.listType === ideaWatcher.model.IdeaList.ListType.MYIDEAS) {
                 isMyIdeas = true;
             }
-            if (isRenderNewIdeaList) {
+            if (ideaListData.isRenderNewIdeaList) {
 
                 publishedLabels = [];
                 htmlParentNode.removeChild(htmlSections);
                 htmlSections = document.createElement('div');
                 htmlSections.classList.add(htmlSectionsClassName);
-                renderIdeaList(htmlSections, ideasToAppend, isMyIdeas);
+                renderIdeaList(htmlSections, ideaListData.ideas, isMyIdeas);
                 htmlParentNode.appendChild(htmlSections);
 
             } else {
-                renderIdeaList(htmlSections, ideasToAppend, isMyIdeas);
+                renderIdeaList(htmlSections, ideaListData.ideas, isMyIdeas);
             }
+            cbLocalizeView();
         }
 
-        function renderIdeaList(htmlList, ideaListToAppend, isMyIdeas) {
+        function renderIdeaList(htmlList, ideaList, isMyIdeas) {
 
             var language = ideaWatcher.core.Localizer.getLanguage();
             //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
             var publishedLabel = ideaWatcher.core.Localizer.IdeaList.Published[language];
 
-
-            ideaListToAppend.forEach(function(idea){
+            ideaList.forEach(function (idea) {
 
                 var ideaElement = document.createElement('div');
                 ideaElement.classList.add('ideaList_ideaElement_div');
@@ -410,7 +389,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 htmlList.appendChild(ideaElement);
 
                 ideaName.textContent = idea.name;
-                ideaDescription.textContent = idea.description;
+                ideaDescription.textContent = getShortDescription(idea.description);
                 numberOfLikes.textContent = idea.numberLikes;
                 numberOfFollowers.textContent = idea.numberFollowers;
                 numberOfComments.textContent = idea.numberComments;
@@ -440,14 +419,15 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         }
 
         function handleEditButton(clickEvent) {
-            var ideaId = clickEvent.target.parentNode.attributes.getNamedItem('data-ideaid').nodeValue;
-            var idea = currentIdeasMap[ideaId];
 
+            var ideaId = clickEvent.target.parentNode.attributes.getNamedItem('data-ideaid').nodeValue;
+            ideaWatcher.controller.IdeaList.tryToEditIdea(ideaId);
         }
 
         function handleDeleteButton(clickEvent) {
-            var ideaId = clickEvent.target.parentNode.attributes.getNamedItem('data-ideaid').nodeValue;
 
+            var ideaId = clickEvent.target.parentNode.attributes.getNamedItem('data-ideaid').nodeValue;
+            ideaWatcher.controller.IdeaList.tryToDeleteIdea(ideaId);
         }
 
         //endregion
@@ -509,17 +489,20 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         });
 
         function showNextIdeas() {
+
+            var listType = ideaWatcher.controller.IdeaList.getCurrentClickedListType();
+            var category = ideaWatcher.controller.IdeaList.getCurrentClickedCategory();
             console.log('Zeige die nächsten ' + countIdeasPerRequest +
-                ' Ideen des Typs "' + currentListType + '" der Kategorie "' +
-                currentCategory + '"');
+                ' Ideen des Typs "' + listType + '" der Kategorie "' +
+                category + '"');
 
             var lengthIdeaList = Object.keys(currentIdeasMap).length;
             ideaWatcher.controller.IdeaList
-                .updateIdeaList(currentListType, currentCategory,
+                .updateIdeaList(listType, category,
                    lengthIdeaList , lengthIdeaList + countIdeasPerRequest, false);
         }
 
-        function createIdeasMap(ideasToAdd) {
+        function createCurrentIdeasMap(ideasToAdd) {
 
             currentIdeasMap = {};
             for (var i = 0; i < ideasToAdd.length; i++) {
@@ -529,7 +512,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             }
         }
 
-        function addToIdeasMap(ideasToAdd) {
+        function addToCurrentIdeasMap(ideasToAdd) {
 
             for (var i = 0; i < ideasToAdd.length; i++) {
 
@@ -538,6 +521,16 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 if (!findIdea) {
                     currentIdeasMap[currentIdea.ideaId] = currentIdea;
                 }
+            }
+        }
+
+        function getShortDescription(description) {
+
+            if (description.length > 200) {
+                var shortText = description.substring(0, 200) + '...';
+                return shortText;
+            } else {
+                return description;
             }
         }
         //endregion

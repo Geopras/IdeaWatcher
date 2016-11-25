@@ -4,8 +4,9 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
         var cbLocalize = null;
         var cbLoginSuccess = null;
         var cbLogoutSuccess = null;
-        var cbGetCurrentClickedButtonId = null;
-        var cbClickHotButton = null;
+        var cbGetCurrentClickedCategory = null;
+        var cbGetCurrentClickedListType = null;
+        var cbWebSocketConnOpen = null;
 
         //region Events Initialisieren
         var evIni = {
@@ -27,6 +28,11 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
             topic: 'SLogout/logoutSuccessful',
             cbFunction: cbLogoutSuccessful
         };
+
+        var evWebSocketConnectionOpen = {
+            topic: 'SWebSocket/connectionOpen',
+            cbFunction: cbWebSocketConnectionOpen
+        };
         //endregion
 
         //region Events am Messagebroker anmelden
@@ -34,6 +40,7 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         ideaWatcher.core.MessageBroker.subscribe(evLoginSuccessful);
         ideaWatcher.core.MessageBroker.subscribe(evLogoutSuccessful);
+        ideaWatcher.core.MessageBroker.subscribe(evWebSocketConnectionOpen);
         //endregion
 
         //region Callback-Functions für MessageBroker
@@ -52,6 +59,10 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
 
         function cbLogoutSuccessful(obj) {
             cbLogoutSuccess(obj);
+        }
+
+        function cbWebSocketConnectionOpen(obj) {
+            cbWebSocketConnOpen(obj);
         }
 
         //endregion
@@ -73,13 +84,16 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
             cbLogoutSuccess = cb;
         }
 
-        function pubRegisterCurrentClickedButtonId(cb) {
-
-            cbGetCurrentClickedButtonId = cb;
+        function pubRegisterWebSocketConnectionOpen(cb) {
+            cbWebSocketConnOpen = cb;
         }
 
-        function pubRegisterClickHotButton(cb) {
-            cbClickHotButton = cb;
+        function pubRegisterGetCurrentClickedCategory(cb) {
+            cbGetCurrentClickedCategory = cb;
+        }
+
+        function pubRegisterGetCurrentClickedListType(cb) {
+            cbGetCurrentClickedListType = cb;
         }
         //endregion
 
@@ -88,27 +102,28 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
             ideaWatcher.controller.UserSession.tryToLogout();
         }
 
-        function pubGetCurrentClickedButtonId() {
-
-            return cbGetCurrentClickedButtonId();
+        function pubGetCurrentClickedCategory() {
+            return cbGetCurrentClickedCategory();
         }
 
-        function pubClickHotButton() {
-            cbClickHotButton();
+        function pubGetCurrentClickedListType() {
+            return cbGetCurrentClickedListType();
         }
+
         //endregion
 
         return {
 
-            clickHotButton: pubClickHotButton,
-            getCurrentClickedButtonId: pubGetCurrentClickedButtonId,
+            getCurrentClickedCategory: pubGetCurrentClickedCategory,
+            getCurrentClickedListType: pubGetCurrentClickedListType,
             logoutUser: pubLogout,
-            registerClickHotButton: pubRegisterClickHotButton,
-            registerGetCurrentClickedButtonId: pubRegisterCurrentClickedButtonId,
+            registerGetCurrentClickedCategory: pubRegisterGetCurrentClickedCategory,
+            registerGetCurrentClickedListType: pubRegisterGetCurrentClickedListType,
             registerInitializeView: pubRegisterInitializeView,
             registerLocalizeView: pubRegisterLocalizeView,
             registerLoginSuccessful: pubRegisterLoginSuccessful,
-            registerLogoutSuccessful: pubRegisterLogoutSuccessful
+            registerLogoutSuccessful: pubRegisterLogoutSuccessful,
+            registerWebSocketConnectionOpen: pubRegisterWebSocketConnectionOpen
         };
 
     })();
