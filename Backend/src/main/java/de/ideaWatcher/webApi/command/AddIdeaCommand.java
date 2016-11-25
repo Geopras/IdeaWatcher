@@ -1,6 +1,7 @@
 package main.java.de.ideaWatcher.webApi.command;
 
 import main.java.de.ideaWatcher.common.ICommand;
+import main.java.de.ideaWatcher.webApi.workflow.SaveIdeaWorkflow;
 
 /**
  * Command zum Anlegen einer neuen Idee
@@ -16,9 +17,8 @@ public class AddIdeaCommand<IRequest, IResponse> implements ICommand<IRequest,
      */
     @Override
     public IResponse apply(IRequest data) {
-//        GetIdeaDetailsWorkflow workflow = new GetIdeaDetailsWorkflow();
-//        return (IResponse) workflow.getResponse((main.java.de.ideaWatcher
-//                .webApi.core.IRequest) data);
-    	return null;
+        SaveIdeaWorkflow workflow = new SaveIdeaWorkflow();
+        return (IResponse) workflow.getResponse((main.java.de.ideaWatcher
+                .webApi.core.IRequest) data);
     }
 }
