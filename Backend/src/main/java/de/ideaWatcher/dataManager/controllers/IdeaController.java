@@ -33,7 +33,7 @@ public class IdeaController implements IIdeaController {
     }
     @Override
     public List<IIdea> getAllIdeasSmart() throws Exception {
-        return this.ideaService.getAllIdeas();
+        return this.ideaService.getAllIdeasSmart();
     }
 
     @Override

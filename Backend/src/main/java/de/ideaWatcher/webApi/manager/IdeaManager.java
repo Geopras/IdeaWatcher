@@ -47,7 +47,7 @@ public class IdeaManager {
         try {
             // initial, bevor der Ranking Algorithmus ein mal durchgelaufen ist,
             // soll der Snapshot mit den letzten Werten aus der Datenbank befüllt werden
-            this.allIdeasSnapshot = this.ideaController.getAllIdeas();
+            this.allIdeasSnapshot = this.ideaController.getAllIdeasSmart();
             //this.allIdeasSnapshot = getTestIdeas();
         } catch (Exception e) {
             log.log(Level.SEVERE, "Ein Fehler ist bei der Abfrage aller Ideen" +
@@ -100,7 +100,8 @@ public class IdeaManager {
      */
     public List<IIdea> filterIdeas(String listType, String category, int fromRank, int toRank) throws Exception {
 
-        List<IIdea> filteredIdeas = new ArrayList<>();
+        List<String> filteredIdeaIds = new ArrayList<String>();
+        List<IIdea> filteredIdeas = new ArrayList<IIdea>();
 
         try {
             //während des Filterns darf sich der AllIdeasSnapshot nicht verändern
@@ -126,7 +127,7 @@ public class IdeaManager {
                             // und fuege Sie den Ergebnissen hinzu,
                             // wenn sie im gesuchten Ranking-Bereich liegen
                             if (currentRank >= fromRank) {
-                                filteredIdeas.add(idea);
+                                filteredIdeaIds.add(idea.getIdeaId());
                             }
 
                             if (currentRank == toRank) {
@@ -155,7 +156,7 @@ public class IdeaManager {
                 for (int i = fromRank - 1; i < toRank; i++) {
 
                     if (i < allIdeasCount) {
-                        filteredIdeas.add(allIdeasSnapshot.get(i));
+                        filteredIdeaIds.add(allIdeasSnapshot.get(i).getIdeaId());
                     }
                 }
             }
@@ -163,6 +164,11 @@ public class IdeaManager {
             throw new Exception(ex);
         } finally {
             lockAllIdeasSnapshot.unlock();
+        }
+
+        // jetzt müssen noch für jede gefundene ideaId die vollen Ideen-Objekte aus der DB geladen werden
+        for (String ideaId : filteredIdeaIds){
+            filteredIdeas.add(ideaController.getIdea(ideaId));
         }
 
         return filteredIdeas;
