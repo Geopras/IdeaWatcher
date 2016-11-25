@@ -104,7 +104,7 @@ public class LikeFollowWorkflow implements IWorkflow {
                 newNumberFollows = (long) currentIdea.getFollowerUsers().size();
                 currentIdea.setNumberFollowers(newNumberFollows);
 
-                currentUser.getFollowedIdeas().add(currentIdea);
+                currentUser.getFollowedIdeas().add(currentIdea.getIdeaId());
                 currentUser.setNumberFollowedIdeas(currentUser.getFollowedIdeas().size());
 
                 ideaChanged = true;
@@ -120,24 +120,17 @@ public class LikeFollowWorkflow implements IWorkflow {
                 newNumberFollows = (long) currentIdea.getFollowerUsers().size();
                 currentIdea.setNumberFollowers(newNumberFollows);
 
-                IIdea oldIdeaInstance = null;
-                for (IIdea oldIdea : currentUser.getFollowedIdeas()){
-                    if (oldIdea.getIdeaId().equals(ideaId)){
-                        oldIdeaInstance = oldIdea;
-                    }
-                }
-                if (oldIdeaInstance == null){
-
+                if (currentUser.getFollowedIdeas().contains(ideaId)){
+                    currentUser.getFollowedIdeas().remove(ideaId);
+                } else{
                     response.setErrorMessage("SIdeaDetails_likeFollowIntegrity_error");
                     response.setResult("error");
                     log.log(Level.SEVERE, "Beim unfollowen einer Idee ist ein Fehler aufgetreten. Der User folgte " +
                             "der Idee garnicht." +
                             "\nFehlermeldung: ");
                     return response;
-
-                } else{
-                    currentUser.getFollowedIdeas().remove(oldIdeaInstance);
                 }
+
                 currentUser.setNumberFollowedIdeas(currentUser.getFollowedIdeas().size());
 
                 ideaChanged = true;

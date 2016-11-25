@@ -100,24 +100,17 @@ public class DeleteIdeaWorkflow implements IWorkflow {
 
         // Idee aus createdIdeas löschen, dazu erstmal tatsächliches Objekt mit der passenden IdeaId holen
 
-        IIdea oldIdeaInstance = null;
-        for (IIdea oldIdea : currentUser.getCreatedIdeas()) {
-            if (oldIdea.getIdeaId().equals(ideaId)) {
-                oldIdeaInstance = oldIdea;
-            }
-        }
-        if (oldIdeaInstance == null) {
-
+        if (currentUser.getCreatedIdeas().contains(ideaId)){
+            currentUser.getCreatedIdeas().remove(ideaId);
+        } else{
             response.setErrorMessage("SIdeaList_deleteIdeaIntegrity_error");
             response.setResult("error");
             log.log(Level.SEVERE,
                     "Beim Löschen der Idee aus der CreatedIdeasList ist ein Fehler aufgetreten. Der User hat die Idee "
                             + "nicht angelegt." + "\nFehlermeldung: ");
             return response;
-
-        } else {
-            currentUser.getCreatedIdeas().remove(oldIdeaInstance);
         }
+
 
         responseData.put("ideaId", ideaId);
         

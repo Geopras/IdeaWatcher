@@ -57,12 +57,12 @@ public interface IUser {
     void setLanguage(String language);
     String getPictureURL();
     void setPictureURL(String pictureURL);
-    List<IIdea> getCreatedIdeas();
-    void setCreatedIdeas(List<IIdea> createdIdeas);
+    List<String> getCreatedIdeas();
+    void setCreatedIdeas(List<String> createdIdeas);
     long getNumberCreatedIdeas();
     void setNumberCreatedIdeas(long numberCreatedIdeas);
-    List<IIdea> getFollowedIdeas();
-    void setFollowedIdeas(List<IIdea> followedIdeas);
+    List<String> getFollowedIdeas();
+    void setFollowedIdeas(List<String> followedIdeas);
     long getNumberFollowedIdeas();
     void setNumberFollowedIdeas(long numberFollowedIdeas);
 }

@@ -21,9 +21,9 @@ public class User implements IUser {
     private String gender;
     private String language;
     private String pictureUrl;
-    private List<IIdea> createdIdeas;
+    private List<String> createdIdeas;
     private long numberCreatedIdeas;
-    private List<IIdea> followedIdeas;
+    private List<String> followedIdeas;
     private long numberFollowedIdeas;
 
     @Override
@@ -127,12 +127,12 @@ public class User implements IUser {
     }
 
     @Override
-    public List<IIdea> getCreatedIdeas() {
+    public List<String> getCreatedIdeas() {
         return this.createdIdeas;
     }
 
     @Override
-    public void setCreatedIdeas(List<IIdea> createdIdeas) {
+    public void setCreatedIdeas(List<String> createdIdeas) {
         this.createdIdeas = createdIdeas;
     }
 
@@ -147,12 +147,12 @@ public class User implements IUser {
     }
 
     @Override
-    public List<IIdea> getFollowedIdeas() {
+    public List<String> getFollowedIdeas() {
         return this.followedIdeas;
     }
 
     @Override
-    public void setFollowedIdeas(List<IIdea> followedIdeas) {
+    public void setFollowedIdeas(List<String> followedIdeas) {
         this.followedIdeas = followedIdeas;
     }
 
