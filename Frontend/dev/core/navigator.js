@@ -12,7 +12,7 @@ ideaWatcher.core.Navigator = ideaWatcher.core.Navigator || (function () {
         //endregion
 
         function prepareSwitch(switchInfo) {
-            history.pushState(switchInfo.viewId, '', switchInfo.url);
+            history.pushState(switchInfo.viewId, '', switchInfo.viewUrl);
             executeSwitch(switchInfo.viewId, switchInfo.additionalData);
         }
 

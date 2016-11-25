@@ -5,7 +5,8 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         var cbShowView = null;
         var cbLocalize = null;
         var cbGetIdea = null;
-        var cbDeleteIdeaResp = null;
+        var cbGetDeleteIdeaResp = null;
+        var cbGetEditIdeaResp = null;
         var cbGetCurrentListType = null;
         var cbGetCurrentCategory = null;
         var cbGetIdeasResp = null;
@@ -41,22 +42,28 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             cbFunction: cbGetIdeasResponse
         };
 
-        var evDeleteIdeaResponse = {
+        var evGetDeleteIdeaResponse = {
             topic: 'SIdeaList/deleteIdeaRequest-response',
-            cbFunction: cbDeleteIdeaResponse
+            cbFunction: cbGetDeleteIdeaResponse
+        };
+
+        var evGetEditIdeaResponse = {
+            topic: 'SIdeaList/editIdeaRequest-response',
+            cbFunction: cbGetEditIdeaResponse
         };
 
         //endregion
 
         //region subscribe to events
 
+        ideaWatcher.core.MessageBroker.subscribe(evIni);
         ideaWatcher.core.MessageBroker.subscribe(evSwitchViewToIdeaList);
         ideaWatcher.core.MessageBroker.subscribe(evSwitchViewToMyIdeas);
         ideaWatcher.core.MessageBroker.subscribe(evSwitchViewToMyFollowedIdeas);
-        ideaWatcher.core.MessageBroker.subscribe(evIni);
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         ideaWatcher.core.MessageBroker.subscribe(evGetIdeasResponse);
-        ideaWatcher.core.MessageBroker.subscribe(evDeleteIdeaResponse);
+        ideaWatcher.core.MessageBroker.subscribe(evGetDeleteIdeaResponse);
+        ideaWatcher.core.MessageBroker.subscribe(evGetEditIdeaResponse);
 
         //endregion
 
@@ -77,8 +84,12 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             cbGetIdeasResp(obj);
         }
 
-        function cbDeleteIdeaResponse(obj) {
-            cbDeleteIdeaResp(obj);
+        function cbGetDeleteIdeaResponse(obj) {
+            cbGetDeleteIdeaResp(obj);
+        }
+
+        function cbGetEditIdeaResponse(obj) {
+            cbGetEditIdeaResp(obj);
         }
 
         //endregion
@@ -104,8 +115,12 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             cbGetIdeasResp = cb;
         }
 
-        function pubRegisterDeleteIdeaResponse(cb) {
-            cbDeleteIdeaResp = cb;
+        function pubRegisterGetDeleteIdeaResponse(cb) {
+            cbGetDeleteIdeaResp = cb;
+        }
+
+        function pubRegisterGetEditIdeaResponse(cb) {
+            cbGetEditIdeaResp = cb;
         }
 
         function pubRegisterGetCurrentListType(cb) {
@@ -119,7 +134,6 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         function pubRegisterGetIdea(cb) {
             cbGetIdea = cb;
         }
-
 
         //endregion
 
@@ -136,13 +150,13 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
          */
         function pubUpdateIdeaList(listType, category, from, to, isRenderNewIdeaList)
         {
-            var requestData = ideaWatcher.model.ExchangeObject.IdeaList.RequestData;
+            var requestData = Object.create(ideaWatcher.model.ExchangeObject.IdeaList.RequestData);
 
             if (!listType) {
-                listType = cbGetCurrentListType();
+                listType = pubGetCurrentClickedListType();
             }
             if (!category) {
-                category = cbGetCurrentCategory();
+                category = pubGetCurrentClickedCategory();
             }
             requestData.listType = listType;
             requestData.category = category;
@@ -167,7 +181,9 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
 
             return request;
         }
-        
+
+
+
         function pubSwitchToCreateIdeaView(idea) {
 
             var exObj = Object.create(ideaWatcher.model.ExchangeObject.SwitchView);
@@ -184,31 +200,31 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
 
         function pubTryToDeleteIdea(ideaId) {
 
+            var requestData = {
+                ideaId: ideaId
+            };
 
+            // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
+            if (ideaWatcher.core.WebSocketConnector.isConnected()) {
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildDeleteIdeaRequest(requestData));
+            } else {
+                //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
+            }
         }
 
-        function buildDeleteIdeaRequest(exObject)
-        {
-            var request = ideaWatcher.model.Request;
+        function buildDeleteIdeaRequest(requestData) {
 
-            request.destination = 'SIdeaList/getIdeasRequest';
-            request.data = exObject;
+            var request = Object.create(ideaWatcher.model.Request);
+
+            request.destination = 'SIdeaList/deleteIdeaRequest';
+            request.data = requestData;
 
             return request;
         }
 
         function pubTryToEditIdea(ideaId) {
 
-        }
-
-        function buildGetIdeasRequest(exObject)
-        {
-            var request = ideaWatcher.model.Request;
-
-            request.destination = 'SIdeaList/getIdeasRequest';
-            request.data = exObject;
-
-            return request;
+            ideaWatcher.controller.ideaCreation.tryToEditIdea(ideaId);
         }
 
         function pubNavigateToCreateIdeaView() {
@@ -216,8 +232,19 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             var exObj = Object.create(ideaWatcher.model.ExchangeObject.SwitchView);
             exObj.viewId = ideaWatcher.model.Navigation.ViewId.CREATEIDEA;
             exObj.viewUrl = ideaWatcher.model.Navigation.ViewUrl.CREATEIDEA;
+            exObj.additionalData.isEdit = true;
 
             ideaWatcher.core.Navigator.switchView(exObj);
+        }
+
+        function pubGetCurrentClickedCategory() {
+
+            return ideaWatcher.controller.MainMenu.getCurrentClickedCategory();
+        }
+
+        function pubGetCurrentClickedListType() {
+
+            return ideaWatcher.controller.MainMenu.getCurrentClickedListType();
         }
 
         //endregion
@@ -226,15 +253,16 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         return {
             // hier kann die View eine Methode(ui-Connector) registrieren, die gerufen wird,
             // wenn die View ein/ausgeblendet werden soll
+            getCurrentClickedCategory: pubGetCurrentClickedCategory,
+            getCurrentClickedListType: pubGetCurrentClickedListType,
             getIdea: pubGetIdea,
             navigateToCreateIdeaView: pubNavigateToCreateIdeaView,
             registerInitializeView: pubRegisterInitializeView,
             registerShowView: pubRegisterShowView,
             registerLocalizeView: pubRegisterLocalizeView,
             registerGetIdeasResponse: pubRegisterGetIdeasResponse,
-            registerGetDeleteIdeaResponse: pubRegisterDeleteIdeaResponse,
-            registerGetCurrentListType: pubRegisterGetCurrentListType,
-            registerGetCurrentCategory: pubRegisterGetCurrentCategory,
+            registerGetDeleteIdeaResponse: pubRegisterGetDeleteIdeaResponse,
+            registerGetEditIdeaResponse: pubRegisterGetEditIdeaResponse,
             registerGetIdea: pubRegisterGetIdea,
             switchToCreateIdeaView: pubSwitchToCreateIdeaView,
             tryToDeleteIdea: pubTryToDeleteIdea,

@@ -4,6 +4,8 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
         var cbIni = null;
         var cbShowView = null;
         var cbLocalize = null;
+        var cbGetIdeaResp = null;
+        var cbSaveIdeaResp = null;
         //endregion
 
         //region Event Globale Initialisierung
@@ -22,12 +24,26 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
             topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.CREATEIDEA,
             cbFunction: cbLocalizeView
         };
+
+        var evGetIdeaToEditResponse = {
+            topic: 'SIdeaCreation/getIdeaToEditRequest-response',
+            cbFunction: cbGetIdeaResponse
+        };
+
+        var evSaveIdeaResponse = {
+            topic: 'SIdeaCreation/saveIdeaRequest-response',
+            cbFunction: cbSaveIdeaResponse
+        };
+
+
         //endregion
 
         //region subscribe to events
         ideaWatcher.core.MessageBroker.subscribe(evIni);
         ideaWatcher.core.MessageBroker.subscribe(evSwitchView);
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
+        ideaWatcher.core.MessageBroker.subscribe(evGetIdeaToEditResponse);
+        ideaWatcher.core.MessageBroker.subscribe(evSaveIdeaResponse);
         //endregion
 
         //region Callbacks definieren
@@ -44,6 +60,15 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
         function cbLocalizeView(obj) {
             cbLocalize();
         }
+
+        function cbGetIdeaResponse(obj) {
+            cbGetIdeaResp(obj);
+        }
+
+        function cbSaveIdeaResponse(obj) {
+            cbSaveIdeaResp(obj);
+        }
+
         //endregion
 
         //region register Callbacks
@@ -58,16 +83,74 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
         function pubRegisterLocalizeView(cb) {
             cbLocalize = cb;
         }
+
+        function pubRegisterGetIdeaToEditResponse(cb) {
+            cbGetIdeaResp = cb;
+        }
+
+        function pubRegisterSaveIdeaResponse(cb) {
+            cbSaveIdeaResp = cb;
+        }
         //endregion
+
+        function pubTryToEditIdeaData(ideaId)
+        {
+            // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
+            if (ideaWatcher.core.WebSocketConnector.isConnected()) {
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestGetIdeaToEdit(ideaId));
+            } else {
+                //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
+            }
+        }
+
+        function buildRequestGetIdeaToEdit(ideaId)
+        {
+            var request = Object.create(ideaWatcher.model.Request);
+
+            request.destination = 'SIdeaCreation/getIdeaToEditRequest';
+            var exObj = {
+                ideaId : ideaId
+            };
+            request.data = exObj;
+
+            return request;
+        }
+
+        function pubTryToSaveNewIdeaData(ideaData)
+        {
+            // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
+            if (ideaWatcher.core.WebSocketConnector.isConnected()) {
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestSaveNewIdeaData(ideaData));
+            } else {
+                //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
+            }
+        }
+
+        function buildRequestSaveNewIdeaData(ideaData)
+        {
+            var request = Object.create(ideaWatcher.model.Request);
+
+            request.destination = 'SIdeaCreation/addIdeaRequest';
+            var exObj = {
+                ideaData : ideaData
+            };
+            request.data = exObj;
+
+            return request;
+        }
+
 
         // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
         return {
             // hier kann die View eine Methode(ui-Connector) registrieren, die gerufen wird,
             // wenn die View ein/ausgeblendet werden soll
+            registerGetIdeaToEditResponse: pubRegisterGetIdeaToEditResponse,
+            registerSaveIdeaResponse: pubRegisterSaveIdeaResponse,
             registerInitializeView: pubRegisterInitializeView,
             registerLocalizeView: pubRegisterLocalizeView,
-            registerShowView: pubRegisterShowView
-            // tryToCreateNewIdea: pubTryToSignup
+            registerShowView: pubRegisterShowView,
+            tryToEditIdea: pubTryToEditIdeaData,
+            tryToSaveNewIdea: pubTryToSaveNewIdeaData
         };
 
     })();

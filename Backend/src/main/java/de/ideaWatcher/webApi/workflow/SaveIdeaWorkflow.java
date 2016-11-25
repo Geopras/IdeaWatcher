@@ -1,18 +1,16 @@
 package main.java.de.ideaWatcher.webApi.workflow;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.json.JSONObject;
-
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
-import main.java.de.ideaWatcher.webApi.core.JSONBuilder;
 import main.java.de.ideaWatcher.webApi.core.Response;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
+import org.json.JSONObject;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SaveIdeaWorkflow implements IWorkflow{
 
@@ -64,7 +62,14 @@ public class SaveIdeaWorkflow implements IWorkflow{
         //create Idea in Backend
         try {
 
-        	ideaController.addNewIdea(newIdea, userId);
+            if (ideaStatus.equals("save")) {
+                ideaController.addNewIdea(newIdea, userId);
+            }
+            else if (ideaStatus.equals("edit")) {
+                //TODO: Update-Methode für vorhandene User-Idea
+                //ideaController.updateIdea(newIdea, userId);
+            }
+
 
             response.setResult("success");
 //            respData.put("idea", JSONBuilder.getIdeaDetailsJSONObject(currentIdea));

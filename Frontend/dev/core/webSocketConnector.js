@@ -9,6 +9,8 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
         };
         //endregion
 
+
+
         //region Neue WebSocket-Verbindung einrichten
 
         // für alle verwirrten Seelen:
@@ -28,9 +30,7 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                 console.log('WebSocket-Verbindung erfolgreich hergestellt!');
                 // callbackFunction(true);
                 isConnected = true;
-
-                console.log('Klicke den Hot-Button');
-                ideaWatcher.controller.MainMenu.clickHotButton();
+                pubWebSocketConnectionOpen();  //Nachricht bekannt geben
             };
 
             // callback function wenn eine Nachricht reinkommt
@@ -158,7 +158,17 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
         function pubIsConnected() {
             return isConnected;
         }
+        //endregion
 
+        //region Nachricht, dass WebSocketVerbindung offe ist, raus geben:
+        function pubWebSocketConnectionOpen() {
+
+            var evObject = {
+                topic: 'SWebSocket/connectionOpen',
+                exObject: null
+            };
+            ideaWatcher.core.MessageBroker.publish(evObject);
+        }
         //endregion
 
         return {
