@@ -346,22 +346,26 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			function renderView(crtIdea) {
 
 				console.log('Starte erstellen der Detailansicht...');
-
+				currentIdea = crtIdea;
+				
+				//htmlEditButton soll nur angezeigt werden, wenn es sich um die Idee des Nutzers handelt
+				htmlEditButton = document
+				.querySelector('#ideaDetails_edit_img');
+				htmlEditButton.style.display = 'none';
+				
 				// Flag isOwnIdea bestimmen
 				var isOwnIdea = false;
-				//
-				// if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
-				// var currentUserId = ideaWatcher.controller.UserSession
-				// .getCurrentUserId();
-				//
-				// if (idea.creator.userId == currentUserId) {
-				// isOwnIdea = true;
-				// }
-				// } else {
-				// // kein User angemeldet
-				// }
-
-				isOwnIdea = true;
+				
+				 if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
+				 var currentUserId = ideaWatcher.controller.UserSession
+				 .getCurrentUserId();
+				
+				 if (currentIdea.creator.userId == currentUserId) {
+				 isOwnIdea = true;
+				 }
+				 } else {
+				 // kein User angemeldet
+				 }
 
 				currentIdea = crtIdea;
 
@@ -409,12 +413,10 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					var mailaddress = creator.email;
 					var mailto = 'mailto: ' + mailaddress;
 					htmlContactLink.href = mailto;
+					htmlContactLink.style.display = 'inline';
 				} else {
 					htmlContactLink.style.display = 'none';
 				}
-
-				var htmlEditButton = document
-						.querySelector('#ideaDetails_edit_img');
 
 				if (isOwnIdea) {
 					htmlEditButton.style.display = 'inline';

@@ -60,6 +60,7 @@ public class SaveIdeaWorkflow implements IWorkflow{
         newIdea.setName(ideaName);
         newIdea.setDescription(description);
         newIdea.setCategory(category);
+        newIdea.getCreator().setUserId(userId);;
         
         //create Idea in Backend
         try {
