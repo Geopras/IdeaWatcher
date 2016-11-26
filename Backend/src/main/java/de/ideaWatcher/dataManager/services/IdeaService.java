@@ -1,5 +1,6 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
 import main.java.de.ideaWatcher.dataManager.pojos.Comment;
@@ -374,14 +375,6 @@ public class IdeaService {
     }
     
     /**
-     * Updatet bestimmte Werte eines User Documents
-     * @param usideaIder {IUser} ID eines User
-     * @param type {IUser} Datenfeld des Users
-     * @param value {IUser} Wert des Datenfeldes
-     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
-     */
-
-    /**
      * Updatet bestimmte Werte eines Idea Documents
      * @param ideaId ID der Idee
      * @param type Datenfeld der Idee
@@ -471,9 +464,49 @@ public class IdeaService {
             throw new Exception(en);
         } finally {
             dbConnectionService.closeConnection();
-        }
-        
-        
+        }   
     }
     
+    public void updateModifiedIsMailPublic(List<IIdea> ideaList) throws Exception{
+        try {
+            if (!dbConnectionService.isOpen()) {
+                dbConnectionService.openConnection();
+            }
+            Document upDocValue;
+            Document upDocQuery;
+            Document upDocSet;
+            for( IIdea idea : ideaList){
+                upDocQuery = new Document("_id", new ObjectId(idea.getIdeaId()) );
+                upDocValue = new Document("creator.isMailPublic" , idea.getCreator().getIsMailPublic());
+                upDocSet = new Document("$set", upDocValue);            
+                dbConnectionService.getCollection().updateOne(upDocQuery, upDocSet );
+            } 
+        } catch (Exception en) {
+            throw new Exception(en);
+        } finally {
+            dbConnectionService.closeConnection();
+        }   
+    }        
+
+    
+    public List<IIdea> getIdeaList(String type, String value) throws Exception{
+      
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        }
+        List<Document> ideasDoc = new ArrayList<Document>();
+        List<IIdea> ideaList = new ArrayList<IIdea>();
+        try {
+            ideasDoc = dbConnectionService.getCollection().find(Filters.eq(type, value)).into(new
+                    ArrayList<>());
+            for(Document doc : ideasDoc){
+                ideaList.add(buildIdea(doc));
+            }
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
+        }        
+        return ideaList;
+    }
 }

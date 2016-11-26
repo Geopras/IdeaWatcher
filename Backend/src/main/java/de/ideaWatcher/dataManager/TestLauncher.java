@@ -52,7 +52,7 @@ public class TestLauncher {
     public static IUser getUser() throws Exception{
         UserService us = new UserService("usersCollection");
         IUser user = new User();
-        user = us.getUser("58346be56f963f1770997256");
+        user = us.getUser("5839a34b6bd8bf1dc0c9a6be");
         return user;
         
     }
@@ -114,9 +114,41 @@ public class TestLauncher {
         idea.setLanguage("english");
         updateIdea(idea);
         deleteIdea(idea);
-       
-        
- */
         updateApropertyOfaIdea( );
+        
+        IdeaService is = new IdeaService("ideasCollection");
+        UserService us = new UserService("usersCollection");
+        // creator.$.userName
+        List<IIdea> ideaList = is.getIdeaList("creator.userName", "user19");
+        for(IIdea doc : ideaList){
+            System.out.println("Ausgabe: " + doc.getCreator().getIsMailPublic());
+        }
+
+      us.updateApropertyOfaUser("5839a34b6bd8bf1dc0c9a6be", "isMailPublic", "true");
+      is.updateModifiedIsMailPublic(ideaList);
+      
+      //System.out.println("user: "  + us.getUser("5839a34b6bd8bf1dc0c9a6be"));
+
+        ideaList = is.getIdeaList("creator.userName", "user19");
+        for(IIdea doc : ideaList){
+           System.out.println("Ausgabe: " + doc.getCreator().getIsMailPublic());
+        }
+         */
+        
+        IUser user = new User();
+        user = getUser();
+        
+        System.out.println(user.getIsMailPublic());
+        
+
+        
+        
+        user.setIsMailPublic(false);
+        updateUser(user);
+        
+        
+        
+        user = getUser();
+        System.out.println("userDocument - Public: " + user.getIsMailPublic());
     }
 }

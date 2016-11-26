@@ -4,7 +4,10 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
 import main.java.de.ideaWatcher.dataManager.BCrypt;
+import main.java.de.ideaWatcher.dataManager.pojos.Creator;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -144,7 +147,7 @@ public class UserService {
      * @return {Document} gibt Objekt Document zurück
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
      */
-    private Document buildUserDocument(IUser user) {
+    private static Document buildUserDocument(IUser user) {
 
         return new Document("userName", user.getUserName() )
                 .append("password", user.getPassword())
@@ -325,7 +328,10 @@ public class UserService {
         }
         UpdateResult ur = null;
         try {
+            
             ur = dbConnectionService.getCollection().replaceOne(Filters.eq("_id", new ObjectId (user.getUserId())), newDoc);
+            updateIsMailPublicToAdjustIdeas(user, user.getIsMailPublic());
+            
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
@@ -359,10 +365,21 @@ public class UserService {
      */ 
     public void updateApropertyOfaUser (String userId, String type, String value) throws Exception {
         try{
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
-        } 
-        dbConnectionService.getCollection().updateOne(Filters.eq("_id", new ObjectId(userId)), new Document("$set", new Document(type, value)));
+            if (!dbConnectionService.isOpen()) {
+                dbConnectionService.openConnection();
+            }    
+            if( type.equals("isMailPublic")){
+                boolean newValue = false;
+                if(value.equals("true") || value.equals("1")){
+                    newValue = true;
+                    dbConnectionService.getCollection().updateOne(Filters.eq("_id", new ObjectId(userId)), new Document("$set", new Document(type, newValue)));
+                    
+                }
+                updateIsMailPublicToAdjustIdeas(userId, newValue);
+            } else {
+                dbConnectionService.getCollection().updateOne(Filters.eq("_id", new ObjectId(userId)), new Document("$set", new Document(type, value)));
+            }
+
         } catch(Exception en){
             throw new Exception(en);
         }
@@ -370,5 +387,34 @@ public class UserService {
             dbConnectionService.closeConnection();
         }
     }
+    
+    private static ICreator buildUserToCreator(IUser user){
+        Document userDoc = new Document();
+        userDoc = buildUserDocument(user);
+        ICreator creator = new Creator();
+        creator = IdeaService.buildCreator(userDoc);
+        return creator;
+    }
 
+    private static void updateIsMailPublicToAdjustIdeas(IUser user, boolean isPublicMail) throws Exception{
+        ICreator creator = new Creator();
+        creator = buildUserToCreator(user);
+        System.out.println("creator -- public: " + creator.getIsMailPublic());
+        IdeaService is = new IdeaService("ideasCollection");
+        List<IIdea> ideaList = new ArrayList<IIdea>();
+        // Testen mit der ID, ob das mit dem String auch geht -- es geht nicht. 
+        //ideaList = is.getIdeaList("creator.userId", creator.getUserId());
+        ideaList = is.getIdeaList("creator.userName", creator.getUserName());
+        
+        for(IIdea idea : ideaList){
+            idea.getCreator().setIsMailPublic(isPublicMail);
+        }
+        is.updateModifiedIsMailPublic(ideaList);
+
+    }
+    private void updateIsMailPublicToAdjustIdeas(String userId, boolean isPublicMail) throws Exception{
+        IUser user = new User();
+        user = getUser(userId);
+        updateIsMailPublicToAdjustIdeas(user, isPublicMail);
+    }
 }
