@@ -176,6 +176,7 @@ public class IdeaService {
         idea.setCategory(ideaDoc.getString("catagory"));
         idea.setCreator(  buildCreator( (Document) ideaDoc.get("creator") ) );
         idea.setPublishDate(ideaDoc.getDate("publishedDate"));
+        idea.setIsPublished(ideaDoc.getBoolean("isPublished"));
         idea.setLanguage(ideaDoc.getString("language"));
         idea.setHotRank(ideaDoc.getDouble("hotRank"));
         idea.setTrendingRank(ideaDoc.getDouble("trendingRank"));
@@ -209,6 +210,7 @@ public class IdeaService {
                 .append("catagory", idea.getCategory())
                 .append("creator", buildCreatorDocument(idea.getCreator()))
                 .append("publishedDate", idea.getPublishDate())
+                .append("isPublished", idea.getIsPublished())
                 .append("language", idea.getLanguage())
                 .append("hotRank", idea.getHotRank())
                 .append("trendingRank", idea.getTrendingRank())
@@ -234,6 +236,7 @@ public class IdeaService {
                 .append("catagory", idea.getCategory())
                 .append("creator", IdeaService.buildCreatorDocument(idea.getCreator()))
                 .append("publishedDate", idea.getPublishDate())
+                .append("isPublished", idea.getIsPublished())
                 .append("language", idea.getLanguage())
                 .append("hotRank", idea.getHotRank())
                 .append("trendingRank", idea.getTrendingRank())
@@ -257,6 +260,7 @@ public class IdeaService {
         idea.setCategory(ideaDoc.getString("catagory"));
         idea.setCreator(  buildCreator( (Document) ideaDoc.get("creator") ) );
         idea.setPublishDate(ideaDoc.getDate("publishedDate"));
+        idea.setIsPublished(ideaDoc.getBoolean("isPublished"));
         idea.setLanguage(ideaDoc.getString("language"));
         idea.setHotRank(ideaDoc.getDouble("hotRank"));
         idea.setTrendingRank(ideaDoc.getDouble("trendingRank"));
@@ -377,7 +381,15 @@ public class IdeaService {
      * @param type {IUser} Datenfeld des Users
      * @param value {IUser} Wert des Datenfeldes
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
-     */  
+     */
+
+    /**
+     * Updatet bestimmte Werte eines Idea Documents
+     * @param ideaId ID der Idee
+     * @param type Datenfeld der Idee
+     * @param value Wert des Datenfelds
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */
     public void updateApropertyOfaIdea(String ideaId, String type, String value) throws Exception{    
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();

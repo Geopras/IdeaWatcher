@@ -20,6 +20,8 @@ public interface IIdea {
     void setCreator(ICreator creator);
     Date getPublishDate();
     void setPublishDate(Date publishDate);
+    boolean getIsPublished();
+    void setIsPublished(boolean isPublished);
     String getLanguage();
     void setLanguage(String language);
     Double getHotRank();

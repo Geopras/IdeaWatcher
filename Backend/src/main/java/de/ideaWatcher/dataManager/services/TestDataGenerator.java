@@ -204,6 +204,15 @@ public class TestDataGenerator {
             int randomLanguageIndex = r.nextInt(languageList.size());
             newIdea.setLanguage(languageList.get(randomLanguageIndex));
 
+            // Erzeuge einen zufälligen isPublished-Zustand
+            // 10% false, 90% true
+            int isPublishedRandom = r.nextInt(9);
+            if (isPublishedRandom == 0){
+                newIdea.setIsPublished(false);
+            } else {
+                newIdea.setIsPublished(true);
+            }
+
             // Erzeuge zufällig likes (maximal so viele, wie in der User-Liste)
             int numberLikes = r.nextInt(userList.size());
             newIdea.setNumberLikes((long) numberLikes);

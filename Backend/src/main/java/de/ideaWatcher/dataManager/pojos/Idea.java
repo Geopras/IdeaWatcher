@@ -22,6 +22,7 @@ public class Idea implements IIdea {
     private String category;
     private ICreator creator;
     private Date publishDate;
+    private boolean isPublished;
     private String language;
     private Double hotRank;
     private Double trendingRank;
@@ -81,6 +82,16 @@ public class Idea implements IIdea {
     @Override
     public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
+    }
+
+    @Override
+    public boolean getIsPublished() {
+        return this.isPublished;
+    }
+
+    @Override
+    public void setIsPublished(boolean isPublished) {
+        this.isPublished = isPublished;
     }
 
     @Override

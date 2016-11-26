@@ -73,6 +73,9 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
                     case ('mainMenu_languageSwitch_div'):
                         initializeLanguageSwitchButton();
                         break;
+                    case ('mainMenu_about_li'):
+                        initializeAboutButton();
+                        break;
                     default:
                         console.log('Es wurde die MainMenu-Button-Klasse "' +
                             childClass + '" NICHT im' +
@@ -293,6 +296,27 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
                 url: ideaWatcher.model.Navigation.ViewUrl[buttonId]
             });
         }
+        //endregion
+
+        //region AboutButton
+        function initializeAboutButton() {
+
+            var htmlAbout = document.querySelector('.mainMenu_about_li');
+            initializeNavigationButton(htmlAbout);
+            // htmlAbout.addEventListener('click', handleAboutButtonClick);
+            // htmlMainMenuButtons.push(htmlAbout);
+        }
+
+        // function handleAboutButtonClick(clickEvent) {
+        //
+        //     handleCurrentButtonClick(clickEvent);
+        //
+        //     console.log('htmlBtnAbout geklickt');
+        //     // ideaWatcher.core.Navigator.switchView({
+        //     //     viewId : 'about',
+        //     //     url : 'about'
+        //     // });
+        // }
         //endregion
 
         //region Language-Switch-Button
