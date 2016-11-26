@@ -149,7 +149,6 @@ public class IdeaService {
         try {
             ideasDoc = dbConnectionService.getCollection().find().into(new
                     ArrayList<>());
-            dbConnectionService.closeConnection();
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
@@ -184,7 +183,6 @@ public class IdeaService {
         idea.setFollowerUsers((List<String>) ideaDoc.get("followerUsers"));
         idea.setNumberFollowers(ideaDoc.getLong("numberFollowers"));
         idea.setNumberComments(ideaDoc.getLong("numberComments"));
-
         idea.setComments((List<IComment>) ideaDoc.get("comments"));
 
         List<Document> commentsDocList = (List<Document>) ideaDoc.get("comments");
