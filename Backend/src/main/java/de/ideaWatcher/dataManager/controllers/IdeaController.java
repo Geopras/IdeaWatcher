@@ -49,4 +49,10 @@ public class IdeaController implements IIdeaController {
     public void updateApropertyOfaIdea(String ideaId, String type, String value) throws Exception {
         this.ideaService.updateApropertyOfaIdea(ideaId, type, value);
     }
+
+    @Override
+    public void updateRankings(List<IIdea> ideaList) throws Exception {
+        // TODO Auto-generated method stub
+        this.ideaService.updateRankings(ideaList);
+    }
 }

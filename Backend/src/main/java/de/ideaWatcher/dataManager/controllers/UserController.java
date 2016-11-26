@@ -94,4 +94,9 @@ public class UserController implements IUserController {
     public void updateUser(IUser user) throws Exception {
         userService.updateUser(user);
     }
+    
+    @Override
+    public void updateApropertyOfaUser(String userId, String type, String value) throws Exception {
+        this.userService.updateApropertyOfaUser(userId, type, value);
+    }
 }

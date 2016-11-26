@@ -64,4 +64,11 @@ public interface IIdeaController {
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      */   
     void updateApropertyOfaIdea(String ideaId, String type, String value) throws Exception;
+    
+    /**
+     * Aktualisiert HotRanking und TrendingRankings von Ideen
+     * @param ideaList {List<Idea>} ideaId ID des Dokuments
+     * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
+     */   
+    void updateRankings(List<IIdea> ideaList) throws Exception;
 }

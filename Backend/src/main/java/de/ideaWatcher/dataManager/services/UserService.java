@@ -327,4 +327,18 @@ public class UserService {
         dbConnectionService.closeConnection();
     }
 
+    public void updateApropertyOfaUser (String userId, String type, String value) throws Exception {
+        try{
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        } 
+        dbConnectionService.getCollection().updateOne(Filters.eq("_id", new ObjectId(userId)), new Document("$set", new Document(type, value)));
+        } catch(Exception en){
+            throw new Exception(en);
+        }
+        finally {
+        dbConnectionService.closeConnection();
+        }
+    }
+
 }

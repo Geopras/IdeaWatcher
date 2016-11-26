@@ -82,4 +82,13 @@ public interface IUserController {
      * Zugriff auf die Datenbank auftrat
      */
     void updateUser(IUser user) throws Exception;
+    
+    /**
+     * Aktualisiert bestimmtes Feld einea Users-Dokuments
+     * @param userId {String} userId ID des Dokuments
+     * @param type {String} Feld des Dokuments in der DB
+     * @param value {String} value der Wert des Feldes
+     * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
+     */   
+    void updateApropertyOfaUser(String userId, String type, String value) throws Exception;
 }

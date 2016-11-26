@@ -308,5 +308,26 @@ public class IdeaService {
         
         return ideasSmart; 
     }
+
+    public void updateRankings(List<IIdea> ideaList) throws Exception {
+      
+        try {
+            if (!dbConnectionService.isOpen()) {
+                dbConnectionService.openConnection();
+            }
+            for( IIdea idea : ideaList){
+                dbConnectionService.getCollection().updateOne(Filters.eq("_id", new ObjectId(idea.getIdeaId())), 
+                        new Document("$set", new Document("hotRank", idea.getHotRank())));
+                dbConnectionService.getCollection().updateOne(Filters.eq("_id", new ObjectId(idea.getIdeaId())), 
+                        new Document("$set", new Document("trendingRank", idea.getTrendingRank())));
+            }         
+        } catch (Exception en) {
+            throw new Exception(en);
+        } finally {
+            dbConnectionService.closeConnection();
+        }
+        
+        
+    }
     
 }
