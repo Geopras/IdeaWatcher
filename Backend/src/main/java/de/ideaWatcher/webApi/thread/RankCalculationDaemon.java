@@ -66,6 +66,14 @@ public class RankCalculationDaemon extends Thread {
             // gebe den allIdeasSnapshot wieder frei
             ideaManager.getLockAllIdeasSnapshot().unlock();
         }
+
+        try{
+            ideaController.updateRankings(ideas);
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Ein Fehler ist beim Zurückschreiben der aktualisierten Rankings " +
+            "in die Datenbank aufgetreten! \nFehlermeldung: " + e
+                    .toString());
+        }
     }
 
 }

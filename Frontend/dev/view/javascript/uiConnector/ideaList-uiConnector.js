@@ -16,6 +16,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         var currentIdeasMap = {};
         var countIdeasPerRequest = 10;
         var publishedLabels = [];
+        var publishedValueLabels = [];
 
         //endregion
 
@@ -127,18 +128,17 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             var countPublishedLabels = publishedLabels.length;
             if (countPublishedLabels > 0) {
                 for (var i = 0; i < countPublishedLabels; i++) {
-                    var textContent = publishedLabels[i].textContent;
-                    if (textContent.startsWith(
-                            ideaWatcher.core.Localizer.IdeaList.Published.de_DE)) {
-                        textContent = textContent.replace(
-                            ideaWatcher.core.Localizer.IdeaList.Published.de_DE,
-                            ideaWatcher.core.Localizer.IdeaList.Published.en_GB);
-                    } else {
-                        textContent = textContent.replace(
-                            ideaWatcher.core.Localizer.IdeaList.Published.en_GB,
-                            ideaWatcher.core.Localizer.IdeaList.Published.de_DE);
-                    }
-                    publishedLabels[i].textContent = textContent;
+                    publishedLabels[i].textContent = ideaWatcher.core.Localizer.IdeaList.Published[language];
+                }
+            }
+            var countPublishedValueLabels = publishedValueLabels.length;
+            if (countPublishedValueLabels > 0) {
+                for (var i = 0; i < countPublishedValueLabels; i++) {
+                    var publishDateValue = publishedValueLabels[i].attributes.getNamedItem('data-publishDate').nodeValue;
+                    var locale = language.replace('_', '-');
+                    var dateObject = new Date(parseInt(publishDateValue));
+                    publishedValueLabels[i].textContent = dateObject.toLocaleDateString(locale) +
+                    ' ' + dateObject.toLocaleTimeString(locale);
                 }
             }
         }
@@ -250,6 +250,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             if (ideaListData.isRenderNewIdeaList) {
 
                 publishedLabels = [];
+                publishedValueLabels = [];
                 htmlParentNode.removeChild(htmlSections);
                 htmlSections = document.createElement('div');
                 htmlSections.classList.add(htmlSectionsClassName);
@@ -364,6 +365,11 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 publishedLabels.push(publishDate);
                 dataRight.appendChild(publishDate);
 
+                var publishDateValue = document.createElement('span');
+                publishDateValue.classList.add('ideaList_publishDateValue_span');
+                publishedValueLabels.push(publishDateValue);
+                dataRight.appendChild(publishDateValue);
+
                 dataRow.appendChild(dataRight);
                 dataRow.appendChild(dataLeft);
 
@@ -393,7 +399,13 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 numberOfLikes.textContent = idea.numberLikes;
                 numberOfFollowers.textContent = idea.numberFollowers;
                 numberOfComments.textContent = idea.numberComments;
-                publishDate.textContent = publishedLabel + ': ' + idea.publishDate;
+                publishDate.textContent = publishedLabel;
+                publishDateValue.setAttribute('data-publishDate', idea.publishDate);
+
+                var locale = language.replace('_', '-');
+                var dateObject = new Date(idea.publishDate);
+                publishDateValue.textContent = dateObject.toLocaleDateString(locale) +
+                    ' ' + dateObject.toLocaleTimeString(locale);
             });
         }
 
