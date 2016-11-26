@@ -28,8 +28,8 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
             }
         },
         Published: {
-            en_GB: 'Published',
-            de_DE: 'Veröffentlicht'
+            en_GB: 'Published: ',
+            de_DE: 'Veröffentlicht: '
         },
         Notification: {
             en_GB: {

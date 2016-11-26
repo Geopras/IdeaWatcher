@@ -33,7 +33,7 @@ public class JSONBuilder {
         jsonObject.put("name", idea.getName());
         jsonObject.put("description", idea.getDescription());
         jsonObject.put("category", idea.getCategory());
-        jsonObject.put("publishDate", idea.getPublishDate());
+        jsonObject.put("publishDate", idea.getPublishDate().getTime());
         jsonObject.put("language", idea.getLanguage());
         jsonObject.put("hotRank", idea.getHotRank());
         jsonObject.put("trendingRank", idea.getTrendingRank());
