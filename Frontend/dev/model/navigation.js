@@ -1,6 +1,7 @@
 ideaWatcher.model.Navigation = ideaWatcher.model.Navigation || {
 
         ButtonId: {
+            ABOUT: 'ABOUT',
             BUSINESS: 'BUSINESS',
             CATEGORY: 'CATEGORY',
             COMPUTER: 'COMPUTER',
@@ -22,6 +23,7 @@ ideaWatcher.model.Navigation = ideaWatcher.model.Navigation || {
             TRENDING: 'TRENDING'
         },
         ViewId: {
+            ABOUT: 'about',
             CREATEIDEA: 'createNewIdea',
             FRESH: {
                 BUSINESS: 'ideaList',
@@ -66,6 +68,7 @@ ideaWatcher.model.Navigation = ideaWatcher.model.Navigation || {
             },
         },
         ViewUrl: {
+            ABOUT: 'about',
             CREATEIDEA: 'createNewIdea',
             IDEADETAILS: 'ideaDetails',
             IDEALIST: 'ideaList',
