@@ -127,39 +127,39 @@ public class IdeaManager {
                     break;
             }
 
-            if (!category.toUpperCase().equals("NONE") || category.toUpperCase().equals("") ){
+            int numberIdeas = toRank - fromRank + 1;
+            int currentRank = 0;
 
-                // es soll nach einer Kategorie gefiltert werden
+            if (numberIdeas > 0) {
+                // iteriere durch alle Ideen
+                for (IIdea idea : allIdeasSnapshot) {
+                    // suche dabei nach Ideen der gewuenschten Kategorie
+                    if (idea.getIsPublished()) {
 
-                int numberIdeas = toRank - fromRank + 1;
-                int currentRank = 0;
+                        boolean ideaIsOK = false;
 
-                if (numberIdeas > 0) {
-                    // iteriere durch alle Ideen
-                    for (IIdea idea : allIdeasSnapshot) {
-                        // suche dabei nach Ideen der gewuenschten Kategorie
-                        if (idea.getCategory().toUpperCase().equals(category.toUpperCase())) {
-                            currentRank += 1;
-
-                            // und fuege Sie den Ergebnissen hinzu,
-                            // wenn sie im gesuchten Ranking-Bereich liegen
-                            if (currentRank >= fromRank) {
-                                filteredIdeaIds.add(idea.getIdeaId());
+                        // Für den Fall, dass nach einer Kategorie gesucht werden soll
+                        if (!category.toUpperCase().equals("NONE") || category.toUpperCase().equals("") ){
+                            if (idea.getCategory().toUpperCase().equals(category.toUpperCase())) {
+                                // Die Kategorie der Idee stimmt mit der gesuchten überein
+                                ideaIsOK = true;
                             }
-
-                            if (currentRank == toRank) {
-                                break;
-                            }
+                        } else{
+                            // wenn nicht nach einer Kategorie gesucht wird, kann die Idee immer genommen werden
+                            ideaIsOK = true;
                         }
-                    }
-                }
-            } else {
 
-                // Hole die Ideen aus der sortieren Liste entsprechend der gewünschten Bounds
-                for (int i = fromRank - 1; i < toRank; i++) {
+                        currentRank += 1;
 
-                    if (i < allIdeasCount) {
-                        filteredIdeaIds.add(allIdeasSnapshot.get(i).getIdeaId());
+                        // und fuege Sie den Ergebnissen hinzu,
+                        // wenn sie im gesuchten Ranking-Bereich liegen
+                        if (currentRank >= fromRank) {
+                            filteredIdeaIds.add(idea.getIdeaId());
+                        }
+
+                        if (currentRank == toRank) {
+                            break;
+                        }
                     }
                 }
             }

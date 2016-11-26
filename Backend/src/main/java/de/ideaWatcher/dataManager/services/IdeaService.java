@@ -418,6 +418,7 @@ public class IdeaService {
         ideaSmart.setNumberFollowers(idea.getNumberFollowers());
         ideaSmart.setNumberLikes(idea.getNumberLikes());
         ideaSmart.setPublishDate(idea.getPublishDate());
+        ideaSmart.setIsPublished(idea.getIsPublished());
         ideaSmart.setTrendingRank(idea.getTrendingRank());
         
         return ideaSmart;
