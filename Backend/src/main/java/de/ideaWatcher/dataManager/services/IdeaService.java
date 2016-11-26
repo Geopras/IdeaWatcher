@@ -28,6 +28,11 @@ public class IdeaService {
         this.dbConnectionService = new DbConnectionService(collectionName);
     }
     
+    /**
+     * baut Creator in Document um
+     * @param creator {ICreator} ein User Objekt
+     * @return {Document} gibt ein Creator Document zurück
+     */  
     private static Document buildCreatorDocument(ICreator creator) {
         return new Document("userId", creator.getUserId() )
                 .append("userName", creator.getUserName())
@@ -36,6 +41,11 @@ public class IdeaService {
                 .append("pictureURL", creator.getPictureURL());
     }
     
+    /**
+     * baut Document in ICreator um
+     * @param creatorDoc {Document} ein Document Objekt
+     * @return {ICreator} gibt ein Creator Objekt zurück
+     */ 
     public static ICreator buildCreator(Document creatorDoc) {
         ICreator creator = new Creator();
         creator.setUserId(creatorDoc.getString("userId"));
@@ -46,7 +56,11 @@ public class IdeaService {
         return creator;
     }
 
-
+    /**
+     * baut IComment in Document um
+     * @param comment {IComment} ein IComment Objekt
+     * @return {Document} gibt ein Creator Objekt zurück
+     */ 
     private Document buildCommentDocument(IComment comment) {
         return new Document("commentId", comment.getCommentId() )
                 .append("userName", comment.getUserName())
@@ -55,7 +69,12 @@ public class IdeaService {
                 .append("pictureURL", comment.getPictureURL())
                 .append("publishDate", comment.getPublishDate());
     }
-
+    
+    /**
+     * baut Document in IComment um
+     * @param commentDoc {Document} ein Document Objekt
+     * @return {IComment} gibt ein Comment Objekt zurück
+     */ 
     public static IComment buildComment(Document commentDoc) {
         IComment comment = new Comment();
         comment.setCommentId(commentDoc.getString("commentId"));
@@ -66,18 +85,26 @@ public class IdeaService {
         comment.setPictureURL(commentDoc.getString("pictureUrl"));
         return comment;
     }
-
+    
+    /**
+     * baut Document in IComment um
+     * @param commentList {List<IComment>} Liste von Comment Objekt
+     * @return {List<Document>} gibt eine Liste von Documenten zurück
+     */ 
     private List<Document> buildCommentDocumentList(List<IComment> commentList){
-
         List<Document> commentDocList = new ArrayList<Document>();
-
         for (IComment comment : commentList){
             commentDocList.add(buildCommentDocument(comment));
         }
         return commentDocList;
     }
-
-    private List<IComment> buildCommentList(List<Document>  commentDocList){
+    
+    /**
+     * baut List<Document> in List<IComment> um
+     * @param commentDocList {List<IComment>} Liste von Comment Objekt
+     * @return {List<IComment>} gibt eine Liste von IComment zurück
+     */ 
+    private List<IComment> buildCommentList(List<Document> commentDocList){
 
         List<IComment> commentList = new ArrayList<IComment>();
 
@@ -87,13 +114,19 @@ public class IdeaService {
 
         return commentList;
     }
-
+    /**
+     * gibt eine Idea zurück
+     * @param ideaId {String} ID einer Idea
+     * @return {String} gibt die Idea zurück
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */ 
     public IIdea getIdea( String ideaId ) throws Exception {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
         try {
-            Document foundDoc = dbConnectionService.getCollection().find(eq("_id", new ObjectId (ideaId))).first();
+            Document foundDoc = dbConnectionService.getCollection()
+                    .find(eq("_id", new ObjectId (ideaId))).first();
             return buildIdea(foundDoc);
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -102,6 +135,11 @@ public class IdeaService {
         }
     }
     
+    /**
+     * gibt eine Liste von allen Ideen zurück
+     * @return {List<IIdea>} gibt die Liste zurück
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */    
     public List<IIdea> getAllIdeas() throws Exception {
 
         if (!dbConnectionService.isOpen()) {
@@ -124,6 +162,11 @@ public class IdeaService {
         return ideas;
     }
     
+    /**
+     * baut ein Idea-Document um in ein IIdea Objekt
+     * @param ideaDoc {Document} Document einer Idea
+     * @return {IIdea} gibt die Idea zurück
+     */    
     public static IIdea buildIdea( Document ideaDoc){
         IIdea idea = new Idea();
         
@@ -153,7 +196,12 @@ public class IdeaService {
 
         return idea;
     }
-
+    
+    /**
+     * baut ein Idea Objekt um in ein Idea Document
+     * @param idea {IIdea} Idea Objekt
+     * @return {IIdea} gibt Document einer Idea zurück
+     */   
     private Document buildIdeaDocument(IIdea idea) {
         // ID wird nicht übertragen, da von MongoDB erzeugt!
         return new Document("name", idea.getName())
@@ -172,6 +220,12 @@ public class IdeaService {
                 .append("numberComments", idea.getNumberComments());
     }
 
+    /**
+     * baut ein Idea Objekt um in ein Idea Document
+     * @param idea {IIdea} Idea Objekt
+     * @return {IIdea} gibt Document einer Idea zurück nur wesentlich
+     * Information für das Ranking
+     */   
     public static Document buildSmallIdeaDocument(IIdea idea) {
         // ID wird nicht übertragen, da von MongoDB erzeugt!
         return new Document("ideaId", idea.getIdeaId())
@@ -187,7 +241,13 @@ public class IdeaService {
                 .append("numberFollowers", idea.getNumberFollowers())
                 .append("numberComments", idea.getNumberComments());
     }
-
+    
+    /**
+     * baut ein Idea Document um in ein Idea Objekt
+     * @param ideaDoc {Document} Idea Objekt
+     * @return {IIdea} gibt IIdea zurück nur wesentlich
+     * Information für das Ranking
+     */  
     public static IIdea buildSmallIdea(Document ideaDoc){
         IIdea idea = new Idea();
 
@@ -206,7 +266,13 @@ public class IdeaService {
 
         return idea;
     }
-
+    
+    /**
+     * fügt der DB ein Idee zu
+     * @param idea {IIdea} Idea Objekt
+     * @param userId {String} ID der Idea als String
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */ 
     public void addIdea(IIdea idea, String userId) throws Exception {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
@@ -221,11 +287,15 @@ public class IdeaService {
         }
     }
     
+    /**
+     * fügt der DB eine Liste von Idee zu (Testdaten)
+     * @param ideaList {List<IIdea>} Liste von Idea Objekt
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */    
     public void addIdeaList(List<IIdea> ideaList) throws Exception {
         List<Document> ideaListDoc = new ArrayList<Document>();
         Document ideaDoc;
         for( IIdea idea : ideaList){
-            //ideaListDoc.add(buildIdeaDocument(idea));
             ideaDoc = new Document();
             ideaDoc = buildIdeaDocument(idea);
             ideaListDoc.add(ideaDoc);
@@ -234,29 +304,63 @@ public class IdeaService {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }     
-        dbConnectionService.getCollection().insertMany(ideaListDoc);
-        dbConnectionService.closeConnection();
+        try {
+            dbConnectionService.getCollection().insertMany(ideaListDoc);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
+        }
     }
     
+    /**
+     * Update einer Idea
+     * @param idea {IIdea} Idea Objekt
+     * @return {UpdateResult} Anzahl der Operation auf die DB
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */      
     public UpdateResult updateIdea(IIdea idea) throws Exception{
         Document newDoc = new Document();
         newDoc = buildIdeaDocument(idea);
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
-        }
-        UpdateResult ur = dbConnectionService.getCollection().replaceOne(Filters.eq("_id", new ObjectId (idea.getIdeaId())), newDoc);
-        dbConnectionService.closeConnection();
+        }   
+        UpdateResult ur = null;
+        try {
+            ur = dbConnectionService.getCollection().replaceOne(
+                    Filters.eq("_id", new ObjectId (idea.getIdeaId())), newDoc);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();           
+        }       
         return ur;
     }
     
+    /**
+     * Löschen einer Idea
+     * @param ideaId {String} ID einer Idea
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */   
     public void deleteIdea(String ideaId) throws Exception{
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
-        dbConnectionService.getCollection().findOneAndDelete(Filters.eq("_id", new ObjectId (ideaId)));
-        dbConnectionService.closeConnection();
+        try {
+            dbConnectionService.getCollection().findOneAndDelete(
+                    Filters.eq("_id", new ObjectId (ideaId)));
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();           
+        }  
     }
-
+    
+    /**
+     * baut ein User Objekt in ein Creator Objekt um
+     * @param user {IUser} User Objekt
+     * @return {ICreator} gibt ein Creator Objekt zurück
+     */  
     public ICreator userToCreator(IUser user){
         ICreator creator = new Creator();
         creator.setUserId(user.getUserId());
@@ -266,15 +370,33 @@ public class IdeaService {
         creator.setPictureURL(user.getPictureURL());
         return creator;
     }
-    public void updateApropertyOfaIdea(String ideaId, String type, String value) throws Exception{
-       
+    
+    /**
+     * Updatet bestimmte Werte eines User Documents
+     * @param usideaIder {IUser} ID eines User
+     * @param type {IUser} Datenfeld des Users
+     * @param value {IUser} Wert des Datenfeldes
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */  
+    public void updateApropertyOfaIdea(String ideaId, String type, String value) throws Exception{    
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         } 
-        dbConnectionService.getCollection().updateOne(eq("_id", new ObjectId(ideaId)), new Document("$set", new Document(type, value)));
-        dbConnectionService.closeConnection();
+        try {
+            dbConnectionService.getCollection().updateOne(eq("_id", new ObjectId(ideaId)), 
+                    new Document("$set", new Document(type, value)));
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();           
+        }  
     }
     
+    /**
+     * baut ein IIdea Objekt für das Ranking
+     * @param idea {IIdea} Idea Objekt
+     * @return {IIdea} gibt ein IIdea Objekt zurück
+     */     
     public static IIdea buildIdeaToIdeaSmart( IIdea idea){
         IIdea ideaSmart = new Idea();
         ideaSmart.setCategory(idea.getCategory());
@@ -291,13 +413,22 @@ public class IdeaService {
         return ideaSmart;
     }
     
-    
+    /**
+     * gint ein Idea Objekt zurück fürs Ranking
+     * @param ideaId {String} ID eines User
+     * @return {IIdea} gibt ein IIdea Objekt zurück
+     */     
     public IIdea getIdeaSmart( String ideaId) throws Exception{
         IIdea ideaSmart = new Idea();
         ideaSmart = buildIdeaToIdeaSmart(getIdea(ideaId));    
         return ideaSmart;
     }
     
+    /**
+     * gibt eine Liste von Idea Objekt zurück fürs Ranking
+     * @return {List<IIdea>} gibt eine Liste IIdea Objekt zurück
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */      
     public List<IIdea> getAllIdeasSmart() throws Exception{
         List<IIdea> ideasSmart = new ArrayList<IIdea>();
         List<IIdea> ideas = new ArrayList<IIdea>();
@@ -308,7 +439,12 @@ public class IdeaService {
         
         return ideasSmart; 
     }
-
+    
+    /**
+     * Update die Rankings
+     * @param ideaList {List<IIdea>} Liste von Ideen
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */   
     public void updateRankings(List<IIdea> ideaList) throws Exception {
       
         try {

@@ -1,21 +1,13 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-
 import main.java.de.ideaWatcher.dataManager.BCrypt;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
-import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
-
-import org.bson.BSON;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-
 import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
@@ -58,15 +50,24 @@ public class UserService {
             dbConnectionService.closeConnection();
         }
     }
-
-        public List<IUser> getAllUsers() throws Exception {
-        // ToDo
-        // fehlende Fehlerbehandlungen sollten noch hinzugef�gt werden
+    /**
+     * Gibt eine Liste aller User zurück
+     * @return {List<IUser>} Liste mit IUser
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */
+    public List<IUser> getAllUsers() throws Exception {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
-        List<Document> usersDoc = dbConnectionService.getCollection().find().into(new ArrayList<Document>());
-        dbConnectionService.closeConnection();
+        List<Document> usersDoc = null;
+        try {
+            usersDoc = dbConnectionService.getCollection()
+                    .find().into(new ArrayList<Document>());
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();           
+        }  
         List<IUser> users = new ArrayList<IUser>();
         for(Document d : usersDoc){
             users.add(buildUser(d));
@@ -96,7 +97,7 @@ public class UserService {
                 //System.out.println("ID: " + userDoc.get("_id").toString());
                 return userDoc.get("_id").toString();
             }
-            // // Wenn userName nicht gefunden, dann nach email schauen
+            // Wenn userName nicht gefunden, dann nach email schauen
             userDoc = dbConnectionService.getCollection()
                     .find(new BasicDBObject("email", userNameOrEmail))
                     .first();
@@ -111,7 +112,12 @@ public class UserService {
             dbConnectionService.closeConnection();
         }
     }
-
+    /**
+     * Baut Document in IUser um
+     * @param userDoc {Document} ein User-Document
+     * @return {IUser} gibt Objekt IUser zurück
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */
     private IUser buildUser(Document userDoc) {
 
         IUser user = new User();
@@ -129,36 +135,16 @@ public class UserService {
         user.setNumberFollowedIdeas(userDoc.getLong("numberFollowedIdeas"));
         user.setCreatedIdeas((List<String>) userDoc.get("createdIdeas"));
         user.setFollowedIdeas((List<String>) userDoc.get("followedIdeas"));
-
-
-//        List<Document> createdIdeasDocList = (List<Document>) userDoc.get("createdIdeas");
-//        List<IIdea> createdIdeasList = new ArrayList<IIdea>();
-//        for (Document ideaDoc : createdIdeasDocList){
-//            createdIdeasList.add(IdeaService.buildSmallIdea(ideaDoc));
-//        }
-//        user.setCreatedIdeas(createdIdeasList);
-//
-//        List<Document> followedIdeasDocList = (List<Document>) userDoc.get("followedIdeas");
-//        List<IIdea> followedIdeasList = new ArrayList<IIdea>();
-//        for (Document ideaDoc : followedIdeasDocList){
-//            followedIdeasList.add(IdeaService.buildSmallIdea(ideaDoc));
-//        }
-//        user.setFollowedIdeas(followedIdeasList);
-
         return user;
     }
-
+    
+    /**
+     * Baut IUser in Document um
+     * @param user {Document} ein User-Document
+     * @return {Document} gibt Objekt Document zurück
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */
     private Document buildUserDocument(IUser user) {
-
-//        List<Document> createdIdeasList = new ArrayList<Document>();
-//        for (IIdea idea : user.getCreatedIdeas()){
-//            createdIdeasList.add(IdeaService.buildSmallIdeaDocument(idea));
-//        }
-//
-//        List<Document> followedIdeaList = new ArrayList<Document>();
-//        for (IIdea idea : user.getFollowedIdeas()){
-//            followedIdeaList.add(IdeaService.buildSmallIdeaDocument(idea));
-//        }
 
         return new Document("userName", user.getUserName() )
                 .append("password", user.getPassword())
@@ -176,7 +162,7 @@ public class UserService {
     }
 
     /**
-     * Pr�ft, ob die UserID bereits in der DB vorhanden ist
+     * Prüft, ob die UserID bereits in der DB vorhanden ist
      * @param userId {String} eindeutige UserID
      * @return {boolean} TRUE oder FALSE je nachdem, ob UserID existiert
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
@@ -277,12 +263,21 @@ public class UserService {
             dbConnectionService.closeConnection();
         }
     }
-
+    /**
+     * Hashwert von Passwort berechnen
+     * @param password {String}Passwort im Klartext
+     * @return {String} Hashwert des Passwortes
+     */
     public String hashPassword(String password) {
-
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
+    /**
+     * Prüft auf valides Passwort
+     * @param plaintextPassword {String} Passwort im Klartext
+     * @param hashedPassword {String} Passwort im Hashwert
+     * @return {boolean} 
+     */
     public boolean validatePassword(String plaintextPassword, String
             hashedPassword) {
 
@@ -292,6 +287,11 @@ public class UserService {
             return false;
         }
     }
+    /**
+     * fügt der DB eine Liste von usern hinzu (Testdaten)
+     * @param userList {List<IUser>} Liste mit Usern
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */
     public void addUserList(List<IUser> userList) throws Exception {
         List<Document> userListDoc = new ArrayList<>();
         for( IUser idea : userList){
@@ -301,10 +301,21 @@ public class UserService {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
-        dbConnectionService.getCollection().insertMany(userListDoc);
-        dbConnectionService.closeConnection();
+        try {
+            dbConnectionService.getCollection().insertMany(userListDoc);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();           
+        } 
     }
     
+    /**
+     * Update eines Usersdokuments in der DB
+     * @param user {IUser} ein User Objekt
+     * @return {UpdateResult} Informationen über Anzahl der Datensätze
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */   
     public UpdateResult updateUser(IUser user) throws Exception{
         Document newDoc = new Document();
         newDoc = buildUserDocument(user);
@@ -312,21 +323,40 @@ public class UserService {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
-        UpdateResult ur = dbConnectionService.getCollection().replaceOne(Filters.eq("_id", new ObjectId (user.getUserId())), newDoc);
-   
-        dbConnectionService.closeConnection();
-        
+        UpdateResult ur = null;
+        try {
+            ur = dbConnectionService.getCollection().replaceOne(Filters.eq("_id", new ObjectId (user.getUserId())), newDoc);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();           
+        } 
         return ur;
     }
-
+    /**
+     * Löscht einen User
+     * @param userId {String} ID eines User-Dokuments
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */ 
     public void deleteUser(String userId) throws Exception{
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
-        dbConnectionService.getCollection().findOneAndDelete(Filters.eq("_id", new ObjectId (userId)));   
-        dbConnectionService.closeConnection();
+        try {
+            dbConnectionService.getCollection().findOneAndDelete(Filters.eq("_id", new ObjectId (userId))); 
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();           
+        } 
     }
-
+    /**
+     * Update auf bestimmte Werte eines Documents User
+     * @param userId {String} ID eines User-Dokuments
+     * @param type {String} Datenfeld eines User-Dokuments
+     * @param value {String} Wert eines Datenfeldes eines User-Dokuments
+     * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     */ 
     public void updateApropertyOfaUser (String userId, String type, String value) throws Exception {
         try{
         if (!dbConnectionService.isOpen()) {
@@ -337,7 +367,7 @@ public class UserService {
             throw new Exception(en);
         }
         finally {
-        dbConnectionService.closeConnection();
+            dbConnectionService.closeConnection();
         }
     }
 
