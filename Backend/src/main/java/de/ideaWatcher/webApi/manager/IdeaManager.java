@@ -149,17 +149,20 @@ public class IdeaManager {
                             ideaIsOK = true;
                         }
 
-                        currentRank += 1;
+                        if (ideaIsOK){
+                            currentRank += 1;
 
-                        // und fuege Sie den Ergebnissen hinzu,
-                        // wenn sie im gesuchten Ranking-Bereich liegen
-                        if (currentRank >= fromRank) {
-                            filteredIdeaIds.add(idea.getIdeaId());
+                            // und fuege Sie den Ergebnissen hinzu,
+                            // wenn sie im gesuchten Ranking-Bereich liegen
+                            if (currentRank >= fromRank) {
+                                filteredIdeaIds.add(idea.getIdeaId());
+                            }
+
+                            if (currentRank == toRank) {
+                                break;
+                            }
                         }
 
-                        if (currentRank == toRank) {
-                            break;
-                        }
                     }
                 }
             }

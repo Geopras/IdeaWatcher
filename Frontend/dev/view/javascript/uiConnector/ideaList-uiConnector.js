@@ -176,7 +176,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             if (!currentIdeasMap || response.data.isRenderNewIdeaList) {
                 createCurrentIdeasMap(response.data.ideas);
             } else {
-                addToCurrentIdeasMap()
+                addToCurrentIdeasMap(response.data.ideas)
             }
 
             var exObj = ideaWatcher.model.ExchangeObject.SwitchView;
@@ -511,7 +511,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             var lengthIdeaList = Object.keys(currentIdeasMap).length;
             ideaWatcher.controller.IdeaList
                 .updateIdeaList(listType, category,
-                   lengthIdeaList , lengthIdeaList + countIdeasPerRequest, false);
+                   lengthIdeaList + 1 , lengthIdeaList + countIdeasPerRequest, false);
         }
 
         function createCurrentIdeasMap(ideasToAdd) {
