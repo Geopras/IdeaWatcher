@@ -5,6 +5,7 @@
 ideaWatcher.core.Localizer.MainMenuButtonLabels = ideaWatcher.core.Localizer.MainMenuButtonLabels || {
 
         en_GB: {
+            ABOUT: 'About',
             BUSINESS: 'Business & Science',
             CATEGORY: 'Categories',
             COMPUTER: 'Computer & Electronics',
@@ -24,6 +25,7 @@ ideaWatcher.core.Localizer.MainMenuButtonLabels = ideaWatcher.core.Localizer.Mai
             TRENDING: 'Trending'
         },
         de_DE: {
+            ABOUT: 'Impressum',
             BUSINESS: 'Gewerbe & Wissenschaft',
             CATEGORY: 'Kategorien',
             COMPUTER: 'Computer & Elektronik',

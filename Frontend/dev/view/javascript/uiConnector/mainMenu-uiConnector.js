@@ -302,7 +302,8 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         function initializeAboutButton() {
 
             var htmlAbout = document.querySelector('.mainMenu_about_li');
-            initializeNavigationButton(htmlAbout);
+            htmlAbout.addEventListener('click', handleNavigationButton);
+
             // htmlAbout.addEventListener('click', handleAboutButtonClick);
             // htmlMainMenuButtons.push(htmlAbout);
         }

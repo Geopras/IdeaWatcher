@@ -144,7 +144,7 @@ public class TestDataGenerator {
 
         List<IIdea> ideas = new ArrayList<>();
         Random r = new Random();
-        Calendar calendar;
+        Calendar calendar = new GregorianCalendar();
 
         List<String> catagoryList = new ArrayList<>();
         catagoryList.add("BUSINESS");
@@ -193,13 +193,6 @@ public class TestDataGenerator {
             // merke mir die Creator-ID
             String creatorID = newIdea.getCreator().getUserId();
 
-            // Erzeuge ein zufälliges Publish-Date
-            // Zeitraum letzte 5 Jahre
-            calendar = new GregorianCalendar();
-            calendar.add(Calendar.DAY_OF_MONTH, (-1 * r.nextInt(365 * 5)));
-
-            newIdea.setPublishDate(calendar.getTime());
-
             // Erzeuge eine zufällige Sprache
             int randomLanguageIndex = r.nextInt(languageList.size());
             newIdea.setLanguage(languageList.get(randomLanguageIndex));
@@ -209,8 +202,14 @@ public class TestDataGenerator {
             int isPublishedRandom = r.nextInt(9);
             if (isPublishedRandom == 0){
                 newIdea.setIsPublished(false);
+                newIdea.setPublishDate(new Date(0));
             } else {
                 newIdea.setIsPublished(true);
+                // Erzeuge ein zufälliges Publish-Date
+                // Zeitraum letzte 5 Jahre
+                calendar = new GregorianCalendar();
+                calendar.add(Calendar.DAY_OF_MONTH, (-1 * r.nextInt(365 * 5)));
+                newIdea.setPublishDate(calendar.getTime());
             }
 
             // Erzeuge zufällig likes (maximal so viele, wie in der User-Liste)
