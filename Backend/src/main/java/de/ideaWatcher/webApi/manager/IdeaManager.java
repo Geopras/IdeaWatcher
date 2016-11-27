@@ -6,6 +6,7 @@ import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
 import main.java.de.ideaWatcher.webApi.core.*;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IUserController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
@@ -35,11 +36,14 @@ public class IdeaManager {
     private final Lock lockAllIdeasSnapshot = new ReentrantLock();
     private ScheduledExecutorService rankCalculationScheduler;
     private IIdeaController ideaController;
+    private IUserController userController;
 
     public IdeaManager() {
 
         this.ideaController = InstanceManager.getDataManager()
                 .getIdeaController();
+        this.userController = InstanceManager.getDataManager()
+                .getUserController();
     }
 
     public void initialize() throws Exception {
@@ -91,94 +95,52 @@ public class IdeaManager {
 
     /**
      * Filtert den vorgehaltenen Snapshot der Ideenliste entsprechend der uebergebenen Suchkriterien
-     * @param listType Typ der Liste (HOT, TRENDING, FRESH, CATEGORY,
-     *                 MYIDEAS, MYFOLLOWEDIDEAS)
-     * @param category Kategorie, nach der gesucht werden soll
-     * @param fromRank Bsp.: von Ranking 11
-     * @param toRank Bsp.: bis Ranking 20
      * @return
      */
-    public List<IIdea> filterIdeas(String listType, String category, int fromRank, int toRank, String userId) throws Exception {
+    public List<IIdea> filterIdeas(List<IIdea> ideasToFilter, int
+            fromRank, int toRank, boolean
+            isMyIdeas) throws Exception {
 
-        List<String> filteredIdeaIds = new ArrayList<String>();
-        List<IIdea> filteredIdeas = new ArrayList<IIdea>();
+        List<IIdea> preFilteredIdeas = new ArrayList<>();
+        List<IIdea> filteredIdeas = new ArrayList<>();
+
+        if (fromRank > toRank){
+
+            log.log(Level.SEVERE, "Die übergebenen fromRank und toRank passen logisch nicht zueinander." +
+                    "fromRank: " + fromRank + ", toRank:" + toRank);
+            return filteredIdeas;
+        }
 
         try {
             //während des Filterns darf sich der AllIdeasSnapshot nicht verändern
             lockAllIdeasSnapshot.lock();
 
-            long allIdeasCount = allIdeasSnapshot.size();
+            int countIdeasToFilter = ideasToFilter.size();
+            // // Filtere die Ideen anhand des gewünschten Ranking-Bereichs heraus
+            // Wenn es sich um keine MyIdeas-Liste
+            // handelt, dann muss nach dem PublishDate geprüft werden
+            if (isMyIdeas) {
 
-            switch (listType) {
-                case "HOT":
-                    allIdeasSnapshot.sort(new IdeaHotRankComparator(true));
-                    break;
-                case "MYFOLLOWEDIDEAS":
-                    allIdeasSnapshot.sort(new IdeaHotRankComparator(true));
-                    break;
-                case "TRENDING":
-                    allIdeasSnapshot.sort(new IdeaTrendingRankComparator(true));
-                    break;
-                case "FRESH":
-                    allIdeasSnapshot.sort(new IdeaAgeComparator(true));
-                    break;
-                case "MYIDEAS":
-                    allIdeasSnapshot.sort(new IdeaAgeComparator(true));
-                    break;
-            }
+                if (toRank - 1 > countIdeasToFilter) {
+                    toRank = countIdeasToFilter;
+                }
+                preFilteredIdeas.addAll(ideasToFilter.subList(fromRank - 1,
+                        toRank));
+            } else {
 
-            int numberIdeas = toRank - fromRank + 1;
-            int currentRank = 0;
+                int maxCount = toRank - fromRank + 1;
+                int counter = 0;
+                int index = fromRank;
 
-            if (numberIdeas > 0) {
-                // iteriere durch alle Ideen
-                for (IIdea idea : allIdeasSnapshot) {
+                while (counter < maxCount && index < countIdeasToFilter) {
 
-                    boolean ideaIsOK = false;
-
+                    IIdea idea = ideasToFilter.get(index);
                     if (idea.getIsPublished()) {
 
-                        // Für den Fall, dass nach einer Kategorie gesucht werden soll
-                        if (!category.toUpperCase().equals("NONE") || category.toUpperCase().equals("") ){
-                            if (idea.getCategory().toUpperCase().equals(category.toUpperCase())) {
-                                // Die Kategorie der Idee stimmt mit der gesuchten überein
-                                ideaIsOK = true;
-                            }
-                        } else if (listType.equals("MYFOLLOWEDIDEAS")){
-                            if (idea.getFollowerUsers().contains(userId)){
-                                ideaIsOK = true;
-                            }
-                        } else if(listType.equals("MYIDEAS")) {
-                            if (idea.getCreator().getUserId().equals(userId)){
-                                ideaIsOK = true;
-                            }
-                        } else{
-                            // wenn nicht nach einer Kategorie gesucht wird, kann die Idee immer genommen werden
-                            ideaIsOK = true;
-                        }
-
-                    } else {
-
-                        // nur MyIdeas werden nicht herausgefiltert, wenn sie nicht gepublished sind
-                        if(listType.equals("MYIDEAS") && idea.getCreator().getUserId().equals(userId)) {
-                            ideaIsOK = true;
-                        }
-
+                        preFilteredIdeas.add(idea);
                     }
-
-                    if (ideaIsOK){
-                        currentRank += 1;
-
-                        // und fuege Sie den Ergebnissen hinzu,
-                        // wenn sie im gesuchten Ranking-Bereich liegen
-                        if (currentRank >= fromRank) {
-                            filteredIdeaIds.add(idea.getIdeaId());
-                        }
-
-                        if (currentRank == toRank) {
-                            break;
-                        }
-                    }
+                    counter++;
+                    index++;
                 }
             }
         } catch (Exception ex) {
@@ -188,12 +150,67 @@ public class IdeaManager {
         }
 
         // jetzt müssen noch für jede gefundene ideaId die vollen Ideen-Objekte aus der DB geladen werden
-        for (String ideaId : filteredIdeaIds){
-            filteredIdeas.add(ideaController.getIdea(ideaId));
+        for (IIdea idea : preFilteredIdeas){
+            filteredIdeas.add(ideaController.getIdea(idea.getIdeaId()));
         }
 
         return filteredIdeas;
     }
+
+    public List<IIdea> getMyIdeas(String userId) throws Exception {
+
+        List<IIdea> myIdeas = new ArrayList<>();
+
+        // Suche anhand der userId die Liste von IdeenIDs der von dem User
+        // erstellten Ideen aus der Datenbank
+        IUser user = this.userController.getUser(userId);
+        List<String> userIdeaIds = user.getCreatedIdeas();
+
+        for (String userIdeaId : userIdeaIds) {
+            myIdeas.add(this.ideaController.getIdea(userIdeaId));
+        }
+
+        return myIdeas;
+    }
+
+    public List<IIdea> getMyFollowedIdeas(String userId) throws Exception {
+
+        List<IIdea> myFollowedIdeas = new ArrayList<>();
+
+        // Suche anhand der userId die Liste von IdeenIDs der von dem User
+        // erstellten Ideen aus der Datenbank
+        IUser user = this.userController.getUser(userId);
+        List<String> followedIdeaIds = user.getFollowedIdeas();
+
+        for (String followedIdeaId : followedIdeaIds) {
+            myFollowedIdeas.add(this.ideaController.getIdea(followedIdeaId));
+        }
+
+        return myFollowedIdeas;
+    }
+
+    public List<IIdea> sortIdeas(List<IIdea> ideasToSort, String listType) {
+
+        switch (listType) {
+            case "HOT":
+                ideasToSort.sort(new IdeaHotRankComparator(true));
+                break;
+            case "MYFOLLOWEDIDEAS":
+                ideasToSort.sort(new IdeaHotRankComparator(true));
+                break;
+            case "TRENDING":
+                ideasToSort.sort(new IdeaTrendingRankComparator(true));
+                break;
+            case "FRESH":
+                ideasToSort.sort(new IdeaAgeComparator(true));
+                break;
+            case "MYIDEAS":
+                ideasToSort.sort(new IdeaAgeComparator(true));
+                break;
+        }
+        return ideasToSort;
+    }
+
 
     /**
      * Startet den Scheduler für

@@ -176,6 +176,13 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             requestData.toRank = to;
             requestData.isRenderNewIdeaList = isRenderNewIdeaList;
 
+            // Wenn für MyIdeas- oder MyFollowedIdeas-Liste, dann UserId des
+            // Creator mit übergeben:
+            if (listType === ideaWatcher.model.IdeaList.ListType.MYIDEAS ||
+                listType === ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS) {
+                requestData.userId = ideaWatcher.controller.UserSession.getCurrentUserId();
+            }
+
             // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
             if (ideaWatcher.core.WebSocketConnector.isConnected()) {
                 ideaWatcher.core.WebSocketConnector.sendRequest(buildGetIdeasRequest(requestData));

@@ -18,8 +18,8 @@ public class IdeaController implements IIdeaController {
     }
 
     @Override
-    public void addNewIdea(IIdea idea, String userId) throws Exception {
-        this.ideaService.addIdea(idea, userId);
+    public String addNewIdea(IIdea idea, String userId) throws Exception {
+        return this.ideaService.addIdea(idea, userId);
     }
 
     @Override

@@ -16,7 +16,7 @@ public interface IIdeaController {
      * @return {String} von Datenbank generierte IdeaID
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      */
-    void addNewIdea(IIdea idea, String userId) throws Exception;
+    String addNewIdea(IIdea idea, String userId) throws Exception;
 
     /**
      * Gibt eine vorhandene Idee zurueck
@@ -58,9 +58,9 @@ public interface IIdeaController {
     
     /**
      * Aktualisiert bestimmtes Feld einer Idee
-     * @param idea {String} ideaId ID des Dokuments
-     * @param idea {String} type Feld des Dokuments in der DB
-     * @param idea {String} value der Wert des Feldes
+     * @param ideaId {String} ideaId ID des Dokuments
+     * @param type {String} type Feld des Dokuments in der DB
+     * @param value {String} value der Wert des Feldes
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      */   
     void updateApropertyOfaIdea(String ideaId, String type, String value) throws Exception;

@@ -6,12 +6,12 @@ ideaWatcher.model.ExchangeObject = ideaWatcher.model.ExchangeObject || {
                 fromRank: 1,
                 isRenderNewIdeaList: true,
                 listType: 'HOT',
-                toRank: 10
+                toRank: 10,
+                userId: ""
             },
             ResponseData: {
                 category: 'NONE',
                 ideas: [],
-                isReachedEnd: false,
                 isRenderNewIdeaList: true,
                 listType: 'HOT'
             }

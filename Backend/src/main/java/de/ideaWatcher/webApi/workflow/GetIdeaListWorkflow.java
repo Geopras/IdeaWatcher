@@ -6,6 +6,7 @@ import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.core.JSONBuilder;
 import main.java.de.ideaWatcher.webApi.core.Response;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
+import main.java.de.ideaWatcher.webApi.manager.IdeaManager;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,6 +21,11 @@ import java.util.logging.Logger;
 public class GetIdeaListWorkflow  implements IWorkflow {
 
     private static final Logger log = Logger.getLogger( GetIdeaListWorkflow.class.getName() );
+    private IdeaManager ideaManager;
+
+    public GetIdeaListWorkflow() {
+        this.ideaManager = InstanceManager.getIdeaManager();
+    }
 
     @Override
     public IResponse getResponse(IRequest request) {
@@ -30,8 +36,11 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         String category;
         int fromRank;
         int toRank;
+        String userId = "";
+        boolean isMyIdeas = false;
+        boolean isMyFollowedIdeas = false;
+
         boolean isRenderNewIdeaList;
-        boolean isReachedEnd = false;
 
         // Workflow-Antwort instanziieren
         IResponse response = new Response();
@@ -39,11 +48,19 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         // Prüfe, ob die im Data-Objekt uebergebenen Parameter OK sind
         try {
             listType = data.getString("listType");
+            if (listType.equals("MYIDEAS")) {
+                isMyIdeas = true;
+            }
+            if (listType.equals("MYFOLLOWEDIDEAS")) {
+                isMyFollowedIdeas = true;
+            }
             category = data.getString("category");
             fromRank = data.getInt("fromRank");
             toRank = data.getInt("toRank");
             isRenderNewIdeaList = data.getBoolean("isRenderNewIdeaList");
-
+            if (isMyIdeas || isMyFollowedIdeas) {
+                userId = data.getString("userId");
+            }
         } catch (Exception ex) {
             response.setErrorMessage("SIdeaList_getIdeasRequestData_error");
             response.setResult("error");
@@ -61,43 +78,40 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         }
 
         // Suche die Ideen im vorgehaltenen Snapshot
+        List<IIdea> ideasToFilter;
 
-        List<IIdea> filteredIdeas = null;
         try {
-            filteredIdeas = InstanceManager.getIdeaManager()
-                    .filterIdeas(listType, category, fromRank, toRank, "");
+            if (isMyIdeas) {
+                ideasToFilter = this.ideaManager.getMyIdeas(userId);
+            }
+            else if (isMyFollowedIdeas) {
+                ideasToFilter = this.ideaManager.getMyFollowedIdeas(userId);
+            } else {
+                ideasToFilter = this.ideaManager.getAllIdeasSnapshot();
+            }
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Ein Fehler ist bei der Abfrage der zu " +
+                    "filternden Ideen aufgetreten.\nFehlermeldung: " + e.toString());
+            response.setErrorMessage("SIdeaList_getIdeasFromDb_error");
+            response.setResult("error");
+            return response;
+        }
+
+        // Sortiere die Ideen nach gewünschtem Comparator:
+        ideasToFilter = this.ideaManager.sortIdeas(ideasToFilter, listType);
+
+        // Filtere die Ideen entsprechend des Ranking-Bereichs:
+        List<IIdea> filteredIdeas;
+        try {
+            filteredIdeas = this.ideaManager.filterIdeas(ideasToFilter, fromRank, toRank, isMyIdeas);
+
         } catch (Exception e) {
             log.log(Level.SEVERE, "Ein Fehler ist bei der Filterung" +
                     " der Ideen.\nFehlermeldung: " + e.toString());
             response.setErrorMessage("SIdeaList_filterIdeas_error");
-        }
-
-//        try {
-//            allIdeas = this.ideaController.getAllIdeas();
-//        } catch (Exception e) {
-//            log.log(Level.SEVERE, "Beim Abrufen der Ideen aus der Datenbank " +
-//                    "ist ein Fehler aufgetreten.\nFehlermeldung: " + e.toString());
-//            response.setErrorMessage("SIdeaList_getIdeasFromDb_error");
-//            response.setResult("error");
-//            return response;
-//        }
-
-        // Prüfe, ob der gewünschte Bereich möglich ist:
-        int countIdeas = filteredIdeas.size();
-        if (fromRank <= countIdeas && toRank > filteredIdeas.size()) {
-            toRank = countIdeas;
-            isReachedEnd = true;
-        } else if (fromRank > countIdeas) {
-
-            log.log(Level.SEVERE, "Die Angabe 'toRank = " + toRank + "' bei " +
-                    "der Abfrage 'getIdeas' ist größer als die vorhandene " +
-                    "Anzahl an Ideen (" + countIdeas + ").");
             response.setResult("error");
-            response.setErrorMessage("SIdeaList_fromRankTooLarge_error");
+            return response;
         }
-
-        //TODO: an dieser Stelle muessten jetzt fuer die Filter-Ergebnisse die vollen Daten aus der DB
-        // nachgeladen werden
 
         response.setResult("success");
         JSONObject responseData = new JSONObject();
@@ -105,7 +119,6 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         responseData.put("category", category);
         responseData.put("ideas", this.ideaDataToJSONObject(filteredIdeas));
         responseData.put("isRenderNewIdeaList", isRenderNewIdeaList);
-        responseData.put("isReachedEnd", isReachedEnd);
         response.setData(responseData);
         return response;
     }

@@ -61,7 +61,6 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 responseData.listType = exObj.additionalData.listType;
                 responseData.category = exObj.additionalData.category;
                 responseData.ideas = exObj.additionalData.ideas;
-                responseData.isReachedEnd = exObj.additionalData.isReachedEnd;
                 responseData.isRenderNewIdeaList = exObj.additionalData.isRenderNewIdeaList;
 
                 renderView(responseData);
@@ -170,6 +169,12 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 return;
             }
 
+            if (!response.data.ideas) {
+                console.log("Es werden keine Ideen angezeigt, da die" +
+                    " erhaltene Ideenliste leer ist oder undefiniert.");
+                return false;
+            }
+
             var listType = response.data.listType;
             var category = response.data.category;
 
@@ -247,6 +252,10 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             if (ideaListData.listType === ideaWatcher.model.IdeaList.ListType.MYIDEAS) {
                 isMyIdeas = true;
             }
+            var isMyFollowedIdeas = false;
+            if (ideaListData.listType === ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS) {
+                isMyFollowedIdeas = true;
+            }
             if (ideaListData.isRenderNewIdeaList) {
 
                 publishedLabels = [];
@@ -254,16 +263,17 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 htmlParentNode.removeChild(htmlSections);
                 htmlSections = document.createElement('div');
                 htmlSections.classList.add(htmlSectionsClassName);
-                renderIdeaList(htmlSections, ideaListData.ideas, isMyIdeas);
+                renderIdeaList(htmlSections, ideaListData.ideas, isMyIdeas, isMyFollowedIdeas);
                 htmlParentNode.appendChild(htmlSections);
 
             } else {
-                renderIdeaList(htmlSections, ideaListData.ideas, isMyIdeas);
+                renderIdeaList(htmlSections, ideaListData.ideas, isMyIdeas, isMyFollowedIdeas);
             }
             cbLocalizeView();
+            return true;
         }
 
-        function renderIdeaList(htmlList, ideaList, isMyIdeas) {
+        function renderIdeaList(htmlList, ideaList, isMyIdeas, isMyFollowedIdeas) {
 
             var language = ideaWatcher.core.Localizer.getLanguage();
             //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
@@ -350,6 +360,10 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
                     userButtons.setAttribute('data-ideaid', idea.ideaId);
                     ratings.appendChild(userButtons);
+                }
+                else if (isMyFollowedIdeas) {
+
+
                 }
 
                 dataLeft.appendChild(ratings);

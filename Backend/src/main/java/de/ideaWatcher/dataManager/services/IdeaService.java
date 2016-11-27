@@ -1,6 +1,5 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
 import main.java.de.ideaWatcher.dataManager.pojos.Comment;
@@ -275,14 +274,18 @@ public class IdeaService {
      * @param idea {IIdea} Idea Objekt
      * @param userId {String} ID der Idea als String
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
+     * @return {String} automatisch von MongoDB erstellte ID der hinzugefügten
+     * Idee
      */ 
-    public void addIdea(IIdea idea, String userId) throws Exception {
+    public String addIdea(IIdea idea, String userId) throws Exception {
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
         try {
-            dbConnectionService.getCollection().insertOne(buildIdeaDocument
-                    (idea));
+            Document ideaDocument = buildIdeaDocument(idea);
+            dbConnectionService.getCollection().insertOne(ideaDocument);
+            String ideaId = ideaDocument.getObjectId("_id").toString();
+            return ideaId;
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
@@ -296,7 +299,7 @@ public class IdeaService {
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
      */    
     public void addIdeaList(List<IIdea> ideaList) throws Exception {
-        List<Document> ideaListDoc = new ArrayList<Document>();
+        List<Document> ideaListDoc = new ArrayList<>();
         Document ideaDoc;
         for( IIdea idea : ideaList){
             ideaDoc = new Document();
