@@ -141,26 +141,28 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
             var htmlIdeaNameErrorLabel = document.querySelector('.ideaCreation_ideaNameError_label');
             var htmlIdeaDescriptionErrorLabel = document.querySelector('.ideaCreation_ideaDescriptionError_label');
             var errorMessage;
+            var language = ideaWatcher.core.Localizer.getLanguage();
 
             if (ideaName.length < 1) {
                 console.log('Ideen Name zu kurz');
-                errorMessage = ideaWatcher.core.Localizer.ideaCreation[language].ideaNameTooShort;
+                errorMessage = ideaWatcher.core.Localizer.CreateIdea[language].ideaNameTooShort;
                 isFormValid = false;
-            } else if (ideaDescription < 1) {
+
+                htmlIdeaNameErrorLabel.textContent = errorMessage;
+                htmlIdeaNameErrorLabel.style.display = 'inline';
+                htmlIdeaDescriptionErrorLabel.style.display = 'none';
+            } else if (ideaDescription.length < 1) {
                 console.log('Ideen Beschreibung zu kurz');
-                errorMessage = ideaWatcher.core.Localizer.ideaCreation[language].ideaDescriptionTooShort;
+                errorMessage = ideaWatcher.core.Localizer.CreateIdea[language].ideaDescriptionTooShort;
                 isFormValid = false;
+
+                htmlIdeaDescriptionErrorLabel.textContent = errorMessage;
+                htmlIdeaDescriptionErrorLabel.style.display = 'inline';
+                htmlIdeaNameErrorLabel.style.display = 'none';
             } else {
                 console.log('Der Name und die Beschreibung der Idee entsprechen den Richtlinien.');
                 htmlIdeaNameErrorLabel.style.display = 'none';
                 htmlIdeaDescriptionErrorLabel.style.display = 'none';
-            }
-
-            if (!isFormValid) {
-                htmlIdeaNameErrorLabel.textContent = errorMessage;
-                htmlIdeaNameErrorLabel.style.display = 'inline';
-                htmlIdeaDescriptionErrorLabel.textContent = errorMessage;
-                htmlIdeaDescriptionErrorLabel.style.display = 'inline';
             }
 
             return isFormValid;

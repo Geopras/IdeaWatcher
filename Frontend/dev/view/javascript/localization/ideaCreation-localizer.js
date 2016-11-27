@@ -5,8 +5,7 @@
 ideaWatcher.core.Localizer.CreateIdea = ideaWatcher.core.Localizer.CreateIdea || {
 
         en_GB: {
-            headline: 'New Idea',
-            name: 'Name',
+            cancel: 'Cancel',
             category: 'Category',
             category1: 'Buisness & Science',
             category2: 'Computer & Electronics',
@@ -17,13 +16,16 @@ ideaWatcher.core.Localizer.CreateIdea = ideaWatcher.core.Localizer.CreateIdea ||
             category7: 'Other',
             description: 'Description',
             descriptionTextarea: 'Enter your Description here',
+            headline: 'New Idea',
+            ideaDescriptionTooShort: 'Idea Description is too short',
+            ideaNameTooShort: 'Idea Name is too short',
+            name: 'Name',
             publish: 'Publish',
-            cancel: 'Cancel',
-            save: 'Save'
+            save: 'Save',
+            viewName: 'New Idea'
         },
         de_DE: {
-            headline: 'Neue Ideen',
-            name: 'Name',
+            cancel: 'Abbrechen',
             category: 'Kategorie',
             category1: 'Gewerbe & Wissenschaft',
             category2: 'Computer & Elektronik',
@@ -34,8 +36,12 @@ ideaWatcher.core.Localizer.CreateIdea = ideaWatcher.core.Localizer.CreateIdea ||
             category7: 'Anderes',
             description: 'Beschreibung',
             descriptionTextarea: 'Geben sie hier Ihre Beschreibung ein',
+            headline: 'Neue Ideen',
+            ideaDescriptionTooShort: 'Die Ideen Beschreibung ist zu kurz.',
+            ideaNameTooShort: 'Der Ideen Name ist zu kurz.',
+            name: 'Name',
             publish: 'Veröffentlichen',
-            cancel: 'Abbrechen',
-            save: 'Speichern'
+            save: 'Speichern',
+            viewName: 'Neue Idee'
         }
     };
