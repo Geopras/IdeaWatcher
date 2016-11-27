@@ -101,25 +101,27 @@ ideaWatcher.view.Profile = ideaWatcher.view.Profile || (function () {
 
         function handleButtonNavigationMyIdeas(clickEvent){
 
-            ideaWatcher.core.Navigator.switchView({
-                viewId: 'myIdeas',
-                url: 'myProfile'
-            });
+            var listType = ideaWatcher.model.IdeaList.ListType.MYIDEAS;
+            var category = ideaWatcher.model.IdeaList.Category.NONE;
+
+            ideaWatcher.controller.IdeaList
+                .updateIdeaList(listType, category, 1, 10, true);
         }
 
         function handleButtonNavigationFollowedIdeas(clickEvent){
 
-            ideaWatcher.core.Navigator.switchView({
-                viewId: 'followedIdeas',
-                url: 'myProfile'
-            });
+            var listType = ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS;
+            var category = ideaWatcher.model.IdeaList.Category.NONE;
+
+            ideaWatcher.controller.IdeaList
+                .updateIdeaList(listType, category, 1, 10, true);
         }
 
         function handleButtonNavigationEditProfile(clickEvent){
 
             ideaWatcher.core.Navigator.switchView({
-                viewId: 'profileEdit',
-                url: 'myProfile'
+                viewId: ideaWatcher.model.Navigation.ViewId.MYPROFILE,
+                url: ideaWatcher.model.Navigation.ViewUrl.MYPROFILE
             });
         }
 

@@ -37,6 +37,16 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             cbFunction: cbLocalizeView
         };
 
+        var evLocalizeMyIdeasView = {
+            topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.MYIDEAS.NONE,
+            cbFunction: cbLocalizeView
+        };
+
+        var evLocalizeMyFollowedIdeasView = {
+            topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.MYFOLLOWEDIDEAS.NONE,
+            cbFunction: cbLocalizeView
+        };
+
         var evGetIdeasResponse = {
             topic: 'SIdeaList/getIdeasRequest-response',
             cbFunction: cbGetIdeasResponse
@@ -61,6 +71,8 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         ideaWatcher.core.MessageBroker.subscribe(evSwitchViewToMyIdeas);
         ideaWatcher.core.MessageBroker.subscribe(evSwitchViewToMyFollowedIdeas);
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeMyIdeasView);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeMyFollowedIdeasView);
         ideaWatcher.core.MessageBroker.subscribe(evGetIdeasResponse);
         ideaWatcher.core.MessageBroker.subscribe(evGetDeleteIdeaResponse);
         ideaWatcher.core.MessageBroker.subscribe(evGetEditIdeaResponse);
