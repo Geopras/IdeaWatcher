@@ -349,6 +349,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			function renderView(crtIdea) {
 
+				var language = ideaWatcher.core.Localizer.getLanguage();
+
 				console.log('Starte erstellen der Detailansicht...');
 				currentIdea = crtIdea;
 				
@@ -520,12 +522,23 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 										.createElement('div');
 								htmlCommentTextDiv.textContent = comment.text;
 
+								var htmlCreationDateText = document
+										.createElement('span');
+								var locale = language.replace('_', '-');
+								var dateObject = new Date(comment.publishDate);
+								htmlCreationDateText.textContent = dateObject.toLocaleDateString(locale) +
+									' ' + dateObject.toLocaleTimeString(locale);
+
 								htmlCommentNameAndTextDiv
 										.appendChild(htmlCommentNameBold);
 								htmlCommentNameAndTextDiv.appendChild(document
 										.createElement('br'));
 								htmlCommentNameAndTextDiv
 										.appendChild(htmlCommentTextDiv);
+								htmlCommentNameAndTextDiv.appendChild(document
+									.createElement('br'));
+								htmlCommentNameAndTextDiv.appendChild(htmlCreationDateText);
+
 								htmlCommentTextCell
 										.appendChild(htmlCommentNameAndTextDiv);
 
