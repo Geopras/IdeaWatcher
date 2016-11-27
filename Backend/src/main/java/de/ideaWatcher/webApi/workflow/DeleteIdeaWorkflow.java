@@ -1,10 +1,5 @@
 package main.java.de.ideaWatcher.webApi.workflow;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.json.JSONObject;
-
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.core.Response;
@@ -14,6 +9,10 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
+import org.json.JSONObject;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DeleteIdeaWorkflow implements IWorkflow {
     private static final Logger log = Logger
@@ -61,7 +60,7 @@ public class DeleteIdeaWorkflow implements IWorkflow {
             currentIdea = ideaController.getIdea(ideaId);
         } catch (Exception ex) {
             response.setErrorMessage(
-                    "SIdeaList_deleteIdeaGetDBObjects_error");
+                    "SIdeaList_deleteIdeaData_error");
             response.setResult("error");
             log.log(Level.SEVERE,
                     "Beim Abrufen des Ideeobjekts aus der DB ist ein Fehler aufgetreten!"
@@ -77,7 +76,7 @@ public class DeleteIdeaWorkflow implements IWorkflow {
             currentUser = userController.getUser(userId);
         } catch (Exception ex) {
             response.setErrorMessage(
-                    "SIdeaList_deleteIdeaGetDBObjects_error");
+                    "SIdeaList_deleteIdeaData_error");
             response.setResult("error");
             log.log(Level.SEVERE,
                     "Beim Abrufen des Userobjekts aus der DB ist ein Fehler aufgetreten!"
@@ -90,7 +89,7 @@ public class DeleteIdeaWorkflow implements IWorkflow {
             ideaController.deleteIdea(ideaId);
         } catch (Exception ex) {
             response.setErrorMessage(
-                    "SIdeaList_deleteIdeaIdeaController_error");
+                    "SIdeaList_deleteIdeaData_error");
             response.setResult("error");
             log.log(Level.SEVERE,
                     "Beim Löschen der Idee aus der DB ist ein Fehler aufgetreten!"
@@ -102,22 +101,31 @@ public class DeleteIdeaWorkflow implements IWorkflow {
 
         if (currentUser.getCreatedIdeas().contains(ideaId)){
             currentUser.getCreatedIdeas().remove(ideaId);
+            try {
+                this.userController.updateUser(currentUser);
+
+                response.setResult("success");
+                response.setData(responseData);
+                return response;
+
+            } catch (Exception ex) {
+                response.setErrorMessage(
+                        "SIdeaList_deleteIdeaData_error");
+                response.setResult("error");
+                log.log(Level.SEVERE,
+                        "Beim DB-Update des geänderten Users ist ein Fehler " +
+                                "aufgetreten!"
+                                + "\nFehlermeldung: " + ex.getMessage());
+                return response;
+            }
         } else{
-            response.setErrorMessage("SIdeaList_deleteIdeaIntegrity_error");
+            response.setErrorMessage("SIdeaList_deleteIdeaData_error");
             response.setResult("error");
             log.log(Level.SEVERE,
                     "Beim Löschen der Idee aus der CreatedIdeasList ist ein Fehler aufgetreten. Der User hat die Idee "
-                            + "nicht angelegt." + "\nFehlermeldung: ");
+                            + "nicht angelegt.");
             return response;
         }
-
-
-        responseData.put("ideaId", ideaId);
-        
-        response.setResult("success");
-        response.setData(responseData);
-        return response;
-
     }
 
 }

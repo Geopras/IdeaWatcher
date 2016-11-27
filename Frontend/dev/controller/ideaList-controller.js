@@ -7,8 +7,6 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         var cbGetIdea = null;
         var cbGetDeleteIdeaResp = null;
         var cbGetEditIdeaResp = null;
-        var cbGetCurrentListType = null;
-        var cbGetCurrentCategory = null;
         var cbGetIdeasResp = null;
 
         var evSwitchViewToIdeaList = {
@@ -133,14 +131,6 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
 
         function pubRegisterGetEditIdeaResponse(cb) {
             cbGetEditIdeaResp = cb;
-        }
-
-        function pubRegisterGetCurrentListType(cb) {
-            cbGetCurrentListType = cb;
-        }
-
-        function pubRegisterGetCurrentCategory(cb) {
-            cbGetCurrentCategory = cb;
         }
 
         function pubRegisterGetIdea(cb) {
