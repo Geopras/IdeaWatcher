@@ -6,6 +6,7 @@ import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.core.Response;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IUserController;
+import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
@@ -62,12 +63,36 @@ public class SaveIdeaWorkflow implements IWorkflow{
                             + "\nFehlermeldung: " + ex.getMessage());
             return response;
         }
-        
+
+        // Suche den User heraus, der der Ideenersteller ist:
+        // ID der neuen Idee in Liste createdIdeas des Users hinzufügen
+        IUser user;
+        try {
+            user = this.userController.getUser(userId);
+
+        } catch (Exception e) {
+
+            response.setErrorMessage("SIdeaCreation_saveIdeaData_error");
+            response.setResult("error");
+            log.log(Level.SEVERE,
+                    "Beim DB-Abruf des User, der der Ideenersteller ist," +
+                            " Fehler aufgetreten!"
+                            + "\nFehlermeldung: " + e.getMessage());
+            return response;
+        }
+
+        // zu speicherndes Ideen-Objekt zusammenstellen
         newIdea = new Idea();
         newIdea.setName(ideaName);
         newIdea.setDescription(description);
         newIdea.setCategory(category);
-        newIdea.getCreator().setUserId(userId);
+        ICreator creator = newIdea.getCreator();
+        creator.setUserId(userId);
+        creator.setEmail(user.getEmail());
+        creator.setIsMailPublic(user.getIsMailPublic());
+        creator.setPictureURL(user.getPictureURL());
+        creator.setUserName(user.getUserName());
+        newIdea.setCreator(creator);
 
         if (ideaStatus.equals("saveNew")) {  // Wenn Idee neu erstellt wird
 
@@ -88,7 +113,6 @@ public class SaveIdeaWorkflow implements IWorkflow{
 
             // ID der neuen Idee in Liste createdIdeas des Users hinzufügen
             try {
-                IUser user = this.userController.getUser(userId);
                 user.getCreatedIdeas().add(ideaId);
                 this.userController.updateUser(user);
 
