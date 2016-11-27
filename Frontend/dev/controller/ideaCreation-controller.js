@@ -131,9 +131,6 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
             var request = Object.create(ideaWatcher.model.Request);
 
             request.destination = 'SIdeaCreation/saveIdeaRequest';
-            // var exObj = {
-            //     ideaData :
-            // };
             request.data = ideaData;
 
             return request;

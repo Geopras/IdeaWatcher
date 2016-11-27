@@ -157,6 +157,26 @@ public class IdeaManager {
         return filteredIdeas;
     }
 
+    public List<IIdea> getCategorizedIdeas(String category) {
+
+        List<IIdea> ideas = new ArrayList<>();
+
+        for (IIdea idea : this.allIdeasSnapshot) {
+
+            // Für den Fall, dass nach einer Kategorie gesucht werden soll
+            if (!category.toUpperCase().equals("NONE") || category.toUpperCase().equals("")) {
+                if (idea.getCategory().toUpperCase().equals(category.toUpperCase())) {
+                    // Die Kategorie der Idee stimmt mit der gesuchten überein
+                    ideas.add(idea);
+                }
+            } else if (category.toUpperCase().equals("NONE")) {
+                ideas.add(idea);
+            }
+        }
+
+        return ideas;
+    }
+
     public List<IIdea> getMyIdeas(String userId) throws Exception {
 
         List<IIdea> myIdeas = new ArrayList<>();
@@ -320,6 +340,10 @@ public class IdeaManager {
         }
 
         return ideas;
+    }
+
+    public void updateIdea() {
+
     }
 
 }

@@ -37,6 +37,7 @@ public class SaveIdeaWorkflow implements IWorkflow{
         IResponse response = new Response();
         
         String userId = request.getUserId();
+        String ideaId = "";
         String ideaStatus;
         String ideaName;
         String description;
@@ -45,11 +46,14 @@ public class SaveIdeaWorkflow implements IWorkflow{
         IIdea newIdea;
         
         try {
-            JSONObject commentData = request.getData();
-            ideaStatus = commentData.getString("ideaStatus");
-            ideaName = commentData.getString("ideaName");
-            description = commentData.getString("ideaDescription");
-            category = commentData.getString("ideaCategory");
+            JSONObject data = request.getData();
+            ideaStatus = data.getString("ideaStatus");
+            if (ideaStatus.equals("edit")) {
+                ideaId = data.getString("ideaId");
+            }
+            ideaName = data.getString("ideaName");
+            description = data.getString("ideaDescription");
+            category = data.getString("ideaCategory");
         } catch (Exception ex) {
             response.setErrorMessage("SIdeaCreation_saveIdeaData_error");
             response.setResult("error");
@@ -63,41 +67,80 @@ public class SaveIdeaWorkflow implements IWorkflow{
         newIdea.setName(ideaName);
         newIdea.setDescription(description);
         newIdea.setCategory(category);
-        newIdea.getCreator().setUserId(userId);;
-        
-        //create Idea in Backend
-        String ideaId;
-        try {
-        	ideaId = ideaController.addNewIdea(newIdea, userId);
+        newIdea.getCreator().setUserId(userId);
 
-        } catch (Exception ex) {
-            response.setErrorMessage("SIdeaCreation_storeIdea_error");
-            response.setResult("error");
-            log.log(Level.SEVERE,
-                    "Beim Hinzufügen einer neuen Idee ist ein " +
-                            "Fehler aufgetreten!"
-                            + "\nFehlermeldung: " + ex.getMessage());
-            return response;
+        if (ideaStatus.equals("saveNew")) {  // Wenn Idee neu erstellt wird
+
+            // Neue Idee in Ideen-DB hinzufügen
+
+            try {
+                ideaId = ideaController.addNewIdea(newIdea, userId);
+
+            } catch (Exception ex) {
+                response.setErrorMessage("SIdeaCreation_saveIdeaData_error");
+                response.setResult("error");
+                log.log(Level.SEVERE,
+                        "Beim Hinzufügen einer neuen Idee ist ein " +
+                                "Fehler aufgetreten!"
+                                + "\nFehlermeldung: " + ex.getMessage());
+                return response;
+            }
+
+            // ID der neuen Idee in Liste createdIdeas des Users hinzufügen
+            try {
+                IUser user = this.userController.getUser(userId);
+                user.getCreatedIdeas().add(ideaId);
+                this.userController.updateUser(user);
+
+                response.setResult("success");
+                return response;
+            } catch (Exception e) {
+
+                response.setErrorMessage("SIdeaCreation_saveIdeaData_error");
+                response.setResult("error");
+                log.log(Level.SEVERE,
+                        "Beim Hinzufügen einer neuen Idee in die " +
+                                "CreatedIdeas-Liste des angemeldeten User ist ein" +
+                                " Fehler aufgetreten!"
+                                + "\nFehlermeldung: " + e.getMessage());
+                return response;
+            }
         }
+        else if (ideaStatus.equals("edit")) {
+            // Wenn vorhandene Idee bearbeitet werden soll
 
-        try {
-            IUser user = this.userController.getUser(userId);
-            user.getCreatedIdeas().add(ideaId);
-            this.userController.updateUser(user);
+            IIdea idea;
+            try {
+                idea = this.ideaController.getIdea(ideaId);
 
-            response.setResult("success");
-//            respData.put("idea", JSONBuilder.getIdeaDetailsJSONObject(currentIdea));
-//            response.setData(respData);
-            return response;
-        } catch (Exception e) {
+                idea.setName(ideaName);
+                idea.setDescription(description);
+                idea.setCategory(category);
 
-            response.setErrorMessage("SIdeaCreation_storeIdea_error");
+                this.ideaController.updateIdea(idea);
+
+                response.setResult("success");
+                return response;
+
+            } catch (Exception e) {
+                response.setErrorMessage("SIdeaCreation_saveIdeaData_error");
+                response.setResult("error");
+                log.log(Level.SEVERE,
+                        "Beim Abrufen einer zu bearbeitenden Idee ist ein" +
+                                " Fehler aufgetreten!"
+                                + "\nFehlermeldung: " + e.getMessage());
+                return response;
+            }
+
+            // Idee aktualisieren
+
+        } else {
+            response.setErrorMessage("SIdeaCreation_saveIdeaData_error");
             response.setResult("error");
             log.log(Level.SEVERE,
-                    "Beim Hinzufügen einer neuen Idee in die " +
-                            "CreatedIdeas-Liste des angemeldeten User ist ein" +
-                            " Fehler aufgetreten!"
-                            + "\nFehlermeldung: " + e.getMessage());
+                    "Es konnte die Idee nicht gespeichert werden, weil ihr " +
+                            "Status nicht erkannt wird! Es ist der Status " +
+                            "'saveNew' oder 'edit' anzugeben.'");
             return response;
         }
     }

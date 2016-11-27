@@ -22,6 +22,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
         var htmlSaveButton = null;
         var htmlIdeaNameInput = null;
         var isEdit;
+        var ideaIdForEdit = null;
         //endregion
 
         //region subscribe to events
@@ -100,16 +101,18 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
             if(!checkValidForm()) return;
 
-            var ideaStatus = 'save';
-            if (isEdit) {
-                ideaStatus = 'edit';
-            }
             var exObj = {
                 ideaName: htmlIdeaNameInput.value,
                 ideaCategory: htmlCategorySelect.value,
-                ideaDescription: htmlDescriptionTextarea.value,
-                ideaStatus: ideaStatus
+                ideaDescription: htmlDescriptionTextarea.value
             };
+            if (isEdit) {
+                exObj.ideaId = ideaIdForEdit;
+                exObj.ideaStatus = 'edit';
+            } else {
+                exObj.ideaStatus = 'saveNew';
+            }
+
             console.log(exObj);
 
             ideaWatcher.controller.ideaCreation.tryToSaveNewIdea(exObj);
@@ -145,7 +148,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
             if (ideaName.length < 1) {
                 console.log('Ideen Name zu kurz');
-                errorMessage = ideaWatcher.core.Localizer.CreateIdea[language].ideaNameTooShort;
+                errorMessage = ideaWatcher.core.Localizer.SaveIdea[language].ideaNameTooShort;
                 isFormValid = false;
 
                 htmlIdeaNameErrorLabel.textContent = errorMessage;
@@ -153,7 +156,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
                 htmlIdeaDescriptionErrorLabel.style.display = 'none';
             } else if (ideaDescription.length < 1) {
                 console.log('Ideen Beschreibung zu kurz');
-                errorMessage = ideaWatcher.core.Localizer.CreateIdea[language].ideaDescriptionTooShort;
+                errorMessage = ideaWatcher.core.Localizer.SaveIdea[language].ideaDescriptionTooShort;
                 isFormValid = false;
 
                 htmlIdeaDescriptionErrorLabel.textContent = errorMessage;
@@ -176,6 +179,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
             {
                 renderView(exObj.additionalData.idea);
                 htmlIdeaCreationView.style.display = 'block';
+                ideaIdForEdit = exObj.additionalData.idea.ideaId;
             } else {
 
                 htmlIdeaCreationView.style.display = 'none';
@@ -190,7 +194,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
             if (idea) {
 
                 isEdit = true;
-                htmlIdeaNameInput.textContent = idea.name;
+                htmlIdeaNameInput.value = idea.name;
                 htmlDescriptionTextarea.textContent = idea.description;
                 // Setze die gewählte Kategorie
                 var selectBox = document.getElementById('ideaCreation_category_select');
@@ -213,45 +217,50 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
             console.log("Starte Lokalisierung der IdeaCreation-View ...");
 
-            htmlViewHeadline.textContent =
-                ideaWatcher.core.Localizer.CreateIdea[language].headline;
+            if (isEdit) {
+                htmlViewHeadline.textContent =
+                    ideaWatcher.core.Localizer.SaveIdea[language].headerEditIdea;
+            } else {
+                htmlViewHeadline.textContent =
+                    ideaWatcher.core.Localizer.SaveIdea[language].headerNewIdea;
+            }
             htmlIdeaName.textContent =
-                ideaWatcher.core.Localizer.CreateIdea[language].name;
+                ideaWatcher.core.Localizer.SaveIdea[language].name;
             htmlCategory .textContent =
-                ideaWatcher.core.Localizer.CreateIdea[language].category;
+                ideaWatcher.core.Localizer.SaveIdea[language].category;
             htmlCategory1 .textContent =
-                ideaWatcher.core.Localizer.CreateIdea[language].category1;
+                ideaWatcher.core.Localizer.SaveIdea[language].category1;
             htmlCategory2.textContent =
-                ideaWatcher.core.Localizer.CreateIdea[language].category2;
+                ideaWatcher.core.Localizer.SaveIdea[language].category2;
             htmlCategory3.textContent =
-                ideaWatcher.core.Localizer.CreateIdea[language].category3;
+                ideaWatcher.core.Localizer.SaveIdea[language].category3;
             htmlCategory4.textContent =
-                ideaWatcher.core.Localizer.CreateIdea[language].category4;
+                ideaWatcher.core.Localizer.SaveIdea[language].category4;
             htmlCategory5.textContent =
-                ideaWatcher.core.Localizer.CreateIdea[language].category5;
+                ideaWatcher.core.Localizer.SaveIdea[language].category5;
             htmlCategory6.textContent =
-                ideaWatcher.core.Localizer.CreateIdea[language].category6;
+                ideaWatcher.core.Localizer.SaveIdea[language].category6;
             htmlCategory7.textContent =
-                ideaWatcher.core.Localizer.CreateIdea[language].category7;
+                ideaWatcher.core.Localizer.SaveIdea[language].category7;
             htmlDescription.textContent =
-                ideaWatcher.core.Localizer.CreateIdea[language].description;
+                ideaWatcher.core.Localizer.SaveIdea[language].description;
             // Wenn noch Defaulttext drin steht, dann diesen lokalisieren,
             // sonst ignorieren
             if (htmlDescriptionTextarea.textContent ===
-                ideaWatcher.core.Localizer.CreateIdea['de_DE'].descriptionTextarea ||
+                ideaWatcher.core.Localizer.SaveIdea['de_DE'].descriptionTextarea ||
                 htmlDescriptionTextarea.textContent ===
-                ideaWatcher.core.Localizer.CreateIdea['en_GB'].descriptionTextarea) {
+                ideaWatcher.core.Localizer.SaveIdea['en_GB'].descriptionTextarea) {
 
                 htmlDescriptionTextarea.textContent =
-                    ideaWatcher.core.Localizer.CreateIdea[language].descriptionTextarea;
+                    ideaWatcher.core.Localizer.SaveIdea[language].descriptionTextarea;
             }
 
             htmlPublishButton.setAttribute("value", ideaWatcher.core.Localizer
-                .CreateIdea[language].publish);
+                .SaveIdea[language].publish);
             htmlCancelButton.setAttribute("value", ideaWatcher.core.Localizer
-                .CreateIdea[language].cancel);
+                .SaveIdea[language].cancel);
             htmlSaveButton.setAttribute("value", ideaWatcher.core.Localizer
-                .CreateIdea[language].save);
+                .SaveIdea[language].save);
 
             console.log("Lokalisierung IdeaCreation-View abgeschlossen.");
         }
@@ -269,17 +278,19 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
                 ideaWatcher.controller.GlobalNotification.showNotification(
                     ideaWatcher.model.GlobalNotificationType.ERROR,
-                    ideaWatcher.core.Localizer.IdeaList.Notification[language].Headline,
-                    ideaWatcher.core.Localizer.IdeaList.Notification[language][response.errorMessage],
+                    ideaWatcher.core.Localizer.SaveIdea[language].notification.headline,
+                    ideaWatcher.core.Localizer.SaveIdea[language].notification.errorMessage[response.errorMessage],
                     5000);
                 return;
 
             }
 
-            var exObj = ideaWatcher.model.ExchangeObject.SwitchView;
+            var exObj = Object.create(ideaWatcher.model.ExchangeObject.SwitchView);
             exObj.viewId = ideaWatcher.model.Navigation.ViewId.CREATEIDEA;
             exObj.viewUrl = ideaWatcher.model.Navigation.ViewUrl.CREATEIDEA;
-            exObj.additionalData = response.data;
+            exObj.additionalData = {
+                idea: response.data
+            };
             ideaWatcher.core.Navigator.switchView(exObj);
         }
 
@@ -294,23 +305,21 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
                 ideaWatcher.controller.GlobalNotification.showNotification(
                     ideaWatcher.model.GlobalNotificationType.ERROR,
-                    ideaWatcher.core.Localizer.CreateIdea[language].viewName,
-                    response.errorMessage,
+                    ideaWatcher.core.Localizer.SaveIdea[language].notification.headline,
+                    ideaWatcher.core.Localizer.SaveIdea[language].notification.errorMessage[response.errorMessage],
                     5000);
             }
             else {
                 ideaWatcher.controller.GlobalNotification.showNotification(
                 ideaWatcher.model.GlobalNotificationType.SUCCESS,
-                ideaWatcher.core.Localizer.CreateIdea[language].viewName,
-                ideaWatcher.core.Localizer.CreateIdea[language].saveSuccessMessage,
+                ideaWatcher.core.Localizer.SaveIdea[language].notification.headline,
+                ideaWatcher.core.Localizer.SaveIdea[language].notification.saveSuccessMessage,
                 5000);
             }
 
-            // var exObj = ideaWatcher.model.ExchangeObject.SwitchView;
-            // exObj.viewId = ideaWatcher.model.Navigation.ViewId.CREATEIDEA;
-            // exObj.viewUrl = ideaWatcher.model.Navigation.ViewUrl.CREATEIDEA;
-            // exObj.additionalData = response.data;
-            // ideaWatcher.core.Navigator.switchView(exObj);
+            var listType = ideaWatcher.model.IdeaList.ListType.MYIDEAS;
+            var category = ideaWatcher.model.IdeaList.Category.NONE;
+            ideaWatcher.controller.IdeaList.updateIdeaList(listType, category, 1, 10, true);
         }
 
         // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann

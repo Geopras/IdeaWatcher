@@ -87,7 +87,7 @@ public class GetIdeaListWorkflow  implements IWorkflow {
             else if (isMyFollowedIdeas) {
                 ideasToFilter = this.ideaManager.getMyFollowedIdeas(userId);
             } else {
-                ideasToFilter = this.ideaManager.getAllIdeasSnapshot();
+                ideasToFilter = this.ideaManager.getCategorizedIdeas(category);
             }
         } catch (Exception e) {
             log.log(Level.SEVERE, "Ein Fehler ist bei der Abfrage der zu " +

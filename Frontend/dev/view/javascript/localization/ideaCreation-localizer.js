@@ -2,7 +2,7 @@
 
 // Bitte alphabetisch ordnen!!
 
-ideaWatcher.core.Localizer.CreateIdea = ideaWatcher.core.Localizer.CreateIdea || {
+ideaWatcher.core.Localizer.SaveIdea = ideaWatcher.core.Localizer.SaveIdea || {
 
         en_GB: {
             cancel: 'Cancel',
@@ -16,14 +16,23 @@ ideaWatcher.core.Localizer.CreateIdea = ideaWatcher.core.Localizer.CreateIdea ||
             category7: 'Other',
             description: 'Description',
             descriptionTextarea: 'Enter your Description here',
-            headline: 'New Idea',
             ideaDescriptionTooShort: 'Idea Description is too short',
             ideaNameTooShort: 'Idea Name is too short',
+            headerNewIdea: 'Create New Idea',
+            headerEditIdea: 'Edit Idea',
             name: 'Name',
+            notification: {
+                errorMessage: {
+
+                    SIdeaCreation_saveIdeaData_error: 'An Error occurred on the' +
+                    ' server. The Data could not be saved.'  +
+                    ' Please try again later.'
+                },
+                headline: 'Save Idea',
+                saveSuccessMessage: 'The idea was successfully created!'
+            },
             publish: 'Publish',
-            save: 'Save',
-            saveSuccessMessage: 'Idea created successfully!',
-            viewName: 'New Idea'
+            save: 'Save'
         },
         de_DE: {
             cancel: 'Abbrechen',
@@ -37,13 +46,22 @@ ideaWatcher.core.Localizer.CreateIdea = ideaWatcher.core.Localizer.CreateIdea ||
             category7: 'Anderes',
             description: 'Beschreibung',
             descriptionTextarea: 'Geben sie hier Ihre Beschreibung ein',
-            headline: 'Neue Ideen',
             ideaDescriptionTooShort: 'Die Ideen Beschreibung ist zu kurz.',
             ideaNameTooShort: 'Der Ideen Name ist zu kurz.',
+            headerNewIdea: 'Erstellen Sie eine neue Idee',
+            headerEditIdea: 'Bearbeiten Sie eine neue Idee',
             name: 'Name',
+            notification: {
+                errorMessage: {
+                    headline: 'Speichern Fehlgeschlagen',
+                    SIdeaCreation_saveIdeaData_error: 'Auf dem Server ist ein' +
+                    ' Problem aufgetreten. Es konnte nicht die Idee gespeichert' +
+                    ' werden. Bitte versuchen Sie es später erneut.'
+                },
+                headline: 'Speichern der Idee',
+                saveSuccessMessage: 'Die Idee wurde erfolgreich gespeichert!'
+            },
             publish: 'Veröffentlichen',
             save: 'Speichern',
-            saveSuccessMessage: 'Die neue Idee wurde erfolgreich gespeichert!',
-            viewName: 'Neue Idee'
         }
     };
