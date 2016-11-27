@@ -94,6 +94,15 @@ gulp.task('deployres', function () {
 });
 //endregion
 
-gulp.task('buildAll', ['jsTransform', 'minicss', 'buildhtml', 'deployres'], function(){
+//deploy favicon
+gulp.task('favicon', function () {
+    console.log('Kopiere Favicon in Auslieferungspfad...');
+    return gulp.src('../dev/view/res/img/favicon.ico')
+        .pipe(gulp.dest('../dist/private'))
+        .pipe(gulp.dest('../dist/public'));
+});
+//endregion
+
+gulp.task('buildAll', ['jsTransform', 'minicss', 'buildhtml', 'deployres', 'favicon'], function(){
     console.log('Javascript und CSS minimiert, HTML neu zusammengebaut und Ressourcen aktualisiert...');
 });

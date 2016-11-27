@@ -17,6 +17,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         var countIdeasPerRequest = 10;
         var publishedLabels = [];
         var publishedValueLabels = [];
+        var alreadySendNextIdeasRequest = false;
 
         //endregion
 
@@ -49,10 +50,14 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             htmlCreateIdeaButton = document.querySelector('.myIdeas_createNewIdea_button');
             htmlCreateIdeaButton.addEventListener('click', handleCreateIdeaClickEvent);
             //endregion
+
+            alreadySendNextIdeasRequest = false;
         }
         //endregion
 
         function cbShowView(exObj) {
+
+            alreadySendNextIdeasRequest = false;
 
             if(exObj.shouldShow)
             {
@@ -149,6 +154,8 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             var language = ideaWatcher.core.Localizer.getLanguage();
             // Nach Ergebnis sehen:
             var result = response.result;
+
+            alreadySendNextIdeasRequest = false;
 
             if (result === 'error') {
 
@@ -516,16 +523,21 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         function showNextIdeas() {
 
-            var listType = ideaWatcher.controller.IdeaList.getCurrentClickedListType();
-            var category = ideaWatcher.controller.IdeaList.getCurrentClickedCategory();
-            console.log('Zeige die nächsten ' + countIdeasPerRequest +
-                ' Ideen des Typs "' + listType + '" der Kategorie "' +
-                category + '"');
+            if (!alreadySendNextIdeasRequest){
 
-            var lengthIdeaList = Object.keys(currentIdeasMap).length;
-            ideaWatcher.controller.IdeaList
-                .updateIdeaList(listType, category,
-                   lengthIdeaList + 1 , lengthIdeaList + countIdeasPerRequest, false);
+                alreadySendNextIdeasRequest = true;
+
+                var listType = ideaWatcher.controller.IdeaList.getCurrentClickedListType();
+                var category = ideaWatcher.controller.IdeaList.getCurrentClickedCategory();
+                console.log('Zeige die nächsten ' + countIdeasPerRequest +
+                    ' Ideen des Typs "' + listType + '" der Kategorie "' +
+                    category + '"');
+
+                var lengthIdeaList = Object.keys(currentIdeasMap).length;
+                ideaWatcher.controller.IdeaList
+                    .updateIdeaList(listType, category,
+                        lengthIdeaList + 1 , lengthIdeaList + countIdeasPerRequest, false);
+            }
         }
 
         function createCurrentIdeasMap(ideasToAdd) {
