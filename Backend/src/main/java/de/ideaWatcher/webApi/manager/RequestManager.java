@@ -57,7 +57,7 @@ public class RequestManager {
                 new SaveCommentCommand());
         this.workflowMapping.addCommand("SIdeaDetails/deleteCommentIdeaRequest",
                 new DeleteCommentCommand());
-        this.workflowMapping.addCommand("SIdea/deleteIdeaRequest",
+        this.workflowMapping.addCommand("SIdeaList/deleteIdeaRequest",
                 new DeleteIdeaCommand());
         this.workflowMapping.addCommand("SIdeaCreation/saveIdeaRequest",
                 new AddIdeaCommand());

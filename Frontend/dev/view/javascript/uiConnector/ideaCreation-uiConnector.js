@@ -179,7 +179,9 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
             {
                 renderView(exObj.additionalData.idea);
                 htmlIdeaCreationView.style.display = 'block';
-                ideaIdForEdit = exObj.additionalData.idea.ideaId;
+                if (exObj.additionalData.idea) {
+                    ideaIdForEdit = exObj.additionalData.idea.ideaId;
+                }
             } else {
 
                 htmlIdeaCreationView.style.display = 'none';

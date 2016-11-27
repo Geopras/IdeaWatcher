@@ -27,6 +27,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         ideaWatcher.controller.IdeaList.registerLocalizeView(cbLocalizeView);
         ideaWatcher.controller.IdeaList.registerGetIdeasResponse(cbGetIdeasResponse);
         ideaWatcher.controller.IdeaList.registerGetIdea(cbGetIdea);
+        ideaWatcher.controller.IdeaList.registerGetDeleteIdeaResponse(cbDeleteIdeaResponse);
         //endregion
 
         //region Callback-Functions
@@ -161,8 +162,8 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
                 ideaWatcher.controller.GlobalNotification.showNotification(
                     ideaWatcher.model.GlobalNotificationType.ERROR,
-                    ideaWatcher.core.Localizer.IdeaList.Notification[language].Headline,
-                    ideaWatcher.core.Localizer.IdeaList.Notification[language][response.errorMessage],
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].errorMessage.Headline,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].errorMessage[response.errorMessage],
                     5000);
                 return;
 
@@ -170,8 +171,8 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
                 ideaWatcher.controller.GlobalNotification.showNotification(
                     ideaWatcher.model.GlobalNotificationType.ERROR,
-                    ideaWatcher.core.Localizer.IdeaList.Notification[language].Headline,
-                    ideaWatcher.core.Localizer.IdeaList.Notification[language].UnknownStatus,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].errorMessage.Headline,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].errorMessage.UnknownStatus,
                     5000);
                 return;
             }
@@ -203,16 +204,21 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             var language = ideaWatcher.core.Localizer.getLanguage();
             // Nach Ergebnis sehen:
             var result = response.result;
-            var ideaId = response.data.ideaId;
 
             if (result !== 'success') {
 
                 ideaWatcher.controller.GlobalNotification.showNotification(
                     ideaWatcher.model.GlobalNotificationType.ERROR,
-                    ideaWatcher.core.Localizer.IdeaList.DeleteIdea[language].errorMessage.header,
-                    ideaWatcher.core.Localizer.IdeaList.DeleteIdea[language].errorMessage[response.errorMessage],
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].errorMessage.Headline,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].errorMessage[response.errorMessage],
                     5000);
                 return;
+            } else {
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.model.GlobalNotificationType.SUCCESS,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].deleteSuccessHeader,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].deleteSuccessMessage,
+                    5000);
             }
 
             // Wenn erfolgreich, dann Ideenliste neu abfragen

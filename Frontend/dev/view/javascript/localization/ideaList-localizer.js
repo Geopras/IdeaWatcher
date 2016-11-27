@@ -8,61 +8,55 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
             en_GB: 'Create new idea',
             de_DE: 'Neue Idee erstellen'
         },
-        DeleteIdea: {
-        	en_GB: {
-        		errorMessage: {
-        			SIdeaList_deleteIdeaData_error: '',
-        			SIdeaList_deleteIdeaGetDBObjects_error: '',
-        			SIdeaList_deleteIdeaIdeaController_error: '',
-        			SIdeaList_deleteIdeaIntegrity_error: ''
-        		}
-        	},
-            de_DE: {
-            	errorMessage: {
-            		SIdeaList_deleteIdeaData_error: '',
-        			SIdeaList_deleteIdeaGetDBObjects_error: '',
-        			SIdeaList_deleteIdeaIdeaController_error: '',
-        			SIdeaList_deleteIdeaIntegrity_error: ''
-            	}
-            	
-            }
-        },
         Published: {
             en_GB: 'Published: ',
             de_DE: 'Veröffentlicht: '
         },
         Notification: {
             en_GB: {
-                Headline: 'Idea List Query',
-                SIdeaList_filterIdeas_error: 'An error occured while asking' +
-                ' for ideas from server. Please try again later.',
-                SIdeaList_fromRankTooLarge_error: 'An error occured while asking' +
-                ' for ideas from server. Please try again later.',
-                SIdeaList_getIdeasBounds_error: 'An error occurred because' +
-                ' of not valid server request data. Please try again later.',
-                SIdeaList_getIdeasFromDb_error: 'An error occured while demanding' +
-                ' data from database. Please try again later.',
-                SIdeaList_getIdeasRequestData_error: 'An error occurred because' +
-                ' of not valid server request data. Please try again later.',
-                UnknownStatus: 'Something unknown has happened while asking for' +
-                ' idea list. Please try again later.'
+                deleteSuccessHeader: 'Delete Idea',
+                deleteSuccessMessage: 'The idea was successfully removed.',
+                errorMessage: {
+                    Headline: 'Idea List',
+                    SIdeaList_deleteIdeaData_error: 'An error occured while' +
+                    ' trying to delete the idea on server. Please try again later.',
+                    SIdeaList_filterIdeas_error: 'An error occured while asking' +
+                    ' for ideas from server. Please try again later.',
+                    SIdeaList_fromRankTooLarge_error: 'An error occured while asking' +
+                    ' for ideas from server. Please try again later.',
+                    SIdeaList_getIdeasBounds_error: 'An error occurred because' +
+                    ' of not valid server request data. Please try again later.',
+                    SIdeaList_getIdeasFromDb_error: 'An error occured while demanding' +
+                    ' data from database. Please try again later.',
+                    SIdeaList_getIdeasRequestData_error: 'An error occurred because' +
+                    ' of not valid server request data. Please try again later.',
+                    UnknownStatus: 'Something unknown has happened while asking for' +
+                    ' idea list. Please try again later.'
+                }
             },
             de_DE: {
-                Headline: 'Ideenlisten-Abfrage',
-                SIdeaList_filterIdeas_error: 'Beim Abfragen weiterer Ideen' +
-                ' vom Server ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.',
-                SIdeaList_fromRankTooLarge_error: 'Beim Abfragen weiterer Ideen' +
-                ' vom Server ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.',
-                SIdeaList_getIdeasBounds_error: 'Aufgrund fehlerhafte Daten' +
-                ' während der Serveranfrage ist ein Fehler aufgetreten.' +
-                ' Bitte versuchen Sie es später erneut.',
-                SIdeaList_getIdeasFromDb_error: 'Beim Versuch die Datenbank' +
-                ' abzurufen, ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.',
-                SIdeaList_getIdeasRequestData_error: 'Aufgrund fehlerhafte Daten' +
-                ' während der Serveranfrage ist ein Fehler aufgetreten.' +
-                ' Bitte versuchen Sie es später erneut.',
-                UnknownStatus: 'Ein unbekannter Fall ist eingetreten bei der' +
-                ' Abfrage von Ideen. Bitte versuchen Sie es später nochmal.'
+                deleteSuccessHeader: 'Idee Löschen',
+                deleteSuccessMessage: 'Die Idee wurde erfolgreich gelöscht.',
+                errorMessage: {
+                    Headline: 'Ideenliste',
+                    SIdeaList_deleteIdeaData_error: 'Beim Löschen der Idee auf' +
+                    ' dem Server ist ein Fehler aufgetreten. Bitte versuchen Sie' +
+                    ' es später nochmal.',
+                    SIdeaList_filterIdeas_error: 'Beim Abfragen weiterer Ideen' +
+                    ' vom Server ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.',
+                    SIdeaList_fromRankTooLarge_error: 'Beim Abfragen weiterer Ideen' +
+                    ' vom Server ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.',
+                    SIdeaList_getIdeasBounds_error: 'Aufgrund fehlerhafte Daten' +
+                    ' während der Serveranfrage ist ein Fehler aufgetreten.' +
+                    ' Bitte versuchen Sie es später erneut.',
+                    SIdeaList_getIdeasFromDb_error: 'Beim Versuch die Datenbank' +
+                    ' abzurufen, ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.',
+                    SIdeaList_getIdeasRequestData_error: 'Aufgrund fehlerhafte Daten' +
+                    ' während der Serveranfrage ist ein Fehler aufgetreten.' +
+                    ' Bitte versuchen Sie es später erneut.',
+                    UnknownStatus: 'Ein unbekannter Fall ist eingetreten bei der' +
+                    ' Abfrage von Ideen. Bitte versuchen Sie es später nochmal.'
+                }
             }
         },
         FRESH: {
