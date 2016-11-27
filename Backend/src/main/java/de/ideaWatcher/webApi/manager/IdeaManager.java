@@ -98,7 +98,7 @@ public class IdeaManager {
      * @param toRank Bsp.: bis Ranking 20
      * @return
      */
-    public List<IIdea> filterIdeas(String listType, String category, int fromRank, int toRank) throws Exception {
+    public List<IIdea> filterIdeas(String listType, String category, int fromRank, int toRank, String userId) throws Exception {
 
         List<String> filteredIdeaIds = new ArrayList<String>();
         List<IIdea> filteredIdeas = new ArrayList<IIdea>();
@@ -133,10 +133,10 @@ public class IdeaManager {
             if (numberIdeas > 0) {
                 // iteriere durch alle Ideen
                 for (IIdea idea : allIdeasSnapshot) {
-                    // suche dabei nach Ideen der gewuenschten Kategorie
-                    if (idea.getIsPublished()) {
 
-                        boolean ideaIsOK = false;
+                    boolean ideaIsOK = false;
+
+                    if (idea.getIsPublished()) {
 
                         // Für den Fall, dass nach einer Kategorie gesucht werden soll
                         if (!category.toUpperCase().equals("NONE") || category.toUpperCase().equals("") ){
@@ -144,25 +144,40 @@ public class IdeaManager {
                                 // Die Kategorie der Idee stimmt mit der gesuchten überein
                                 ideaIsOK = true;
                             }
+                        } else if (listType.equals("MYFOLLOWEDIDEAS")){
+                            if (idea.getFollowerUsers().contains(userId)){
+                                ideaIsOK = true;
+                            }
+                        } else if(listType.equals("MYIDEAS")) {
+                            if (idea.getCreator().getUserId().equals(userId)){
+                                ideaIsOK = true;
+                            }
                         } else{
                             // wenn nicht nach einer Kategorie gesucht wird, kann die Idee immer genommen werden
                             ideaIsOK = true;
                         }
 
-                        if (ideaIsOK){
-                            currentRank += 1;
+                    } else {
 
-                            // und fuege Sie den Ergebnissen hinzu,
-                            // wenn sie im gesuchten Ranking-Bereich liegen
-                            if (currentRank >= fromRank) {
-                                filteredIdeaIds.add(idea.getIdeaId());
-                            }
-
-                            if (currentRank == toRank) {
-                                break;
-                            }
+                        // nur MyIdeas werden nicht herausgefiltert, wenn sie nicht gepublished sind
+                        if(listType.equals("MYIDEAS") && idea.getCreator().getUserId().equals(userId)) {
+                            ideaIsOK = true;
                         }
 
+                    }
+
+                    if (ideaIsOK){
+                        currentRank += 1;
+
+                        // und fuege Sie den Ergebnissen hinzu,
+                        // wenn sie im gesuchten Ranking-Bereich liegen
+                        if (currentRank >= fromRank) {
+                            filteredIdeaIds.add(idea.getIdeaId());
+                        }
+
+                        if (currentRank == toRank) {
+                            break;
+                        }
                     }
                 }
             }

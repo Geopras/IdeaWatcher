@@ -65,7 +65,7 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         List<IIdea> filteredIdeas = null;
         try {
             filteredIdeas = InstanceManager.getIdeaManager()
-                    .filterIdeas(listType, category, fromRank, toRank);
+                    .filterIdeas(listType, category, fromRank, toRank, "");
         } catch (Exception e) {
             log.log(Level.SEVERE, "Ein Fehler ist bei der Filterung" +
                     " der Ideen.\nFehlermeldung: " + e.toString());
