@@ -236,6 +236,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation
 					isEdit = false;
 					htmlIdeaNameInput.value = '';
 					htmlDescriptionTextarea.textContent = '';
+					htmlDescriptionTextarea.value = '';
 				}
 				cbLocalizeView();
 			}
