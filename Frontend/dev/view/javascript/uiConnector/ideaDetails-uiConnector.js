@@ -343,9 +343,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			}
 
-			function navigateToEditView() {
-				console
-						.log('Jetzt müsste sich die vorausgefüllte CreateIdeaView öffnen.');
+			function navigateToEditView(clickEvent) {
+				var ideaId = clickEvent.target.attributes.getNamedItem('data-idea-id').nodeValue;
+	            ideaWatcher.controller.IdeaDetails.tryToEditIdea(ideaId);
 			}
 
 			function renderView(crtIdea) {
@@ -430,6 +430,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 				if (isOwnIdea) {
 					htmlEditButton.style.display = 'inline';
+					htmlEditButton.dataset.ideaId = currentIdea.ideaId;
 				}
 
 				// set userPicture in new Comment section

@@ -186,6 +186,11 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
                 //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
             }
         }
+        
+        function pubTryToEditIdea(ideaId) {
+
+            ideaWatcher.controller.ideaCreation.tryToEditIdea(ideaId);
+        }
 
         function pubGetIdea(ideaId) {
 
@@ -272,6 +277,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             tryToLoadIdeaData: pubTryToLoadIdeaData,
             tryToSaveComment: pubTryToSaveComment,
             tryToDeleteComment: pubTryToDeleteComment,
+            tryToEditIdea: pubTryToEditIdea,
         };
 
     })();
