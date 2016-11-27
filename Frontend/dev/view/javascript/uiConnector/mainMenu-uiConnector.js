@@ -382,9 +382,9 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
             // Wenn HomeButton geklickt, dann Hot-Button klicken
             if (clickedButton.id === 'mainMenu_homeButton_img') {
                 lastClickedButton.style.background = ''; // CSS-Eigenschaft
+                clickHotButton();
                 // zurücksetzen, sodass der allgemeine Hover-Button-Style
                 // wieder greift
-                cbClickHotButton();
             }
             // Wenn Hot, Fresh oder Trending geklickt, dann soll dieser
             // Button markiert und extra gespeichert werden
