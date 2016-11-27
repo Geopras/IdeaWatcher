@@ -22,7 +22,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation
 			var htmlCancelButton = null;
 			var htmlSaveButton = null;
 			var htmlIdeaNameInput = null;
-			var isEdit;
+			var isEdit = null;
 			var ideaIdForEdit = null;
 			// endregion
 
