@@ -59,8 +59,10 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						.querySelector('#ideaDetails_comment_input');
 				htmlEditButton = document
 						.querySelector('#ideaDetails_edit_img');
-				htmlIdeaCreator = document.querySelector('#ideaDetails_creator_span');
-				htmlIdeaCreatorName = document.querySelector('#ideaDetails_creatorName_span');
+				htmlIdeaCreator = document
+						.querySelector('#ideaDetails_creator_span');
+				htmlIdeaCreatorName = document
+						.querySelector('#ideaDetails_creatorName_span');
 				// endregion
 
 				// region register Callbacks
@@ -82,7 +84,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 							text : htmlCommentTextInput.value
 						};
 						console
-								.log('Kommentar wird im UIConnector abgeschickt.')
+								.log(exObj)
 						ideaWatcher.controller.IdeaDetails
 								.tryToSaveComment(exObj);
 
@@ -223,8 +225,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				}
 
 			}
-			
-			
+
 			function cbLikeFollowResponse(exObj) {
 
 				var language = ideaWatcher.core.Localizer.getLanguage();
@@ -353,27 +354,28 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 				console.log('Starte erstellen der Detailansicht...');
 				currentIdea = crtIdea;
-				
-				//htmlEditButton soll nur angezeigt werden, wenn es sich um die Idee des Nutzers handelt
+
+				// htmlEditButton soll nur angezeigt werden, wenn es sich um die
+				// Idee des Nutzers handelt
 				htmlEditButton = document
-				.querySelector('#ideaDetails_edit_img');
+						.querySelector('#ideaDetails_edit_img');
 				htmlEditButton.style.display = 'none';
 
 				htmlIdeaCreatorName.textContent = currentIdea.creator.userName;
 
 				// Flag isOwnIdea bestimmen
 				var isOwnIdea = false;
-				
-				 if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
-				 var currentUserId = ideaWatcher.controller.UserSession
-				 .getCurrentUserId();
-				
-				 if (currentIdea.creator.userId == currentUserId) {
-				 isOwnIdea = true;
-				 }
-				 } else {
-				 // kein User angemeldet
-				 }
+
+				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
+					var currentUserId = ideaWatcher.controller.UserSession
+							.getCurrentUserId();
+
+					if (currentIdea.creator.userId == currentUserId) {
+						isOwnIdea = true;
+					}
+				} else {
+					// kein User angemeldet
+				}
 
 				currentIdea = crtIdea;
 
@@ -518,26 +520,28 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 								var htmlCommentNameBold = document
 										.createElement('b');
 								htmlCommentNameBold.textContent = comment.userName;
+								var htmlCreationDateText = document
+										.createElement('span');
+								htmlCreationDateText.id = 'ideaDetails_commentCreationDate_span';
+								var locale = language.replace('_', '-');
+								var dateObject = new Date(comment.publishDate);
+								htmlCreationDateText.textContent = dateObject
+										.toLocaleDateString(locale)
+										+ ' '
+										+ dateObject.toLocaleTimeString(locale);
 								var htmlCommentTextDiv = document
 										.createElement('div');
 								htmlCommentTextDiv.textContent = comment.text;
 
-								var htmlCreationDateText = document
-										.createElement('span');
-								var locale = language.replace('_', '-');
-								var dateObject = new Date(comment.publishDate);
-								htmlCreationDateText.textContent = dateObject.toLocaleDateString(locale) +
-									' ' + dateObject.toLocaleTimeString(locale);
-
 								htmlCommentNameAndTextDiv
 										.appendChild(htmlCommentNameBold);
+								htmlCommentNameAndTextDiv
+								.appendChild(htmlCreationDateText);
 								htmlCommentNameAndTextDiv.appendChild(document
 										.createElement('br'));
 								htmlCommentNameAndTextDiv
 										.appendChild(htmlCommentTextDiv);
-								htmlCommentNameAndTextDiv.appendChild(document
-									.createElement('br'));
-								htmlCommentNameAndTextDiv.appendChild(htmlCreationDateText);
+
 
 								htmlCommentTextCell
 										.appendChild(htmlCommentNameAndTextDiv);
