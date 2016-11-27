@@ -6,7 +6,7 @@ ideaWatcher.core.Localizer.ideaDetails = ideaWatcher.core.Localizer.ideaDetails 
 
 		en_GB: {
 			contact: 'Contact idea provider',
-			creator: 'crated by: ',
+			creator: 'created by: ',
 			edit: 'Edit',
 			ideaDetails: 'idea details',
 			submit: 'Comment',
