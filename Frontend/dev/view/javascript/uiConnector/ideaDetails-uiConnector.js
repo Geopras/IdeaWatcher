@@ -10,6 +10,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			var htmlFollowerImg = null;
 			var htmlCommentTextInput = null;
 			var htmlFollowerSpan = null;
+			var htmlIdeaCreator = null;
+			var htmlIdeaCreatorName = null;
 			var htmlCommentsSpan = null;
 			var htmlSubmitButton = null;
 			var htmlEditButton = null;
@@ -57,7 +59,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						.querySelector('#ideaDetails_comment_input');
 				htmlEditButton = document
 						.querySelector('#ideaDetails_edit_img');
-
+				htmlIdeaCreator = document.querySelector('#ideaDetails_creator_span');
+				htmlIdeaCreatorName = document.querySelector('#ideaDetails_creatorName_span');
 				// endregion
 
 				// region register Callbacks
@@ -158,6 +161,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				htmlEditButton = document
 						.querySelector('#ideaDetails_editIdea_button');
 
+				htmlIdeaCreator.textContent = ideaWatcher.core.Localizer.ideaDetails[language].creator;
 			}
 			// endregion
 
@@ -352,7 +356,9 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				htmlEditButton = document
 				.querySelector('#ideaDetails_edit_img');
 				htmlEditButton.style.display = 'none';
-				
+
+				htmlIdeaCreatorName.textContent = currentIdea.creator.userName;
+
 				// Flag isOwnIdea bestimmen
 				var isOwnIdea = false;
 				
