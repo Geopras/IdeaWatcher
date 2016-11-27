@@ -1,5 +1,6 @@
 package main.java.de.ideaWatcher.webApi.workflow;
 
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -92,6 +93,7 @@ public class SaveCommentWorkflow implements IWorkflow {
         currentComment.setUserName(currentUser.getUserName());
         currentComment.setText(commentText);
         currentComment.setCommentId(java.util.UUID.randomUUID().toString());
+        currentComment.setPublishDate(new Date());
 
         currentIdea.getComments().add(currentComment);
 
