@@ -41,7 +41,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					.registerDeleteCommentResponse(cbDeleteCommentResponse);
 			ideaWatcher.controller.IdeaDetails
 					.registerLikeFollowResponse(cbLikeFollowResponse);
-			
+
 			// endregion
 
 			// region subscribe to events
@@ -61,7 +61,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						.querySelector('#ideaDetails_comment_input');
 				htmlEditButton = document
 						.querySelector('#ideaDetails_edit_img');
-				htmlDeleteIdeaButton = document.querySelector('#ideaDetails_ideaDeleteButton_img');
+				htmlDeleteIdeaButton = document
+						.querySelector('#ideaDetails_ideaDeleteButton_img');
 				htmlIdeaCreator = document
 						.querySelector('#ideaDetails_creator_span');
 				htmlIdeaCreatorName = document
@@ -86,15 +87,14 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 							ideaId : currentIdea.ideaId,
 							text : htmlCommentTextInput.value
 						};
-						console
-								.log(exObj)
+						console.log(exObj)
 						ideaWatcher.controller.IdeaDetails
 								.tryToSaveComment(exObj);
 
 						// TODO: Hier muss noch die entsprechende Methode des
 						// Controllers aufgerufen werden
 					} else {
-						console.log("kein User angemeldet");
+						//kein User angemeldet.
 					}
 				};
 				// endregion
@@ -230,7 +230,6 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			}
 
-			
 			function cbLikeFollowResponse(exObj) {
 
 				var language = ideaWatcher.core.Localizer.getLanguage();
@@ -272,28 +271,36 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					var currentUserId = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
 
-					if (isLiked) {
-						htmlLikeImg.src = './resources/img/bulb_off.png';
-						isLiked = false;
-						var exObj = {
-							userId : currentUserId,
-							ideaId : currentIdea.ideaId,
-							action : 'unlike'
-						};
+					var creatorId = currentIdea.creator.userId;
+
+					if (currentUserId !== creatorId) {
+
+						if (isLiked) {
+							htmlLikeImg.src = './resources/img/bulb_off.png';
+							isLiked = false;
+							var exObj = {
+								userId : currentUserId,
+								ideaId : currentIdea.ideaId,
+								action : 'unlike'
+							};
+						} else {
+							htmlLikeImg.src = './resources/img/bulb_on.png';
+							isLiked = true;
+							var exObj = {
+								userId : currentUserId,
+								ideaId : currentIdea.ideaId,
+								action : 'like'
+							};
+						}
+						console.log(exObj);
+						ideaWatcher.controller.IdeaDetails
+								.tryToChangeLikeFollow(exObj);
 					} else {
-						htmlLikeImg.src = './resources/img/bulb_on.png';
-						isLiked = true;
-						var exObj = {
-							userId : currentUserId,
-							ideaId : currentIdea.ideaId,
-							action : 'like'
-						};
+						//User darf eigene Idee nicht liken.
 					}
-					console.log(exObj);
-					ideaWatcher.controller.IdeaDetails
-							.tryToChangeLikeFollow(exObj);
+
 				} else {
-					console.log("kein User angemeldet");
+					//kein Nutzer angemeldet.
 				}
 
 			}
@@ -303,29 +310,36 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					var currentUserId = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
 
-					if (isFollowed) {
-						htmlFollowerImg.src = './resources/img/favorite_off.png';
-						isFollowed = false;
-						var exObj = {
-							userId : currentUserId,
-							ideaId : currentIdea.ideaId,
-							action : 'unfollow'
-						};
-					} else {
-						htmlFollowerImg.src = './resources/img/favorite_on.png';
-						isFollowed = true;
-						var exObj = {
-							userId : currentUserId,
-							ideaId : currentIdea.ideaId,
-							action : 'follow'
-						};
-					}
-					console.log(exObj);
+					var creatorId = currentIdea.creator.userId;
 
-					ideaWatcher.controller.IdeaDetails
-							.tryToChangeLikeFollow(exObj);
+					if (currentUserId !== creatorId) {
+
+						if (isFollowed) {
+							htmlFollowerImg.src = './resources/img/favorite_off.png';
+							isFollowed = false;
+							var exObj = {
+								userId : currentUserId,
+								ideaId : currentIdea.ideaId,
+								action : 'unfollow'
+							};
+						} else {
+							htmlFollowerImg.src = './resources/img/favorite_on.png';
+							isFollowed = true;
+							var exObj = {
+								userId : currentUserId,
+								ideaId : currentIdea.ideaId,
+								action : 'follow'
+							};
+						}
+						console.log(exObj);
+
+						ideaWatcher.controller.IdeaDetails
+								.tryToChangeLikeFollow(exObj);
+					} else {
+						//User darf eigener Idee nicht folgen.
+					}
 				} else {
-					console.log("kein User angemeldet");
+					//kein User angemeldet
 				}
 
 			}
@@ -349,13 +363,15 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 			}
 
 			function navigateToEditView(clickEvent) {
-				var ideaId = clickEvent.target.attributes.getNamedItem('data-idea-id').nodeValue;
-	            ideaWatcher.controller.IdeaDetails.tryToEditIdea(ideaId);
+				var ideaId = clickEvent.target.attributes
+						.getNamedItem('data-idea-id').nodeValue;
+				ideaWatcher.controller.IdeaDetails.tryToEditIdea(ideaId);
 			}
-			
+
 			function deleteIdea(clickEvent) {
-				var ideaId = clickEvent.target.attributes.getNamedItem('data-idea-id').nodeValue;
-	            ideaWatcher.controller.IdeaDetails.tryToDeleteIdea(ideaId);
+				var ideaId = clickEvent.target.attributes
+						.getNamedItem('data-idea-id').nodeValue;
+				ideaWatcher.controller.IdeaDetails.tryToDeleteIdea(ideaId);
 			}
 
 			function renderView(crtIdea) {
@@ -365,13 +381,15 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 				console.log('Starte erstellen der Detailansicht...');
 				currentIdea = crtIdea;
 
-				// htmlEditButton und deleteIdeaButton sollen nur angezeigt werden, wenn es sich um die
+				// htmlEditButton und deleteIdeaButton sollen nur angezeigt
+				// werden, wenn es sich um die
 				// Idee des Nutzers handelt
 				htmlEditButton = document
 						.querySelector('#ideaDetails_edit_img');
 				htmlEditButton.style.display = 'none';
-				
-				htmlDeleteIdeaButton = document.querySelector('#ideaDetails_ideaDeleteButton_img');
+
+				htmlDeleteIdeaButton = document
+						.querySelector('#ideaDetails_ideaDeleteButton_img');
 				htmlDeleteIdeaButton.style.display = 'none';
 
 				htmlIdeaCreatorName.textContent = currentIdea.creator.userName;
@@ -461,7 +479,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 						htmlUserImage.src = creator.pictureUrl;
 					}
 				} else {
-					console.log('Kein Nutzer angemeldet.');
+					//Kein Nutzer angemeldet.
 				}
 
 				htmlCommentTextInput.value = '';
@@ -552,12 +570,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 								htmlCommentNameAndTextDiv
 										.appendChild(htmlCommentNameBold);
 								htmlCommentNameAndTextDiv
-								.appendChild(htmlCreationDateText);
+										.appendChild(htmlCreationDateText);
 								htmlCommentNameAndTextDiv.appendChild(document
 										.createElement('br'));
 								htmlCommentNameAndTextDiv
 										.appendChild(htmlCommentTextDiv);
-
 
 								htmlCommentTextCell
 										.appendChild(htmlCommentNameAndTextDiv);
