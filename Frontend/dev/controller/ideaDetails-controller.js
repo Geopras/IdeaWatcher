@@ -192,6 +192,11 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             ideaWatcher.controller.ideaCreation.tryToEditIdea(ideaId);
         }
 
+        
+        function pubTryToDeleteIdea(ideaId) {
+        	console.log('ich lande beim Idee löschen schonmal im Controller.');	
+        }
+        
         function pubGetIdea(ideaId) {
 
             return ideaWatcher.controller.IdeaList.getIdea(ideaId);
@@ -278,6 +283,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             tryToSaveComment: pubTryToSaveComment,
             tryToDeleteComment: pubTryToDeleteComment,
             tryToEditIdea: pubTryToEditIdea,
+            tryToDeleteIdea: pubTryToDeleteIdea,
         };
 
     })();
