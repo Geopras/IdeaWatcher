@@ -40,8 +40,6 @@ public class DeleteIdeaWorkflow implements IWorkflow {
         IIdea currentIdea;
         ICreator currentCreator;
         
-        JSONObject responseData = new JSONObject();
-
         try {
             JSONObject deleteIdeaData = request.getData();
             ideaId = deleteIdeaData.getString("ideaId");
@@ -105,7 +103,6 @@ public class DeleteIdeaWorkflow implements IWorkflow {
                 this.userController.updateUser(currentUser);
 
                 response.setResult("success");
-                response.setData(responseData);
                 return response;
 
             } catch (Exception ex) {

@@ -47,6 +47,8 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         		topic: 'SIdeaDetails/deleteCommentIdeaRequest-response',
         		cbFunction: cbDeleteCommentResponse
         };
+        
+       
         //endregion
 
         //region subscribe to events
@@ -78,6 +80,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         function cbDeleteCommentResponse(obj) {
         	cbDeleteCommentResp(obj);
         }
+        
         
         function cbLikeFollowResponse(obj) {
         	cbLikeFollowResp(obj);
@@ -121,6 +124,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         function pubRegisterDeleteCommentResponse(cb) {
             cbDeleteCommentResp = cb;
         }
+        
         
         function pubRegisterLikeFollowResponse(cb) {
             cbLikeFollowResp = cb;
@@ -166,7 +170,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             }
         }
         
-        pubTryToDeleteComment
+        
         function pubTryToDeleteComment(exObject)
         {
             // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
@@ -194,7 +198,27 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
 
         
         function pubTryToDeleteIdea(ideaId) {
-        	console.log('ich lande beim Idee löschen schonmal im Controller.');	
+        	
+        	var requestData = {
+                    ideaId: ideaId
+                };
+
+        	// Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
+            if (ideaWatcher.core.WebSocketConnector.isConnected()) {
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildDeleteIdeaRequest(requestData));
+            } else {
+                //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
+            }	
+        }
+        
+        function buildDeleteIdeaRequest(requestData) {
+
+            var request = Object.create(ideaWatcher.model.Request);
+
+            request.destination = 'SIdeaList/deleteIdeaRequest';
+            request.data = requestData;
+
+            return request;
         }
         
         function pubGetIdea(ideaId) {

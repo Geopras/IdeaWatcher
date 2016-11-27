@@ -41,6 +41,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 					.registerDeleteCommentResponse(cbDeleteCommentResponse);
 			ideaWatcher.controller.IdeaDetails
 					.registerLikeFollowResponse(cbLikeFollowResponse);
+			
 			// endregion
 
 			// region subscribe to events
@@ -229,6 +230,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 
 			}
 
+			
 			function cbLikeFollowResponse(exObj) {
 
 				var language = ideaWatcher.core.Localizer.getLanguage();
