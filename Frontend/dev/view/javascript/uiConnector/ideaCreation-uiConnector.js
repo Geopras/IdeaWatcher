@@ -294,11 +294,16 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function () {
 
                 ideaWatcher.controller.GlobalNotification.showNotification(
                     ideaWatcher.model.GlobalNotificationType.ERROR,
-                    ideaWatcher.core.Localizer.IdeaList.Notification[language].Headline,
-                    ideaWatcher.core.Localizer.IdeaList.Notification[language][response.errorMessage],
+                    ideaWatcher.core.Localizer.CreateIdea[language].viewName,
+                    response.errorMessage,
                     5000);
-                return;
-
+            }
+            else {
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                ideaWatcher.model.GlobalNotificationType.SUCCESS,
+                ideaWatcher.core.Localizer.CreateIdea[language].viewName,
+                ideaWatcher.core.Localizer.CreateIdea[language].saveSuccessMessage,
+                5000);
             }
 
             // var exObj = ideaWatcher.model.ExchangeObject.SwitchView;

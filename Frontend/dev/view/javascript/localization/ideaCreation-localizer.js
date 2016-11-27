@@ -22,6 +22,7 @@ ideaWatcher.core.Localizer.CreateIdea = ideaWatcher.core.Localizer.CreateIdea ||
             name: 'Name',
             publish: 'Publish',
             save: 'Save',
+            saveSuccessMessage: 'Idea created successfully!',
             viewName: 'New Idea'
         },
         de_DE: {
@@ -42,6 +43,7 @@ ideaWatcher.core.Localizer.CreateIdea = ideaWatcher.core.Localizer.CreateIdea ||
             name: 'Name',
             publish: 'Veröffentlichen',
             save: 'Speichern',
+            saveSuccessMessage: 'Die neue Idee wurde erfolgreich gespeichert!',
             viewName: 'Neue Idee'
         }
     };

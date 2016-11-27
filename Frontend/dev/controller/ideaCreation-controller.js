@@ -66,8 +66,6 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
         }
 
         function cbSaveIdeaResponse(obj) {
-            console.log('Speicgere Idee, Ergebnis: ');
-            console.log(obj);
             cbSaveIdeaResp(obj);
         }
 
