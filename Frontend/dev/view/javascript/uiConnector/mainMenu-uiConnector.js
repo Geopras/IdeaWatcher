@@ -415,25 +415,28 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
                 lastClickedMainIdeaListButton.style.background = '#4096ee';
                 currentClickedButton.style.background = '#4096ee';
             } else {
-            } { // ansonsten Markierung vom letzten Button
+                // ansonsten Markierung vom letzten Button
                 // auflösen
                 lastClickedButton.style.background = '';
                 lastClickedMainIdeaListButton.style.background = '';
             }
             if (buttonId === ideaWatcher.model.Navigation.ButtonId.MYIDEAS) {
 
+                lastClickedButton.style.background = '';
                 htmlProfileEditButton.style.background = '';
                 htmlFollowedIdeasButton.style.background = '';
                 htmlMyIdeasButton.style.background = '#4096ee';
             }
             else if (buttonId === ideaWatcher.model.Navigation.ButtonId.MYFOLLOWEDIDEAS) {
 
+                lastClickedButton.style.background = '';
                 htmlProfileEditButton.style.background = '';
                 htmlFollowedIdeasButton.style.background = '#4096ee';
                 htmlMyIdeasButton.style.background = '';
             }
             else if (buttonId === ideaWatcher.model.Navigation.ButtonId.MYPROFILE) {
 
+                lastClickedButton.style.background = '';
                 htmlProfileEditButton.style.background = '#4096ee';
                 htmlFollowedIdeasButton.style.background = '';
                 htmlMyIdeasButton.style.background = '';
