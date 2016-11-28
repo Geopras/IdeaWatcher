@@ -180,11 +180,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
             if (!response.data.ideas || response.data.ideas.length === 0) {
 
-                ideaWatcher.controller.GlobalNotification.showNotification(
-                    ideaWatcher.model.GlobalNotificationType.INFO,
-                    ideaWatcher.core.Localizer.IdeaList.Notification[language].infoMessage.emptyIdeaListHeader,
-                    ideaWatcher.core.Localizer.IdeaList.Notification[language].infoMessage.emptyIdeaListMessage,
-                    5000);
+                console.log("Die Ideenliste vom Server ist leer oder undefiniert.")
             }
 
             var listType = response.data.listType;
