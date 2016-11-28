@@ -11,6 +11,7 @@ import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -99,6 +100,12 @@ public class GetIdeaListWorkflow  implements IWorkflow {
 
         if (ideasToFilter.isEmpty()) {
             log.log(Level.WARNING, "Die zu filternde Ideenliste ist leer.");
+            JSONObject responseData = new JSONObject();
+            responseData.put("listType", listType);
+            responseData.put("category", category);
+            responseData.put("isRenderNewIdeaList", isRenderNewIdeaList);
+            responseData.put("ideas", this.ideaDataToJSONObject(new ArrayList<>()));
+            response.setData(responseData);
             response.setResult("success");
             return response;
         }

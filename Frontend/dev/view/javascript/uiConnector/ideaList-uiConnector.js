@@ -178,10 +178,13 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 return;
             }
 
-            if (!response.data.ideas) {
-                console.log("Es werden keine Ideen angezeigt, da die" +
-                    " erhaltene Ideenliste leer ist oder undefiniert.");
-                return false;
+            if (!response.data.ideas || response.data.ideas.length === 0) {
+
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.model.GlobalNotificationType.INFO,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].infoMessage.emptyIdeaListHeader,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].infoMessage.emptyIdeaListMessage,
+                    5000);
             }
 
             var listType = response.data.listType;
@@ -217,8 +220,8 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             } else {
                 ideaWatcher.controller.GlobalNotification.showNotification(
                     ideaWatcher.model.GlobalNotificationType.SUCCESS,
-                    ideaWatcher.core.Localizer.IdeaList.Notification[language].deleteSuccessHeader,
-                    ideaWatcher.core.Localizer.IdeaList.Notification[language].deleteSuccessMessage,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].successMessage.deleteSuccessHeader,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].successMessage.deleteSuccessMessage,
                     5000);
             }
 
@@ -228,8 +231,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
             // Liste neu abfragen
             ideaWatcher.controller.IdeaList
-                .updateIdeaList(listType, category, 1,
-                    Object.keys(currentIdeasMap).length - 1, true);
+                .updateIdeaList(listType, category, 1, 10, true);
 
         }
 
@@ -599,6 +601,9 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         function createCurrentIdeasMap(ideasToAdd) {
 
+            if (!ideasToAdd) {
+                return;
+            }
             currentIdeasMap = {};
             for (var i = 0; i < ideasToAdd.length; i++) {
 
@@ -609,6 +614,9 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         function addToCurrentIdeasMap(ideasToAdd) {
 
+            if (!ideasToAdd) {
+                return;
+            }
             for (var i = 0; i < ideasToAdd.length; i++) {
 
                 var currentIdea = ideasToAdd[i];

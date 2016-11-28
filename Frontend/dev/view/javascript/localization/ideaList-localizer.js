@@ -14,8 +14,6 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
         },
         Notification: {
             en_GB: {
-                deleteSuccessHeader: 'Delete Idea',
-                deleteSuccessMessage: 'The idea was successfully removed.',
                 errorMessage: {
                     Headline: 'Idea List',
                     SIdeaList_deleteIdeaData_error: 'An error occured while' +
@@ -32,13 +30,20 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
                     ' of not valid server request data. Please try again later.',
                     UnknownStatus: 'Something unknown has happened while asking for' +
                     ' idea list. Please try again later.'
+                },
+                infoMessage: {
+                    emptyIdeaListHeader: 'Empty Idea List',
+                    emptyIdeaListMessage: 'No idea could be shown, because the idea list is empty.'
+                },
+                successMessage: {
+                    deleteSuccessHeader: 'Delete Idea',
+                    deleteSuccessMessage: 'The idea was successfully removed.',
                 }
             },
             de_DE: {
-                deleteSuccessHeader: 'Idee Löschen',
-                deleteSuccessMessage: 'Die Idee wurde erfolgreich gelöscht.',
                 errorMessage: {
-                    Headline: 'Ideenliste',
+                    emptyListInfo: 'Die angeforderte Ideenliste ist leer.',
+                    Headline: 'Fehler Ideenliste',
                     SIdeaList_deleteIdeaData_error: 'Beim Löschen der Idee auf' +
                     ' dem Server ist ein Fehler aufgetreten. Bitte versuchen Sie' +
                     ' es später nochmal.',
@@ -56,6 +61,14 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
                     ' Bitte versuchen Sie es später erneut.',
                     UnknownStatus: 'Ein unbekannter Fall ist eingetreten bei der' +
                     ' Abfrage von Ideen. Bitte versuchen Sie es später nochmal.'
+                },
+                infoMessage: {
+                    emptyIdeaListHeader: 'Anzeige Ideen',
+                    emptyIdeaListMessage: 'Es können keine Ideen angezeigt werden, da keine vorhanden sind.'
+                },
+                successMessage: {
+                    deleteSuccessHeader: 'Idee Löschen',
+                    deleteSuccessMessage: 'Die Idee wurde erfolgreich gelöscht.'
                 }
             }
         },
