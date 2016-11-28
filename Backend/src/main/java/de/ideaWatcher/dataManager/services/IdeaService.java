@@ -105,9 +105,7 @@ public class IdeaService {
      * @return {List<IComment>} gibt eine Liste von IComment zurück
      */ 
     private List<IComment> buildCommentList(List<Document> commentDocList){
-
         List<IComment> commentList = new ArrayList<IComment>();
-
         for (Document document : commentDocList){
             commentList.add(buildComment(document));
         }
@@ -355,6 +353,8 @@ public class IdeaService {
         try {
             dbConnectionService.getCollection().findOneAndDelete(
                     Filters.eq("_id", new ObjectId (ideaId)));
+        // ToDo Aktualisiere in usersCollection die followedIdeas   
+            toAdjustUsersFollowedIdeas(ideaId);
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
@@ -362,6 +362,16 @@ public class IdeaService {
         }  
     }
     
+    private void toAdjustUsersFollowedIdeas(String ideaId) throws Exception {
+        UserService us = new UserService("usersCollection");
+        List<IUser> userList = new ArrayList<IUser>();
+        userList = us.getUserList("followedIdeas", ideaId);
+        for(IUser user : userList){
+            user.getFollowedIdeas().remove(ideaId);
+        }
+        us.updateFollowedIdeas(userList);             
+    }
+
     /**
      * baut ein User Objekt in ein Creator Objekt um
      * @param user {IUser} User Objekt
@@ -492,7 +502,6 @@ public class IdeaService {
         }   
     }        
 
-    
     public List<IIdea> getIdeaList(String type, String value) throws Exception{
       
         if (!dbConnectionService.isOpen()) {

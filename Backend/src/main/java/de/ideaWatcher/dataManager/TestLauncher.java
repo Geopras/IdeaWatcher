@@ -2,6 +2,7 @@ package main.java.de.ideaWatcher.dataManager;
 
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
+import main.java.de.ideaWatcher.dataManager.services.DbConnectionService;
 import main.java.de.ideaWatcher.dataManager.services.IdeaService;
 import main.java.de.ideaWatcher.dataManager.services.UserDataGenerator;
 import main.java.de.ideaWatcher.dataManager.services.UserService;
@@ -84,6 +85,10 @@ public class TestLauncher {
          IdeaService is = new IdeaService("ideasCollection");
          is.deleteIdea(idea.getIdeaId());
      }
+     public static void deleteIdea (String ideaId) throws Exception{
+         IdeaService is = new IdeaService("ideasCollection");
+         is.deleteIdea(ideaId);
+     }
      public static void updateApropertyOfaIdea( ) throws Exception{
        //  ObjectId("58346be56f963f177099728a")
          String ideaId = "58346be56f963f177099728a";
@@ -92,6 +97,13 @@ public class TestLauncher {
          IdeaService is = new IdeaService("ideasCollection");
          
          is.updateApropertyOfaIdea(ideaId, type, value);
+     }
+     public static List<IUser> getUserList(String type, String value) throws Exception{
+         String collectionName = "usersCollection";
+         //DbConnectionService dbConnectionService = new DbConnectionService(collectionName);
+         UserService us = new UserService(collectionName);
+         return us.getUserList(type, value);
+ 
      }
 
 
@@ -132,23 +144,46 @@ public class TestLauncher {
         ideaList = is.getIdeaList("creator.userName", "user19");
         for(IIdea doc : ideaList){
            System.out.println("Ausgabe: " + doc.getCreator().getIsMailPublic());
-        }
-         */
-        
+        }              
         IUser user = new User();
-        user = getUser();
-        
-        System.out.println(user.getIsMailPublic());
-        
-
-        
-        
+        user = getUser();      
+        System.out.println(user.getIsMailPublic());    
         user.setIsMailPublic(false);
         updateUser(user);
-        
-        
-        
         user = getUser();
         System.out.println("userDocument - Public: " + user.getIsMailPublic());
+        
+        
+        List<IUser> userList = new ArrayList<>();
+        userList = getUserList("followedIdeas", value);
+        System.out.println("Größe der Liste: " + userList.size());
+        for(IUser user : userList){
+            System.out.println(user.getUserName() + " --  " + user.getUserId());
+            for (String ideaId : user.getFollowedIdeas()){
+                System.out.println("IdeaId: " + ideaId);
+            }
+                
+            user.getFollowedIdeas().remove(value);
+        }
+        for(IUser user : userList){
+            System.out.println(user.getUserName() + " --  " + user.getUserId());
+            for (String ideaId : user.getFollowedIdeas()){
+                System.out.println("IdeaId: " + ideaId);
+            }
+        }
+        */
+
+        String value = "583ac70f6bd8bf1b8855930e";
+         deleteIdea(value);
+        List<IUser> userList = new ArrayList<>();
+        userList = getUserList("followedIdeas", value);
+        System.out.println("Größe der Liste: " + userList.size());
+        for(IUser user : userList){
+            System.out.println(user.getUserName() + " --  " + user.getUserId());
+            for (String ideaId : user.getFollowedIdeas()){
+                System.out.println("IdeaId: " + ideaId);
+            }
+        }       
+        
     }
 }
