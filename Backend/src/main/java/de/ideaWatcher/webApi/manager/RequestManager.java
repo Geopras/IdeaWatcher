@@ -9,7 +9,6 @@ import main.java.de.ideaWatcher.webApi.core.Request;
 import main.java.de.ideaWatcher.webApi.core.Response;
 import org.json.JSONObject;
 
-
 /**
  * Dieser Manager soll einen empfangenen JSON-String-Request behandeln.
  */
@@ -27,9 +26,8 @@ public class RequestManager {
 
     /**
      * Erstelle Mapping von Workflownamen zu entsprechenden Commands, die
-     * jeweils einen Workflow starten.
-     * Der Key ist das Ziel, das mit der Request-Eigenschaft "destination"
-     * angegeben wird.
+     * jeweils einen Workflow starten. Der Key ist das Ziel, das mit der
+     * Request-Eigenschaft "destination" angegeben wird.
      */
     public void initialize() {
         initializeCommandMap();
@@ -94,14 +92,15 @@ public class RequestManager {
         // Signup- oder Login-Anfrage)
         boolean shouldStartWorkflow = true;
 
-        if (!requestObject.getDestination().startsWith("SSignup") &&
-                !requestObject.getDestination().startsWith("SLogin") &&
-                !requestObject.getDestination().startsWith("SIdeaList") &&
-                !requestObject.getDestination().startsWith("SIdea/getIdeaDetailsRequest")) {
+        if (!requestObject.getDestination().startsWith("SSignup")
+                && !requestObject.getDestination().startsWith("SLogin")
+                && !requestObject.getDestination().startsWith("SIdeaList")
+                && !requestObject.getDestination()
+                        .startsWith("SIdea/getIdeaDetailsRequest")) {
 
             // Token validieren
-            if (!InstanceManager.getTokenManager()
-                    .validateToken(requestObject.getUserId(), requestObject.getToken())) {
+            if (!InstanceManager.getTokenManager().validateToken(
+                    requestObject.getUserId(), requestObject.getToken())) {
 
                 // Wenn Token nicht gueltig, dann Antwort mit Fehlernachricht
                 // zurueckschicken
@@ -116,8 +115,8 @@ public class RequestManager {
             IResponse workFlowResponse;
             try {
                 // Angefragten Workflow ausfuehren
-                workFlowResponse = this.workflowMapping.executeCommand
-                        (requestObject.getDestination(), requestObject);
+                workFlowResponse = this.workflowMapping.executeCommand(
+                        requestObject.getDestination(), requestObject);
             } catch (Exception ex) {
                 throw new Exception(ex);
             }
@@ -157,7 +156,7 @@ public class RequestManager {
 
     private IRequest toRequest(String requestString) throws Exception {
 
-        //JSON-String-Request in Request-Javaobjekt umwandeln
+        // JSON-String-Request in Request-Javaobjekt umwandeln
         JSONObject requestJson;
         try {
             requestJson = JsonService.toJSONObject(requestString);
@@ -176,9 +175,9 @@ public class RequestManager {
                 requestUserId = requestJson.getString("userId");
                 requestToken = requestJson.getString("token");
             }
-            
-            return new Request(requestDestination, requestData,
-                    requestUserId, requestToken);
+
+            return new Request(requestDestination, requestData, requestUserId,
+                    requestToken);
 
         } catch (NullPointerException ex) {
             throw new Exception("Fehler beim Extrahieren der Eigenschaften " +
