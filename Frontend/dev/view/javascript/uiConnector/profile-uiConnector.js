@@ -101,6 +101,10 @@ ideaWatcher.view.Profile = ideaWatcher.view.Profile || (function () {
 
         function handleButtonNavigationMyIdeas(clickEvent){
 
+            htmlProfileEditButton.style.background = '';
+            htmlFollowedIdeasButton.style.background = '';
+            htmlMyIdeasButton.style.background = '#4096ee';
+
             var listType = ideaWatcher.model.IdeaList.ListType.MYIDEAS;
             var category = ideaWatcher.model.IdeaList.Category.NONE;
 
@@ -110,6 +114,10 @@ ideaWatcher.view.Profile = ideaWatcher.view.Profile || (function () {
 
         function handleButtonNavigationFollowedIdeas(clickEvent){
 
+            htmlProfileEditButton.style.background = '';
+            htmlFollowedIdeasButton.style.background = '#4096ee';
+            htmlMyIdeasButton.style.background = '';
+
             var listType = ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS;
             var category = ideaWatcher.model.IdeaList.Category.NONE;
 
@@ -118,6 +126,10 @@ ideaWatcher.view.Profile = ideaWatcher.view.Profile || (function () {
         }
 
         function handleButtonNavigationEditProfile(clickEvent){
+
+            htmlProfileEditButton.style.background = '#4096ee';
+            htmlFollowedIdeasButton.style.background = '';
+            htmlMyIdeasButton.style.background = '';
 
             ideaWatcher.core.Navigator.switchView({
                 viewId: ideaWatcher.model.Navigation.ViewId.MYPROFILE,

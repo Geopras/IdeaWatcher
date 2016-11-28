@@ -15,6 +15,9 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         var currentClickedListType;
         var currentClickedCategory;
         var hotButton;
+        var htmlProfileEditButton;
+        var htmlFollowedIdeasButton;
+        var htmlMyIdeasButton;
 
         // endregion
 
@@ -111,6 +114,11 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
             currentClickedListType = ideaWatcher.model.IdeaList.ListType.HOT;
             currentClickedCategory = ideaWatcher.model.IdeaList.Category.NONE;
             hotButton = document.getElementById('mainMenu_hot_button');
+            htmlMyIdeasButton = document.querySelector('.profileSubMenu_myIdeas_button');
+            htmlFollowedIdeasButton = document.querySelector('.profileSubMenu_followedIdeas_button');
+            htmlProfileEditButton = document.querySelector('.profileSubMenu_profileEdit_button');
+            htmlFollowedIdeasButton.style.background = '';
+            htmlMyIdeasButton.style.background = '#4096ee';
             cbLocalizeView();
         }
 
@@ -372,6 +380,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         function handleCurrentButtonClick(clickEvent) {
 
             var clickedButton = clickEvent.target;
+            var buttonId = clickedButton.attributes.getNamedItem('data-buttonid').nodeValue;
             if (!lastClickedButton) {
                 lastClickedButton = clickedButton;
             } else {
@@ -405,9 +414,29 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
                 lastClickedButton.style.background = '';
                 lastClickedMainIdeaListButton.style.background = '#4096ee';
                 currentClickedButton.style.background = '#4096ee';
-            } else { // ansonsten Markierung vom letzten Button auflösen
+            } else {
+            } { // ansonsten Markierung vom letzten Button
+                // auflösen
                 lastClickedButton.style.background = '';
                 lastClickedMainIdeaListButton.style.background = '';
+            }
+            if (buttonId === ideaWatcher.model.Navigation.ButtonId.MYIDEAS) {
+
+                htmlProfileEditButton.style.background = '';
+                htmlFollowedIdeasButton.style.background = '';
+                htmlMyIdeasButton.style.background = '#4096ee';
+            }
+            else if (buttonId === ideaWatcher.model.Navigation.ButtonId.MYFOLLOWEDIDEAS) {
+
+                htmlProfileEditButton.style.background = '';
+                htmlFollowedIdeasButton.style.background = '#4096ee';
+                htmlMyIdeasButton.style.background = '';
+            }
+            else if (buttonId === ideaWatcher.model.Navigation.ButtonId.MYPROFILE) {
+
+                htmlProfileEditButton.style.background = '#4096ee';
+                htmlFollowedIdeasButton.style.background = '';
+                htmlMyIdeasButton.style.background = '';
             }
         }
         //endregion
