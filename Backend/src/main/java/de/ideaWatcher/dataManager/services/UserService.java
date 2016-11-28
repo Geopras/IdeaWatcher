@@ -16,6 +16,8 @@ import static com.mongodb.client.model.Filters.eq;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.directory.SearchResult;
+
 /**
  * Klasse fuer Zugriff auf User-Datenbank
  */
@@ -329,7 +331,8 @@ public class UserService {
         UpdateResult ur = null;
         try {
             
-            ur = dbConnectionService.getCollection().replaceOne(Filters.eq("_id", new ObjectId (user.getUserId())), newDoc);
+            ur = dbConnectionService.getCollection().replaceOne(
+                    Filters.eq("_id", new ObjectId (user.getUserId())), newDoc);
             updateIsMailPublicToAdjustIdeas(user, user.getIsMailPublic());
             
         } catch (Exception ex) {
@@ -349,7 +352,8 @@ public class UserService {
             dbConnectionService.openConnection();
         }
         try {
-            dbConnectionService.getCollection().findOneAndDelete(Filters.eq("_id", new ObjectId (userId))); 
+            dbConnectionService.getCollection().findOneAndDelete(
+                    Filters.eq("_id", new ObjectId (userId))); 
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
@@ -372,12 +376,16 @@ public class UserService {
                 boolean newValue = false;
                 if(value.equals("true") || value.equals("1")){
                     newValue = true;
-                    dbConnectionService.getCollection().updateOne(Filters.eq("_id", new ObjectId(userId)), new Document("$set", new Document(type, newValue)));
+                    dbConnectionService.getCollection().updateOne(Filters.eq(
+                            "_id", new ObjectId(userId)), new Document(
+                                    "$set", new Document(type, newValue)));
                     
                 }
                 updateIsMailPublicToAdjustIdeas(userId, newValue);
             } else {
-                dbConnectionService.getCollection().updateOne(Filters.eq("_id", new ObjectId(userId)), new Document("$set", new Document(type, value)));
+                dbConnectionService.getCollection().updateOne(Filters.eq(
+                        "_id", new ObjectId(userId)), new Document(
+                                "$set", new Document(type, value)));
             }
 
         } catch(Exception en){
@@ -399,7 +407,6 @@ public class UserService {
     private static void updateIsMailPublicToAdjustIdeas(IUser user, boolean isPublicMail) throws Exception{
         ICreator creator = new Creator();
         creator = buildUserToCreator(user);
-        System.out.println("creator -- public: " + creator.getIsMailPublic());
         IdeaService is = new IdeaService("ideasCollection");
         List<IIdea> ideaList = new ArrayList<IIdea>();
         // Testen mit der ID, ob das mit dem String auch geht -- es geht nicht. 
@@ -417,4 +424,50 @@ public class UserService {
         user = getUser(userId);
         updateIsMailPublicToAdjustIdeas(user, isPublicMail);
     }
+    public List<IUser> getUserList(String type, String value) throws Exception{
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        }
+        List<Document> userDoc = new ArrayList<Document>();
+        List<IUser> userList = new ArrayList<IUser>();
+        try {
+            userDoc = dbConnectionService.getCollection().find(Filters.eq(type, value)).into(new
+                    ArrayList<>());
+            for(Document doc : userDoc){
+                userList.add(buildUser(doc));
+            }
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
+        } 
+        return userList;
+    }
+    
+    public void updateFollowedIdeas(List<IUser> userList) throws Exception{
+        try {
+            if (!dbConnectionService.isOpen()) {
+                dbConnectionService.openConnection();
+            }
+            Document upDocValue;
+            Document upDocQuery;
+            Document upDocSet;
+            for( IUser user : userList){
+                upDocQuery = new Document("_id", new ObjectId(user.getUserId()) );
+                upDocValue = new Document("followedIdeas" , user.getFollowedIdeas());
+                upDocSet = new Document("$set", upDocValue);            
+                dbConnectionService.getCollection().updateOne(upDocQuery, upDocSet );
+                if(user.getNumberFollowedIdeas() > 0){
+                    upDocValue =  new Document("numberFollowedIdeas" , user.getNumberFollowedIdeas() - 1 );
+                    dbConnectionService.getCollection().updateOne(upDocQuery, upDocSet );
+                }
+            } 
+        } catch (Exception en) {
+            throw new Exception(en);
+        } finally {
+            dbConnectionService.closeConnection();
+        }   
+    }
+
+    
 }
