@@ -97,6 +97,12 @@ public class GetIdeaListWorkflow  implements IWorkflow {
             return response;
         }
 
+        if (ideasToFilter.isEmpty()) {
+            log.log(Level.WARNING, "Die zu filternde Ideenliste ist leer.");
+            response.setResult("success");
+            return response;
+        }
+
         // Sortiere die Ideen nach gewünschtem Comparator:
         ideasToFilter = this.ideaManager.sortIdeas(ideasToFilter, listType);
 

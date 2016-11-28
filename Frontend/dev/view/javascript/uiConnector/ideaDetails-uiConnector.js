@@ -1,5 +1,4 @@
-ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
-		|| (function() {
+ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 
 			var idea = null;
 			var htmlView = null;
@@ -86,7 +85,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
 							text : htmlCommentTextInput.value
 						};
 						console
-								.log(exObj)
+								.log(exObj);
 						ideaWatcher.controller.IdeaDetails
 								.tryToSaveComment(exObj);
 

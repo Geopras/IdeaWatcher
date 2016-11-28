@@ -63,7 +63,9 @@ public class RequestManager {
                 new AddIdeaCommand());
         this.workflowMapping.addCommand
                 ("SIdeaCreation/getIdeaToEditRequest",
-                new GetIdeaToEditCommand());
+                new GetIdeaDetailsCommand());
+        this.workflowMapping.addCommand("SIdeaList/unfollowIdeaRequest",
+                new LikeFollowCommand());
     }
 
     /**

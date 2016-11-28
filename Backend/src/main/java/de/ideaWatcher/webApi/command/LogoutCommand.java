@@ -1,14 +1,14 @@
 package main.java.de.ideaWatcher.webApi.command;
 
 import main.java.de.ideaWatcher.common.ICommand;
+import main.java.de.ideaWatcher.webApi.core.IRequest;
+import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.workflow.LogoutWorkflow;
 
 /**
  * Command zum Ausfuehren des UserSession-Workflows
- * @param <IRequest> Request-Datentyp fuer Eingabeparameter
- * @param <IResponse> Response-Datentyp fuer Ausgabeparameter
  * */
-public class LogoutCommand<IRequest, IResponse> implements ICommand<IRequest,
+public class LogoutCommand implements ICommand<IRequest,
         IResponse> {
 
     /**
@@ -20,7 +20,6 @@ public class LogoutCommand<IRequest, IResponse> implements ICommand<IRequest,
     public IResponse apply(IRequest data) {
 
         LogoutWorkflow workflow = new LogoutWorkflow();
-        return (IResponse) workflow.getResponse((main.java.de.ideaWatcher
-                .webApi.core.IRequest) data);
+        return workflow.getResponse(data);
     }
 }

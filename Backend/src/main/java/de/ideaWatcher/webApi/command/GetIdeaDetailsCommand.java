@@ -1,14 +1,14 @@
 package main.java.de.ideaWatcher.webApi.command;
 
 import main.java.de.ideaWatcher.common.ICommand;
+import main.java.de.ideaWatcher.webApi.core.IRequest;
+import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.workflow.GetIdeaDetailsWorkflow;
 
 /**
  * Command zum Abrufen der Details einer Idee
- * @param <IRequest> Request-Datentyp fuer Eingabeparameter
- * @param <IResponse> Response-Datentyp fuer Ausgabeparameter
  * */
-public class GetIdeaDetailsCommand<IRequest, IResponse> implements ICommand<IRequest,
+public class GetIdeaDetailsCommand implements ICommand<IRequest,
         IResponse> {
 
     /**
@@ -18,7 +18,6 @@ public class GetIdeaDetailsCommand<IRequest, IResponse> implements ICommand<IReq
     @Override
     public IResponse apply(IRequest data) {
         GetIdeaDetailsWorkflow workflow = new GetIdeaDetailsWorkflow();
-        return (IResponse) workflow.getResponse((main.java.de.ideaWatcher
-                .webApi.core.IRequest) data);
+        return workflow.getResponse(data);
     }
 }

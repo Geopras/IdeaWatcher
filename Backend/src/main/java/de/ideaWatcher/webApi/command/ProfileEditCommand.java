@@ -1,9 +1,11 @@
 package main.java.de.ideaWatcher.webApi.command;
 
 import main.java.de.ideaWatcher.common.ICommand;
+import main.java.de.ideaWatcher.webApi.core.IRequest;
+import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.workflow.ProfileEditWorkflow;
 
-public class ProfileEditCommand<IRequest, IResponse> implements ICommand<IRequest,
+public class ProfileEditCommand implements ICommand<IRequest,
         IResponse> {
 
     /**
@@ -14,7 +16,6 @@ public class ProfileEditCommand<IRequest, IResponse> implements ICommand<IReques
     @Override
     public IResponse apply(IRequest data) {
         ProfileEditWorkflow workflow = new ProfileEditWorkflow();
-        return (IResponse) workflow.getResponse((main.java.de.ideaWatcher
-                .webApi.core.IRequest) data);
+        return workflow.getResponse(data);
     }
 }

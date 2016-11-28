@@ -1,16 +1,14 @@
 ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (function () {
 
         // region local vars
-        var userName = null;
-        var email = null;
-        var password = null;
         var cbInitView = null;
         var cbShowView = null;
         var cbLocalize = null;
         var cbGetIdeaResp = null;
         var cbGetIdea = null;
-
-
+        var cbSaveCommentResp = null;
+        var cbDeleteCommentResp = null;
+        var cbLikeFollowResp = null;
 
         // Event Globale Initialisierung
         var evIni = {
@@ -113,7 +111,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
         function pubRegisterGetIdea(cb) {
             cbGetIdea = cb;
         }
-        
+
         function pubRegisterSaveCommentResponse(cb) {
             cbSaveCommentResp = cb;
         }
@@ -165,8 +163,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
                 //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
             }
         }
-        
-        pubTryToDeleteComment
+
         function pubTryToDeleteComment(exObject)
         {
             // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
@@ -256,14 +253,6 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             return exFollowRequest;
         }
 
-
-
-        //region register Callbacks
-        // function pubRegisterVerificationError(cb) {
-        //     cbVerificationError = cb;
-        // }
-
-
         // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
         return {
             // hier kann die View eine Methode(ui-Connector) registrieren, die gerufen wird,
@@ -283,7 +272,7 @@ ideaWatcher.controller.IdeaDetails = ideaWatcher.controller.IdeaDetails || (func
             tryToSaveComment: pubTryToSaveComment,
             tryToDeleteComment: pubTryToDeleteComment,
             tryToEditIdea: pubTryToEditIdea,
-            tryToDeleteIdea: pubTryToDeleteIdea,
+            tryToDeleteIdea: pubTryToDeleteIdea
         };
 
     })();

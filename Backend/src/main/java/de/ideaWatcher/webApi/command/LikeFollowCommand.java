@@ -1,13 +1,14 @@
 package main.java.de.ideaWatcher.webApi.command;
 
 import main.java.de.ideaWatcher.common.ICommand;
+import main.java.de.ideaWatcher.webApi.core.IRequest;
+import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.workflow.LikeFollowWorkflow;
-import main.java.de.ideaWatcher.webApi.workflow.ProfileEditWorkflow;
 
 /**
- * Created by Stefan on 21.11.2016.
+ * Command zum Liken und Followen einer Idee
  */
-public class LikeFollowCommand<IRequest, IResponse> implements ICommand<IRequest,
+public class LikeFollowCommand implements ICommand<IRequest,
         IResponse> {
 
     /**
@@ -18,7 +19,6 @@ public class LikeFollowCommand<IRequest, IResponse> implements ICommand<IRequest
     @Override
     public IResponse apply(IRequest data) {
         LikeFollowWorkflow workflow = new LikeFollowWorkflow();
-        return (IResponse) workflow.getResponse((main.java.de.ideaWatcher
-                .webApi.core.IRequest) data);
+        return workflow.getResponse(data);
     }
 }

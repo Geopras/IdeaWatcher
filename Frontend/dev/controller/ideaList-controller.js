@@ -8,6 +8,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         var cbGetDeleteIdeaResp = null;
         var cbGetEditIdeaResp = null;
         var cbGetIdeasResp = null;
+        var cbUnfollowIdeaResp = null;
 
         var evSwitchViewToIdeaList = {
             topic: 'switchView/' + ideaWatcher.model.Navigation.ViewId.HOT.NONE,
@@ -60,6 +61,11 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             cbFunction: cbGetEditIdeaResponse
         };
 
+        var evUnfollowIdeaResponse = {
+            topic: 'SIdeaList/unfollowIdeaRequest-response',
+            cbFunction: cbUnfollowIdeaResponse
+        };
+
         //endregion
 
         //region subscribe to events
@@ -74,6 +80,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         ideaWatcher.core.MessageBroker.subscribe(evGetIdeasResponse);
         ideaWatcher.core.MessageBroker.subscribe(evGetDeleteIdeaResponse);
         ideaWatcher.core.MessageBroker.subscribe(evGetEditIdeaResponse);
+        ideaWatcher.core.MessageBroker.subscribe(evUnfollowIdeaResponse);
 
         //endregion
 
@@ -100,6 +107,10 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
 
         function cbGetEditIdeaResponse(obj) {
             cbGetEditIdeaResp(obj);
+        }
+
+        function cbUnfollowIdeaResponse(obj) {
+            cbUnfollowIdeaResp(obj);
         }
 
         //endregion
@@ -135,6 +146,10 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
 
         function pubRegisterGetIdea(cb) {
             cbGetIdea = cb;
+        }
+
+        function pubRegisterChangeFollowIdeaResponse(cb) {
+            cbUnfollowIdeaResp = cb;
         }
 
         //endregion
@@ -236,6 +251,26 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             ideaWatcher.controller.ideaCreation.tryToEditIdea(ideaId);
         }
 
+        function pubTryToUnfollowIdea(exObject)
+        {
+            // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
+            if (ideaWatcher.core.WebSocketConnector.isConnected()) {
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestUnfollow(exObject));
+            } else {
+                //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
+            }
+        }
+
+        function buildRequestUnfollow(exObject)
+        {
+            var exLikeRequest = ideaWatcher.model.Request;
+
+            exLikeRequest.destination = 'SIdeaList/unfollowIdeaRequest';
+            exLikeRequest.data = exObject;
+
+            return exLikeRequest;
+        }
+
         function pubNavigateToCreateIdeaView() {
 
             var exObj = Object.create(ideaWatcher.model.ExchangeObject.SwitchView);
@@ -266,6 +301,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             getCurrentClickedListType: pubGetCurrentClickedListType,
             getIdea: pubGetIdea,
             navigateToCreateIdeaView: pubNavigateToCreateIdeaView,
+            registerChangeFollowIdeaResponse: pubRegisterChangeFollowIdeaResponse,
             registerInitializeView: pubRegisterInitializeView,
             registerShowView: pubRegisterShowView,
             registerLocalizeView: pubRegisterLocalizeView,
@@ -274,6 +310,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             registerGetEditIdeaResponse: pubRegisterGetEditIdeaResponse,
             registerGetIdea: pubRegisterGetIdea,
             switchToCreateIdeaView: pubSwitchToCreateIdeaView,
+            tryToUnfollowIdea: pubTryToUnfollowIdea,
             tryToDeleteIdea: pubTryToDeleteIdea,
             tryToEditIdea: pubTryToEditIdea,
             updateIdeaList: pubUpdateIdeaList

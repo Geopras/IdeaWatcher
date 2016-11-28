@@ -28,6 +28,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         ideaWatcher.controller.IdeaList.registerGetIdeasResponse(cbGetIdeasResponse);
         ideaWatcher.controller.IdeaList.registerGetIdea(cbGetIdea);
         ideaWatcher.controller.IdeaList.registerGetDeleteIdeaResponse(cbDeleteIdeaResponse);
+        ideaWatcher.controller.IdeaList.registerChangeFollowIdeaResponse(cbUnfollowIdeaResponse);
         //endregion
 
         //region Callback-Functions
@@ -231,6 +232,29 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                     Object.keys(currentIdeasMap).length - 1, true);
 
         }
+
+        function cbUnfollowIdeaResponse(exObj) {
+
+            var language = ideaWatcher.core.Localizer.getLanguage();
+
+            if (exObj.result == 'success') {
+
+                var listType = ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS;
+                var category = ideaWatcher.model.IdeaList.Category.NONE;
+                ideaWatcher.controller.IdeaList.updateIdeaList(listType, category, 1, 10, true);
+
+            } else {
+                var errorMessage = exObj.error;
+
+                ideaWatcher.controller.GlobalNotification
+                    .showNotification(
+                        ideaWatcher.model.GlobalNotificationType.ERROR,
+                        ideaWatcher.core.Localizer.ideaDetails[language].ideaDetails,
+                        ideaWatcher.core.Localizer.ideaDetails[language].errorMessage[errorMessage],
+                        5000);
+            }
+        }
+
         //endregion
 
         function cbGetIdea(ideaId) {
@@ -326,14 +350,27 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 likes.appendChild(numberOfLikes);
 
                 var followers = document.createElement('li');
-                var followersImage = document.createElement('img');
-                followersImage.classList.add('ideaList_followButton');
-                followersImage.src = './resources/img/star_bright.svg';
-                followersImage.width = 20;
-                followersImage.height = 20;
+                var followerButtonImage = document.createElement('img');
+                followerButtonImage.classList.add('ideaList_followButton');
+
+                followerButtonImage.width = 20;
+                followerButtonImage.height = 20;
+                if (isMyFollowedIdeas) {
+                    var currentUserId = ideaWatcher.controller.UserSession
+                        .getCurrentUserId();
+                    if (isUserFollowerOfIdea(currentUserId, idea.ideaId)) {
+                        followerButtonImage.src = './resources/img/favorite_on.png';
+                    } else {
+                        followerButtonImage.src = './resources/img/favorite_off.png';
+                    }
+                    followerButtonImage.setAttribute('data-ideaid', idea.ideaId);
+                    followerButtonImage.addEventListener('click', handleUnfollowButtonClick);
+                } else {
+                    followerButtonImage.src = './resources/img/favorite_off.png';
+                }
                 var numberOfFollowers = document.createElement('span');
                 numberOfFollowers.classList.add('ideaList_numberOfFollowers_span');
-                followers.appendChild(followersImage);
+                followers.appendChild(followerButtonImage);
                 followers.appendChild(numberOfFollowers);
 
                 var comments = document.createElement('li');
@@ -359,24 +396,20 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                     editButtonImage.src = './resources/img/editButton2.svg';
                     editButtonImage.width = 20;
                     editButtonImage.height = 20;
-                    editButtonImage.addEventListener('click', handleEditButton);
+                    editButtonImage.addEventListener('click', handleEditButtonClick);
 
                     var deleteButtonImage = document.createElement('img');
                     deleteButtonImage.classList.add('ideaList_user_button');
                     deleteButtonImage.src = './resources/img/deleteButton1.svg';
                     deleteButtonImage.width = 20;
                     deleteButtonImage.height = 20;
-                    deleteButtonImage.addEventListener('click', handleDeleteButton);
+                    deleteButtonImage.addEventListener('click', handleDeleteButtonClick);
 
                     userButtons.appendChild(editButtonImage);
                     userButtons.appendChild(deleteButtonImage);
 
                     userButtons.setAttribute('data-ideaid', idea.ideaId);
                     ratings.appendChild(userButtons);
-                }
-                else if (isMyFollowedIdeas) {
-
-
                 }
 
                 dataLeft.appendChild(ratings);
@@ -409,11 +442,11 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 ideaElement.setAttribute('data-ideaid', idea.ideaId);
                 ideaName.setAttribute('data-ideaid', idea.ideaId);
                 likeImage.setAttribute('data-ideaid', idea.ideaId);
-                followersImage.setAttribute('data-ideaid', idea.ideaId);
+                followerButtonImage.setAttribute('data-ideaid', idea.ideaId);
 
                 // den Aktiviert-Status der Icons setzen
                 setLikedState(likeImage);
-                setFollowState(followersImage);
+                setFollowState(followerButtonImage);
 
                 // Click-Event dranhängen, damit die IdeaDetails-View
                 // aufgerufen werden kann
@@ -457,16 +490,34 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             ideaWatcher.core.Navigator.switchView(exObj);
         }
 
-        function handleEditButton(clickEvent) {
+        function handleEditButtonClick(clickEvent) {
 
             var ideaId = clickEvent.target.parentNode.attributes.getNamedItem('data-ideaid').nodeValue;
             ideaWatcher.controller.IdeaList.tryToEditIdea(ideaId);
         }
 
-        function handleDeleteButton(clickEvent) {
+        function handleDeleteButtonClick(clickEvent) {
 
             var ideaId = clickEvent.target.parentNode.attributes.getNamedItem('data-ideaid').nodeValue;
             ideaWatcher.controller.IdeaList.tryToDeleteIdea(ideaId);
+        }
+
+        function handleUnfollowButtonClick(clickEvent) {
+
+            var currentUserId = ideaWatcher.controller.UserSession
+                .getCurrentUserId();
+            var followerButton = clickEvent.target;
+            var currentIdeaId = followerButton.attributes.getNamedItem('data-ideaid').nodeValue;
+
+            var exObj = {
+                userId : currentUserId,
+                ideaId : currentIdeaId,
+                action : 'unfollow'
+            };
+
+            console.log(exObj);
+
+            ideaWatcher.controller.IdeaList.tryToUnfollowIdea(exObj);
         }
 
         //endregion
@@ -566,6 +617,17 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                     currentIdeasMap[currentIdea.ideaId] = currentIdea;
                 }
             }
+        }
+
+        function isUserFollowerOfIdea(userId, ideaId) {
+
+            var followers = cbGetIdea(ideaId).followers;
+            for (var follower in followers) {
+                if (follower.userId === userId) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         function getShortDescription(description) {

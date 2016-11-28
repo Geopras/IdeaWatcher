@@ -49,7 +49,7 @@ ideaWatcher.core.Localizer.SaveIdea = ideaWatcher.core.Localizer.SaveIdea || {
             ideaDescriptionTooShort: 'Die Ideen Beschreibung ist zu kurz.',
             ideaNameTooShort: 'Der Ideen Name ist zu kurz.',
             headerNewIdea: 'Erstellen Sie eine neue Idee',
-            headerEditIdea: 'Bearbeiten Sie eine neue Idee',
+            headerEditIdea: 'Bearbeiten Sie die Idee',
             name: 'Name',
             notification: {
                 errorMessage: {

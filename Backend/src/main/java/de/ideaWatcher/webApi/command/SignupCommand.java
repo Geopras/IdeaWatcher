@@ -1,12 +1,14 @@
 package main.java.de.ideaWatcher.webApi.command;
 
 import main.java.de.ideaWatcher.common.ICommand;
+import main.java.de.ideaWatcher.webApi.core.IRequest;
+import main.java.de.ideaWatcher.webApi.core.IResponse;
 import main.java.de.ideaWatcher.webApi.workflow.SignupWorkflow;
 
 /**
- * Created by geopras on 05.11.16.
+ * Command zum Registrieren eines neuen Benutzers
  */
-public class SignupCommand<IRequest, IResponse> implements ICommand<IRequest,
+public class SignupCommand implements ICommand<IRequest,
         IResponse> {
 
     /**
@@ -17,6 +19,6 @@ public class SignupCommand<IRequest, IResponse> implements ICommand<IRequest,
     @Override
     public IResponse apply(IRequest data) {
         SignupWorkflow workflow = new SignupWorkflow();
-        return (IResponse) workflow.getResponse((main.java.de.ideaWatcher.webApi.core.IRequest) data);
+        return workflow.getResponse(data);
     }
 }
