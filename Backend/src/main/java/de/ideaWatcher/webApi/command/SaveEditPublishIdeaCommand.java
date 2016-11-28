@@ -3,12 +3,12 @@ package main.java.de.ideaWatcher.webApi.command;
 import main.java.de.ideaWatcher.common.ICommand;
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
-import main.java.de.ideaWatcher.webApi.workflow.SaveIdeaWorkflow;
+import main.java.de.ideaWatcher.webApi.workflow.SaveEditPublishIdeaWorkflow;
 
 /**
- * Command zum Anlegen einer neuen Idee
+ * Command zum Anlegen, Veröffentlichen und Bearbeiten einer Idee
  * */
-public class AddIdeaCommand implements ICommand<IRequest,
+public class SaveEditPublishIdeaCommand implements ICommand<IRequest,
         IResponse> {
 
     /**
@@ -17,7 +17,7 @@ public class AddIdeaCommand implements ICommand<IRequest,
      */
     @Override
     public IResponse apply(IRequest data) {
-        SaveIdeaWorkflow workflow = new SaveIdeaWorkflow();
+        SaveEditPublishIdeaWorkflow workflow = new SaveEditPublishIdeaWorkflow();
         return workflow.getResponse(data);
     }
 }

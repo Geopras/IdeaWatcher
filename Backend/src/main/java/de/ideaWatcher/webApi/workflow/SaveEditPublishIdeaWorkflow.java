@@ -12,10 +12,11 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SaveIdeaWorkflow implements IWorkflow{
+public class SaveEditPublishIdeaWorkflow implements IWorkflow{
 
 	private static final Logger log = Logger
 	            .getLogger(ProfileEditWorkflow.class.getName());
@@ -23,7 +24,7 @@ public class SaveIdeaWorkflow implements IWorkflow{
     private IUserController userController;
 	
 	    
-    public SaveIdeaWorkflow() {
+    public SaveEditPublishIdeaWorkflow() {
 
         this.ideaController = InstanceManager.getDataManager()
                 .getIdeaController();
@@ -40,21 +41,22 @@ public class SaveIdeaWorkflow implements IWorkflow{
         String userId = request.getUserId();
         String ideaId = "";
         String ideaStatus;
-        String ideaName;
-        String description;
-        String category;
+        String ideaName = "";
+        String description = "";
+        String category = "";
         
         IIdea newIdea;
         
         try {
             JSONObject data = request.getData();
             ideaStatus = data.getString("ideaStatus");
-            if (ideaStatus.equals("edit")) {
+            if (ideaStatus.equals("edit") || ideaStatus.equals("publish")) {
                 ideaId = data.getString("ideaId");
             }
             ideaName = data.getString("ideaName");
             description = data.getString("ideaDescription");
             category = data.getString("ideaCategory");
+
         } catch (Exception ex) {
             response.setErrorMessage("SIdeaCreation_saveIdeaData_error");
             response.setResult("error");
@@ -81,22 +83,21 @@ public class SaveIdeaWorkflow implements IWorkflow{
             return response;
         }
 
-        // zu speicherndes Ideen-Objekt zusammenstellen
-        newIdea = new Idea();
-        newIdea.setName(ideaName);
-        newIdea.setDescription(description);
-        newIdea.setCategory(category);
-        ICreator creator = newIdea.getCreator();
-        creator.setUserId(userId);
-        creator.setEmail(user.getEmail());
-        creator.setIsMailPublic(user.getIsMailPublic());
-        creator.setPictureURL(user.getPictureURL());
-        creator.setUserName(user.getUserName());
-        newIdea.setCreator(creator);
-
         if (ideaStatus.equals("saveNew")) {  // Wenn Idee neu erstellt wird
 
             // Neue Idee in Ideen-DB hinzufügen
+            // zu speicherndes Ideen-Objekt zusammenstellen
+            newIdea = new Idea();
+            newIdea.setName(ideaName);
+            newIdea.setDescription(description);
+            newIdea.setCategory(category);
+            ICreator creator = newIdea.getCreator();
+            creator.setUserId(userId);
+            creator.setEmail(user.getEmail());
+            creator.setIsMailPublic(user.getIsMailPublic());
+            creator.setPictureURL(user.getPictureURL());
+            creator.setUserName(user.getUserName());
+            newIdea.setCreator(creator);
 
             try {
                 ideaId = ideaController.addNewIdea(newIdea, userId);
@@ -140,7 +141,9 @@ public class SaveIdeaWorkflow implements IWorkflow{
                 idea.setName(ideaName);
                 idea.setDescription(description);
                 idea.setCategory(category);
+                idea.setPublishDate(new Date());
 
+                // Idee aktualisieren
                 this.ideaController.updateIdea(idea);
 
                 response.setResult("success");
@@ -156,7 +159,41 @@ public class SaveIdeaWorkflow implements IWorkflow{
                 return response;
             }
 
-            // Idee aktualisieren
+        } else if (ideaStatus.equals("publish")) {
+
+            IIdea idea;
+            try {
+                idea = this.ideaController.getIdea(ideaId);
+
+            } catch (Exception e) {
+                response.setErrorMessage("SIdeaCreation_publishIdea_error");
+                response.setResult("error");
+                log.log(Level.SEVERE,
+                        "Beim Abrufen einer zu bearbeitenden Idee ist ein" +
+                                " Fehler aufgetreten!"
+                                + "\nFehlermeldung: " + e.getMessage());
+                return response;
+            }
+
+            try {
+                idea.setName(ideaName);
+                idea.setDescription(description);
+                idea.setCategory(category);
+                idea.setIsPublished(true);
+                idea.setPublishDate(new Date());
+
+                this.ideaController.updateIdea(idea);
+                response.setResult("success");
+                return response;
+
+            } catch (Exception e) {
+                response.setErrorMessage("SIdeaCreation_publishIdea_error");
+                response.setResult("error");
+                log.log(Level.SEVERE,
+                        "Beim Aktualisieren der Idee in der DB ist ein" +
+                                " Fehler aufgetreten!\nFehlermeldung: " + e.getMessage());
+                return response;
+            }
 
         } else {
             response.setErrorMessage("SIdeaCreation_saveIdeaData_error");

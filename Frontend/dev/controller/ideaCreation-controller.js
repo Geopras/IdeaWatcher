@@ -6,6 +6,7 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
         var cbLocalize = null;
         var cbGetIdeaResp = null;
         var cbSaveIdeaResp = null;
+        var cbPublishIdeaResp = null;
         //endregion
 
         //region Event Globale Initialisierung
@@ -35,6 +36,11 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
             cbFunction: cbSaveIdeaResponse
         };
 
+        var evPublishIdeaResponse = {
+            topic: 'SIdeaCreation/publishIdeaRequest-response',
+            cbFunction: cbPublishIdeaResponse
+        };
+
 
         //endregion
 
@@ -44,6 +50,7 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         ideaWatcher.core.MessageBroker.subscribe(evGetIdeaToEditResponse);
         ideaWatcher.core.MessageBroker.subscribe(evSaveIdeaResponse);
+        ideaWatcher.core.MessageBroker.subscribe(evPublishIdeaResponse);
         //endregion
 
         //region Callbacks definieren
@@ -69,6 +76,10 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
             cbSaveIdeaResp(obj);
         }
 
+        function cbPublishIdeaResponse(obj) {
+            cbPublishIdeaResp(obj);
+        }
+
         //endregion
 
         //region register Callbacks
@@ -90,6 +101,10 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
 
         function pubRegisterSaveIdeaResponse(cb) {
             cbSaveIdeaResp = cb;
+        }
+
+        function pubRegisterPublishIdeaResponse(cb) {
+            cbPublishIdeaResp = cb;
         }
         //endregion
 
@@ -136,17 +151,48 @@ ideaWatcher.controller.ideaCreation = ideaWatcher.controller.ideaCreation || (fu
             return request;
         }
 
+        function pubTryToPublishIdea(idea)
+        {
+            // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
+            if (ideaWatcher.core.WebSocketConnector.isConnected()) {
+                ideaWatcher.core.WebSocketConnector.sendRequest(buildRequestPublishIdea(idea));
+            } else {
+                //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
+            }
+        }
+
+        function buildRequestPublishIdea(idea)
+        {
+            var request = Object.create(ideaWatcher.model.Request);
+
+            request.destination = 'SIdeaCreation/publishIdeaRequest';
+            request.data = idea;
+
+            return request;
+        }
+
+        function pubCancelSaveIdea() {
+
+            var listType = ideaWatcher.model.IdeaList.ListType.MYIDEAS;
+            var category = ideaWatcher.model.IdeaList.Category.NONE;
+
+            ideaWatcher.controller.IdeaList.updateIdeaList(listType, category, 1, 10, true);
+        }
+
 
         // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
         return {
             // hier kann die View eine Methode(ui-Connector) registrieren, die gerufen wird,
             // wenn die View ein/ausgeblendet werden soll
+            cancelSaveIdea: pubCancelSaveIdea,
             registerGetIdeaToEditResponse: pubRegisterGetIdeaToEditResponse,
+            registerPublishIdeaResponse: pubRegisterPublishIdeaResponse,
             registerSaveIdeaResponse: pubRegisterSaveIdeaResponse,
             registerInitializeView: pubRegisterInitializeView,
             registerLocalizeView: pubRegisterLocalizeView,
             registerShowView: pubRegisterShowView,
             tryToEditIdea: pubTryToEditIdeaData,
+            tryToPublishIdea: pubTryToPublishIdea,
             tryToSaveNewIdea: pubTryToSaveNewIdeaData
         };
 
