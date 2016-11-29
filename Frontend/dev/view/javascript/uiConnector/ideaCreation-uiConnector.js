@@ -122,7 +122,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function() {
 		}
 		// endregion
 
-		function saveIdea() {
+		function saveIdea(event) {
 			event.preventDefault();
 
 			if (!checkValidForm())

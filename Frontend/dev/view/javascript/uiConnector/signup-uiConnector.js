@@ -61,7 +61,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function () {
         //endregion
 
         //region sendRegistrationToController
-        function sendRegistrationToController()
+        function sendRegistrationToController(event)
         {
             event.preventDefault();
 
