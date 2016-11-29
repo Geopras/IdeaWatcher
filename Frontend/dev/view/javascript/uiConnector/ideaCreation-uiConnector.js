@@ -234,7 +234,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function() {
 
 				isEdit = true;
 				htmlIdeaNameInput.value = idea.name;
-				htmlDescriptionTextarea.textContent = idea.description;
+				htmlDescriptionTextarea.value = idea.description;
 				// Setze die gewählte Kategorie
 				var selectBox = document
 						.getElementById('ideaCreation_category_select');
@@ -248,7 +248,6 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function() {
 			} else {
 				isEdit = false;
 				htmlIdeaNameInput.value = '';
-				htmlDescriptionTextarea.textContent = '';
 				htmlDescriptionTextarea.value = '';
 			}
 			cbLocalizeView();
@@ -277,10 +276,10 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function() {
 			htmlDescription.textContent = ideaWatcher.core.Localizer.SaveIdea[language].description;
 			// Wenn noch Defaulttext drin steht, dann diesen lokalisieren,
 			// sonst ignorieren
-			if (htmlDescriptionTextarea.textContent === ideaWatcher.core.Localizer.SaveIdea['de_DE'].descriptionTextarea
-					|| htmlDescriptionTextarea.textContent === ideaWatcher.core.Localizer.SaveIdea['en_GB'].descriptionTextarea) {
+			if (htmlDescriptionTextarea.value === ideaWatcher.core.Localizer.SaveIdea['de_DE'].descriptionTextarea
+					|| htmlDescriptionTextarea.value === ideaWatcher.core.Localizer.SaveIdea['en_GB'].descriptionTextarea) {
 
-				htmlDescriptionTextarea.textContent = ideaWatcher.core.Localizer.SaveIdea[language].descriptionTextarea;
+				htmlDescriptionTextarea.value = ideaWatcher.core.Localizer.SaveIdea[language].descriptionTextarea;
 			}
 
 			htmlPublishButton.setAttribute("value",
