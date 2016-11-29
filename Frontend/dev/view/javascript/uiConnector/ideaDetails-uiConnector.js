@@ -420,6 +420,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 				// description
 				htmlIdeaDescription = document
 						.querySelector('#ideaDetails_description_div');
+				htmlIdeaDescription.style.whiteSpace = 'pre';
 				htmlIdeaDescription.textContent = currentIdea.description;
 				// iconbar
 
