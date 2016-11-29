@@ -74,6 +74,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 if (existIdeaToRender) {
                     renderView(responseData);
                 }
+                existIdeaToRender = false;
 
                 switch (responseData.listType) {
                     case (ideaWatcher.model.IdeaList.ListType.MYIDEAS):
