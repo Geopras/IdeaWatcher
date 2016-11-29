@@ -388,6 +388,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 
 				htmlDeleteIdeaButton = document
 						.querySelector('#ideaDetails_ideaDeleteButton_img');
+				htmlDeleteIdeaButton.src = './resources/img/deleteButton1.svg';
 				htmlDeleteIdeaButton.style.display = 'none';
 
 				htmlIdeaCreatorName.textContent = currentIdea.creator.userName;
@@ -464,12 +465,13 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 					htmlDeleteIdeaButton.dataset.ideaId = currentIdea.ideaId;
 				}
 
+				var htmlNewCommentForm = document
+				.querySelector('#ideaDetails_newComment_form');
+				
 				// set userPicture in new Comment section
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUserId = ideaWatcher.controller.UserSession
-							.getCurrentUserId();
-					var htmlNewCommentForm = document
-							.querySelector('#ideaDetails_newComment_form');
+							.getCurrentUserId();	
 					htmlNewCommentForm.style.display = 'block';
 					var htmlUserImage = document
 							.querySelector('#ideaDetails_userPicture_img');
@@ -477,7 +479,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 						htmlUserImage.src = creator.pictureUrl;
 					}
 				} else {
-					console.log('Kein Nutzer angemeldet.');
+					htmlNewCommentForm.style.display = 'none';
+					
 				}
 
 				htmlCommentTextInput.value = '';
@@ -582,7 +585,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 								if (isOwnComment) {
 									var htmlCommentDeleteButton = document
 											.createElement('img');
-									htmlCommentDeleteButton.id = ('ideaDetails_deleteButton_img');
+									htmlCommentDeleteButton.id = ('ideaDetails_deleteCommentButton_img');
+									htmlCommentDeleteButton.src = './resources/img/deleteButton1.svg';
 									htmlCommentDeleteButton.dataset.commentId = comment.commentId;
 									htmlCommentDeleteButton.dataset.ideaId = currentIdea.ideaId;
 									htmlCommentDeleteButton.addEventListener(
@@ -612,6 +616,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUser = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
+					
+					htmlLikeImg.style.cursor = 'pointer';
 
 					// wenn der Nutzer die Idee schon gelikt hat, dann zeige die
 					// leuchtende Glühbirne, ansonsten die nicht leuchtende
@@ -634,6 +640,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 					var currentUser = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
 
+					htmlFollowerImg.style.cursor = 'pointer';
+					
 					// wenn der Nutzer der Idee schon folgt, soll der leuchtende
 					// Stern angezeigt werden, ansonsten der nicht leuchtende
 					if (ideaObject.followers.includes(currentUser)) {
