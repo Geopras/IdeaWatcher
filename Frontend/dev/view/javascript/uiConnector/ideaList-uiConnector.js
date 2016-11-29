@@ -585,7 +585,8 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         // Lade die nächsten Ideen, wenn ans Ende gescrollt
         document.addEventListener('scroll', function (event) {
-            if (document.body.scrollTop > document.body.scrollHeight -
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+            if (scrollTop > document.body.scrollHeight -
                 window.innerHeight * 1.1) {
 
                 var currentView = ideaWatcher.core.Navigator.getCurrentView();
