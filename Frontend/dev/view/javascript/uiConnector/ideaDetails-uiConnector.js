@@ -388,6 +388,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 
 				htmlDeleteIdeaButton = document
 						.querySelector('#ideaDetails_ideaDeleteButton_img');
+				htmlDeleteIdeaButton.src = './resources/img/deleteButton1.svg';
 				htmlDeleteIdeaButton.style.display = 'none';
 
 				htmlIdeaCreatorName.textContent = currentIdea.creator.userName;
@@ -582,7 +583,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 								if (isOwnComment) {
 									var htmlCommentDeleteButton = document
 											.createElement('img');
-									htmlCommentDeleteButton.id = ('ideaDetails_deleteButton_img');
+									htmlCommentDeleteButton.id = ('ideaDetails_deleteCommentButton_img');
+									htmlCommentDeleteButton.src = './resources/img/deleteButton1.svg';
 									htmlCommentDeleteButton.dataset.commentId = comment.commentId;
 									htmlCommentDeleteButton.dataset.ideaId = currentIdea.ideaId;
 									htmlCommentDeleteButton.addEventListener(
@@ -612,6 +614,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUser = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
+					
+					htmlLikeImg.style.cursor = 'pointer';
 
 					// wenn der Nutzer die Idee schon gelikt hat, dann zeige die
 					// leuchtende Glühbirne, ansonsten die nicht leuchtende
@@ -634,6 +638,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 					var currentUser = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
 
+					htmlFollowerImg.style.cursor = 'pointer';
+					
 					// wenn der Nutzer der Idee schon folgt, soll der leuchtende
 					// Stern angezeigt werden, ansonsten der nicht leuchtende
 					if (ideaObject.followers.includes(currentUser)) {
