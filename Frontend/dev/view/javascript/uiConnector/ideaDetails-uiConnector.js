@@ -80,10 +80,11 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 						var currentUserId = ideaWatcher.controller.UserSession
 								.getCurrentUserId();
 						// TODO: Kommentar abschicken
+						
 						var exObj = {
 							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
-							text : htmlCommentTextInput.value
+							text : htmlCommentTextInput.value,
 						};
 						console.log(exObj);
 						ideaWatcher.controller.IdeaDetails
@@ -566,6 +567,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 										+ dateObject.toLocaleTimeString(locale);
 								var htmlCommentTextDiv = document
 										.createElement('div');
+								htmlCommentTextDiv.style.whiteSpace = 'pre';
 								htmlCommentTextDiv.textContent = comment.text;
 
 								htmlCommentNameAndTextDiv
