@@ -98,10 +98,6 @@ public class GetIdeaListWorkflow  implements IWorkflow {
             return response;
         }
 
-        if (fromRank == 91) {
-            int a = 0;
-        }
-
         if (ideasToFilter.isEmpty()) {
             log.log(Level.WARNING, "Die zu filternde Ideenliste ist leer.");
             JSONObject responseData = new JSONObject();
