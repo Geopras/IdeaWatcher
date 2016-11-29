@@ -103,7 +103,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function() {
 		// endregion
 
 		// region
-		function publishIdea() {
+		function publishIdea(event) {
 			event.preventDefault();
 
 			if (!checkValidForm())
@@ -146,7 +146,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function() {
 		}
 		// endregion
 
-		function cancelIdea() {
+		function cancelIdea(event) {
 
 			event.preventDefault();
 
