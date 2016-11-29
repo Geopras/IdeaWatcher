@@ -372,8 +372,10 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                     }
                     followerButtonImage.setAttribute('data-ideaid', idea.ideaId);
                     followerButtonImage.addEventListener('click', handleUnfollowButtonClick);
+                    followerButtonImage.style.cursor = 'pointer';
                 } else {
                     followerButtonImage.src = './resources/img/favorite_off.png';
+                    followerButtonImage.style.cursor = 'auto';
                 }
                 var numberOfFollowers = document.createElement('span');
                 numberOfFollowers.classList.add('ideaList_numberOfFollowers_span');
