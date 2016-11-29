@@ -465,12 +465,13 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 					htmlDeleteIdeaButton.dataset.ideaId = currentIdea.ideaId;
 				}
 
+				var htmlNewCommentForm = document
+				.querySelector('#ideaDetails_newComment_form');
+				
 				// set userPicture in new Comment section
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUserId = ideaWatcher.controller.UserSession
-							.getCurrentUserId();
-					var htmlNewCommentForm = document
-							.querySelector('#ideaDetails_newComment_form');
+							.getCurrentUserId();	
 					htmlNewCommentForm.style.display = 'block';
 					var htmlUserImage = document
 							.querySelector('#ideaDetails_userPicture_img');
@@ -478,7 +479,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 						htmlUserImage.src = creator.pictureUrl;
 					}
 				} else {
-					console.log('Kein Nutzer angemeldet.');
+					htmlNewCommentForm.style.display = 'none';
+					
 				}
 
 				htmlCommentTextInput.value = '';
