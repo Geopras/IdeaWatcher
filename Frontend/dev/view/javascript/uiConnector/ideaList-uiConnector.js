@@ -18,6 +18,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         var publishedLabels = [];
         var publishedValueLabels = [];
         var alreadySendNextIdeasRequest = false;
+        var existIdeaToRender = false;
 
         //endregion
 
@@ -70,7 +71,9 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 responseData.ideas = exObj.additionalData.ideas;
                 responseData.isRenderNewIdeaList = exObj.additionalData.isRenderNewIdeaList;
 
-                renderView(responseData);
+                if (existIdeaToRender) {
+                    renderView(responseData);
+                }
 
                 switch (responseData.listType) {
                     case (ideaWatcher.model.IdeaList.ListType.MYIDEAS):
@@ -191,9 +194,9 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             var category = response.data.category;
 
             if (!currentIdeasMap || response.data.isRenderNewIdeaList) {
-                createCurrentIdeasMap(response.data.ideas);
+                existIdeaToRender = createCurrentIdeasMap(response.data.ideas);
             } else {
-                addToCurrentIdeasMap(response.data.ideas)
+                existIdeaToRender = addToCurrentIdeasMap(response.data.ideas)
             }
 
             var exObj = ideaWatcher.model.ExchangeObject.SwitchView;
@@ -612,21 +615,25 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         function createCurrentIdeasMap(ideasToAdd) {
 
+            var isFilledWithIdea = false;
             if (!ideasToAdd) {
-                return;
+                return isFilledWithIdea;
             }
             currentIdeasMap = {};
             for (var i = 0; i < ideasToAdd.length; i++) {
 
                 var currentIdea = ideasToAdd[i];
                 currentIdeasMap[currentIdea.ideaId] = currentIdea;
+                isFilledWithIdea = true;
             }
+            return isFilledWithIdea;
         }
 
         function addToCurrentIdeasMap(ideasToAdd) {
 
+            var isAddedSomething = false;
             if (!ideasToAdd) {
-                return;
+                return isAddedSomething;
             }
             for (var i = 0; i < ideasToAdd.length; i++) {
 
@@ -634,8 +641,10 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 var findIdea = currentIdeasMap[currentIdea.ideaId];
                 if (!findIdea) {
                     currentIdeasMap[currentIdea.ideaId] = currentIdea;
+                    isAddedSomething = true;
                 }
             }
+            return isAddedSomething;
         }
 
         function isUserFollowerOfIdea(userId, ideaId) {

@@ -104,18 +104,26 @@ public class IdeaManager {
         List<IIdea> preFilteredIdeas = new ArrayList<>();
         List<IIdea> filteredIdeas = new ArrayList<>();
 
+        int countIdeasToFilter = ideasToFilter.size();
+
+        //region Vorprüfung, ob Filterung möglich:
         if (fromRank > toRank){
 
             log.log(Level.SEVERE, "Die übergebenen fromRank und toRank passen logisch nicht zueinander." +
                     "fromRank: " + fromRank + ", toRank:" + toRank);
             return filteredIdeas;
         }
+        if (fromRank > countIdeasToFilter) {
+            log.log(Level.SEVERE, "Der übergebene fromRank ist größer als die Anzahl der zu filternden Ideen. Es kann nicht gefiltert werden. " +
+                    "fromRank: " + fromRank + ", Anzahl Ideen:" + countIdeasToFilter);
+            return filteredIdeas;
+        }
+        //endregion
 
         try {
             //während des Filterns darf sich der AllIdeasSnapshot nicht verändern
             lockAllIdeasSnapshot.lock();
 
-            int countIdeasToFilter = ideasToFilter.size();
             // // Filtere die Ideen anhand des gewünschten Ranking-Bereichs heraus
             // Wenn es sich um keine MyIdeas-Liste
             // handelt, dann muss nach dem PublishDate geprüft werden
@@ -130,7 +138,7 @@ public class IdeaManager {
 
                 int maxCount = toRank - fromRank + 1;
                 int counter = 0;
-                int index = fromRank;
+                int index = fromRank - 1;
 
                 while (counter < maxCount && index < countIdeasToFilter) {
 
