@@ -225,7 +225,12 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
             handleCurrentButtonClick(clickEvent);
             console.log('Kategorie: "' + currentClickedCategory + '" geklickt');
 
-            ideaWatcher.controller.IdeaList.updateIdeaList('', currentClickedCategory, 1, 10, true);
+            if (currentClickedListType === ideaWatcher.model.IdeaList.ListType.MYIDEAS ||
+                currentClickedListType === ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS) {
+                currentClickedListType = ideaWatcher.model.IdeaList.ListType.HOT;
+            }
+
+            ideaWatcher.controller.IdeaList.updateIdeaList(currentClickedListType, currentClickedCategory, 1, 10, true);
         }
         //endregion
 
