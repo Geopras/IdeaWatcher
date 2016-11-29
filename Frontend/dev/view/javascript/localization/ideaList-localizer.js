@@ -8,6 +8,10 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
             en_GB: 'Create new idea',
             de_DE: 'Neue Idee erstellen'
         },
+        Saved: {
+            en_GB: 'Saved: ',
+            de_DE: 'Gespeichert: '
+        },
         Published: {
             en_GB: 'Published: ',
             de_DE: 'Veröffentlicht: '

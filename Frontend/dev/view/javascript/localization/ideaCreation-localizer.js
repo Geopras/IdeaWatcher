@@ -22,14 +22,20 @@ ideaWatcher.core.Localizer.SaveIdea = ideaWatcher.core.Localizer.SaveIdea || {
             headerEditIdea: 'Edit Idea',
             name: 'Name',
             notification: {
+                saveIdeaHeadline: 'Save Idea',
+                publishIdeaHeadline: 'Publish Idea',
                 errorMessage: {
-
+                    SIdeaCreation_publishIdea_error: 'An Error occurred on the' +
+                    ' server. The idea could not be published.'  +
+                    ' Please try again later.',
                     SIdeaCreation_saveIdeaData_error: 'An Error occurred on the' +
                     ' server. The Data could not be saved.'  +
                     ' Please try again later.'
                 },
-                headline: 'Save Idea',
-                saveSuccessMessage: 'The idea was successfully created!'
+                successMessage: {
+                    saveIdeaSuccess: 'The idea was successfully saved!',
+                    publishIdeaSuccess: 'The idea was successfully published'
+                }
             },
             publish: 'Publish',
             save: 'Save'
@@ -52,16 +58,24 @@ ideaWatcher.core.Localizer.SaveIdea = ideaWatcher.core.Localizer.SaveIdea || {
             headerEditIdea: 'Bearbeiten Sie die Idee',
             name: 'Name',
             notification: {
+                saveIdeaHeadline: 'Idee Speichern',
+                editIdeaHeadline: 'Idee Bearbeiten',
+                publishIdeaHeadline: 'Idee Veröffentlichen',
                 errorMessage: {
-                    headline: 'Speichern Fehlgeschlagen',
+                    SIdeaCreation_publishIdea_error: 'Auf dem Server ist ein' +
+                    ' Problem aufgetreten. Es konnte nicht die Idee veröffentlicht' +
+                    ' werden. Bitte versuchen Sie es später erneut.',
                     SIdeaCreation_saveIdeaData_error: 'Auf dem Server ist ein' +
                     ' Problem aufgetreten. Es konnte nicht die Idee gespeichert' +
                     ' werden. Bitte versuchen Sie es später erneut.'
                 },
-                headline: 'Speichern der Idee',
-                saveSuccessMessage: 'Die Idee wurde erfolgreich gespeichert!'
+                successMessage: {
+                    saveIdeaSuccess: 'Die Idee wurde erfolgreich gespeichert!',
+                    publishIdeaSuccess: 'Die Idee wurde erfolgreich veröffentlicht!'
+                }
+
             },
             publish: 'Veröffentlichen',
-            save: 'Speichern',
+            save: 'Speichern'
         }
     };
