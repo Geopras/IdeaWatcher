@@ -110,6 +110,7 @@ ideaWatcher.view.UserSession = ideaWatcher.view.UserSession || (function () {
 
                 ideaWatcher.controller.IdeaList.updateIdeaList(listType, '', 1, 10, true);
 
+                clearView();
             }
             else if (response.result === 'notvalid') {
 
@@ -163,6 +164,13 @@ ideaWatcher.view.UserSession = ideaWatcher.view.UserSession || (function () {
                         .SLogin_deleteToken_error, 5000);
             }
         }
+
+        //region clearView
+        function clearView(){
+            htmlUsernameInput.value = '';
+            htmlPasswordInput.value = '';
+        }
+        //endregion
 
         return {
 
