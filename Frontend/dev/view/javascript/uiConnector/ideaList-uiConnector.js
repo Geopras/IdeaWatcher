@@ -71,9 +71,8 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 responseData.ideas = exObj.additionalData.ideas;
                 responseData.isRenderNewIdeaList = exObj.additionalData.isRenderNewIdeaList;
 
-                if (existIdeaToRender) {
-                    renderView(responseData);
-                }
+                renderView(responseData);
+
                 existIdeaToRender = false;
 
                 switch (responseData.listType) {
@@ -95,8 +94,6 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                         htmlMyIdeasView.style.display = 'none';
                         htmlMyFollowedIdeasView.style.display = 'none';
                 }
-                
-                renderView(responseData); //Bassbiene hat das mal auf Verdacht eingefügt.
             }
             else
             {
@@ -308,11 +305,17 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 htmlParentNode.removeChild(htmlSections);
                 htmlSections = document.createElement('div');
                 htmlSections.classList.add(htmlSectionsClassName);
-                renderIdeaList(htmlSections, ideaListData.ideas, isMyIdeas, isMyFollowedIdeas);
+
+                if (existIdeaToRender) {
+                    renderIdeaList(htmlSections, ideaListData.ideas, isMyIdeas, isMyFollowedIdeas);
+                }
                 htmlParentNode.appendChild(htmlSections);
 
             } else {
-                renderIdeaList(htmlSections, ideaListData.ideas, isMyIdeas, isMyFollowedIdeas);
+
+                if (existIdeaToRender) {
+                    renderIdeaList(htmlSections, ideaListData.ideas, isMyIdeas, isMyFollowedIdeas);
+                }
             }
             cbLocalizeView();
             return true;
