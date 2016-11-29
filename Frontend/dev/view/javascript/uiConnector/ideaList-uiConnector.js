@@ -517,7 +517,23 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         function handleEditButtonClick(clickEvent) {
 
             var ideaId = clickEvent.target.parentNode.attributes.getNamedItem('data-ideaid').nodeValue;
-            ideaWatcher.controller.IdeaList.tryToEditIdea(ideaId);
+
+            // Prüfen, ob die eigene Idee bereits geliked wurde, da sie nur bearbeitet
+            // werden kann, wenn sie noch nicht geliked wurde
+            var idea = cbGetIdea(ideaId);
+            if (idea.likeUsers.length === 0) {
+                // Wenn noch nicht geliked wurde, dann Editieren zulassen
+                ideaWatcher.controller.IdeaList.tryToEditIdea(ideaId);
+            } else {
+
+                var language = ideaWatcher.core.Localizer.getLanguage();
+
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.model.GlobalNotificationType.WARNING,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].infoMessage.editNotPossibleHeader,
+                    ideaWatcher.core.Localizer.IdeaList.Notification[language].infoMessage.editNotPossibleMessage,
+                    5000);
+            }
         }
 
         function handleDeleteButtonClick(clickEvent) {

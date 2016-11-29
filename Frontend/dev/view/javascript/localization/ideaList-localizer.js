@@ -36,6 +36,9 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
                     ' idea list. Please try again later.'
                 },
                 infoMessage: {
+                    editNotPossibleHeader: 'Edit My Idea',
+                    editNotPossibleMessage: 'You cannot edit your idea anymore, ' +
+                    'because someone already liked it.',
                     emptyIdeaListHeader: 'Empty Idea List',
                     emptyIdeaListMessage: 'No idea could be shown, because the idea list is empty.'
                 },
@@ -67,6 +70,9 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
                     ' Abfrage von Ideen. Bitte versuchen Sie es später nochmal.'
                 },
                 infoMessage: {
+                    editNotPossibleHeader: 'Eigene Idee Bearbeiten',
+                    editNotPossibleMessage: 'Das Bearbeiten der Idee ist nicht ' +
+                    'möglich, da sie bereits bewertet wurde.',
                     emptyIdeaListHeader: 'Anzeige Ideen',
                     emptyIdeaListMessage: 'Es können keine Ideen angezeigt werden, da keine vorhanden sind.'
                 },
