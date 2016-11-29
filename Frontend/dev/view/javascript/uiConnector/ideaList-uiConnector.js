@@ -95,6 +95,8 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                         htmlMyIdeasView.style.display = 'none';
                         htmlMyFollowedIdeasView.style.display = 'none';
                 }
+                
+                renderView(responseData); //Bassbiene hat das mal auf Verdacht eingefügt.
             }
             else
             {
