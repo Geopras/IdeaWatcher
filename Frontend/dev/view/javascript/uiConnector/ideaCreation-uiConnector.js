@@ -109,13 +109,24 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function() {
 			if (!checkValidForm())
 				return;
 
-			var exObj = {
-				ideaId: ideaId,
-				ideaName : htmlIdeaNameInput.value,
-				ideaCategory : htmlCategorySelect.value,
-				ideaDescription : htmlDescriptionTextarea.value,
-				ideaStatus: 'publish'
-			};
+			if (ideaId !== null) {
+				var exObj = {
+					ideaId: ideaId,
+					ideaName : htmlIdeaNameInput.value,
+					ideaCategory : htmlCategorySelect.value,
+					ideaDescription : htmlDescriptionTextarea.value,
+					ideaStatus: 'publish'
+				};
+			} else {
+				var exObj = {
+					ideaId: '',
+					ideaName : htmlIdeaNameInput.value,
+					ideaCategory : htmlCategorySelect.value,
+					ideaDescription : htmlDescriptionTextarea.value,
+					ideaStatus: 'publishNew'
+				};
+			}
+
 			console.log(exObj);
 
 			ideaWatcher.controller.ideaCreation.tryToPublishIdea(exObj);

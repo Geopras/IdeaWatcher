@@ -40,17 +40,42 @@ public class SaveEditPublishIdeaWorkflow implements IWorkflow{
         
         String userId = request.getUserId();
         String ideaId = "";
-        String ideaStatus;
         String ideaName = "";
         String description = "";
         String category = "";
-        
-        IIdea newIdea;
+        boolean isEdit = false;
+        boolean isSaveNew = false;
+        boolean isPublishNew = false;
+        boolean isPublish = false;
+
+        IIdea idea;
         
         try {
             JSONObject data = request.getData();
-            ideaStatus = data.getString("ideaStatus");
-            if (ideaStatus.equals("edit") || ideaStatus.equals("publish")) {
+            String ideaStatus = data.getString("ideaStatus");
+            switch (ideaStatus) {
+                case "edit":
+                    isEdit = true;
+                    break;
+                case "saveNew":
+                    isSaveNew = true;
+                    break;
+                case "publishNew":
+                    isPublishNew = true;
+                    break;
+                case "publish":
+                    isPublish = true;
+                    break;
+                default:
+                    response.setErrorMessage("SIdeaCreation_saveIdeaData_error");
+                    response.setResult("error");
+                    log.log(Level.SEVERE,
+                            String.format("Beim Auslesen der RequestData-Parameter ist ein Fehler aufgetreten. Der IdeaStatus %s ist unbekannt.", ideaStatus));
+                    return response;
+            }
+            // Wenn vorhandene Idee bearbeitet bzw. veröffentlicht werden soll,
+            // dann muss eine IdeaId mitgegeben worden sein
+            if (isEdit || isPublish) {
                 ideaId = data.getString("ideaId");
             }
             ideaName = data.getString("ideaName");
@@ -83,24 +108,31 @@ public class SaveEditPublishIdeaWorkflow implements IWorkflow{
             return response;
         }
 
-        if (ideaStatus.equals("saveNew")) {  // Wenn Idee neu erstellt wird
+        // Wenn Idee neu erstellt wurde, dann füge Idee in DB hinzu
+        if (isSaveNew || isPublishNew) {
 
             // Neue Idee in Ideen-DB hinzufügen
             // zu speicherndes Ideen-Objekt zusammenstellen
-            newIdea = new Idea();
-            newIdea.setName(ideaName);
-            newIdea.setDescription(description);
-            newIdea.setCategory(category);
-            ICreator creator = newIdea.getCreator();
+            idea = new Idea();
+            idea.setName(ideaName);
+            idea.setDescription(description);
+            idea.setCategory(category);
+
+            // Ersteller der Idee speichern
+            ICreator creator = idea.getCreator();
             creator.setUserId(userId);
             creator.setEmail(user.getEmail());
             creator.setIsMailPublic(user.getIsMailPublic());
             creator.setPictureURL(user.getPictureURL());
             creator.setUserName(user.getUserName());
-            newIdea.setCreator(creator);
+            idea.setCreator(creator);
+
+            if (isPublishNew) {
+                idea.setIsPublished(true);
+            }
 
             try {
-                ideaId = ideaController.addNewIdea(newIdea, userId);
+                ideaId = ideaController.addNewIdea(idea, userId);
 
             } catch (Exception ex) {
                 response.setErrorMessage("SIdeaCreation_saveIdeaData_error");
@@ -116,9 +148,9 @@ public class SaveEditPublishIdeaWorkflow implements IWorkflow{
             try {
                 user.getCreatedIdeas().add(ideaId);
                 this.userController.updateUser(user);
-
                 response.setResult("success");
                 return response;
+
             } catch (Exception e) {
 
                 response.setErrorMessage("SIdeaCreation_saveIdeaData_error");
@@ -131,23 +163,10 @@ public class SaveEditPublishIdeaWorkflow implements IWorkflow{
                 return response;
             }
         }
-        else if (ideaStatus.equals("edit")) {
-            // Wenn vorhandene Idee bearbeitet werden soll
+        else if (isEdit || isPublish) {  // Wenn vorhandene Idee bearbeitet oder veröffentlicht werden soll
 
-            IIdea idea;
             try {
                 idea = this.ideaController.getIdea(ideaId);
-
-                idea.setName(ideaName);
-                idea.setDescription(description);
-                idea.setCategory(category);
-                idea.setPublishDate(new Date());
-
-                // Idee aktualisieren
-                this.ideaController.updateIdea(idea);
-
-                response.setResult("success");
-                return response;
 
             } catch (Exception e) {
                 response.setErrorMessage("SIdeaCreation_saveIdeaData_error");
@@ -158,50 +177,37 @@ public class SaveEditPublishIdeaWorkflow implements IWorkflow{
                                 + "\nFehlermeldung: " + e.getMessage());
                 return response;
             }
+            idea.setName(ideaName);
+            idea.setDescription(description);
+            idea.setCategory(category);
+            idea.setPublishDate(new Date());
 
-        } else if (ideaStatus.equals("publish")) {
-
-            IIdea idea;
-            try {
-                idea = this.ideaController.getIdea(ideaId);
-
-            } catch (Exception e) {
-                response.setErrorMessage("SIdeaCreation_publishIdea_error");
-                response.setResult("error");
-                log.log(Level.SEVERE,
-                        "Beim Abrufen einer zu bearbeitenden Idee ist ein" +
-                                " Fehler aufgetreten!"
-                                + "\nFehlermeldung: " + e.getMessage());
-                return response;
+            if (isPublish) {
+                idea.setIsPublished(true);
             }
 
             try {
-                idea.setName(ideaName);
-                idea.setDescription(description);
-                idea.setCategory(category);
-                idea.setIsPublished(true);
-                idea.setPublishDate(new Date());
-
                 this.ideaController.updateIdea(idea);
+
                 response.setResult("success");
                 return response;
 
-            } catch (Exception e) {
-                response.setErrorMessage("SIdeaCreation_publishIdea_error");
+            } catch (Exception ex) {
+
+                response.setErrorMessage("SIdeaCreation_saveIdeaData_error");
                 response.setResult("error");
                 log.log(Level.SEVERE,
-                        "Beim Aktualisieren der Idee in der DB ist ein" +
-                                " Fehler aufgetreten!\nFehlermeldung: " + e.getMessage());
+                        "Beim Aktualisieren einer zu bearbeitenden oder zu veröffentlichenden Idee in der DB ist ein" +
+                                " Fehler aufgetreten!"
+                                + "\nFehlermeldung: " + ex.getMessage());
                 return response;
             }
-
         } else {
+
             response.setErrorMessage("SIdeaCreation_saveIdeaData_error");
             response.setResult("error");
             log.log(Level.SEVERE,
-                    "Es konnte die Idee nicht gespeichert werden, weil ihr " +
-                            "Status nicht erkannt wird! Es ist der Status " +
-                            "'saveNew' oder 'edit' anzugeben.'");
+                    "Die Idee konnte nicht gespeichert werden, weil ihr Status unbekannt ist");
             return response;
         }
     }
