@@ -629,7 +629,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 						isLiked = false;
 					}
 				} else {
-
+					htmlLikeImg.style.cursor = 'default';
 					htmlLikeImg.src = './resources/img/bulb_off.png';
 				}
 			}
@@ -652,7 +652,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 						isFollowed = false;
 					}
 				} else {
-
+					htmlFollowerImg.style.cursor = 'default';
 					htmlFollowerImg.src = './resources/img/favorite_off.png';
 				}
 
