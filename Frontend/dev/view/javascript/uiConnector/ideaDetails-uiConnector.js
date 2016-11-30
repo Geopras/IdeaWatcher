@@ -166,13 +166,13 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 				htmlEditButton = document
 						.querySelector('#ideaDetails_editIdea_button');
 				htmlCommentDateText = document.querySelector('#ideaDetails_commentCreationDate_span');
+				var commentDate = htmlCommentDateText.attributes.getNamedItem('data-comment-date').nodeValue;
 				var locale = language.replace('_', '-');
-				var dateObject = htmlCommentDateText.attributes.getNamedItem('data-comment-date').nodeValue;
+				 var dateObject = new Date(commentDate);
 				htmlCommentDateText.textContent = dateObject
 						.toLocaleDateString(locale)
 						+ ' '
 						+ dateObject.toLocaleTimeString(locale);
-				
 				htmlIdeaCreator.textContent = ideaWatcher.core.Localizer.ideaDetails[language].creator;
 				
 				
