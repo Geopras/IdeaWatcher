@@ -81,8 +81,6 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         // Hole die zu filternde Ideenliste aus der Datenbank
         List<IIdea> ideasToFilter;
 
-        //während des Datenbankzugriffs darf sich der AllIdeasSnapshot nicht verändern
-        this.ideaManager.getLockAllIdeasSnapshot().lock();
         try {
             if (isMyIdeas) {
                 ideasToFilter = this.ideaManager.getMyIdeas(userId);
@@ -99,7 +97,6 @@ public class GetIdeaListWorkflow  implements IWorkflow {
             response.setResult("error");
             return response;
         }
-        this.ideaManager.getLockAllIdeasSnapshot().unlock();
 
         if (ideasToFilter.isEmpty()) {
             log.log(Level.WARNING, "Die zu filternde Ideenliste ist leer.");
