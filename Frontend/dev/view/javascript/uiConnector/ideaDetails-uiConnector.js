@@ -420,7 +420,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 				// description
 				htmlIdeaDescription = document
 						.querySelector('#ideaDetails_description_div');
-				htmlIdeaDescription.style.whiteSpace = 'pre';
+				htmlIdeaDescription.style.whiteSpace = 'pre-wrap';
 				htmlIdeaDescription.textContent = currentIdea.description;
 				// iconbar
 
@@ -461,6 +461,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 				}
 
 				if (isOwnIdea) {
+					htmlLikeImg.style.cursor = 'default';
+					htmlFollowerImg.style.cursor = 'default';
 					htmlEditButton.style.display = 'inline';
 					htmlEditButton.dataset.ideaId = currentIdea.ideaId;
 					htmlDeleteIdeaButton.style.display = 'inline';
@@ -568,7 +570,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 										+ dateObject.toLocaleTimeString(locale);
 								var htmlCommentTextDiv = document
 										.createElement('div');
-								htmlCommentTextDiv.style.whiteSpace = 'pre';
+								htmlCommentTextDiv.style.whiteSpace = 'pre-wrap';
 								htmlCommentTextDiv.textContent = comment.text;
 
 								htmlCommentNameAndTextDiv
