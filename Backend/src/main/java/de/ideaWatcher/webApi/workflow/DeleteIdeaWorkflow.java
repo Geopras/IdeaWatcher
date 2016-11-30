@@ -8,6 +8,7 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IUserCo
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.ICreator;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
+import main.java.de.ideaWatcher.webApi.manager.IdeaManager;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
 import org.json.JSONObject;
 
@@ -19,6 +20,7 @@ public class DeleteIdeaWorkflow implements IWorkflow {
             .getLogger(ProfileEditWorkflow.class.getName());
     private IIdeaController ideaController;
     private IUserController userController;
+    private IdeaManager ideaManager;
 
     public DeleteIdeaWorkflow() {
 
@@ -26,6 +28,7 @@ public class DeleteIdeaWorkflow implements IWorkflow {
                 .getUserController();
         this.ideaController = InstanceManager.getDataManager()
                 .getIdeaController();
+        this.ideaManager = InstanceManager.getIdeaManager();
     }
 
     public IResponse getResponse(IRequest request) {
@@ -95,15 +98,13 @@ public class DeleteIdeaWorkflow implements IWorkflow {
             return response;
         }
 
+
         // Idee aus createdIdeas löschen, dazu erstmal tatsächliches Objekt mit der passenden IdeaId holen
 
         if (currentUser.getCreatedIdeas().contains(ideaId)){
             currentUser.getCreatedIdeas().remove(ideaId);
             try {
                 this.userController.updateUser(currentUser);
-
-                response.setResult("success");
-                return response;
 
             } catch (Exception ex) {
                 response.setErrorMessage(
@@ -121,6 +122,22 @@ public class DeleteIdeaWorkflow implements IWorkflow {
             log.log(Level.SEVERE,
                     "Beim Löschen der Idee aus der CreatedIdeasList ist ein Fehler aufgetreten. Der User hat die Idee "
                             + "nicht angelegt.");
+            return response;
+        }
+
+        // Idee aus lokalem Ideensnapshot löschen
+        try {
+            ideaManager.deleteIdeaFromSnapshot(ideaId);
+
+            response.setResult("success");
+            return response;
+        } catch (Exception ex) {
+            response.setErrorMessage(
+                    "SIdeaList_deleteIdeaData_error");
+            response.setResult("error");
+            log.log(Level.SEVERE,
+                    "Beim Löschen der Idee aus dem AllIdeasSnapshot ist ein Fehler aufgetreten!"
+                            + "\nFehlermeldung: " + ex.getMessage());
             return response;
         }
     }

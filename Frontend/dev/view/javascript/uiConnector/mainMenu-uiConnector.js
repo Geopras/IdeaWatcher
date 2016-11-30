@@ -344,7 +344,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
 
         function handleCheckboxLanguageSwitch(clickEvent) {
 
-            handleCurrentButtonClick(clickEvent);
+//            handleCurrentButtonClick(clickEvent);
             var language = ideaWatcher.core.Localizer.getLanguage();
 
             if (language === 'de_DE') {

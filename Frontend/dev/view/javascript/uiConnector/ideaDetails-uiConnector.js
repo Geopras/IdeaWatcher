@@ -1,4 +1,5 @@
-ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
+ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails
+		|| (function() {
 
 			var idea = null;
 			var htmlView = null;
@@ -18,6 +19,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 			var htmlOldCommentsTable = null;
 			var isLiked = null;
 			var isFollowed = null;
+			var commentDateSpanList = [];
 
 			var currentIdea = null;
 
@@ -80,7 +82,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 						var currentUserId = ideaWatcher.controller.UserSession
 								.getCurrentUserId();
 						// TODO: Kommentar abschicken
-						
+
 						var exObj = {
 							userId : currentUserId,
 							ideaId : currentIdea.ideaId,
@@ -165,17 +167,26 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 						.querySelector('#ideaDetails_contact_a');
 				htmlEditButton = document
 						.querySelector('#ideaDetails_editIdea_button');
-				htmlCommentDateText = document.querySelector('#ideaDetails_commentCreationDate_span');
-				var locale = language.replace('_', '-');
-				var dateObject = htmlCommentDateText.attributes.getNamedItem('data-comment-date').nodeValue;
-				htmlCommentDateText.textContent = dateObject
-						.toLocaleDateString(locale)
-						+ ' '
-						+ dateObject.toLocaleTimeString(locale);
-				
+				// lokalisiere alle Kommentardaten aus der Tabelle
+				var htmlCommentsTable = document
+						.querySelector('#ideaDetails_existingComments_table');
+				// so und wie komm ich jetzt an das Kommentardatum?
+				// table -->tr --> td --> div --> span
+
+				commentDateSpanList
+						.forEach(function(commentDateSpan) {
+							var commentDate = commentDateSpan.attributes
+									.getNamedItem('data-comment-date').nodeValue;
+							var locale = language.replace('_', '-');
+							var dateObject = new Date(commentDate);
+							commentDateSpan.textContent = dateObject
+									.toLocaleDateString(locale)
+									+ ' '
+									+ dateObject.toLocaleTimeString(locale);
+						});
+
 				htmlIdeaCreator.textContent = ideaWatcher.core.Localizer.ideaDetails[language].creator;
-				
-				
+
 			}
 			// endregion
 
@@ -304,7 +315,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 						ideaWatcher.controller.IdeaDetails
 								.tryToChangeLikeFollow(exObj);
 					} else {
-						//User darf eigene Idee nicht liken.
+						// User darf eigene Idee nicht liken.
 					}
 
 				} else {
@@ -344,7 +355,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 						ideaWatcher.controller.IdeaDetails
 								.tryToChangeLikeFollow(exObj);
 					} else {
-						//User darf eigener Idee nicht folgen.
+						// User darf eigener Idee nicht folgen.
 					}
 				} else {
 					console.log("kein User angemeldet");
@@ -388,7 +399,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 						5000);
 				}
 			}
-			
+
 			function deleteIdea(clickEvent) {
 				var ideaId = clickEvent.target.attributes
 						.getNamedItem('data-idea-id').nodeValue;
@@ -492,12 +503,12 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 				}
 
 				var htmlNewCommentForm = document
-				.querySelector('#ideaDetails_newComment_form');
-				
+						.querySelector('#ideaDetails_newComment_form');
+
 				// set userPicture in new Comment section
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUserId = ideaWatcher.controller.UserSession
-							.getCurrentUserId();	
+							.getCurrentUserId();
 					htmlNewCommentForm.style.display = 'block';
 					var htmlUserImage = document
 							.querySelector('#ideaDetails_userPicture_img');
@@ -506,7 +517,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 					}
 				} else {
 					htmlNewCommentForm.style.display = 'none';
-					
+
 				}
 
 				htmlCommentTextInput.value = '';
@@ -581,11 +592,14 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 								var htmlCommentNameBold = document
 										.createElement('b');
 								htmlCommentNameBold.textContent = comment.userName;
+
 								var htmlCreationDateText = document
 										.createElement('span');
 								htmlCreationDateText.id = 'ideaDetails_commentCreationDate_span';
 								var dateObject = new Date(comment.publishDate);
 								htmlCreationDateText.dataset.commentDate = dateObject;
+								commentDateSpanList.push(htmlCreationDateText);
+
 								var htmlCommentTextDiv = document
 										.createElement('div');
 								htmlCommentTextDiv.style.whiteSpace = 'pre-wrap';
@@ -639,7 +653,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 				if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
 					var currentUser = ideaWatcher.controller.UserSession
 							.getCurrentUserId();
-					
+
 					htmlLikeImg.style.cursor = 'pointer';
 
 					// wenn der Nutzer die Idee schon gelikt hat, dann zeige die
@@ -664,7 +678,7 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 							.getCurrentUserId();
 
 					htmlFollowerImg.style.cursor = 'pointer';
-					
+
 					// wenn der Nutzer der Idee schon folgt, soll der leuchtende
 					// Stern angezeigt werden, ansonsten der nicht leuchtende
 					if (ideaObject.followers.includes(currentUser)) {
