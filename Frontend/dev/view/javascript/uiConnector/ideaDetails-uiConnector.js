@@ -364,7 +364,20 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 			function navigateToEditView(clickEvent) {
 				var ideaId = clickEvent.target.attributes
 						.getNamedItem('data-idea-id').nodeValue;
-				ideaWatcher.controller.IdeaDetails.tryToEditIdea(ideaId);
+
+				if (currentIdea.likeUsers.length === 0) {
+					// Wenn noch nicht geliked wurde, dann Editieren zulassen
+					ideaWatcher.controller.IdeaList.tryToEditIdea(ideaId);
+				} else {
+
+					var language = ideaWatcher.core.Localizer.getLanguage();
+
+					ideaWatcher.controller.GlobalNotification.showNotification(
+						ideaWatcher.model.GlobalNotificationType.WARNING,
+						ideaWatcher.core.Localizer.IdeaList.Notification[language].infoMessage.editNotPossibleHeader,
+						ideaWatcher.core.Localizer.IdeaList.Notification[language].infoMessage.editNotPossibleMessage,
+						5000);
+				}
 			}
 			
 			function deleteIdea(clickEvent) {
