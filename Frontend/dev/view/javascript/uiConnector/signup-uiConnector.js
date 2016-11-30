@@ -155,6 +155,7 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function () {
             else
             {
                 htmlView.style.display = 'none';
+                clearView();
             }
         }
         //endregion
@@ -177,6 +178,16 @@ ideaWatcher.view.Signup = ideaWatcher.view.Signup || (function () {
             htmlPasswordLabel.textContent = ideaWatcher.core.Localizer.signUp[language].password;
             htmlPasswordRepeatedLabel.textContent = ideaWatcher.core.Localizer.signUp[language].passwordRepeated;
             htmlSubmitButton.value = ideaWatcher.core.Localizer.signUp[language].submit;
+        }
+        //endregion
+
+        //region clearView
+        function clearView() {
+            htmlUsernameInput.value = '';
+            htmlEmailInput.value = '';
+            htmlPasswordInput.value = '';
+            htmlPasswordRepeatInput.value = '';
+            htmlPasswordRepeatErrorLabel.style.display = 'none';
         }
         //endregion
 
