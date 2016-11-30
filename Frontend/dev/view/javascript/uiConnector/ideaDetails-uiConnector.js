@@ -165,8 +165,17 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 						.querySelector('#ideaDetails_contact_a');
 				htmlEditButton = document
 						.querySelector('#ideaDetails_editIdea_button');
-
+				htmlCommentDateText = document.querySelector('#ideaDetails_commentCreationDate_span');
+				var locale = language.replace('_', '-');
+				var dateObject = htmlCommentDateText.attributes.getNamedItem('data-comment-date').nodeValue;
+				htmlCommentDateText.textContent = dateObject
+						.toLocaleDateString(locale)
+						+ ' '
+						+ dateObject.toLocaleTimeString(locale);
+				
 				htmlIdeaCreator.textContent = ideaWatcher.core.Localizer.ideaDetails[language].creator;
+				
+				
 			}
 			// endregion
 
@@ -562,12 +571,8 @@ ideaWatcher.view.IdeaDetails = ideaWatcher.view.IdeaDetails || (function() {
 								var htmlCreationDateText = document
 										.createElement('span');
 								htmlCreationDateText.id = 'ideaDetails_commentCreationDate_span';
-								var locale = language.replace('_', '-');
 								var dateObject = new Date(comment.publishDate);
-								htmlCreationDateText.textContent = dateObject
-										.toLocaleDateString(locale)
-										+ ' '
-										+ dateObject.toLocaleTimeString(locale);
+								htmlCreationDateText.dataset.commentDate = dateObject;
 								var htmlCommentTextDiv = document
 										.createElement('div');
 								htmlCommentTextDiv.style.whiteSpace = 'pre-wrap';
