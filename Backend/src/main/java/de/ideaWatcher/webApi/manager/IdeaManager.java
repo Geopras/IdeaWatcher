@@ -239,6 +239,36 @@ public class IdeaManager {
         return ideasToSort;
     }
 
+    /**
+     * Löscht eine Idee aus dem allIdeasSnapshot und berücksichtigt dabei den kritischen Abschnitt
+     * @param ideaId
+     */
+    public void deleteIdeaFromSnapshot(String ideaId) throws Exception{
+
+        try {
+            //während des Löschens darf sich der AllIdeasSnapshot nicht verändern
+            lockAllIdeasSnapshot.lock();
+
+            IIdea ideaToBeDeleted = null;
+
+            for (IIdea idea : this.allIdeasSnapshot){
+                if (idea.getIdeaId().equals(ideaId)){
+                    ideaToBeDeleted = idea;
+                    break;
+                }
+            }
+
+            if (ideaToBeDeleted != null){
+                allIdeasSnapshot.remove(ideaToBeDeleted);
+            }
+
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            lockAllIdeasSnapshot.unlock();
+        }
+
+    }
 
     /**
      * Startet den Scheduler für
