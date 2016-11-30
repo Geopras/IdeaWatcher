@@ -11,12 +11,9 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.naming.directory.SearchResult;
 
 /**
  * Klasse fuer Zugriff auf User-Datenbank

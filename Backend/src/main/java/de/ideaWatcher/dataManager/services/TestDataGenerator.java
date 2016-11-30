@@ -11,7 +11,6 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.manager.IdeaManager;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class TestDataGenerator {
@@ -146,14 +145,14 @@ public class TestDataGenerator {
         Random r = new Random();
         Calendar calendar = new GregorianCalendar();
 
-        List<String> catagoryList = new ArrayList<>();
-        catagoryList.add("BUSINESS");
-        catagoryList.add("COMPUTER");
-        catagoryList.add("HOMEGARDEN");
-        catagoryList.add("GADGET");
-        catagoryList.add("SPORTS");
-        catagoryList.add("TOYS");
-        catagoryList.add("OTHER");
+        List<String> categoryList = new ArrayList<>();
+        categoryList.add("BUSINESS");
+        categoryList.add("COMPUTER");
+        categoryList.add("HOMEGARDEN");
+        categoryList.add("GADGET");
+        categoryList.add("SPORTS");
+        categoryList.add("TOYS");
+        categoryList.add("OTHER");
 
         List<String> languageList = new ArrayList<>();
         languageList.add("de_DE");
@@ -184,8 +183,8 @@ public class TestDataGenerator {
             newIdea.setDescription(description);
 
             // erzeuge eine zufällige Kategorie
-            int randomCategoryIndex = r.nextInt(catagoryList.size());
-            newIdea.setCategory(catagoryList.get(randomCategoryIndex));
+            int randomCategoryIndex = r.nextInt(categoryList.size());
+            newIdea.setCategory(categoryList.get(randomCategoryIndex));
 
             // erzeuge einen zufälligen Creator
             int randomCreatorIndex = r.nextInt(userList.size());

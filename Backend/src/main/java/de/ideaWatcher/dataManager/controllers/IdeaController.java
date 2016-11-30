@@ -37,6 +37,16 @@ public class IdeaController implements IIdeaController {
     }
 
     @Override
+    public List<IIdea> getPublishedCategorizedIdeas(String category) throws Exception {
+        return this.ideaService.getPublishedCategorizedIdeas(category);
+    }
+
+    @Override
+    public List<IIdea> getPublishedIdeas() throws Exception {
+        return this.ideaService.getPublishedIdeas();
+    }
+
+    @Override
     public void deleteIdea(String ideaId) throws Exception {
         this.ideaService.deleteIdea(ideaId);
     }

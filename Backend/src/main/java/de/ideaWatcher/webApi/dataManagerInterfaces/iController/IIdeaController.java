@@ -46,7 +46,22 @@ public interface IIdeaController {
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      */
     List<IIdea> getAllIdeasSmart() throws Exception;
-    
+
+    /**
+     * Gibt alle veröffentlichten Ideen einer Kategorie zurueck
+     * @param category {String} Kategorie der Ideenliste
+     * @return {List<IIdea>} eine Liste von Idea-Objekten
+     * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
+     */
+    List<IIdea> getPublishedCategorizedIdeas(String category) throws Exception;
+
+    /**
+     * Gibt alle veröffentlichten Ideen zurueck
+     * @return {List<IIdea>} eine Liste von Idea-Objekten
+     * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
+     */
+    List<IIdea> getPublishedIdeas() throws Exception;
+
     void deleteIdea(String ideaId) throws Exception;
 
     /**

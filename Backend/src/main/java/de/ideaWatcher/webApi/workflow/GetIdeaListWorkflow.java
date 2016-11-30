@@ -78,9 +78,11 @@ public class GetIdeaListWorkflow  implements IWorkflow {
             return response;
         }
 
-        // Suche die Ideen im vorgehaltenen Snapshot
+        // Hole die zu filternde Ideenliste aus der Datenbank
         List<IIdea> ideasToFilter;
 
+        //während des Datenbankzugriffs darf sich der AllIdeasSnapshot nicht verändern
+        this.ideaManager.getLockAllIdeasSnapshot().lock();
         try {
             if (isMyIdeas) {
                 ideasToFilter = this.ideaManager.getMyIdeas(userId);
@@ -97,6 +99,7 @@ public class GetIdeaListWorkflow  implements IWorkflow {
             response.setResult("error");
             return response;
         }
+        this.ideaManager.getLockAllIdeasSnapshot().unlock();
 
         if (ideasToFilter.isEmpty()) {
             log.log(Level.WARNING, "Die zu filternde Ideenliste ist leer.");
@@ -114,17 +117,9 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         ideasToFilter = this.ideaManager.sortIdeas(ideasToFilter, listType);
 
         // Filtere die Ideen entsprechend des Ranking-Bereichs:
-        List<IIdea> filteredIdeas;
-        try {
-            filteredIdeas = this.ideaManager.filterIdeas(ideasToFilter, fromRank, toRank, isMyIdeas);
+        List<IIdea> filteredIdeas = this.ideaManager
+                .filterIdeas(ideasToFilter, fromRank, toRank);
 
-        } catch (Exception e) {
-            log.log(Level.SEVERE, "Ein Fehler ist bei der Filterung" +
-                    " der Ideen.\nFehlermeldung: " + e.toString());
-            response.setErrorMessage("SIdeaList_filterIdeas_error");
-            response.setResult("error");
-            return response;
-        }
 
         response.setResult("success");
         JSONObject responseData = new JSONObject();

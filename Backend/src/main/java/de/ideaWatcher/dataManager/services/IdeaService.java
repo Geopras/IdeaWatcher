@@ -170,7 +170,7 @@ public class IdeaService {
         idea.setIdeaId(ideaDoc.getObjectId("_id").toString());
         idea.setName(ideaDoc.getString("name"));
         idea.setDescription(ideaDoc.getString("description"));
-        idea.setCategory(ideaDoc.getString("catagory"));
+        idea.setCategory(ideaDoc.getString("category"));
         idea.setCreator(  buildCreator( (Document) ideaDoc.get("creator") ) );
         idea.setPublishDate(ideaDoc.getDate("publishedDate"));
         idea.setIsPublished(ideaDoc.getBoolean("isPublished"));
@@ -203,7 +203,7 @@ public class IdeaService {
         // ID wird nicht übertragen, da von MongoDB erzeugt!
         return new Document("name", idea.getName())
                 .append("description", idea.getDescription())
-                .append("catagory", idea.getCategory())
+                .append("category", idea.getCategory())
                 .append("creator", buildCreatorDocument(idea.getCreator()))
                 .append("publishedDate", idea.getPublishDate())
                 .append("isPublished", idea.getIsPublished())
@@ -229,7 +229,7 @@ public class IdeaService {
         return new Document("ideaId", idea.getIdeaId())
                 .append("name", idea.getName())
                 .append("description", idea.getDescription())
-                .append("catagory", idea.getCategory())
+                .append("category", idea.getCategory())
                 .append("creator", IdeaService.buildCreatorDocument(idea.getCreator()))
                 .append("publishedDate", idea.getPublishDate())
                 .append("isPublished", idea.getIsPublished())
@@ -253,7 +253,7 @@ public class IdeaService {
         idea.setIdeaId(ideaDoc.getString("ideaId"));
         idea.setName(ideaDoc.getString("name"));
         idea.setDescription(ideaDoc.getString("description"));
-        idea.setCategory(ideaDoc.getString("catagory"));
+        idea.setCategory(ideaDoc.getString("category"));
         idea.setCreator(  buildCreator( (Document) ideaDoc.get("creator") ) );
         idea.setPublishDate(ideaDoc.getDate("publishedDate"));
         idea.setIsPublished(ideaDoc.getBoolean("isPublished"));
@@ -503,7 +503,7 @@ public class IdeaService {
     }        
 
     public List<IIdea> getIdeaList(String type, String value) throws Exception{
-      
+
         if (!dbConnectionService.isOpen()) {
             dbConnectionService.openConnection();
         }
@@ -519,7 +519,64 @@ public class IdeaService {
             throw new Exception(ex);
         } finally {
             dbConnectionService.closeConnection();
-        }        
+        }
+        return ideaList;
+    }
+
+    /**
+     * Gibt alle veröffentlichten Ideen einer Kategorie zurück
+     * @param category {String} Kategorie der Ideenliste
+     * @return {List<IIdea>} Liste von gefilterten Ideen
+     * @throws Exception wenn etwas beim Zugriff auf die Datenbank schief gelaufen ist
+     */
+    public List<IIdea> getPublishedCategorizedIdeas(String category) throws Exception{
+
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        }
+        List<Document> ideasDoc;
+        List<IIdea> ideaList = new ArrayList<>();
+        try {
+            ideasDoc = dbConnectionService.getCollection()
+                    .find(Filters.and(
+                            eq("category", category),
+                            eq("isPublished", true)))
+                    .into(new ArrayList<>());
+            for(Document doc : ideasDoc){
+                ideaList.add(buildIdea(doc));
+            }
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
+        }
+        return ideaList;
+    }
+
+    /**
+     * Gib alle veröffentlichten Ideen einer Kategorie zurüc
+     * @return {List<IIdea>} Liste von gefilterten Ideen
+     * @throws Exception wenn etwas beim Zugriff auf die Datenbank schief gelaufen ist
+     */
+    public List<IIdea> getPublishedIdeas() throws Exception{
+
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        }
+        List<Document> ideasDoc;
+        List<IIdea> ideaList = new ArrayList<>();
+        try {
+            ideasDoc = dbConnectionService.getCollection()
+                    .find(Filters.eq("isPublished", true))
+                    .into(new ArrayList<>());
+            for(Document doc : ideasDoc){
+                ideaList.add(buildIdea(doc));
+            }
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
+        }
         return ideaList;
     }
 }
