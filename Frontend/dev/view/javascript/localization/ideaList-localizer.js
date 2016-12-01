@@ -19,7 +19,9 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
         Notification: {
             en_GB: {
                 errorMessage: {
-                    Headline: 'Idea List',
+                    Headline: 'Error: Ideas Query',
+                    SSearchIdeas_dbQueryError_error: 'An error occured while ' +
+                    'searching for ideas. Please try again later.',
                     SIdeaList_deleteIdeaData_error: 'An error occured while' +
                     ' trying to delete the idea on server. Please try again later.',
                     SIdeaList_filterIdeas_error: 'An error occured while asking' +
@@ -32,6 +34,8 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
                     ' data from database. Please try again later.',
                     SIdeaList_getIdeasRequestData_error: 'An error occurred because' +
                     ' of not valid server request data. Please try again later.',
+                    SSearchIdeas_invalidRequestData_error: 'An error occured while ' +
+                    'searching for ideas. Please try again later.',
                     UnknownStatus: 'Something unknown has happened while asking for' +
                     ' idea list. Please try again later.'
                 },
@@ -50,7 +54,9 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
             de_DE: {
                 errorMessage: {
                     emptyListInfo: 'Die angeforderte Ideenliste ist leer.',
-                    Headline: 'Fehler Ideenliste',
+                    Headline: 'Fehler: Ideenabfrage',
+                    SSearchIdeas_dbQueryError_error: 'Bei der Suchanfrage nach ' +
+                    'Ideen ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.',
                     SIdeaList_deleteIdeaData_error: 'Beim Löschen der Idee auf' +
                     ' dem Server ist ein Fehler aufgetreten. Bitte versuchen Sie' +
                     ' es später nochmal.',
@@ -66,6 +72,8 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
                     SIdeaList_getIdeasRequestData_error: 'Aufgrund fehlerhafte Daten' +
                     ' während der Serveranfrage ist ein Fehler aufgetreten.' +
                     ' Bitte versuchen Sie es später erneut.',
+                    SSearchIdeas_invalidRequestData_error: 'Bei der Suchanfrage nach ' +
+                    'Ideen ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.',
                     UnknownStatus: 'Ein unbekannter Fall ist eingetreten bei der' +
                     ' Abfrage von Ideen. Bitte versuchen Sie es später nochmal.'
                 },
@@ -233,6 +241,16 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
                 },
                 de_DE: {
                     header: 'Meine erstellten Ideen'
+                }
+            }
+        },
+        SEARCHRESULTS: {
+            NONE: {
+                en_GB: {
+                    header: 'My Search Results'
+                },
+                de_DE: {
+                    header: 'Meine Suchergebnisse'
                 }
             }
         },

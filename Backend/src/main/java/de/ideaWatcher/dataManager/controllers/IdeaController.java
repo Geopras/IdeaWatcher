@@ -65,4 +65,11 @@ public class IdeaController implements IIdeaController {
         // TODO Auto-generated method stub
         this.ideaService.updateRankings(ideaList);
     }
+
+    @Override
+    public List<IIdea> searchIdeas(String searchText) throws Exception {
+        return this.ideaService.searchIdea(searchText);
+    }
+
+
 }

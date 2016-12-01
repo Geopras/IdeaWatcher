@@ -260,14 +260,13 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             }
         }
 
-        //endregion
-
         function cbGetIdea(ideaId) {
 
             if (currentIdeasMap) {
                 return currentIdeasMap[ideaId];
             }
         }
+
         //endregion
 
         //region Render-Funktionen

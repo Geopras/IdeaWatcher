@@ -29,7 +29,6 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         ideaWatcher.controller.MainMenu.registerWebSocketConnectionOpen(cbWebSocketConnectionOpen);
         ideaWatcher.controller.MainMenu.registerGetCurrentClickedListType(cbCurrentClickedListType);
         ideaWatcher.controller.MainMenu.registerGetCurrentClickedCategory(cbCurrentClickedCategory);
-
         // endregion
 
         //region Callback Functions
@@ -284,10 +283,22 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         //region MySearch-Button
         function initializeMySearchButton(htmlElement) {
 
-            var button = htmlElement.getElementsByTagName('img').item(0);
-            button.addEventListener('click', handleNavigationButton);
-            htmlMainMenuButtons.push(button);
+            var searchInput = htmlView.querySelector('#mainMenu_searchIdeas_input');
+            searchInput.addEventListener('input', handleSearchIdeasInput);
+            htmlMainMenuButtons.push(searchInput);
         }
+
+        function handleSearchIdeasInput(inputEvent) {
+
+            var searchText = inputEvent.target.value;
+            if (searchText && searchText !== '') {
+                var listType = ideaWatcher.model.IdeaList.ListType.MYSEARCH;
+                var category = ideaWatcher.model.IdeaList.Category.NONE;
+
+                ideaWatcher.controller.IdeaList.updateIdeaList(listType, category, 1, 10, true, searchText);
+            }
+        }
+
         //endregion
 
         //region Reiner SwitchView-Button

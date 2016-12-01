@@ -25,6 +25,11 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             cbFunction: cbSwitchView
         };
 
+        var evSwitchViewToMySearch = {
+            topic: 'switchView/' + ideaWatcher.model.Navigation.ViewId.MYSEARCH.NONE,
+            cbFunction: cbSwitchView
+        };
+
         // Event Globale Initialisierung
         var evIni = {
             topic: 'internal/ini',
@@ -74,6 +79,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         ideaWatcher.core.MessageBroker.subscribe(evSwitchViewToIdeaList);
         ideaWatcher.core.MessageBroker.subscribe(evSwitchViewToMyIdeas);
         ideaWatcher.core.MessageBroker.subscribe(evSwitchViewToMyFollowedIdeas);
+        ideaWatcher.core.MessageBroker.subscribe(evSwitchViewToMySearch);
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeMyIdeasView);
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeMyFollowedIdeasView);
@@ -165,7 +171,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
          * @param isRenderNewIdeaList {boolean} Wenn der Anfang der
          * gefilterten Ideenliste angezeigt werden soll
          */
-        function pubUpdateIdeaList(listType, category, from, to, isRenderNewIdeaList)
+        function pubUpdateIdeaList(listType, category, from, to, isRenderNewIdeaList, searchText)
         {
             var requestData = Object.create(ideaWatcher.model.ExchangeObject.IdeaList.RequestData);
 
@@ -180,6 +186,8 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             requestData.fromRank = from;
             requestData.toRank = to;
             requestData.isRenderNewIdeaList = isRenderNewIdeaList;
+            if (searchText)
+            requestData.searchText = searchText;
 
             // Wenn für MyIdeas- oder MyFollowedIdeas-Liste, dann UserId des
             // Creator mit übergeben:

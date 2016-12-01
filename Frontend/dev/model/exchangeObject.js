@@ -6,6 +6,7 @@ ideaWatcher.model.ExchangeObject = ideaWatcher.model.ExchangeObject || {
                 fromRank: 1,
                 isRenderNewIdeaList: true,
                 listType: 'HOT',
+                searchText: '',
                 toRank: 10,
                 userId: ""
             },

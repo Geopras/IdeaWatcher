@@ -49,6 +49,7 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                             .errorMessage.headline,
                         ideaWatcher.core.Localizer.WebSocketConnector[language]
                             .errorMessage.noValidServerResponse, 5000);
+                    return;
                 }
 
                 // Falls eine Fehlermeldung wegen ungültiger
@@ -60,6 +61,8 @@ ideaWatcher.core.WebSocketConnector = ideaWatcher.core.WebSocketConnector || (fu
                             .errorMessage.headline,
                         ideaWatcher.core.Localizer.WebSocketConnector[language]
                             .errorMessage.token_not_valid, 5000);
+                    console.log('Fehler beim Authentifizieren der Anfrage.');
+                    return;
                 }
 
                 //region Wenn UserSession-Antwort, dann Token und UserID

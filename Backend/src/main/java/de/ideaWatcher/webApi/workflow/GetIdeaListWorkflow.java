@@ -35,11 +35,14 @@ public class GetIdeaListWorkflow  implements IWorkflow {
 
         String listType;
         String category;
+        String searchText = "";
         int fromRank;
         int toRank;
         String userId = "";
         boolean isMyIdeas = false;
         boolean isMyFollowedIdeas = false;
+        boolean isMySearch = false;
+
 
         boolean isRenderNewIdeaList;
 
@@ -55,12 +58,18 @@ public class GetIdeaListWorkflow  implements IWorkflow {
             if (listType.equals("MYFOLLOWEDIDEAS")) {
                 isMyFollowedIdeas = true;
             }
+            if (listType.equals("MYSEARCH")) {
+                isMySearch = true;
+            }
             category = data.getString("category");
             fromRank = data.getInt("fromRank");
             toRank = data.getInt("toRank");
             isRenderNewIdeaList = data.getBoolean("isRenderNewIdeaList");
             if (isMyIdeas || isMyFollowedIdeas) {
                 userId = data.getString("userId");
+            }
+            if (isMySearch) {
+                searchText = data.getString("searchText");
             }
         } catch (Exception ex) {
             response.setErrorMessage("SIdeaList_getIdeasRequestData_error");
@@ -87,7 +96,11 @@ public class GetIdeaListWorkflow  implements IWorkflow {
             }
             else if (isMyFollowedIdeas) {
                 ideasToFilter = this.ideaManager.getMyFollowedIdeas(userId);
-            } else {
+            }
+            else if (isMySearch) {
+                ideasToFilter = this.ideaManager.getMySearchedIdeas(searchText);
+            }
+            else {
                 ideasToFilter = this.ideaManager.getCategorizedIdeas(category);
             }
         } catch (Exception e) {
@@ -116,7 +129,6 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         // Filtere die Ideen entsprechend des Ranking-Bereichs:
         List<IIdea> filteredIdeas = this.ideaManager
                 .filterIdeas(ideasToFilter, fromRank, toRank);
-
 
         response.setResult("success");
         JSONObject responseData = new JSONObject();

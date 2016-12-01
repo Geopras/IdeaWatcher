@@ -54,7 +54,9 @@ ideaWatcher.model.Navigation = ideaWatcher.model.Navigation || {
                 NONE: 'myIdeas'
             },
             MYPROFILE: 'profileEdit',
-            MYSEARCH: 'mySearch',
+            MYSEARCH: {
+                NONE: 'mySearch'
+            },
             SIGNUP: 'signup',
             TRENDING: {
                 BUSINESS: 'ideaList',

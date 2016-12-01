@@ -10,11 +10,18 @@ ideaWatcher.model.IdeaList = ideaWatcher.model.IdeaList || {
             SPORTS: 'SPORTS',
             TOYS: 'TOYS'
         },
+        IdeaListData: {
+            category: '',
+            ideas: [],
+            isRenderNewIdeaList: '',
+            listType: ''
+        },
         ListType: {
             FRESH: 'FRESH',
             HOT: 'HOT',
             MYFOLLOWEDIDEAS: 'MYFOLLOWEDIDEAS',
             MYIDEAS: 'MYIDEAS',
-            TRENDING: 'TRENDING'
+            TRENDING: 'TRENDING',
+            MYSEARCH: 'MYSEARCH'
         }
     };
