@@ -98,7 +98,9 @@ public class RequestManager {
                 && !requestObject.getDestination().startsWith("SLogin")
                 && !requestObject.getDestination().startsWith("SIdeaList")
                 && !requestObject.getDestination()
-                        .startsWith("SIdea/getIdeaDetailsRequest")) {
+                        .equals("SIdea/getIdeaDetailsRequest")
+                && !requestObject.getDestination()
+                .equals("SSearch/searchIdeasRequest")) {
 
             // Token validieren
             if (!InstanceManager.getTokenManager().validateToken(

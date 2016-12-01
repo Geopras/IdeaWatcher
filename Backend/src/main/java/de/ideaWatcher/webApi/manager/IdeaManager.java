@@ -156,6 +156,11 @@ public class IdeaManager {
         return myFollowedIdeas;
     }
 
+    public List<IIdea> getMySearchedIdeas(String searchText) throws Exception {
+
+        return this.ideaController.searchIdeas(searchText);
+    }
+
     public List<IIdea> getCategorizedIdeas(String category) throws Exception {
 
         if (category.equals("NONE")) {
@@ -169,17 +174,14 @@ public class IdeaManager {
 
         switch (listType) {
             case "HOT":
-                ideasToSort.sort(new IdeaHotRankComparator(true));
-                break;
             case "MYFOLLOWEDIDEAS":
+            case "MYSEARCH":
                 ideasToSort.sort(new IdeaHotRankComparator(true));
                 break;
             case "TRENDING":
                 ideasToSort.sort(new IdeaTrendingRankComparator(true));
                 break;
             case "FRESH":
-                ideasToSort.sort(new IdeaAgeComparator(true));
-                break;
             case "MYIDEAS":
                 ideasToSort.sort(new IdeaAgeComparator(true));
                 break;

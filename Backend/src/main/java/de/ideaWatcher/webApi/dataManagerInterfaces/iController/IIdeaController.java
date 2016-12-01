@@ -86,4 +86,11 @@ public interface IIdeaController {
      * @throws Exception wenn es beim Zugriff auf die Datenbank ein Problem gab
      */   
     void updateRankings(List<IIdea> ideaList) throws Exception;
+
+    /**
+     * Sucht nach Ideen, die den Suchtext im Namen enthalten
+     * @param searchText {String} Suchtext
+     * @return {List<IIdea>} Liste von Ideen, die den Suchtext im Namen haben
+     */
+    List<IIdea> searchIdeas(String searchText) throws Exception;
 }

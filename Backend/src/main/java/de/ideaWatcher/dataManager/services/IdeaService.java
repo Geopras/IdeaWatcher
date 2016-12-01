@@ -1,5 +1,6 @@
 package main.java.de.ideaWatcher.dataManager.services;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
 import main.java.de.ideaWatcher.dataManager.pojos.Comment;
@@ -570,6 +571,31 @@ public class IdeaService {
                     .find(Filters.eq("isPublished", true))
                     .into(new ArrayList<>());
             for(Document doc : ideasDoc){
+                ideaList.add(buildIdea(doc));
+            }
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        } finally {
+            dbConnectionService.closeConnection();
+        }
+        return ideaList;
+    }
+
+    public List<IIdea> searchIdea(String searchText) throws Exception {
+
+        if (!dbConnectionService.isOpen()) {
+            dbConnectionService.openConnection();
+        }
+        FindIterable<Document> foundDocuments;
+        List<IIdea> ideaList = new ArrayList<>();
+        try {
+            // Suche mit Regex (über den dritten Parameter (options) kann z.B. Case-Insensitivity verlangt werden)
+            foundDocuments = dbConnectionService.getCollection()
+                    .find(Filters.and(
+                            Filters.regex("name", searchText, "i"),
+                            eq("isPublished", true)));
+
+            for(Document doc : foundDocuments){
                 ideaList.add(buildIdea(doc));
             }
         } catch (Exception ex) {

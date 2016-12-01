@@ -7,6 +7,7 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
         var cbGetCurrentClickedCategory = null;
         var cbGetCurrentClickedListType = null;
         var cbWebSocketConnOpen = null;
+        var cbSearchIdeasResp = null;
 
         //region Events Initialisieren
         var evIni = {
@@ -33,6 +34,11 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
             topic: 'SWebSocket/connectionOpen',
             cbFunction: cbWebSocketConnectionOpen
         };
+
+        var evSearchIdeasResponse = {
+            topic: 'SSearch/searchIdeasRequest-response',
+            cbFunction: cbSearchIdeasResponse
+        };
         //endregion
 
         //region Events am Messagebroker anmelden
@@ -41,6 +47,7 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
         ideaWatcher.core.MessageBroker.subscribe(evLoginSuccessful);
         ideaWatcher.core.MessageBroker.subscribe(evLogoutSuccessful);
         ideaWatcher.core.MessageBroker.subscribe(evWebSocketConnectionOpen);
+        ideaWatcher.core.MessageBroker.subscribe(evSearchIdeasResponse);
         //endregion
 
         //region Callback-Functions für MessageBroker
@@ -63,6 +70,10 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
 
         function cbWebSocketConnectionOpen(obj) {
             cbWebSocketConnOpen(obj);
+        }
+
+        function cbSearchIdeasResponse(obj) {
+            cbSearchIdeasResp(obj);
         }
 
         //endregion
@@ -95,6 +106,10 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
         function pubRegisterGetCurrentClickedListType(cb) {
             cbGetCurrentClickedListType = cb;
         }
+
+        function pubRegisterSearchIdeasResponse(cb) {
+            cbSearchIdeasResp = cb;
+        }
         //endregion
 
         //region Nach außen angebotene Methoden
@@ -110,6 +125,22 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
             return cbGetCurrentClickedListType();
         }
 
+        function pubTryToSearchIdeas(searchText) {
+
+            var request = ideaWatcher.model.Request;
+            request.destination = 'SSearch/searchIdeasRequest';
+            request.data = {
+                searchText: searchText
+            };
+
+            // Wenn bereits eine Verbindung zum Backend besteht, wird der Request an das Backend geschickt
+            if (ideaWatcher.core.WebSocketConnector.isConnected()) {
+                ideaWatcher.core.WebSocketConnector.sendRequest(request);
+            } else {
+                //TODO: Was soll bei einer nicht bestehenden Verbindung passieren??
+            }
+        }
+
         //endregion
 
         return {
@@ -123,7 +154,9 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
             registerLocalizeView: pubRegisterLocalizeView,
             registerLoginSuccessful: pubRegisterLoginSuccessful,
             registerLogoutSuccessful: pubRegisterLogoutSuccessful,
-            registerWebSocketConnectionOpen: pubRegisterWebSocketConnectionOpen
+            registerSearchIdeasResponse: pubRegisterSearchIdeasResponse,
+            registerWebSocketConnectionOpen: pubRegisterWebSocketConnectionOpen,
+            tryToSearchIdeas: pubTryToSearchIdeas
         };
 
     })();
