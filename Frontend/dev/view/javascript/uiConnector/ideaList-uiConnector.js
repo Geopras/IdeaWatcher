@@ -685,8 +685,8 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         function getShortDescription(description) {
 
-            if (description.length > 200) {
-                var shortText = description.substring(0, 200) + '...';
+            if (description.length > 500) {
+                var shortText = description.substring(0, 500) + '...';
                 return shortText;
             } else {
                 return description;
