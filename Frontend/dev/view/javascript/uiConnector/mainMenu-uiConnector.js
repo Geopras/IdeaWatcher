@@ -296,6 +296,8 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
                 var category = ideaWatcher.model.IdeaList.Category.NONE;
 
                 ideaWatcher.controller.IdeaList.updateIdeaList(listType, category, 1, 10, true, searchText);
+            } else {
+                ideaWatcher.controller.IdeaList.updateIdeaList('', '', 1, 10, true);
             }
         }
 
