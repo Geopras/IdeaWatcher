@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  */
 public class IdeaManager {
 
-    public final int REFRESH_RANKING_TIME = 30;
+    public final int REFRESH_RANKING_TIME = 10;
     public final TimeUnit REFRESH_RANKING_TIMEUNIT = TimeUnit.SECONDS;
 
     private static final Logger log = Logger.getLogger( IdeaManager.class.getName() );
@@ -267,6 +267,7 @@ public class IdeaManager {
 
             double likeRatio = ((double) idea.getNumberLikes()) / maxLikes;
             double followRatio = ((double) idea.getNumberFollowers()) / maxFollowers;
+
             double ageRatio = ((double)(maxAge -
                     ((comparableStartTime - idea.getPublishDate().getTime()) / 1000)))
                     / maxAge;
