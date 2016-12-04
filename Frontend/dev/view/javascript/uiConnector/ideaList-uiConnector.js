@@ -5,7 +5,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         var htmlIdeaListView = null;
         var htmlMyIdeasView = null;
         var htmlMyFollowedIdeasView = null;
-        var htmlProfileView = null;
+        var htmlUserMenuView = null;
         var htmlIdeaListHeader = null;
         var htmlMyIdeasHeader = null;
         var htmlMyFollowedIdeasHeader = null;
@@ -44,7 +44,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             htmlMyFollowedIdeasView = document.querySelector('.myFollowedIdeas_view');
             header = document.querySelector('.ideaList_header_h1');
             htmlIdeaListHeader = document.querySelector('.ideaList_header_h1');
-            htmlProfileView = document.querySelector('.profile_view');
+            htmlUserMenuView = document.querySelector('.userMenu_view');
             htmlMyIdeasHeader = document.querySelector('.myIdeas_header_h1');
             htmlMyFollowedIdeasHeader = document.querySelector('.myFollowedIdeas_header_h1');
             htmlIdeaListSections = document.querySelector('.ideaList_sections');
@@ -77,19 +77,19 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
                 switch (responseData.listType) {
                     case (ideaWatcher.model.IdeaList.ListType.MYIDEAS):
-                        htmlProfileView.style.display = 'block';
+                        htmlUserMenuView.style.display = 'block';
                         htmlIdeaListView.style.display = 'none';
                         htmlMyIdeasView.style.display = 'block';
                         htmlMyFollowedIdeasView.style.display = 'none';
                         break;
                     case (ideaWatcher.model.IdeaList.ListType.MYFOLLOWEDIDEAS):
-                        htmlProfileView.style.display = 'block';
+                        htmlUserMenuView.style.display = 'block';
                         htmlIdeaListView.style.display = 'none';
                         htmlMyIdeasView.style.display = 'none';
                         htmlMyFollowedIdeasView.style.display = 'block';
                         break;
                     default:
-                        htmlProfileView.style.display = 'none';
+                        htmlUserMenuView.style.display = 'none';
                         htmlIdeaListView.style.display = 'block';
                         htmlMyIdeasView.style.display = 'none';
                         htmlMyFollowedIdeasView.style.display = 'none';
@@ -97,7 +97,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             }
             else
             {
-                htmlProfileView.style.display = 'none';
+                htmlUserMenuView.style.display = 'none';
                 htmlIdeaListView.style.display = 'none';
                 htmlMyIdeasView.style.display = 'none';
                 htmlMyFollowedIdeasView.style.display = 'none';
@@ -323,6 +323,8 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         function renderIdeaList(htmlList, ideaList, isMyIdeas, isMyFollowedIdeas) {
 
             var language = ideaWatcher.core.Localizer.getLanguage();
+            var userId = ideaWatcher.controller.IdeaList.getCurrentUserId();
+
             //baue die IdeeElemente und füge sie zu oberstem div als section hinzu
 
             ideaList.forEach(function (idea) {
@@ -352,7 +354,11 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 var likes = document.createElement('li');
                 var likeImage = document.createElement('img');
                 likeImage.classList.add('ideaList_likeButton');
-                likeImage.src = './resources/img/likeIcon.svg';
+                if (isUserInUserList(userId, idea.likeUsers)) {
+                    likeImage.src = './resources/img/bulb_on.png';
+                } else {
+                    likeImage.src = './resources/img/bulb_off.png';
+                }
                 likeImage.width = 20;
                 likeImage.height = 20;
                 var numberOfLikes = document.createElement('span');
@@ -367,20 +373,20 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 followerButtonImage.width = 20;
                 followerButtonImage.height = 20;
                 if (isMyFollowedIdeas) {
-                    var currentUserId = ideaWatcher.controller.UserSession
-                        .getCurrentUserId();
-                    if (isUserFollowerOfIdea(currentUserId, idea.ideaId)) {
+
+                    followerButtonImage.src = './resources/img/favorite_on.png';
+                    followerButtonImage.addEventListener('click', handleUnfollowButtonClick);
+                    followerButtonImage.style.cursor = 'pointer';
+                } else {
+
+                    if (isUserInUserList(userId, idea.followers)) {
                         followerButtonImage.src = './resources/img/favorite_on.png';
                     } else {
                         followerButtonImage.src = './resources/img/favorite_off.png';
                     }
-                    followerButtonImage.setAttribute('data-ideaid', idea.ideaId);
-                    followerButtonImage.addEventListener('click', handleUnfollowButtonClick);
-                    followerButtonImage.style.cursor = 'pointer';
-                } else {
-                    followerButtonImage.src = './resources/img/favorite_off.png';
                     followerButtonImage.style.cursor = 'auto';
                 }
+
                 var numberOfFollowers = document.createElement('span');
                 numberOfFollowers.classList.add('ideaList_numberOfFollowers_span');
                 followers.appendChild(followerButtonImage);
@@ -466,10 +472,6 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
                 likeImage.setAttribute('data-ideaid', idea.ideaId);
                 followerButtonImage.setAttribute('data-ideaid', idea.ideaId);
 
-                // den Aktiviert-Status der Icons setzen
-                setLikedState(likeImage);
-                setFollowState(followerButtonImage);
-
                 // Click-Event dranhängen, damit die IdeaDetails-View
                 // aufgerufen werden kann
                 ideaName.addEventListener('click', handleIdeaClickEvent);
@@ -543,8 +545,7 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
 
         function handleUnfollowButtonClick(clickEvent) {
 
-            var currentUserId = ideaWatcher.controller.UserSession
-                .getCurrentUserId();
+            var currentUserId = ideaWatcher.controller.IdeaList.getCurrentUserId();
             var followerButton = clickEvent.target;
             var currentIdeaId = followerButton.attributes.getNamedItem('data-ideaid').nodeValue;
 
@@ -562,46 +563,6 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
         //endregion
 
         //region Hilfsfunktionen
-
-        function setLikedState(likeImage) {
-            var ideaId = likeImage.attributes.getNamedItem('data-ideaid').nodeValue;
-
-            var ideaObject = cbGetIdea(ideaId);
-
-            if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
-                var currentUser = ideaWatcher.controller.UserSession
-                    .getCurrentUserId();
-                // wenn der Nutzer die Idee schon gelikt hat, dann zeige die
-                // leuchtende Glühbirne, ansonsten die nicht leuchtende
-                if (ideaObject.likeUsers.includes(currentUser)) {
-                    likeImage.src = './resources/img/bulb_on.png';
-                } else {
-                    likeImage.src = './resources/img/bulb_off.png';
-                }
-            } else {
-                likeImage.src = './resources/img/bulb_off.png';
-            }
-        }
-
-        function setFollowState(followImage) {
-            var ideaId = followImage.attributes.getNamedItem('data-ideaid').nodeValue;
-
-            var ideaObject = cbGetIdea(ideaId);
-
-            if (ideaWatcher.controller.UserSession.isUserLoggedIn()) {
-                var currentUser = ideaWatcher.controller.UserSession
-                    .getCurrentUserId();
-                // wenn der Nutzer der Idee schon folgt, soll der leuchtende
-                // Stern angezeigt werden, ansonsten der nicht leuchtende
-                if (ideaObject.followers.includes(currentUser)) {
-                    followImage.src = './resources/img/favorite_on.png';
-                } else {
-                    followImage.src = './resources/img/favorite_off.png';
-                }
-            } else {
-                followImage.src = './resources/img/favorite_off.png';
-            }
-        }
 
         // Lade die nächsten Ideen, wenn ans Ende gescrollt
         document.addEventListener('scroll', function (event) {
@@ -671,15 +632,14 @@ ideaWatcher.view.IdeaList = ideaWatcher.view.IdeaList || (function () {
             return isAddedSomething;
         }
 
-        function isUserFollowerOfIdea(userId, ideaId) {
+        function isUserInUserList(userId, users) {
 
-            var followers = cbGetIdea(ideaId).followers;
-            for (var follower in followers) {
-                if (follower.userId === userId) {
-                    return true;
-                }
+            if (users && users.length > 0) {
+
+                return users.indexOf(userId) > -1;
+            } else {
+                return false;
             }
-            return false;
         }
 
         function getShortDescription(description) {

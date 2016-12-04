@@ -1,38 +1,9 @@
-ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfileEdit() {
+ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function () {
 
         //region local vars
-        // Event Globale Initialisierung
-        var evIni = {
-            topic: 'internal/ini',
-            cbFunction: cbIni
-        };
-
-        var evSaveResponse = {
-            topic: 'SProfileEdit/validateAndSaveRequest-response',
-            cbFunction: cbSaveResponse
-        };
-
-        var evUserDataReceived = {
-            topic: 'SProfileEdit/getUserDataRequest-response',
-            cbFunction: cbUserDataReceived
-        };
-
-        var evLocalizeView = {
-            topic: 'localizeView/profileEdit',
-            cbFunction: localizeView
-        };
-
-        //region subscribe to events
-        ideaWatcher.core.MessageBroker.subscribe(evIni);
-        ideaWatcher.core.MessageBroker.subscribe(evSaveResponse);
-        ideaWatcher.core.MessageBroker.subscribe(evUserDataReceived);
-        ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
-        ideaWatcher.controller.ProfileEdit.registerShowView(cbShowView);
-        //endregion
-
         var htmlForm = null;
         var htmlView = null;
-        var htmlProfileView = null;
+        var htmlUserMenuView = null;
 
         //region lade zu internationalisierende HTML-Elemente
         var htmlViewHeader = null;
@@ -67,6 +38,14 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
         var htmlBrowseImageButton = null;
         //endregion
 
+        //region subscribe to events
+        ideaWatcher.controller.ProfileEdit.registerShowView(cbShowView);
+        ideaWatcher.controller.ProfileEdit.registerInitializeView(cbIni);
+        ideaWatcher.controller.ProfileEdit.registerLocalizeView(cbLocalizeView);
+        ideaWatcher.controller.ProfileEdit.registerSaveResponse(cbSaveResponse);
+        ideaWatcher.controller.ProfileEdit.registerGetUserDataResponse(cbGetUserDataResponse);
+        //endregion
+
         //region cbIni
         function cbIni()
         {
@@ -75,7 +54,7 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             //region assign html elements
             htmlForm = document.querySelector('.profileEdit_form');
             htmlView = document.querySelector('.profileEdit_view');
-            htmlProfileView = document.querySelector('.profile_view');
+            htmlUserMenuView = document.querySelector('.userMenu_view');
             htmlViewHeader = document.querySelector('.profileEdit_header');
             htmlUserNameLabel = document.getElementById('profileEdit_userName_label');
             htmlEmailLabel = document.getElementById('profileEdit_mail_label');
@@ -131,101 +110,36 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
             // endregion
 
             // lokalisiere die View anhand der global definierten Sprache
-            localizeView();
+            cbLocalizeView();
 
-        }
-        //endregion
-
-        //region cbSaveResponse
-        function cbSaveResponse(exObj)
-        {
-            var language = ideaWatcher.core.Localizer.getLanguage();
-
-            if (exObj.result == 'success'){
-                ideaWatcher.controller.GlobalNotification.showNotification(
-                    ideaWatcher.model.GlobalNotificationType.SUCCESS,
-                    ideaWatcher.core.Localizer.ProfileEdit[language].profile,
-                    ideaWatcher.core.Localizer.ProfileEdit[language].saveSuccess,
-                    5000);
-            }else {
-                var errorMessage = exObj.error;
-
-                var notificationType = ideaWatcher.model.GlobalNotificationType.ERROR;
-                if (exObj.result == "warning") {
-                    notificationType = ideaWatcher.model.GlobalNotificationType.WARNING;
-                }
-                if (exObj.result == "info") {
-                    notificationType = ideaWatcher.model.GlobalNotificationType.INFO;
-                }
-
-                ideaWatcher.controller.GlobalNotification
-                    .showNotification(
-                        notificationType,
-                    ideaWatcher.core.Localizer.ProfileEdit[language].profile,
-                    ideaWatcher.core.Localizer.ProfileEdit[language].errorMessage[errorMessage],
-                    5000);
-            }
-        }
-        //endregion
-
-        //region cbUserDataReceived
-        // Zeige die Benutzerdaten in den Input-Feldern an, wenn sie erhalten wurden
-        function cbUserDataReceived(exObj)
-        {
-            if (exObj.result == 'success'){
-                htmlUserNameInput.value = exObj.data.userName;
-                htmlEmailInput.value = exObj.data.email;
-                htmlEmailCheckInput.checked = exObj.data.isMailPublic;
-                htmlSurnameInput.value = exObj.data.surname;
-                htmlFirstNameInput.value = exObj.data.firstName;
-                htmlGenderSelect.value = exObj.data.gender;
-                htmlLanguageSelect.value = exObj.data.language;
-            } else {
-                var errorMessage = exObj.error;
-
-                var notificationType = ideaWatcher.model.GlobalNotificationType.ERROR;
-                if (exObj.result == "warning") {
-                    notificationType = ideaWatcher.model.GlobalNotificationType.WARNING;
-                }
-                if (exObj.result == "info") {
-                    notificationType = ideaWatcher.model.GlobalNotificationType.INFO;
-                }
-
-                ideaWatcher.controller.GlobalNotification
-                    .showNotification(
-                        notificationType,
-                        ideaWatcher.core.Localizer.ProfileEdit[language].profile,
-                        ideaWatcher.core.Localizer.ProfileEdit[language].errorMessage[errorMessage],
-                        5000);
-            }
         }
         //endregion
 
         //region showView
-        function cbShowView(obj)
-        {
-            if(obj.shouldShow)
-            {
+        function cbShowView(obj) {
+
+            if (obj.shouldShow) {
+
                 var currentUser = {
+
                     userId: ideaWatcher.controller.UserSession.getCurrentUserId()
                 };
                 ideaWatcher.controller.ProfileEdit.tryToLoadUserData(currentUser);
 
-                localizeView();
-                htmlProfileView.style.display = 'block';
+                cbLocalizeView();
+                htmlUserMenuView.style.display = 'block';
                 htmlView.style.display = 'block';
 
-            }
-            else
-            {
-                htmlProfileView.style.display = 'none';
+            } else {
+
+                htmlUserMenuView.style.display = 'none';
                 htmlView.style.display = 'none';
             }
         }
         //endregion
 
         //region localizeView()
-        function localizeView() {
+        function cbLocalizeView() {
 
             var language = ideaWatcher.core.Localizer.getLanguage();
 
@@ -262,6 +176,71 @@ ideaWatcher.view.ProfileEdit = ideaWatcher.view.ProfileEdit || (function VProfil
                     .ProfileEdit[language].browse);
 
             console.log("Lokalisierung ProfileEditView abgeschlossen.");
+        }
+        //endregion
+
+        //region cbSaveResponse
+        function cbSaveResponse(response)
+        {
+            var language = ideaWatcher.core.Localizer.getLanguage();
+
+            if (response.result == 'success'){
+                ideaWatcher.controller.GlobalNotification.showNotification(
+                    ideaWatcher.model.GlobalNotificationType.SUCCESS,
+                    ideaWatcher.core.Localizer.ProfileEdit[language].profile,
+                    ideaWatcher.core.Localizer.ProfileEdit[language].saveSuccess,
+                    5000);
+            }else {
+                var errorMessage = response.error;
+
+                var notificationType = ideaWatcher.model.GlobalNotificationType.ERROR;
+                if (response.result == "warning") {
+                    notificationType = ideaWatcher.model.GlobalNotificationType.WARNING;
+                }
+                if (response.result == "info") {
+                    notificationType = ideaWatcher.model.GlobalNotificationType.INFO;
+                }
+
+                ideaWatcher.controller.GlobalNotification
+                    .showNotification(
+                        notificationType,
+                        ideaWatcher.core.Localizer.ProfileEdit[language].profile,
+                        ideaWatcher.core.Localizer.ProfileEdit[language].errorMessage[errorMessage],
+                        5000);
+            }
+        }
+        //endregion
+
+        //region cbUserDataReceived
+        // Zeige die Benutzerdaten in den Input-Feldern an, wenn sie erhalten wurden
+        function cbGetUserDataResponse(response)
+        {
+            if (response.result == 'success'){
+                htmlUserNameInput.value = response.data.userName;
+                htmlEmailInput.value = response.data.email;
+                htmlEmailCheckInput.checked = response.data.isMailPublic;
+                htmlSurnameInput.value = response.data.surname;
+                htmlFirstNameInput.value = response.data.firstName;
+                htmlGenderSelect.value = response.data.gender;
+                htmlLanguageSelect.value = response.data.language;
+            } else {
+                var errorMessage = response.error;
+
+                var notificationType = ideaWatcher.model.GlobalNotificationType.ERROR;
+                if (response.result == "warning") {
+                    notificationType = ideaWatcher.model.GlobalNotificationType.WARNING;
+                }
+                if (response.result == "info") {
+                    notificationType = ideaWatcher.model.GlobalNotificationType.INFO;
+                }
+
+                ideaWatcher.controller.GlobalNotification
+                    .showNotification(
+                        notificationType,
+                        ideaWatcher.core.Localizer.ProfileEdit[language].profile,
+                        ideaWatcher.core.Localizer.ProfileEdit[language].errorMessage[errorMessage],
+                        5000);
+            }
         }
         //endregion
 

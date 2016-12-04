@@ -9,6 +9,7 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.manager.IdeaManager;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -71,7 +72,8 @@ public class GetIdeaListWorkflow  implements IWorkflow {
             if (isMySearch) {
                 searchText = data.getString("searchText");
             }
-        } catch (Exception ex) {
+
+        } catch (JSONException ex) {
             response.setErrorMessage("SIdeaList_getIdeasRequestData_error");
             response.setResult("error");
             log.log(Level.SEVERE, "Bei der Auswertung der Request-Paramter für die Abfrage " +
@@ -136,6 +138,7 @@ public class GetIdeaListWorkflow  implements IWorkflow {
         responseData.put("category", category);
         responseData.put("ideas", this.ideaDataToJSONObject(filteredIdeas));
         responseData.put("isRenderNewIdeaList", isRenderNewIdeaList);
+
         response.setData(responseData);
         return response;
     }

@@ -17,12 +17,12 @@ ideaWatcher.controller.UserSession = ideaWatcher.controller.UserSession || (func
         };
 
         var evSwitchView = {
-            topic: 'switchView/login',
+            topic: 'switchView/' + ideaWatcher.model.Navigation.ViewId.LOGIN,
             cbFunction: cbSwitchView
         };
 
         var evLocalizeView = {
-            topic: 'localizeView/login',
+            topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.LOGIN,
             cbFunction: cbLocalizeView
         };
 

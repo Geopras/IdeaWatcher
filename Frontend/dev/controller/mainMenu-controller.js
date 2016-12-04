@@ -141,6 +141,28 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
             }
         }
 
+        function pubShowIdeaList(listType, category, searchText) {
+
+            if (searchText && searchText !== '') {
+
+                ideaWatcher.controller.IdeaList.updateIdeaList(listType, category, 1, 10, true, searchText);
+            } else {
+
+                ideaWatcher.controller.IdeaList.updateIdeaList(listType, category, 1, 10, true);
+            }
+        }
+
+        function pubSwitchView(buttonId, addData) {
+
+            var exObj = Object.create(ideaWatcher.model.ExchangeObject.SwitchView);
+            exObj.viewId = ideaWatcher.model.Navigation.ViewId[buttonId];
+            exObj.viewUrl = ideaWatcher.model.Navigation.ViewUrl[buttonId];
+            if (addData) {
+                exObj.additionalData = addData;
+            }
+            ideaWatcher.core.Navigator.switchView(exObj);
+        }
+
         //endregion
 
         return {
@@ -156,6 +178,8 @@ ideaWatcher.controller.MainMenu = ideaWatcher.controller.MainMenu || (function (
             registerLogoutSuccessful: pubRegisterLogoutSuccessful,
             registerSearchIdeasResponse: pubRegisterSearchIdeasResponse,
             registerWebSocketConnectionOpen: pubRegisterWebSocketConnectionOpen,
+            showIdeaList: pubShowIdeaList,
+            switchView: pubSwitchView,
             tryToSearchIdeas: pubTryToSearchIdeas
         };
 

@@ -1,13 +1,98 @@
-ideaWatcher.controller.ProfileEdit = ideaWatcher.controller.ProfileEdit || (function CProfileEdit() {
+ideaWatcher.controller.ProfileEdit = ideaWatcher.controller.ProfileEdit || (function () {
 
+        var cbInitView = null;
         var cbShowView = null;
+        var cbLocalize = null;
+        var cbSaveResp = null;
+        var cbGetUserDataResp = null;
+
+        // Event Globale Initialisierung
+        var evIni = {
+            topic: 'internal/ini',
+            cbFunction: cbInitializeView
+        };
+
         var evSwitchView = {
-            topic: 'switchView/profileEdit',
+            topic: 'switchView/' + ideaWatcher.model.Navigation.ViewId.MYPROFILE,
             cbFunction: cbSwitchView
         };
 
+        var evLocalizeView = {
+            topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.MYPROFILE,
+            cbFunction: cbLocalizeView
+        };
+
+        var evSaveResponse = {
+            topic: 'SProfileEdit/validateAndSaveRequest-response',
+            cbFunction: cbSaveResponse
+        };
+
+        var evGetUserDataResponse = {
+            topic: 'SProfileEdit/getUserDataRequest-response',
+            cbFunction: cbGetUserDataResponse
+        };
+
         //region subscribe to events
+        ideaWatcher.core.MessageBroker.subscribe(evIni);
         ideaWatcher.core.MessageBroker.subscribe(evSwitchView);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
+        ideaWatcher.core.MessageBroker.subscribe(evSaveResponse);
+        ideaWatcher.core.MessageBroker.subscribe(evGetUserDataResponse);
+        //endregion
+
+        //region Callback-Functions
+        function cbInitializeView(obj) {
+
+            cbInitView();
+        }
+
+        function cbSwitchView(obj) {
+
+            cbShowView(obj);
+        }
+
+        function cbLocalizeView(obj) {
+
+            cbLocalize();
+        }
+
+        function cbSaveResponse(obj) {
+
+            cbSaveResp(obj);
+        }
+
+        function cbGetUserDataResponse(obj) {
+
+            cbGetUserDataResp(obj);
+        }
+
+
+        //endregion
+
+        //region register Callbacks
+        function pubRegisterInitView(cb) {
+
+            cbInitView = cb;
+        }
+
+        function pubRegisterShowView(cb) {
+            cbShowView = cb;
+        }
+
+        function pubRegisterLocalize(cb) {
+
+            cbLocalize = cb;
+        }
+
+        function pubRegisterSaveResponse(cb) {
+
+            cbSaveResp = cb;
+        }
+
+        function pubRegisterGetUserDataResponse(cb) {
+
+            cbGetUserDataResp = cb;
+        }
         //endregion
 
         //region TryToSaveUserData
@@ -58,22 +143,13 @@ ideaWatcher.controller.ProfileEdit = ideaWatcher.controller.ProfileEdit || (func
         }
         //endregion
 
-        //region Callback: Internal - SwitchView
-        function cbSwitchView(obj)
-        {
-            cbShowView(obj);
-        }
-        //endregion
-
-        //region register Callbacks
-        function pubRegisterShowView(cb) {
-            cbShowView = cb;
-        }
-        //endregion
-
         // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
         return {
             // hier kann die View eine Methode(ui-Connector) registrieren, die gerufen wird,
+            registerGetUserDataResponse: pubRegisterGetUserDataResponse,
+            registerInitializeView: pubRegisterInitView,
+            registerLocalizeView: pubRegisterLocalize,
+            registerSaveResponse: pubRegisterSaveResponse,
             // wenn die View ein/ausgeblendet werden soll
             registerShowView: pubRegisterShowView,
             // stellt die Öffentliche Schnittstelle dar, mit der die View dem Controler sagen kann,

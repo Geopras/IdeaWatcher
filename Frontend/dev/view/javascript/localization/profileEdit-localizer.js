@@ -12,7 +12,7 @@ ideaWatcher.core.Localizer.ProfileEdit = ideaWatcher.core.Localizer.ProfileEdit 
             female: 'Female',
             firstName: 'First Name',
             gender: 'Gender',
-            profile: 'Profile',
+            profile: 'UserMenu',
             language: 'Language',
             mail_public_available: 'allow people to contact me (Email address is' +
             ' public)',

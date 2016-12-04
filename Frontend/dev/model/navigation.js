@@ -22,6 +22,15 @@ ideaWatcher.model.Navigation = ideaWatcher.model.Navigation || {
             TOYS: 'TOYS',
             TRENDING: 'TRENDING'
         },
+        ButtonType: {
+            About: 'About',
+            Category: 'Category',
+            Home: 'Home',
+            IdeaList: 'IdeaList',
+            Localization: 'Localization',
+            Search: 'Search',
+            User: 'User'
+        },
         ViewId: {
             ABOUT: 'about',
             CREATEIDEA: 'createNewIdea',
@@ -53,7 +62,7 @@ ideaWatcher.model.Navigation = ideaWatcher.model.Navigation || {
             MYIDEAS: {
                 NONE: 'myIdeas'
             },
-            MYPROFILE: 'profileEdit',
+            MYPROFILE: 'myProfile',
             MYSEARCH: {
                 NONE: 'mySearch'
             },
@@ -67,7 +76,7 @@ ideaWatcher.model.Navigation = ideaWatcher.model.Navigation || {
                 OTHER: 'ideaList',
                 SPORTS: 'ideaList',
                 TOYS: 'ideaList'
-            },
+            }
         },
         ViewUrl: {
             ABOUT: 'about',
@@ -81,7 +90,7 @@ ideaWatcher.model.Navigation = ideaWatcher.model.Navigation || {
             MYIDEAS: {
                 NONE: 'myIdeas'
             },
-            MYPROFILE: 'profileEdit',
+            MYPROFILE: 'myProfile',
             MYSEARCH: 'mySearch',
             SIGNUP: 'signup',
             HOT: {

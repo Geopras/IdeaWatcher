@@ -3,12 +3,11 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         // region local vars
 
         var htmlView;
-        var htmlMainMenuParentNode;
-        var htmlMainMenuChildNodes;
-        var htmlMainMenuButtons = [];
-        var isLoginSuccessful;
         var htmlUserDropdownNoLogin;
         var htmlUserDropdownWithLogin;
+        var htmlUserMenuParentNode;
+        var htmlMainMenuButtons = [];
+        var isLoginSuccessful;
         var lastClickedButton;
         var currentClickedButton;
         var lastClickedMainIdeaListButton;
@@ -32,6 +31,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         // endregion
 
         //region Callback Functions
+        // Initialisierung des MainMenu
         function cbIni() {
 
             console.log('ini Event');
@@ -41,11 +41,15 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
             isLoginSuccessful = false;
             htmlUserDropdownNoLogin = document.querySelector('.mainMenu_dropdownUserNoLogin_ul');
             htmlUserDropdownWithLogin = document.querySelector('.mainMenu_dropdownUserWithLogin_ul');
+            htmlUserMenuParentNode = document.querySelector('.userMenu_Buttons');
+            htmlMyIdeasButton = document.querySelector('.userMenu_myIdeas_button');
+            htmlFollowedIdeasButton = document.querySelector('.userMenu_followedIdeas_button');
+            htmlProfileEditButton = document.querySelector('.userMenu_profileEdit_button');
 
             // MainMenu-Buttonliste:
-            htmlMainMenuParentNode = document.querySelector('.mainMenu_buttons_ul');
+            var htmlMainMenuParentNode = document.querySelector('.mainMenu_buttons_ul');
             // MainMenu-Buttons:
-            htmlMainMenuChildNodes = htmlMainMenuParentNode.children;
+            var htmlMainMenuChildNodes = htmlMainMenuParentNode.children;
 
             // Gehe alle MainMenu-Buttons durch, speichere sie und hänge
             // EventListener dran: (falls eine Button-Klasse unbekannt ist,
@@ -84,43 +88,14 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
                             ' mainMenu-uiConnector initialisiert!');
                 }
             }
-            // Untermenü in Profilansicht muss auch gespeichert werden:
 
-            // MainMenu-Buttonliste:
-            htmlMainMenuParentNode = document.querySelector('.profileView_subMenuButtons');
-            // MainMenu-Buttons:
-            htmlMainMenuChildNodes = htmlMainMenuParentNode.children;
-
-            for (i = 0; i < htmlMainMenuChildNodes.length; i++) {
-
-                mainMenuElement = htmlMainMenuChildNodes[i];
-                childClass = mainMenuElement.className;
-
-                switch (childClass) {
-
-                    case ('mainMenu_ideaList_li'):
-                        initializeIdeaListButton(mainMenuElement);
-                        break;
-                    case ('profileView_myProfileButton_li'):
-                        initializeNavigationButton(mainMenuElement);
-                        break;
-                    default:
-                        console.log('Es wurde die Profil-Menu-Button-Klasse "' +
-                            childClass + '" NICHT im' +
-                            ' mainMenu-uiConnector initialisiert!');
-                }
-            }
             currentClickedListType = ideaWatcher.model.IdeaList.ListType.HOT;
             currentClickedCategory = ideaWatcher.model.IdeaList.Category.NONE;
             hotButton = document.getElementById('mainMenu_hot_button');
-            htmlMyIdeasButton = document.querySelector('.profileSubMenu_myIdeas_button');
-            htmlFollowedIdeasButton = document.querySelector('.profileSubMenu_followedIdeas_button');
-            htmlProfileEditButton = document.querySelector('.profileSubMenu_profileEdit_button');
-            htmlFollowedIdeasButton.style.background = '';
-            htmlMyIdeasButton.style.background = '#4096ee';
             cbLocalizeView();
         }
 
+        // Lokalisierung der Button-Labels
         function cbLocalizeView() {
 
             var language = ideaWatcher.core.Localizer.getLanguage();
@@ -128,11 +103,9 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
             for (var i = 0; i < htmlMainMenuButtons.length; i++) {
 
                 var mainMenuButton = htmlMainMenuButtons[i];
-                var buttonId = mainMenuButton.getAttribute('data-buttonId');
-                var buttonLabel = ideaWatcher.core.Localizer
-                    .MainMenuButtonLabels[language];
-                var localizedText = buttonLabel[buttonId];
-                mainMenuButton.textContent = localizedText;
+                var buttonId = mainMenuButton.getAttribute('data-button-id');
+                mainMenuButton.textContent = ideaWatcher.core.Localizer
+                    .MainMenu[language].ButtonLabel[buttonId];
             }
         }
 
@@ -184,13 +157,12 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
 
         function handleIdeaListButton(clickEvent) {
 
-            currentClickedListType = clickEvent.target.attributes.getNamedItem('data-buttonid').nodeValue;
+            currentClickedListType = clickEvent.target.getAttribute('data-button-id');
             handleCurrentButtonClick(clickEvent);
             console.log('IdeaList vom Typ: "' + currentClickedListType + '" geklickt');
 
             currentClickedCategory = ideaWatcher.model.IdeaList.Category.NONE;
-            ideaWatcher.controller.IdeaList
-                .updateIdeaList(currentClickedListType, currentClickedCategory, 1, 10, true);
+            ideaWatcher.controller.MainMenu.showIdeaList(currentClickedListType, currentClickedCategory);
         }
         //endregion
 
@@ -220,7 +192,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
 
         function handleCategoryButton(clickEvent) {
 
-            currentClickedCategory = clickEvent.target.attributes.getNamedItem('data-buttonid').nodeValue;
+            currentClickedCategory = clickEvent.target.getAttribute('data-button-id');
             handleCurrentButtonClick(clickEvent);
             console.log('Kategorie: "' + currentClickedCategory + '" geklickt');
 
@@ -229,31 +201,30 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
                 currentClickedListType = ideaWatcher.model.IdeaList.ListType.HOT;
             }
 
-            ideaWatcher.controller.IdeaList.updateIdeaList(currentClickedListType, currentClickedCategory, 1, 10, true);
+            ideaWatcher.controller.MainMenu.showIdeaList(currentClickedListType, currentClickedCategory);
         }
         //endregion
 
         //region User-Buttons
         function initializeUserButtons() {
 
-            var userButtonNoLoginList = document.querySelector('.mainMenu_dropdownUserNoLogin_ul');
-            var userButtonNoLoginNodes = userButtonNoLoginList.children;
+            var userButtonNoLoginNodes = htmlUserDropdownNoLogin.children;
 
             for (var j = 0; j < userButtonNoLoginNodes.length; j++) {
 
                 initializeNavigationButton(userButtonNoLoginNodes[j]);
             }
 
-            var userButtonWithLoginList = document.querySelector('.mainMenu_dropdownUserWithLogin_ul');
-            var userButtonWithLoginNodes = userButtonWithLoginList.children;
+            var userButtonWithLoginNodes = htmlUserDropdownWithLogin.children;
 
             for (var j = 0; j < userButtonWithLoginNodes.length; j++) {
 
                 var htmlElement = userButtonWithLoginNodes[j];
                 var userButton = htmlElement.getElementsByTagName('div').item(0);
-                var buttonId = userButton.getAttribute('data-buttonid');
+                var buttonId = userButton.getAttribute('data-button-id');
+                var buttonType = userButton.getAttribute('data-button-type');
 
-                if (htmlElement.className === 'mainMenu_ideaList_li') {
+                if (buttonType === ideaWatcher.model.Navigation.ButtonType.IdeaList) {
                     initializeIdeaListButton(htmlElement);
                     continue;
                 }
@@ -291,14 +262,20 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         function handleSearchIdeasInput(inputEvent) {
 
             var searchText = inputEvent.target.value;
-            if (searchText && searchText !== '') {
-                var listType = ideaWatcher.model.IdeaList.ListType.MYSEARCH;
-                var category = ideaWatcher.model.IdeaList.Category.NONE;
 
-                ideaWatcher.controller.IdeaList.updateIdeaList(listType, category, 1, 10, true, searchText);
+            handleCurrentButtonClick(inputEvent);
+            if (searchText && searchText !== '') {
+
+                currentClickedListType = ideaWatcher.model.IdeaList.ListType.MYSEARCH;
+                currentClickedCategory = ideaWatcher.model.IdeaList.Category.NONE;
+                ideaWatcher.controller.MainMenu
+                    .showIdeaList(currentClickedListType, currentClickedCategory, searchText);
             } else {
-                ideaWatcher.controller.IdeaList.updateIdeaList('', '', 1, 10, true);
+
+                ideaWatcher.controller.MainMenu
+                    .showIdeaList(currentClickedListType, currentClickedCategory);
             }
+
         }
 
         //endregion
@@ -313,14 +290,11 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
 
         function handleNavigationButton(clickEvent) {
 
-            var buttonId = clickEvent.target.attributes.getNamedItem('data-buttonid').nodeValue;
+            var buttonId = clickEvent.target.getAttribute('data-button-id');
             handleCurrentButtonClick(clickEvent);
             console.log('MainMenu-Button ' + buttonId + ' geklickt');
 
-            ideaWatcher.core.Navigator.switchView({
-                viewId: ideaWatcher.model.Navigation.ViewId[buttonId],
-                url: ideaWatcher.model.Navigation.ViewUrl[buttonId]
-            });
+            ideaWatcher.controller.MainMenu.switchView(buttonId);
         }
         //endregion
 
@@ -329,21 +303,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
 
             var htmlAbout = document.querySelector('.mainMenu_about_li');
             htmlAbout.addEventListener('click', handleNavigationButton);
-
-            // htmlAbout.addEventListener('click', handleAboutButtonClick);
-            // htmlMainMenuButtons.push(htmlAbout);
         }
-
-        // function handleAboutButtonClick(clickEvent) {
-        //
-        //     handleCurrentButtonClick(clickEvent);
-        //
-        //     console.log('htmlBtnAbout geklickt');
-        //     // ideaWatcher.core.Navigator.switchView({
-        //     //     viewId : 'about',
-        //     //     url : 'about'
-        //     // });
-        // }
         //endregion
 
         //region Language-Switch-Button
@@ -372,33 +332,12 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
 
         //endregion
 
-        //region Verändere View
-        function switchUserDropdown() {
-
-            if (isLoginSuccessful) {
-
-                htmlUserDropdownNoLogin.style.display = 'none';
-                htmlUserDropdownWithLogin.style.display = 'block';
-            } else {
-
-                htmlUserDropdownNoLogin.style.display = 'block';
-                htmlUserDropdownWithLogin.style.display = 'none';
-            }
-        }
-        //endregion
-
-        // click HotButton automatisch
-        function clickHotButton() {
-
-            hotButton.click();
-        }
-
-        //region Was soll passieren, wenn irgendein Button geklickt wird
-
+        //region Background setzen bei Buttonklick
         function handleCurrentButtonClick(clickEvent) {
 
             var clickedButton = clickEvent.target;
-            var buttonId = clickedButton.attributes.getNamedItem('data-buttonid').nodeValue;
+            var buttonType = clickedButton.getAttribute('data-button-type');
+            var buttonId = clickedButton.getAttribute('data-button-id');
             if (!lastClickedButton) {
                 lastClickedButton = clickedButton;
             } else {
@@ -407,7 +346,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
             currentClickedButton = clickedButton;
 
             // Wenn HomeButton geklickt, dann Hot-Button klicken
-            if (clickedButton.id === 'mainMenu_homeButton_img') {
+            if (buttonType === ideaWatcher.model.Navigation.ButtonType.Home) {
                 lastClickedButton.style.background = ''; // CSS-Eigenschaft
                 clickHotButton();
                 // zurücksetzen, sodass der allgemeine Hover-Button-Style
@@ -415,9 +354,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
             }
             // Wenn Hot, Fresh oder Trending geklickt, dann soll dieser
             // Button markiert und extra gespeichert werden
-            else if (clickedButton.id.toLowerCase().includes('hot') ||
-                clickedButton.id.toLowerCase().includes('fresh') ||
-                clickedButton.id.toLowerCase().includes('trending')) {
+            else if (buttonType === ideaWatcher.model.Navigation.ButtonType.IdeaList) {
 
                 if (lastClickedMainIdeaListButton) {
                     lastClickedMainIdeaListButton.style.background = '';
@@ -428,7 +365,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
             }
             // Wenn Kategorie-Button geklickt, dann diesen zusätzlich zu zuletzt
             // geklickten Hot-, Fresh-, Trending-Button markieren:
-            else if (clickedButton.id.toLowerCase().includes('category')) {
+            else if (buttonType === ideaWatcher.model.Navigation.ButtonType.Category) {
                 lastClickedButton.style.background = '';
                 lastClickedMainIdeaListButton.style.background = '#4096ee';
                 currentClickedButton.style.background = '#4096ee';
@@ -459,6 +396,28 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
                 htmlFollowedIdeasButton.style.background = '';
                 htmlMyIdeasButton.style.background = '';
             }
+        }
+        //endregion
+
+        //region Hilfsfunktionen
+        // Verändere Dropdown-Menü
+        function switchUserDropdown() {
+
+            if (isLoginSuccessful) {
+
+                htmlUserDropdownNoLogin.style.display = 'none';
+                htmlUserDropdownWithLogin.style.display = 'block';
+            } else {
+
+                htmlUserDropdownNoLogin.style.display = 'block';
+                htmlUserDropdownWithLogin.style.display = 'none';
+            }
+        }
+
+        // HotButton anklicken
+        function clickHotButton() {
+
+            hotButton.click();
         }
         //endregion
 

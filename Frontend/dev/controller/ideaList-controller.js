@@ -51,6 +51,11 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             cbFunction: cbLocalizeView
         };
 
+        var evLocalizeMySearch = {
+            topic: 'localizeView/' + ideaWatcher.model.Navigation.ViewId.MYSEARCH.NONE,
+            cbFunction: cbLocalizeView
+        };
+
         var evGetIdeasResponse = {
             topic: 'SIdeaList/getIdeasRequest-response',
             cbFunction: cbGetIdeasResponse
@@ -83,6 +88,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeView);
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeMyIdeasView);
         ideaWatcher.core.MessageBroker.subscribe(evLocalizeMyFollowedIdeasView);
+        ideaWatcher.core.MessageBroker.subscribe(evLocalizeMySearch);
         ideaWatcher.core.MessageBroker.subscribe(evGetIdeasResponse);
         ideaWatcher.core.MessageBroker.subscribe(evGetDeleteIdeaResponse);
         ideaWatcher.core.MessageBroker.subscribe(evGetEditIdeaResponse);
@@ -299,6 +305,11 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             return ideaWatcher.controller.MainMenu.getCurrentClickedListType();
         }
 
+        function pubGetCurrentUserId() {
+
+            return ideaWatcher.controller.UserSession.getCurrentUserId();
+        }
+
         //endregion
 
         // diese Methoden stellen die öffentliche API dar, über welche mit dem Modul kommuniziert werden kann
@@ -307,6 +318,7 @@ ideaWatcher.controller.IdeaList = ideaWatcher.controller.IdeaList || (function (
             // wenn die View ein/ausgeblendet werden soll
             getCurrentClickedCategory: pubGetCurrentClickedCategory,
             getCurrentClickedListType: pubGetCurrentClickedListType,
+            getCurrentUserId: pubGetCurrentUserId,
             getIdea: pubGetIdea,
             navigateToCreateIdeaView: pubNavigateToCreateIdeaView,
             registerChangeFollowIdeaResponse: pubRegisterChangeFollowIdeaResponse,

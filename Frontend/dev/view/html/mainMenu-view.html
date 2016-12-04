@@ -5,54 +5,75 @@
                 <li class="mainMenu_homeButton_li">
                     <img id="mainMenu_homeButton_img"
                          src="./resources/img/logo.png"
-                         data-buttonid="HOT"/>
+                         data-button-id="HOT"
+                         data-button-type="Home"/>
                 </li>
                 <li class="mainMenu_ideaList_li">
-                    <div id="mainMenu_hot_button" data-buttonid="HOT">Hot</div>
+                    <div id="mainMenu_hot_button"
+                         data-button-id="HOT"
+                         data-button-type="IdeaList">Hot</div>
                 </li>
                 <li class="mainMenu_ideaList_li">
-                    <div id="mainMenu_trending_button" data-buttonid="TRENDING">Trending</div>
+                    <div id="mainMenu_trending_button"
+                         data-button-id="TRENDING"
+                         data-button-type="IdeaList">Trending</div>
                 </li>
                 <li class="mainMenu_ideaList_li">
-                    <div id="mainMenu_fresh_button" data-buttonid="FRESH">Fresh</div>
+                    <div id="mainMenu_fresh_button"
+                         data-button-id="FRESH"
+                         data-button-type="IdeaList">Fresh</div>
                 </li>
                 <li class="mainMenu_category_li">
-                    <div class="mainMenu_category_button" data-buttonid="CATEGORY">
+                    <div class="mainMenu_category_button" data-button-id="CATEGORY">
                         Categories
                     </div>
                     <ul class="mainMenu_dropdownCategories_ul">
                        <li>
-                           <div id="mainMenu_businessCategory_button" data-buttonid="BUSINESS">
+                           <div id="mainMenu_businessCategory_button"
+                                data-button-id="BUSINESS"
+                                data-button-type="Category">
                                Business & Science
                            </div>
                        </li>
                        <li>
-                           <div id="mainMenu_computerCategory_button" data-buttonid="COMPUTER">
+                           <div id="mainMenu_computerCategory_button"
+                                data-button-id="COMPUTER"
+                                data-button-type="Category">
                                Computer & Electronics
                            </div>
                        </li>
                        <li>
-                           <div id="mainMenu_gadgetCategory_button" data-buttonid="GADGET">
+                           <div id="mainMenu_gadgetCategory_button"
+                                data-button-id="GADGET"
+                                data-button-type="Category">
                                Gadget
                            </div>
                        </li>
                        <li>
-                           <div id="mainMenu_homeCategory_button" data-buttonid="HOMEGARDEN">
+                           <div id="mainMenu_homeCategory_button"
+                                data-button-id="HOMEGARDEN"
+                                data-button-type="Category">
                                Home & Garten
                            </div>
                        </li>
                        <li>
-                           <div id="mainMenu_sportsCategory_button" data-buttonid="SPORTS">
+                           <div id="mainMenu_sportsCategory_button"
+                                data-button-id="SPORTS"
+                                data-button-type="Category">
                                Sports & Outdoor
                            </div>
                        </li>
                        <li>
-                           <div id="mainMenu_toysCategory_button" data-buttonid="TOYS">
+                           <div id="mainMenu_toysCategory_button"
+                                data-button-id="TOYS"
+                                data-button-type="Category">
                                Toys, Children & Pets
                            </div>
                        </li>
                        <li>
-                           <div id="mainMenu_otherCategory_button" data-buttonid="OTHER">
+                           <div id="mainMenu_otherCategory_button"
+                                data-button-id="OTHER"
+                                data-button-type="Category">
                                Other
                            </div>
                        </li>
@@ -63,12 +84,16 @@
                     <div></div>
                     <ul class="mainMenu_dropdownUserNoLogin_ul">
                         <li>
-                            <div id="mainMenu_signup_button" data-buttonid="SIGNUP">
+                            <div id="mainMenu_signup_button"
+                                 data-button-id="SIGNUP"
+                                 data-button-type="User">
                                 Sign Up
                             </div>
                         </li>
                         <li>
-                            <div id="mainMenu_login_button" data-buttonid="LOGIN">
+                            <div id="mainMenu_login_button"
+                                 data-button-id="LOGIN"
+                                 data-button-type="User">
                                 Login
                             </div>
                         </li>
@@ -76,41 +101,52 @@
                     <ul class="mainMenu_dropdownUserWithLogin_ul"
                         style="display:none;">
                         <li>
-                            <div id="mainMenu_myProfile_button" data-buttonid="MYPROFILE">
-                                My Profile
+                            <div id="mainMenu_myProfile_button"
+                                 data-button-id="MYPROFILE"
+                                 data-button-type="User">
+                                My UserMenu
                             </div>
                         </li>
                         <li class="mainMenu_ideaList_li">
-                            <div id="mainMenu_myIdeas_button" data-buttonid="MYIDEAS">
+                            <div id="mainMenu_myIdeas_button"
+                                 data-button-id="MYIDEAS"
+                                 data-button-type="IdeaList">
                                 My Ideas
                             </div>
                         </li>
                         <li class="mainMenu_ideaList_li">
                             <div id="mainMenu_followedIdeas_button"
-                                 data-buttonid="MYFOLLOWEDIDEAS">
+                                 data-button-id="MYFOLLOWEDIDEAS"
+                                 data-button-type="IdeaList">
                                 Followed Ideas
                             </div>
                         </li>
                         <li>
-                            <div id="mainMenu_logout_button" data-buttonid="LOGOUT">
+                            <div id="mainMenu_logout_button"
+                                 data-button-id="LOGOUT"
+                                 data-button-type="User">
                                 Logout
                             </div>
                         </li>
                     </ul>
                 </li>
 
-                <li class="mainMenu_about_li" style="float: right;" data-buttonid="ABOUT">
-                    <img data-buttonid="ABOUT" src="./resources/img/info.png"/>
+                <li class="mainMenu_about_li" style="float: right;" data-button-id="ABOUT">
+                    <img data-button-id="ABOUT"
+                         data-button-type="About"
+                         src="./resources/img/info.png"/>
                 </li>
                 
                 <li class="mainMenu_mySearch_li" style="float: right;">
-                    <img src="./resources/img/lupe.png" data-buttonid="MYSEARCH"/>
+                    <img src="./resources/img/lupe.png"
+                         data-button-id="MYSEARCH"
+                         data-button-type="Search"/>
                     <div></div>
                     <ul class="mainMenu_dropdownMySearch_ul">
                         <li>
                             <div>
                                 <input id="mainMenu_searchIdeas_input"
-                                       data-buttonid="MYSEARCH"
+                                       data-button-id="MYSEARCH"
                                        type="text" name="search"
                                        placeholder="Search...">
                             </div>
@@ -121,7 +157,9 @@
                 <div class="mainMenu_languageSwitch_div">
                     <label class="mainMenu_languageSwitch_label">
                         <input id="mainMenu_languageSwitch_checkbox"
-                               type="checkbox" data-buttonid="LANGUAGESWITCH">
+                               type="checkbox"
+                               data-button-id="LANGUAGESWITCH"
+                               data-button-type="Localization">
                         <div class="mainMenu_languageSwitch_slider round"></div>
                     </label>
                 </div>

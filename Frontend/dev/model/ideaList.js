@@ -21,7 +21,7 @@ ideaWatcher.model.IdeaList = ideaWatcher.model.IdeaList || {
             HOT: 'HOT',
             MYFOLLOWEDIDEAS: 'MYFOLLOWEDIDEAS',
             MYIDEAS: 'MYIDEAS',
-            TRENDING: 'TRENDING',
-            MYSEARCH: 'MYSEARCH'
+            MYSEARCH: 'MYSEARCH',
+            TRENDING: 'TRENDING'
         }
     };

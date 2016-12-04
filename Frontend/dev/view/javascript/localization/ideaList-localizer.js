@@ -244,7 +244,7 @@ ideaWatcher.core.Localizer.IdeaList = ideaWatcher.core.Localizer.IdeaList || {
                 }
             }
         },
-        SEARCHRESULTS: {
+        MYSEARCH: {
             NONE: {
                 en_GB: {
                     header: 'My Search Results'
