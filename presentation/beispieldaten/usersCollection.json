@@ -1,0 +1,175 @@
+{
+	"_id" : ObjectId("5842d51763d7831c14e4eb97"),
+	"createdIdeas" : [
+		"5842d65863d7831c14e4ebb7"
+	],
+	"email" : "jo@han.na",
+	"firstName" : "",
+	"followedIdeas" : [ ],
+	"gender" : "",
+	"isMailPublic" : false,
+	"language" : "",
+	"numberCreatedIdeas" : NumberLong("0"),
+	"numberFollowedIdeas" : NumberLong("0"),
+	"password" : "$2a$10$6uJNix3mRVg/cx458WcW0.w46Q1XmxH2jYWFxSlxg1ZOpNK5zgYHG",
+	"pictureURL" : "",
+	"surname" : "",
+	"userName" : "johanna"
+},
+{
+	"_id" : ObjectId("5842d68963d7831c14e4ebd5"),
+	"createdIdeas" : [
+		"58431ac563d78300f00dc93c",
+		"58442d6563d7831a0027923e"
+	],
+	"email" : "st.ef@an",
+	"firstName" : "Stefan",
+	"followedIdeas" : [
+		"5843de0863d7831b9063810b",
+		"5842d65863d7831c14e4ebb7"
+	],
+	"gender" : "male",
+	"isMailPublic" : true,
+	"language" : "de_DE",
+	"numberCreatedIdeas" : NumberLong("0"),
+	"numberFollowedIdeas" : NumberLong("2"),
+	"password" : "$2a$10$lSYKl9Djxpg2QBl1BB0t2eHfjrSwEiqGqpK/3akgN2BdTzSESAgBO",
+	"pictureURL" : "",
+	"surname" : "",
+	"userName" : "stefan"
+},
+{
+	"_id" : ObjectId("58431ca963d78300f00dc971"),
+	"createdIdeas" : [
+		"5843de0863d7831b9063810b",
+		"584579a163d7830a4012ce03",
+		"584579c263d7830a4012ce12"
+	],
+	"email" : "g.e@org",
+	"firstName" : "Georg",
+	"followedIdeas" : [
+		"5845790363d7830a4012cdb1"
+	],
+	"gender" : "male",
+	"isMailPublic" : false,
+	"language" : "de_DE",
+	"numberCreatedIdeas" : NumberLong("0"),
+	"numberFollowedIdeas" : NumberLong("1"),
+	"password" : "$2a$10$nrg62ZG9GQ25.23nmM44QO3b0JTyOryclHss5lg6vNqjMxcsN8Jzi",
+	"pictureURL" : "",
+	"surname" : "Aaaaand-Geheimyy",
+	"userName" : "georg"
+},
+{
+	"_id" : ObjectId("58431cc163d78300f00dc976"),
+	"createdIdeas" : [
+		"5844235063d7830634436cff"
+	],
+	"email" : "an.ge@la",
+	"firstName" : "Angela",
+	"followedIdeas" : [
+		"5845790363d7830a4012cdb1"
+	],
+	"gender" : "female",
+	"isMailPublic" : true,
+	"language" : "de_DE",
+	"numberCreatedIdeas" : NumberLong("0"),
+	"numberFollowedIdeas" : NumberLong("1"),
+	"password" : "$2a$10$VvsinaTGsHYkj3YPM9zCN..T90SptdKUFPVbe64rr5seU5y.A4yyC",
+	"pictureURL" : "",
+	"surname" : "",
+	"userName" : "angela"
+},
+{
+	"_id" : ObjectId("58431ce163d78300f00dc97d"),
+	"createdIdeas" : [
+		"5845790363d7830a4012cdb1",
+		"5845791b63d7830a4012cdc4"
+	],
+	"email" : "fl.ori@an",
+	"firstName" : "",
+	"followedIdeas" : [
+		"5843de0863d7831b9063810b",
+		"584579c263d7830a4012ce12"
+	],
+	"gender" : "",
+	"isMailPublic" : false,
+	"language" : "",
+	"numberCreatedIdeas" : NumberLong("0"),
+	"numberFollowedIdeas" : NumberLong("2"),
+	"password" : "$2a$10$iCw85tX2NDXpigZVAOanG.PUD7PkkYNdCe3DgaBXTLkAy4oS.wQVe",
+	"pictureURL" : "",
+	"surname" : "",
+	"userName" : "florian"
+},
+{
+	"_id" : ObjectId("58431cf263d78300f00dc984"),
+	"createdIdeas" : [ ],
+	"email" : "ro.la@nd",
+	"firstName" : "Roland",
+	"followedIdeas" : [
+		"5843df3963d7831b9063812d"
+	],
+	"gender" : "male",
+	"isMailPublic" : false,
+	"language" : "de_DE",
+	"numberCreatedIdeas" : NumberLong("0"),
+	"numberFollowedIdeas" : NumberLong("1"),
+	"password" : "$2a$10$b75X8NwDcJ.TISKkjipIJ.mRU.Nif851t1D9UIH3bc.UTYfLcQej6",
+	"pictureURL" : "",
+	"surname" : "WirdNichtVerraten",
+	"userName" : "roland"
+},
+{
+	"_id" : ObjectId("58431d0c63d78300f00dc98b"),
+	"createdIdeas" : [
+		"5843df3963d7831b9063812d",
+		"5843dff163d7831b90638143"
+	],
+	"email" : "an.d@re",
+	"firstName" : "",
+	"followedIdeas" : [ ],
+	"gender" : "",
+	"isMailPublic" : false,
+	"language" : "",
+	"numberCreatedIdeas" : NumberLong("0"),
+	"numberFollowedIdeas" : NumberLong("0"),
+	"password" : "$2a$10$XTmJHC8mi2S2TwLkFLrJ...NZVyYLbjpYqRRy6X5I1xelastBfvsq",
+	"pictureURL" : "",
+	"surname" : "",
+	"userName" : "andre"
+},
+{
+	"_id" : ObjectId("584320a763d78300f00dc9cf"),
+	"createdIdeas" : [
+		"5844253063d7830634436d99"
+	],
+	"email" : "Lu.i@se",
+	"firstName" : "",
+	"followedIdeas" : [ ],
+	"gender" : "",
+	"isMailPublic" : false,
+	"language" : "",
+	"numberCreatedIdeas" : NumberLong("0"),
+	"numberFollowedIdeas" : NumberLong("0"),
+	"password" : "$2a$10$iqqXxxFDgamj8naNbbxzrepZWk32DsM1b88F8hbvPeJh3iul5lvfy",
+	"pictureURL" : "",
+	"surname" : "",
+	"userName" : "Lu"
+},
+{
+	"_id" : ObjectId("58443eee63d783114c92240f"),
+	"createdIdeas" : [ ],
+	"email" : "test@bla.blub",
+	"firstName" : "sdf",
+	"followedIdeas" : [ ],
+	"gender" : "female",
+	"isMailPublic" : true,
+	"language" : "en_GB",
+	"numberCreatedIdeas" : NumberLong("0"),
+	"numberFollowedIdeas" : NumberLong("0"),
+	"password" : "$2a$10$hkIPzfMNoB4Ehwv5TbYZVeiuTwG1/omHIAOI10xNwOuusBijicHwG",
+	"pictureURL" : "",
+	"surname" : "dfsdf",
+	"userName" : "test"
+},

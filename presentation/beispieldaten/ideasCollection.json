@@ -1,0 +1,336 @@
+{
+	"_id" : ObjectId("5842d65863d7831c14e4ebb7"),
+	"category" : "HOMEGARDEN",
+	"comments" : [
+		{
+			"commentId" : "d5302902-6d6f-4ffd-b677-24ef06bb6ef0",
+			"userName" : "stefan",
+			"userId" : "5842d68963d7831c14e4ebd5",
+			"text" : "Würd ich sofort kaufen :)",
+			"pictureURL" : null,
+			"publishDate" : ISODate("2016-12-03T15:30:08.910+01:00")
+		}
+	],
+	"creator" : {
+		"userId" : "5842d51763d7831c14e4eb97",
+		"userName" : "johanna",
+		"email" : "jo@han.na",
+		"isMailPublic" : false,
+		"pictureURL" : null
+	},
+	"description" : "Do you know that? You lie in your bed and hour after hour passes by but you can't fall asleep. You already took a shower and drunk half a bottle of Jägermeister, but nothing seems to help. And when you are at the university you could sleep immidiately on the table.\n\nSo let's bring boots together: with school class sounds as a help to fall asleep. And you can finaly sleep again at home.",
+	"followerUsers" : [
+		"5842d68963d7831c14e4ebd5"
+	],
+	"hotRank" : 0.28887220522475876,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [
+		"5842d68963d7831c14e4ebd5"
+	],
+	"name" : "school class sounds as a help to fall asleep",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("1"),
+	"numberLikes" : NumberLong("1"),
+	"publishedDate" : ISODate("2016-12-04T15:56:46.566+01:00"),
+	"trendingRank" : 0.2266166156742763
+},
+{
+	"_id" : ObjectId("58431ac563d78300f00dc93c"),
+	"category" : "GADGET",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "5842d68963d7831c14e4ebd5",
+		"userName" : "stefan",
+		"email" : "st.ef@an",
+		"isMailPublic" : true,
+		"pictureURL" : null
+	},
+	"description" : "This is the ultimate gadget for all fans of picknicks and curried sausage.",
+	"followerUsers" : [ ],
+	"hotRank" : 0.03377359378677336,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [ ],
+	"name" : "Solar powered sausage-cutter ",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("0"),
+	"numberLikes" : NumberLong("0"),
+	"publishedDate" : ISODate("2016-12-04T15:11:38.237+01:00"),
+	"trendingRank" : 0.10132078136032008
+},
+{
+	"_id" : ObjectId("5843de0863d7831b9063810b"),
+	"category" : "GADGET",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "58431ca963d78300f00dc971",
+		"userName" : "georg",
+		"email" : "g.e@org",
+		"isMailPublic" : false,
+		"pictureURL" : null
+	},
+	"description" : "If you're battery is low, e.g. in your smartphone or your notebook, and you are far away from a power socket, then this gadget will charge your battery by your own muscle power.\n\nJust move the pedal and your force will be converted into electric energy which is usable for all kind of small devices.\n\nYou can simply move it with your foot while you are sitting or with your hand while walking around.",
+	"followerUsers" : [
+		"5842d68963d7831c14e4ebd5",
+		"58431ce163d78300f00dc97d"
+	],
+	"hotRank" : 0.8,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [
+		"5842d68963d7831c14e4ebd5",
+		"58431cf263d78300f00dc984",
+		"58431ce163d78300f00dc97d",
+		"58431cc163d78300f00dc976",
+		"58431d0c63d78300f00dc98b"
+	],
+	"name" : "pedal battery charger",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("2"),
+	"numberLikes" : NumberLong("5"),
+	"publishedDate" : ISODate("2016-12-04T10:12:40.129+01:00"),
+	"trendingRank" : 0.4
+},
+{
+	"_id" : ObjectId("5843df3963d7831b9063812d"),
+	"category" : "SPORTS",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "58431d0c63d78300f00dc98b",
+		"userName" : "andre",
+		"email" : "an.d@re",
+		"isMailPublic" : false,
+		"pictureURL" : null
+	},
+	"description" : "Every beerpong player knows the problem. A wet ball collects all the dust of the room. After a few rounds your cleaning glass looks dark as hell.\nA beerpong table with automated ball-dryer would be the perfect official equipment. It would get quickly established in all the professional leagues.",
+	"followerUsers" : [
+		"58431cf263d78300f00dc984"
+	],
+	"hotRank" : 0.2853005413038362,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [
+		"58431cf263d78300f00dc984"
+	],
+	"name" : "Beerpong table with automated ball-dryer",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("1"),
+	"numberLikes" : NumberLong("1"),
+	"publishedDate" : ISODate("2016-12-04T15:25:09.585+01:00"),
+	"trendingRank" : 0.21590162391150858
+},
+{
+	"_id" : ObjectId("5843dff163d7831b90638143"),
+	"category" : "COMPUTER",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "58431d0c63d78300f00dc98b",
+		"userName" : "andre",
+		"email" : "an.d@re",
+		"isMailPublic" : false,
+		"pictureURL" : null
+	},
+	"description" : "A smartphone-app that reads out the birthdays of your contacts and sends out automated greeting messages with your preferred messenger.\nNo birthday will ever be forgotten anymore. ",
+	"followerUsers" : [ ],
+	"hotRank" : 0.20092068722052248,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [
+		"5842d68963d7831c14e4ebd5",
+		"58431cc163d78300f00dc976"
+	],
+	"name" : "Birthday-Greets App",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("0"),
+	"numberLikes" : NumberLong("2"),
+	"publishedDate" : ISODate("2016-12-04T10:20:49.366+01:00"),
+	"trendingRank" : 0.12276206166156742
+},
+{
+	"_id" : ObjectId("5844235063d7830634436cff"),
+	"category" : "GADGET",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "58431cc163d78300f00dc976",
+		"userName" : "angela",
+		"email" : "an.ge@la",
+		"isMailPublic" : true,
+		"pictureURL" : null
+	},
+	"description" : "This device looks like a tipical correction roller. But instead of deleting wrong answers it prints the correct answers straight to your test papers. You can choose between 20 different styles of handwriting. First you transfer the correct answers to the roller. During the test you select the answer you want to print and then move the roller over your test paper and watch the magic happen.",
+	"followerUsers" : [ ],
+	"hotRank" : 0.23339326900447166,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [
+		"58431ca963d78300f00dc971",
+		"58431ce163d78300f00dc97d"
+	],
+	"name" : "knowledge printer",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("0"),
+	"numberLikes" : NumberLong("2"),
+	"publishedDate" : ISODate("2016-12-04T15:08:16.754+01:00"),
+	"trendingRank" : 0.22017980701341494
+},
+{
+	"_id" : ObjectId("5844253063d7830634436d99"),
+	"category" : "COMPUTER",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "584320a763d78300f00dc9cf",
+		"userName" : "Lu",
+		"email" : "Lu.i@se",
+		"isMailPublic" : false,
+		"pictureURL" : null
+	},
+	"description" : "... because also cows need some love.",
+	"followerUsers" : [ ],
+	"hotRank" : 0.03439115085902566,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [ ],
+	"name" : "Dating-App for cows - App-Name: \"Rinder\"",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("0"),
+	"numberLikes" : NumberLong("0"),
+	"publishedDate" : ISODate("2016-12-04T15:17:06.492+01:00"),
+	"trendingRank" : 0.10317345257707695
+},
+{
+	"_id" : ObjectId("58442d6563d7831a0027923e"),
+	"category" : "SPORTS",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "5842d68963d7831c14e4ebd5",
+		"userName" : "stefan",
+		"email" : "st.ef@an",
+		"isMailPublic" : true,
+		"pictureURL" : null
+	},
+	"description" : "Imagine you could see a goal from the perspective of the ball. You could see it flying through the goal, pass the fingers of the keeper and fall inside the net.\nA ball would need at leas 6 cameras to cover each direction. A powerfull software is needet to calculate a stable frame when the ball has spin.",
+	"followerUsers" : [ ],
+	"hotRank" : 0.14397834784655214,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [
+		"58431ce163d78300f00dc97d"
+	],
+	"name" : "football with integrated cameras",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("0"),
+	"numberLikes" : NumberLong("1"),
+	"publishedDate" : ISODate("2016-12-04T16:41:58.426+01:00"),
+	"trendingRank" : 0.19193504353965637
+},
+{
+	"_id" : ObjectId("5845790363d7830a4012cdb1"),
+	"category" : "COMPUTER",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "58431ce163d78300f00dc97d",
+		"userName" : "florian",
+		"email" : "fl.ori@an",
+		"isMailPublic" : false,
+		"pictureURL" : null
+	},
+	"description" : "Eliminate the last Reason for using Windows - A World where all devices are running on a free and Opensource Operating System and where you can use a great piece of software on a great Operating System.",
+	"followerUsers" : [
+		"58431ca963d78300f00dc971",
+		"58431cc163d78300f00dc976"
+	],
+	"hotRank" : 0.7981002588844434,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [
+		"58431ca963d78300f00dc971",
+		"58431cc163d78300f00dc976",
+		"58431cf263d78300f00dc984"
+	],
+	"name" : "Adobe for Linux",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("2"),
+	"numberLikes" : NumberLong("3"),
+	"publishedDate" : ISODate("2016-12-05T15:26:15.899+01:00"),
+	"trendingRank" : 0.8743007766533302
+},
+{
+	"_id" : ObjectId("5845791b63d7830a4012cdc4"),
+	"category" : "COMPUTER",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "58431ce163d78300f00dc97d",
+		"userName" : "florian",
+		"email" : "fl.ori@an",
+		"isMailPublic" : false,
+		"pictureURL" : null
+	},
+	"description" : "Tired of slowly typing your great Thoughts on a KeyBoard? Just use your bio-mecanical Interface in order to connect to your PC and write by thinking - of course via Plug and Play!",
+	"followerUsers" : [ ],
+	"hotRank" : 0.2981360320075312,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [
+		"58431ca963d78300f00dc971"
+	],
+	"name" : "Brain to Text",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("0"),
+	"numberLikes" : NumberLong("1"),
+	"publishedDate" : ISODate("2016-12-05T15:26:35.162+01:00"),
+	"trendingRank" : 0.6544080960225935
+},
+{
+	"_id" : ObjectId("584579a163d7830a4012ce03"),
+	"category" : "SPORTS",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "58431ca963d78300f00dc971",
+		"userName" : "georg",
+		"email" : "g.e@org",
+		"isMailPublic" : false,
+		"pictureURL" : ""
+	},
+	"description" : "Description: You don't want to pump up your bike wheels anymore? Then the wheel should pump up itself like an air bed. Just open the valve and you'll have again thick wheels ready for a ride.",
+	"followerUsers" : [ ],
+	"hotRank" : 0.19838832666509768,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [ ],
+	"name" : "Self Pumping Up Bike Wheel",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("0"),
+	"numberLikes" : NumberLong("0"),
+	"publishedDate" : ISODate("2016-12-05T15:28:49.186+01:00"),
+	"trendingRank" : 0.5951649799952929
+},
+{
+	"_id" : ObjectId("584579c263d7830a4012ce12"),
+	"category" : "COMPUTER",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "58431ca963d78300f00dc971",
+		"userName" : "georg",
+		"email" : "g.e@org",
+		"isMailPublic" : false,
+		"pictureURL" : null
+	},
+	"description" : "You don't want to have your user information stored, e.g.  on Google or Facebook? Then this app will send automatically an official request letter to chosen social media services to delete your data from their database as it is your right to do so. It will inform you about the progress of your removal.",
+	"followerUsers" : [
+		"58431ce163d78300f00dc97d"
+	],
+	"hotRank" : 0.5484504589315133,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [
+		"58431ce163d78300f00dc97d",
+		"58431cf263d78300f00dc984"
+	],
+	"name" : "Delete User Data App",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("1"),
+	"numberLikes" : NumberLong("2"),
+	"publishedDate" : ISODate("2016-12-05T15:29:22.620+01:00"),
+	"trendingRank" : 0.7653513767945399
+},
