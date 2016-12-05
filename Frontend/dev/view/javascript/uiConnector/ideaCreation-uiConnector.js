@@ -195,8 +195,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function() {
 				htmlIdeaDescriptionErrorLabel.style.display = 'inline';
 				htmlIdeaNameErrorLabel.style.display = 'none';
 			} else {
-				console
-						.log('Der Name und die Beschreibung der Idee entsprechen den Richtlinien.');
+				console.log('Der Name und die Beschreibung der Idee entsprechen den Richtlinien.');
 				htmlIdeaNameErrorLabel.style.display = 'none';
 				htmlIdeaDescriptionErrorLabel.style.display = 'none';
 			}
@@ -223,6 +222,7 @@ ideaWatcher.view.ideaCreation = ideaWatcher.view.ideaCreation || (function() {
 						htmlPublishButton.style.display = 'none';
 					}
 				} else {
+					ideaId = null;
 					htmlPublishButton.style.display = 'block';
 				}
 
