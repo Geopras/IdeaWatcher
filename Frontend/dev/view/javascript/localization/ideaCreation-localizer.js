@@ -49,7 +49,7 @@ ideaWatcher.core.Localizer.SaveIdea = ideaWatcher.core.Localizer.SaveIdea || {
             category4: 'Haushalt & Garten',
             category5: 'Sport & Freizeit',
             category6: 'Spielzeug und Haustier',
-            category7: 'Anderes',
+            category7: 'Sonstiges',
             description: 'Beschreibung',
             descriptionTextarea: 'Geben sie hier Ihre Beschreibung ein',
             ideaDescriptionTooShort: 'Die Ideen Beschreibung ist zu kurz.',
