@@ -15,7 +15,7 @@ ideaWatcher.core.Localizer.UserSession = ideaWatcher.core.Localizer.UserSession 
             SLogin_password_not_valid: "UserSession has failed.",
             SLogin_unknown_error: "An unknown error has occured while trying" +
             " to login. Please try again or contact the website administrator.",
-            submit: "login",
+            submit: "Login",
             userName: "Email / Username"
         },
         de_DE: {

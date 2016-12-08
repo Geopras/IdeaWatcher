@@ -22,7 +22,7 @@
 	"followerUsers" : [
 		"5842d68963d7831c14e4ebd5"
 	],
-	"hotRank" : 0.28887220522475876,
+	"hotRank" : 0.26100941401678046,
 	"isPublished" : true,
 	"language" : "",
 	"likeUsers" : [
@@ -33,7 +33,7 @@
 	"numberFollowers" : NumberLong("1"),
 	"numberLikes" : NumberLong("1"),
 	"publishedDate" : ISODate("2016-12-04T15:56:46.566+01:00"),
-	"trendingRank" : 0.2266166156742763
+	"trendingRank" : 0.1430282420503414
 },
 {
 	"_id" : ObjectId("58431ac563d78300f00dc93c"),
@@ -48,7 +48,7 @@
 	},
 	"description" : "This is the ultimate gadget for all fans of picknicks and curried sausage.",
 	"followerUsers" : [ ],
-	"hotRank" : 0.03377359378677336,
+	"hotRank" : 0.009565451544874547,
 	"isPublished" : true,
 	"language" : "",
 	"likeUsers" : [ ],
@@ -57,12 +57,21 @@
 	"numberFollowers" : NumberLong("0"),
 	"numberLikes" : NumberLong("0"),
 	"publishedDate" : ISODate("2016-12-04T15:11:38.237+01:00"),
-	"trendingRank" : 0.10132078136032008
+	"trendingRank" : 0.02869635463462364
 },
 {
 	"_id" : ObjectId("5843de0863d7831b9063810b"),
 	"category" : "GADGET",
-	"comments" : [ ],
+	"comments" : [
+		{
+			"commentId" : "86ddbebe-2cbc-4b6f-90f3-0fe82f6a32a7",
+			"userName" : "roland",
+			"userId" : "58431cf263d78300f00dc984",
+			"text" : "Yeah, I really need this for the battery of my Galaxy Note 7 :)",
+			"pictureURL" : null,
+			"publishDate" : ISODate("2016-12-08T18:07:36.836+01:00")
+		}
+	],
 	"creator" : {
 		"userId" : "58431ca963d78300f00dc971",
 		"userName" : "georg",
@@ -107,7 +116,7 @@
 	"followerUsers" : [
 		"58431cf263d78300f00dc984"
 	],
-	"hotRank" : 0.2853005413038362,
+	"hotRank" : 0.2599978937770443,
 	"isPublished" : true,
 	"language" : "",
 	"likeUsers" : [
@@ -118,7 +127,7 @@
 	"numberFollowers" : NumberLong("1"),
 	"numberLikes" : NumberLong("1"),
 	"publishedDate" : ISODate("2016-12-04T15:25:09.585+01:00"),
-	"trendingRank" : 0.21590162391150858
+	"trendingRank" : 0.1399936813311329
 },
 {
 	"_id" : ObjectId("5843dff163d7831b90638143"),
@@ -133,7 +142,7 @@
 	},
 	"description" : "A smartphone-app that reads out the birthdays of your contacts and sends out automated greeting messages with your preferred messenger.\nNo birthday will ever be forgotten anymore. ",
 	"followerUsers" : [ ],
-	"hotRank" : 0.20092068722052248,
+	"hotRank" : 0.20026127829070678,
 	"isPublished" : true,
 	"language" : "",
 	"likeUsers" : [
@@ -145,7 +154,7 @@
 	"numberFollowers" : NumberLong("0"),
 	"numberLikes" : NumberLong("2"),
 	"publishedDate" : ISODate("2016-12-04T10:20:49.366+01:00"),
-	"trendingRank" : 0.12276206166156742
+	"trendingRank" : 0.12078383487212027
 },
 {
 	"_id" : ObjectId("5844235063d7830634436cff"),
@@ -158,9 +167,9 @@
 		"isMailPublic" : true,
 		"pictureURL" : null
 	},
-	"description" : "This device looks like a tipical correction roller. But instead of deleting wrong answers it prints the correct answers straight to your test papers. You can choose between 20 different styles of handwriting. First you transfer the correct answers to the roller. During the test you select the answer you want to print and then move the roller over your test paper and watch the magic happen.",
+	"description" : "This device looks like a typical correction roller. But instead of deleting wrong answers it prints the correct answers straight to your test papers. You can choose between 20 different styles of handwriting. First you transfer the correct answers to the roller. During the test you select the answer you want to print and then move the roller over your test paper and watch the magic happen.",
 	"followerUsers" : [ ],
-	"hotRank" : 0.23339326900447166,
+	"hotRank" : 0.2094577409025832,
 	"isPublished" : true,
 	"language" : "",
 	"likeUsers" : [
@@ -172,7 +181,7 @@
 	"numberFollowers" : NumberLong("0"),
 	"numberLikes" : NumberLong("2"),
 	"publishedDate" : ISODate("2016-12-04T15:08:16.754+01:00"),
-	"trendingRank" : 0.22017980701341494
+	"trendingRank" : 0.14837322270774955
 },
 {
 	"_id" : ObjectId("5844253063d7830634436d99"),
@@ -187,7 +196,7 @@
 	},
 	"description" : "... because also cows need some love.",
 	"followerUsers" : [ ],
-	"hotRank" : 0.03439115085902566,
+	"hotRank" : 0.009740348033347642,
 	"isPublished" : true,
 	"language" : "",
 	"likeUsers" : [ ],
@@ -196,7 +205,7 @@
 	"numberFollowers" : NumberLong("0"),
 	"numberLikes" : NumberLong("0"),
 	"publishedDate" : ISODate("2016-12-04T15:17:06.492+01:00"),
-	"trendingRank" : 0.10317345257707695
+	"trendingRank" : 0.029221044100042923
 },
 {
 	"_id" : ObjectId("58442d6563d7831a0027923e"),
@@ -211,7 +220,7 @@
 	},
 	"description" : "Imagine you could see a goal from the perspective of the ball. You could see it flying through the goal, pass the fingers of the keeper and fall inside the net.\nA ball would need at leas 6 cameras to cover each direction. A powerfull software is needet to calculate a stable frame when the ball has spin.",
 	"followerUsers" : [ ],
-	"hotRank" : 0.14397834784655214,
+	"hotRank" : 0.11245550937269216,
 	"isPublished" : true,
 	"language" : "",
 	"likeUsers" : [
@@ -222,7 +231,7 @@
 	"numberFollowers" : NumberLong("0"),
 	"numberLikes" : NumberLong("1"),
 	"publishedDate" : ISODate("2016-12-04T16:41:58.426+01:00"),
-	"trendingRank" : 0.19193504353965637
+	"trendingRank" : 0.09736652811807645
 },
 {
 	"_id" : ObjectId("5845790363d7830a4012cdb1"),
@@ -240,7 +249,7 @@
 		"58431ca963d78300f00dc971",
 		"58431cc163d78300f00dc976"
 	],
-	"hotRank" : 0.7981002588844434,
+	"hotRank" : 0.6561033808877597,
 	"isPublished" : true,
 	"language" : "",
 	"likeUsers" : [
@@ -253,7 +262,7 @@
 	"numberFollowers" : NumberLong("2"),
 	"numberLikes" : NumberLong("3"),
 	"publishedDate" : ISODate("2016-12-05T15:26:15.899+01:00"),
-	"trendingRank" : 0.8743007766533302
+	"trendingRank" : 0.44831014266327895
 },
 {
 	"_id" : ObjectId("5845791b63d7830a4012cdc4"),
@@ -268,7 +277,7 @@
 	},
 	"description" : "Tired of slowly typing your great Thoughts on a KeyBoard? Just use your bio-mecanical Interface in order to connect to your PC and write by thinking - of course via Plug and Play!",
 	"followerUsers" : [ ],
-	"hotRank" : 0.2981360320075312,
+	"hotRank" : 0.1561140453077885,
 	"isPublished" : true,
 	"language" : "",
 	"likeUsers" : [
@@ -279,7 +288,7 @@
 	"numberFollowers" : NumberLong("0"),
 	"numberLikes" : NumberLong("1"),
 	"publishedDate" : ISODate("2016-12-05T15:26:35.162+01:00"),
-	"trendingRank" : 0.6544080960225935
+	"trendingRank" : 0.22834213592336547
 },
 {
 	"_id" : ObjectId("584579a163d7830a4012ce03"),
@@ -294,7 +303,7 @@
 	},
 	"description" : "Description: You don't want to pump up your bike wheels anymore? Then the wheel should pump up itself like an air bed. Just open the valve and you'll have again thick wheels ready for a ride.",
 	"followerUsers" : [ ],
-	"hotRank" : 0.19838832666509768,
+	"hotRank" : 0.05618549692198177,
 	"isPublished" : true,
 	"language" : "",
 	"likeUsers" : [ ],
@@ -303,7 +312,7 @@
 	"numberFollowers" : NumberLong("0"),
 	"numberLikes" : NumberLong("0"),
 	"publishedDate" : ISODate("2016-12-05T15:28:49.186+01:00"),
-	"trendingRank" : 0.5951649799952929
+	"trendingRank" : 0.1685564907659453
 },
 {
 	"_id" : ObjectId("584579c263d7830a4012ce12"),
@@ -320,7 +329,7 @@
 	"followerUsers" : [
 		"58431ce163d78300f00dc97d"
 	],
-	"hotRank" : 0.5484504589315133,
+	"hotRank" : 0.40620309321502934,
 	"isPublished" : true,
 	"language" : "",
 	"likeUsers" : [
@@ -332,5 +341,77 @@
 	"numberFollowers" : NumberLong("1"),
 	"numberLikes" : NumberLong("2"),
 	"publishedDate" : ISODate("2016-12-05T15:29:22.620+01:00"),
-	"trendingRank" : 0.7653513767945399
+	"trendingRank" : 0.3386092796450881
+},
+{
+	"_id" : ObjectId("584992eb63d78313484f16c5"),
+	"category" : "GADGET",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "58431ca963d78300f00dc971",
+		"userName" : "georg",
+		"email" : "g.e@org",
+		"isMailPublic" : false,
+		"pictureURL" : ""
+	},
+	"description" : "It's winter and you don't have your winter shoes with you or your shoes are not warm enough. The heatable insoles can solve your problem while they are using your walking foot pressure to convert the ground reaction force into heat energy. So you do not need any batteries and you can enjoy your warm feet as long as you are moving.",
+	"followerUsers" : [ ],
+	"hotRank" : 0.1994182558874264,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [ ],
+	"name" : "Heatable Insoles",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("0"),
+	"numberLikes" : NumberLong("0"),
+	"publishedDate" : ISODate("2016-12-08T18:05:47.637+01:00"),
+	"trendingRank" : 0.5982547676622791
+},
+{
+	"_id" : ObjectId("584994ff63d78313484f174b"),
+	"category" : "OTHER",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "58431cf263d78300f00dc984",
+		"userName" : "roland",
+		"email" : "ro.la@nd",
+		"isMailPublic" : false,
+		"pictureURL" : null
+	},
+	"description" : "More and more people walk though public places while they are using their mobile devices. Some of them don't see what is happening around them.\nThe idea for more security in traffic is to implement traffic lights into the boardwalk, like stumbling blocks.\nSo all we would need there for are red, green and yellow shining road stones at pedestrian crossings.",
+	"followerUsers" : [ ],
+	"hotRank" : 0.1997104609962168,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [ ],
+	"name" : "Pedestrian traffic lights implemented into the boardwalk",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("0"),
+	"numberLikes" : NumberLong("0"),
+	"publishedDate" : ISODate("2016-12-08T18:14:55.844+01:00"),
+	"trendingRank" : 0.5991313829886503
+},
+{
+	"_id" : ObjectId("584996ec63d78313484f17bc"),
+	"category" : "HOMEGARDEN",
+	"comments" : [ ],
+	"creator" : {
+		"userId" : "58431cf263d78300f00dc984",
+		"userName" : "roland",
+		"email" : "ro.la@nd",
+		"isMailPublic" : false,
+		"pictureURL" : ""
+	},
+	"description" : "The target is a comfortable way for waste disposal in departments. So you don't need to run the stairs up and down to bring your rubbish outside.\nIn old buildings already existent chambers could be used. New buildings could respect this point at the planning stage.\nThe user can put his sorted waste into a box that is transportet by a lift. You tell the box which kind of rubbish it contains. Eventualy the box can reduce the size of the waste. After moving down the box get's emptied into the container for it's kind of waste.",
+	"followerUsers" : [ ],
+	"hotRank" : 0.19996480741390482,
+	"isPublished" : true,
+	"language" : "",
+	"likeUsers" : [ ],
+	"name" : "Automated waste disposal for apartments",
+	"numberComments" : NumberLong("0"),
+	"numberFollowers" : NumberLong("0"),
+	"numberLikes" : NumberLong("0"),
+	"publishedDate" : ISODate("2016-12-08T18:22:52.194+01:00"),
+	"trendingRank" : 0.5998944222417144
 },
