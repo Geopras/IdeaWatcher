@@ -82,9 +82,9 @@ ideaWatcher.controller.Signup = ideaWatcher.controller.Signup || (function () {
 
     //region Callback: RegistrationResponse
     function cbRegistrationResponse(exObj){
-        var currrentLanguage = ideaWatcher.core.Localizer.getLanguage();
+        var currentLanguage = ideaWatcher.core.Localizer.getLanguage();
 
-        var displayTextRegistration = ideaWatcher.core.Localizer.signUp[currrentLanguage].registration;
+        var displayTextRegistration = ideaWatcher.core.Localizer.signUp[currentLanguage].registration;
         var displayTextError = 'default';
 
         if(exObj.result === 'ok') {
@@ -92,16 +92,17 @@ ideaWatcher.controller.Signup = ideaWatcher.controller.Signup || (function () {
             ideaWatcher.controller.GlobalNotification.showNotification(
                 ideaWatcher.model.GlobalNotificationType.SUCCESS,
                 displayTextRegistration,
-                ideaWatcher.core.Localizer.signUp[currrentLanguage].signup_SUCCESS,
+                ideaWatcher.core.Localizer.signUp[currentLanguage].signup_SUCCESS,
                 4000);
 
-            ideaWatcher.core.Navigator.switchView({
-                viewId: 'login',
-                url: 'myLogin'
-            });
+            var exObj = Object.create(ideaWatcher.model.ExchangeObject.SwitchView);
+            exObj.viewId = ideaWatcher.model.Navigation.ViewId.LOGIN;
+            exObj.viewUrl = ideaWatcher.model.Navigation.ViewUrl.LOGIN;
+
+            ideaWatcher.core.Navigator.switchView(exObj);
         }
         else {
-            displayTextError = ideaWatcher.core.Localizer.signUp[currrentLanguage].signup_ERROR[exObj.error];
+            displayTextError = ideaWatcher.core.Localizer.signUp[currentLanguage].signup_ERROR[exObj.error];
 
             ideaWatcher.controller.GlobalNotification.showNotification(
             ideaWatcher.model.GlobalNotificationType.ERROR,

@@ -106,8 +106,11 @@ ideaWatcher.view.UserSession = ideaWatcher.view.UserSession || (function () {
                 ideaWatcher.controller.UserSession.publishLoginSuccessful();
 
                 // ersten 10 Ideen der Hot-Ideenliste anzeigen
-                var listType = ideaWatcher.model.IdeaList.ListType.HOT;
+                var listType = ideaWatcher.controller.IdeaList.getCurrentClickedListType();
 
+                if (listType === ideaWatcher.model.IdeaList.ListType.MYSEARCH) {
+                    listType = ideaWatcher.model.IdeaList.ListType.HOT;
+                }
                 ideaWatcher.controller.IdeaList.updateIdeaList(listType, '', 1, 10, true);
 
                 clearView();

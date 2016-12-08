@@ -12,6 +12,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         var currentClickedButton;
         var lastClickedMainIdeaListButton;
         var currentClickedListType;
+        var lastClickedNoSearchListType;
         var currentClickedCategory;
         var hotButton;
         var htmlProfileEditButton;
@@ -90,6 +91,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
             }
 
             currentClickedListType = ideaWatcher.model.IdeaList.ListType.HOT;
+            lastClickedNoSearchListType = currentClickedListType;
             currentClickedCategory = ideaWatcher.model.IdeaList.Category.NONE;
             hotButton = document.getElementById('mainMenu_hot_button');
             cbLocalizeView();
@@ -158,6 +160,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         function handleIdeaListButton(clickEvent) {
 
             currentClickedListType = clickEvent.target.getAttribute('data-button-id');
+            lastClickedNoSearchListType = currentClickedListType;
             handleCurrentButtonClick(clickEvent);
             console.log('IdeaList vom Typ: "' + currentClickedListType + '" geklickt');
 
@@ -272,6 +275,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
                     .showIdeaList(currentClickedListType, currentClickedCategory, searchText);
             } else {
 
+                currentClickedListType = lastClickedNoSearchListType;
                 ideaWatcher.controller.MainMenu
                     .showIdeaList(currentClickedListType, currentClickedCategory);
             }
