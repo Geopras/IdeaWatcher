@@ -6,9 +6,9 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
 /**
- * Service zur Verbindung mit der Datenbank
+ * Manager für Verbindung mit der Datenbank
  */
-public class DbConnectionService {
+public class DbConnectionManager {
 
     private MongoClient mongoClient;
     private MongoDatabase db;
@@ -33,7 +33,7 @@ public class DbConnectionService {
         return this.isOpen;
     }
 
-    public DbConnectionService( String collectionName) {
+    public DbConnectionManager(String collectionName) {
         this.collectionName = collectionName;
     }
 

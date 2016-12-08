@@ -23,10 +23,10 @@ import static com.mongodb.client.model.Filters.eq;
  */
 public class IdeaService {
 
-    private DbConnectionService dbConnectionService;
+    private DbConnectionManager dbConnectionManager;
 
     public IdeaService(String collectionName) {
-        this.dbConnectionService = new DbConnectionService(collectionName);
+        this.dbConnectionManager = new DbConnectionManager(collectionName);
     }
     
     /**
@@ -120,17 +120,17 @@ public class IdeaService {
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
      */ 
     public IIdea getIdea( String ideaId ) throws Exception {
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }
         try {
-            Document foundDoc = dbConnectionService.getCollection()
+            Document foundDoc = dbConnectionManager.getCollection()
                     .find(eq("_id", new ObjectId (ideaId))).first();
             return buildIdea(foundDoc);
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
     }
     
@@ -141,17 +141,17 @@ public class IdeaService {
      */    
     public List<IIdea> getAllIdeas() throws Exception {
 
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }
         List<Document> ideasDoc;
         try {
-            ideasDoc = dbConnectionService.getCollection().find().into(new
+            ideasDoc = dbConnectionManager.getCollection().find().into(new
                     ArrayList<>());
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
         List<IIdea> ideas = new ArrayList<>();
         for(Document d : ideasDoc){
@@ -277,18 +277,18 @@ public class IdeaService {
      * Idee
      */ 
     public String addIdea(IIdea idea, String userId) throws Exception {
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }
         try {
             Document ideaDocument = buildIdeaDocument(idea);
-            dbConnectionService.getCollection().insertOne(ideaDocument);
+            dbConnectionManager.getCollection().insertOne(ideaDocument);
             String ideaId = ideaDocument.getObjectId("_id").toString();
             return ideaId;
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
     }
     
@@ -306,15 +306,15 @@ public class IdeaService {
             ideaListDoc.add(ideaDoc);
         }        
         
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }     
         try {
-            dbConnectionService.getCollection().insertMany(ideaListDoc);
+            dbConnectionManager.getCollection().insertMany(ideaListDoc);
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
     }
     
@@ -327,17 +327,17 @@ public class IdeaService {
     public UpdateResult updateIdea(IIdea idea) throws Exception{
         Document newDoc = new Document();
         newDoc = buildIdeaDocument(idea);
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }   
         UpdateResult ur = null;
         try {
-            ur = dbConnectionService.getCollection().replaceOne(
+            ur = dbConnectionManager.getCollection().replaceOne(
                     Filters.eq("_id", new ObjectId (idea.getIdeaId())), newDoc);
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();           
+            dbConnectionManager.closeConnection();
         }       
         return ur;
     }
@@ -348,18 +348,18 @@ public class IdeaService {
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
      */   
     public void deleteIdea(String ideaId) throws Exception{
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }
         try {
-            dbConnectionService.getCollection().findOneAndDelete(
+            dbConnectionManager.getCollection().findOneAndDelete(
                     Filters.eq("_id", new ObjectId (ideaId)));
         // ToDo Aktualisiere in usersCollection die followedIdeas   
             toAdjustUsersFollowedIdeas(ideaId);
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();           
+            dbConnectionManager.closeConnection();
         }  
     }
     
@@ -396,16 +396,16 @@ public class IdeaService {
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
      */
     public void updateApropertyOfaIdea(String ideaId, String type, String value) throws Exception{    
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         } 
         try {
-            dbConnectionService.getCollection().updateOne(eq("_id", new ObjectId(ideaId)), 
+            dbConnectionManager.getCollection().updateOne(eq("_id", new ObjectId(ideaId)),
                     new Document("$set", new Document(type, value)));
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();           
+            dbConnectionManager.closeConnection();
         }  
     }
     
@@ -466,26 +466,26 @@ public class IdeaService {
     public void updateRankings(List<IIdea> ideaList) throws Exception {
       
         try {
-            if (!dbConnectionService.isOpen()) {
-                dbConnectionService.openConnection();
+            if (!dbConnectionManager.isOpen()) {
+                dbConnectionManager.openConnection();
             }
             for( IIdea idea : ideaList){
-                dbConnectionService.getCollection().updateOne(Filters.eq("_id", new ObjectId(idea.getIdeaId())), 
+                dbConnectionManager.getCollection().updateOne(Filters.eq("_id", new ObjectId(idea.getIdeaId())),
                         new Document("$set", new Document("hotRank", idea.getHotRank())));
-                dbConnectionService.getCollection().updateOne(Filters.eq("_id", new ObjectId(idea.getIdeaId())), 
+                dbConnectionManager.getCollection().updateOne(Filters.eq("_id", new ObjectId(idea.getIdeaId())),
                         new Document("$set", new Document("trendingRank", idea.getTrendingRank())));
             }         
         } catch (Exception en) {
             throw new Exception(en);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }   
     }
     
     public void updateModifiedIsMailPublic(List<IIdea> ideaList) throws Exception{
         try {
-            if (!dbConnectionService.isOpen()) {
-                dbConnectionService.openConnection();
+            if (!dbConnectionManager.isOpen()) {
+                dbConnectionManager.openConnection();
             }
             Document upDocValue;
             Document upDocQuery;
@@ -494,24 +494,24 @@ public class IdeaService {
                 upDocQuery = new Document("_id", new ObjectId(idea.getIdeaId()) );
                 upDocValue = new Document("creator.isMailPublic" , idea.getCreator().getIsMailPublic());
                 upDocSet = new Document("$set", upDocValue);            
-                dbConnectionService.getCollection().updateOne(upDocQuery, upDocSet );
+                dbConnectionManager.getCollection().updateOne(upDocQuery, upDocSet );
             } 
         } catch (Exception en) {
             throw new Exception(en);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }   
     }        
 
     public List<IIdea> getIdeaList(String type, String value) throws Exception{
 
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }
         List<Document> ideasDoc = new ArrayList<Document>();
         List<IIdea> ideaList = new ArrayList<IIdea>();
         try {
-            ideasDoc = dbConnectionService.getCollection().find(Filters.eq(type, value)).into(new
+            ideasDoc = dbConnectionManager.getCollection().find(Filters.eq(type, value)).into(new
                     ArrayList<>());
             for(Document doc : ideasDoc){
                 ideaList.add(buildIdea(doc));
@@ -519,7 +519,7 @@ public class IdeaService {
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
         return ideaList;
     }
@@ -532,13 +532,13 @@ public class IdeaService {
      */
     public List<IIdea> getPublishedCategorizedIdeas(String category) throws Exception{
 
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }
         List<Document> ideasDoc;
         List<IIdea> ideaList = new ArrayList<>();
         try {
-            ideasDoc = dbConnectionService.getCollection()
+            ideasDoc = dbConnectionManager.getCollection()
                     .find(Filters.and(
                             eq("category", category),
                             eq("isPublished", true)))
@@ -549,7 +549,7 @@ public class IdeaService {
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
         return ideaList;
     }
@@ -561,13 +561,13 @@ public class IdeaService {
      */
     public List<IIdea> getPublishedIdeas() throws Exception{
 
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }
         List<Document> ideasDoc;
         List<IIdea> ideaList = new ArrayList<>();
         try {
-            ideasDoc = dbConnectionService.getCollection()
+            ideasDoc = dbConnectionManager.getCollection()
                     .find(Filters.eq("isPublished", true))
                     .into(new ArrayList<>());
             for(Document doc : ideasDoc){
@@ -576,21 +576,21 @@ public class IdeaService {
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
         return ideaList;
     }
 
     public List<IIdea> searchIdea(String searchText) throws Exception {
 
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }
         FindIterable<Document> foundDocuments;
         List<IIdea> ideaList = new ArrayList<>();
         try {
             // Suche mit Regex (über den dritten Parameter (options) kann z.B. Case-Insensitivity verlangt werden)
-            foundDocuments = dbConnectionService.getCollection()
+            foundDocuments = dbConnectionManager.getCollection()
                     .find(Filters.and(
                             Filters.regex("name", searchText, "i"),
                             eq("isPublished", true)));
@@ -601,7 +601,7 @@ public class IdeaService {
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
         return ideaList;
     }

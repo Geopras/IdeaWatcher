@@ -20,10 +20,10 @@ import java.util.List;
  */
 public class UserService {
 
-    private DbConnectionService dbConnectionService;
+    private DbConnectionManager dbConnectionManager;
 
     public UserService(String collectionName) {
-        this.dbConnectionService = new DbConnectionService(collectionName);
+        this.dbConnectionManager = new DbConnectionManager(collectionName);
     }
 
     /**
@@ -35,10 +35,10 @@ public class UserService {
     public IUser getUser(String userId) throws Exception {
 
         try {
-            if (!dbConnectionService.isOpen()) {
-                dbConnectionService.openConnection();
+            if (!dbConnectionManager.isOpen()) {
+                dbConnectionManager.openConnection();
             }
-            Document userDoc = dbConnectionService.getCollection()
+            Document userDoc = dbConnectionManager.getCollection()
                     .find(new BasicDBObject("_id", new ObjectId
                             (userId))).first();
             if (userDoc != null) {
@@ -49,7 +49,7 @@ public class UserService {
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
     }
     /**
@@ -58,17 +58,17 @@ public class UserService {
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
      */
     public List<IUser> getAllUsers() throws Exception {
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }
         List<Document> usersDoc = null;
         try {
-            usersDoc = dbConnectionService.getCollection()
+            usersDoc = dbConnectionManager.getCollection()
                     .find().into(new ArrayList<Document>());
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();           
+            dbConnectionManager.closeConnection();
         }  
         List<IUser> users = new ArrayList<IUser>();
         for(Document d : usersDoc){
@@ -88,10 +88,10 @@ public class UserService {
         try {
             Document userDoc;
 
-            if (!dbConnectionService.isOpen()) {
-                dbConnectionService.openConnection();
+            if (!dbConnectionManager.isOpen()) {
+                dbConnectionManager.openConnection();
             }
-            userDoc = dbConnectionService.getCollection()
+            userDoc = dbConnectionManager.getCollection()
                     .find(new BasicDBObject("userName", userNameOrEmail))
                     .first();
             // Wenn userName gefunden, dann gib userId zurück
@@ -100,7 +100,7 @@ public class UserService {
                 return userDoc.get("_id").toString();
             }
             // Wenn userName nicht gefunden, dann nach email schauen
-            userDoc = dbConnectionService.getCollection()
+            userDoc = dbConnectionManager.getCollection()
                     .find(new BasicDBObject("email", userNameOrEmail))
                     .first();
             if (userDoc != null) {
@@ -111,7 +111,7 @@ public class UserService {
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
     }
     /**
@@ -172,10 +172,10 @@ public class UserService {
     public boolean existsUserId(String userId) throws Exception {
 
         try {
-            if (!dbConnectionService.isOpen()) {
-                dbConnectionService.openConnection();
+            if (!dbConnectionManager.isOpen()) {
+                dbConnectionManager.openConnection();
             }
-            Document userDoc = dbConnectionService.getCollection()
+            Document userDoc = dbConnectionManager.getCollection()
                     .find(new BasicDBObject("_id", new ObjectId(userId)))
                     .first();
             if (userDoc == null) {
@@ -186,7 +186,7 @@ public class UserService {
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
     }
 
@@ -199,10 +199,10 @@ public class UserService {
     public boolean existsUserName(String userName) throws Exception {
 
         try {
-            if (!dbConnectionService.isOpen()) {
-                dbConnectionService.openConnection();
+            if (!dbConnectionManager.isOpen()) {
+                dbConnectionManager.openConnection();
             }
-            Document userDoc = dbConnectionService.getCollection()
+            Document userDoc = dbConnectionManager.getCollection()
                     .find(new BasicDBObject("userName", userName))
                     .first();
             if (userDoc == null) {
@@ -213,17 +213,17 @@ public class UserService {
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
     }
 
     public boolean existsEmail(String email) throws Exception {
 
         try {
-            if (!dbConnectionService.isOpen()) {
-                dbConnectionService.openConnection();
+            if (!dbConnectionManager.isOpen()) {
+                dbConnectionManager.openConnection();
             }
-            Document userDoc = dbConnectionService.getCollection()
+            Document userDoc = dbConnectionManager.getCollection()
                     .find(new BasicDBObject("email", email)).first();
             if (userDoc == null) {
                 return false;
@@ -233,7 +233,7 @@ public class UserService {
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
     }
 
@@ -254,15 +254,15 @@ public class UserService {
         // hash aus Passwort berechnen
         user.setPassword(hashPassword(user.getPassword()));
         try {
-            if (!dbConnectionService.isOpen()) {
-                dbConnectionService.openConnection();
+            if (!dbConnectionManager.isOpen()) {
+                dbConnectionManager.openConnection();
             }
-            dbConnectionService.getCollection().insertOne(buildUserDocument
+            dbConnectionManager.getCollection().insertOne(buildUserDocument
                     (user));
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
     }
     /**
@@ -300,15 +300,15 @@ public class UserService {
             userListDoc.add(buildUserDocument(idea));
         }        
         
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }
         try {
-            dbConnectionService.getCollection().insertMany(userListDoc);
+            dbConnectionManager.getCollection().insertMany(userListDoc);
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();           
+            dbConnectionManager.closeConnection();
         } 
     }
     
@@ -322,20 +322,20 @@ public class UserService {
         Document newDoc = new Document();
         newDoc = buildUserDocument(user);
         
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }
         UpdateResult ur = null;
         try {
             
-            ur = dbConnectionService.getCollection().replaceOne(
+            ur = dbConnectionManager.getCollection().replaceOne(
                     Filters.eq("_id", new ObjectId (user.getUserId())), newDoc);
             updateIsMailPublicToAdjustIdeas(user, user.getIsMailPublic());
             
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();           
+            dbConnectionManager.closeConnection();
         } 
         return ur;
     }
@@ -345,16 +345,16 @@ public class UserService {
      * @throws Exception falls Probleme beim Zugriff auf die DB auftreten
      */ 
     public void deleteUser(String userId) throws Exception{
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }
         try {
-            dbConnectionService.getCollection().findOneAndDelete(
+            dbConnectionManager.getCollection().findOneAndDelete(
                     Filters.eq("_id", new ObjectId (userId))); 
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();           
+            dbConnectionManager.closeConnection();
         } 
     }
     /**
@@ -366,21 +366,21 @@ public class UserService {
      */ 
     public void updateApropertyOfaUser (String userId, String type, String value) throws Exception {
         try{
-            if (!dbConnectionService.isOpen()) {
-                dbConnectionService.openConnection();
+            if (!dbConnectionManager.isOpen()) {
+                dbConnectionManager.openConnection();
             }    
             if( type.equals("isMailPublic")){
                 boolean newValue = false;
                 if(value.equals("true") || value.equals("1")){
                     newValue = true;
-                    dbConnectionService.getCollection().updateOne(Filters.eq(
+                    dbConnectionManager.getCollection().updateOne(Filters.eq(
                             "_id", new ObjectId(userId)), new Document(
                                     "$set", new Document(type, newValue)));
                     
                 }
                 updateIsMailPublicToAdjustIdeas(userId, newValue);
             } else {
-                dbConnectionService.getCollection().updateOne(Filters.eq(
+                dbConnectionManager.getCollection().updateOne(Filters.eq(
                         "_id", new ObjectId(userId)), new Document(
                                 "$set", new Document(type, value)));
             }
@@ -389,7 +389,7 @@ public class UserService {
             throw new Exception(en);
         }
         finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }
     }
     
@@ -422,13 +422,13 @@ public class UserService {
         updateIsMailPublicToAdjustIdeas(user, isPublicMail);
     }
     public List<IUser> getUserList(String type, String value) throws Exception{
-        if (!dbConnectionService.isOpen()) {
-            dbConnectionService.openConnection();
+        if (!dbConnectionManager.isOpen()) {
+            dbConnectionManager.openConnection();
         }
         List<Document> userDoc = new ArrayList<Document>();
         List<IUser> userList = new ArrayList<IUser>();
         try {
-            userDoc = dbConnectionService.getCollection().find(Filters.eq(type, value)).into(new
+            userDoc = dbConnectionManager.getCollection().find(Filters.eq(type, value)).into(new
                     ArrayList<>());
             for(Document doc : userDoc){
                 userList.add(buildUser(doc));
@@ -436,15 +436,15 @@ public class UserService {
         } catch (Exception ex) {
             throw new Exception(ex);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         } 
         return userList;
     }
     
     public void updateFollowedIdeas(List<IUser> userList) throws Exception{
         try {
-            if (!dbConnectionService.isOpen()) {
-                dbConnectionService.openConnection();
+            if (!dbConnectionManager.isOpen()) {
+                dbConnectionManager.openConnection();
             }
             Document upDocValue;
             Document upDocQuery;
@@ -453,16 +453,16 @@ public class UserService {
                 upDocQuery = new Document("_id", new ObjectId(user.getUserId()) );
                 upDocValue = new Document("followedIdeas" , user.getFollowedIdeas());
                 upDocSet = new Document("$set", upDocValue);            
-                dbConnectionService.getCollection().updateOne(upDocQuery, upDocSet );
+                dbConnectionManager.getCollection().updateOne(upDocQuery, upDocSet );
                 if(user.getNumberFollowedIdeas() > 0){
                     upDocValue =  new Document("numberFollowedIdeas" , user.getNumberFollowedIdeas() - 1 );
-                    dbConnectionService.getCollection().updateOne(upDocQuery, upDocSet );
+                    dbConnectionManager.getCollection().updateOne(upDocQuery, upDocSet );
                 }
             } 
         } catch (Exception en) {
             throw new Exception(en);
         } finally {
-            dbConnectionService.closeConnection();
+            dbConnectionManager.closeConnection();
         }   
     }
 

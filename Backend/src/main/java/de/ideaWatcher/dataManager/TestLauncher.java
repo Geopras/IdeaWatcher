@@ -2,7 +2,6 @@ package main.java.de.ideaWatcher.dataManager;
 
 import main.java.de.ideaWatcher.dataManager.pojos.Idea;
 import main.java.de.ideaWatcher.dataManager.pojos.User;
-import main.java.de.ideaWatcher.dataManager.services.DbConnectionService;
 import main.java.de.ideaWatcher.dataManager.services.IdeaService;
 import main.java.de.ideaWatcher.dataManager.services.UserDataGenerator;
 import main.java.de.ideaWatcher.dataManager.services.UserService;
@@ -12,14 +11,6 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bson.Document;
-import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
-
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
 
 public class TestLauncher {
@@ -100,7 +91,7 @@ public class TestLauncher {
      }
      public static List<IUser> getUserList(String type, String value) throws Exception{
          String collectionName = "usersCollection";
-         //DbConnectionService dbConnectionService = new DbConnectionService(collectionName);
+         //DbConnectionManager dbConnectionService = new DbConnectionManager(collectionName);
          UserService us = new UserService(collectionName);
          return us.getUserList(type, value);
  
