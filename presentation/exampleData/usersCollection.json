@@ -43,7 +43,8 @@
 	"createdIdeas" : [
 		"5843de0863d7831b9063810b",
 		"584579a163d7830a4012ce03",
-		"584579c263d7830a4012ce12"
+		"584579c263d7830a4012ce12",
+		"584992eb63d78313484f16c5"
 	],
 	"email" : "g.e@org",
 	"firstName" : "Georg",
@@ -104,7 +105,10 @@
 },
 {
 	"_id" : ObjectId("58431cf263d78300f00dc984"),
-	"createdIdeas" : [ ],
+	"createdIdeas" : [
+		"584994ff63d78313484f174b",
+		"584996ec63d78313484f17bc"
+	],
 	"email" : "ro.la@nd",
 	"firstName" : "Roland",
 	"followedIdeas" : [
