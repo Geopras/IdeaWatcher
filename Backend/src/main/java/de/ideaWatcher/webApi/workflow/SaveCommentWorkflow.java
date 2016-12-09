@@ -1,15 +1,9 @@
 package main.java.de.ideaWatcher.webApi.workflow;
 
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import main.java.de.ideaWatcher.webApi.core.JSONBuilder;
-import org.json.JSONObject;
-
 import main.java.de.ideaWatcher.dataManager.pojos.Comment;
 import main.java.de.ideaWatcher.webApi.core.IRequest;
 import main.java.de.ideaWatcher.webApi.core.IResponse;
+import main.java.de.ideaWatcher.webApi.core.JSONBuilder;
 import main.java.de.ideaWatcher.webApi.core.Response;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IIdeaController;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iController.IUserController;
@@ -17,6 +11,11 @@ import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IComment;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IIdea;
 import main.java.de.ideaWatcher.webApi.dataManagerInterfaces.iModel.IUser;
 import main.java.de.ideaWatcher.webApi.manager.InstanceManager;
+import org.json.JSONObject;
+
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SaveCommentWorkflow implements IWorkflow {
 
@@ -96,10 +95,11 @@ public class SaveCommentWorkflow implements IWorkflow {
         currentComment.setPublishDate(new Date());
 
         currentIdea.getComments().add(currentComment);
+        // Anzahl Kommentare aktualisieren
+        currentIdea.setNumberComments((long)currentIdea.getComments().size());
 
         JSONObject respData = new JSONObject();
         try {
-
             ideaController.updateIdea(currentIdea);
 
             response.setResult("success");
