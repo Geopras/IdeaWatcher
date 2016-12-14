@@ -18,7 +18,7 @@ ideaWatcher.core.Localizer.MainMenu = ideaWatcher.core.Localizer.MainMenu || {
                 LOGOUT: 'Logout',
                 MYFOLLOWEDIDEAS: 'Followed Ideas',
                 MYIDEAS: 'My Ideas',
-                MYPROFILE: 'My UserMenu',
+                MYPROFILE: 'My Profile',
                 OTHER: 'Other',
                 SIGNUP: 'Sign Up',
                 SPORTS: 'Sports & Outdoor',

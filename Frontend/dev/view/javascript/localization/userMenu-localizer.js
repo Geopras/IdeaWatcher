@@ -5,12 +5,12 @@
 ideaWatcher.core.Localizer.UserMenu = ideaWatcher.core.Localizer.UserMenu || {
 
 		en_GB: {
-			MYFOLLOWEDIDEAS: 'Followed Ideas',
+			MYFOLLOWEDIDEAS: 'My Followed Ideas',
 			MYIDEAS: 'My Ideas',
-			MYPROFILE: 'My UserMenu'
+			MYPROFILE: 'My Profile'
 		},
 		de_DE: {
-			MYFOLLOWEDIDEAS: 'Verfolgte Ideen',
+			MYFOLLOWEDIDEAS: 'Meine Verfolgte Ideen',
 			MYIDEAS: 'Meine Ideen',
 			MYPROFILE: 'Mein Profil'
 		}
