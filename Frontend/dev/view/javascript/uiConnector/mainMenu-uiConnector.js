@@ -15,6 +15,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         var lastClickedNoSearchListType;
         var currentClickedCategory;
         var hotButton;
+        var loginButton;
         var htmlProfileEditButton;
         var htmlFollowedIdeasButton;
         var htmlMyIdeasButton;
@@ -94,6 +95,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
             lastClickedNoSearchListType = currentClickedListType;
             currentClickedCategory = ideaWatcher.model.IdeaList.Category.NONE;
             hotButton = document.getElementById('mainMenu_hot_button');
+            loginButton = document.getElementById('mainMenu_login_button');
             cbLocalizeView();
         }
 
@@ -120,7 +122,7 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         function cbLogoutSuccessful(obj) {
             isLoginSuccessful = false;
             switchUserDropdown();
-            clickHotButton();
+            clickLoginButton();
         }
 
         function cbWebSocketConnectionOpen(obj) {
@@ -422,6 +424,12 @@ ideaWatcher.view.MainMenu = ideaWatcher.view.MainMenu || (function () {
         function clickHotButton() {
 
             hotButton.click();
+        }
+
+        // HotButton anklicken
+        function clickLoginButton() {
+
+            loginButton.click();
         }
         //endregion
 
