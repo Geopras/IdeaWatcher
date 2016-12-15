@@ -25,14 +25,16 @@
 	"email" : "st.ef@an",
 	"firstName" : "Stefan",
 	"followedIdeas" : [
-		"5843de0863d7831b9063810b",
-		"5842d65863d7831c14e4ebb7"
+		"5842d65863d7831c14e4ebb7",
+		"584992eb63d78313484f16c5",
+		"5845790363d7830a4012cdb1",
+		"5843de0863d7831b9063810b"
 	],
 	"gender" : "male",
 	"isMailPublic" : true,
 	"language" : "de_DE",
 	"numberCreatedIdeas" : NumberLong("0"),
-	"numberFollowedIdeas" : NumberLong("2"),
+	"numberFollowedIdeas" : NumberLong("4"),
 	"password" : "$2a$10$lSYKl9Djxpg2QBl1BB0t2eHfjrSwEiqGqpK/3akgN2BdTzSESAgBO",
 	"pictureURL" : "",
 	"surname" : "",
